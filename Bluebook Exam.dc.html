@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://www.desmos.com/api/v1.10/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;background:#fff;}
+  body{zoom:0.85;}
+  .katex .msupsub{font-size:82%;}
+  a{color:#1a56db;text-decoration:underline;cursor:pointer;}
+  a:hover{color:#123a9e;}
+  .bb-scroll::-webkit-scrollbar{width:12px;}
+  .bb-scroll::-webkit-scrollbar-thumb{background:#c3c8d0;border-radius:8px;border:3px solid #fff;}
+  .katex{font-size:1.05em;}
+</style>
+</helmet>
+<div style="position:fixed;inset:0;overflow:hidden;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#0b1020;background:#fff;">
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <div style="position:absolute;inset:0;display:flex;flex-direction:column;background:#f4f6fb;">
+    <div style="height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:#0f1f66;color:#fff;">
+      <div style="display:flex;align-items:center;gap:12px;font-weight:700;font-size:20px;letter-spacing:.3px;">
+        <div style="width:26px;height:26px;border-radius:6px;background:#ffdb00;"></div>
+        Exam Practice
+      </div>
+      <div style="font-size:14px;opacity:.85;">{{ studentName }}</div>
+    </div>
+    <div style="flex:1;overflow:auto;" class="bb-scroll">
+      <div style="max-width:920px;margin:0 auto;padding:56px 32px 80px;">
+        <div style="font-size:13px;font-weight:700;letter-spacing:1.5px;color:#6b7280;text-transform:uppercase;">Test Preview</div>
+        <h1 style="font-family:'Source Serif 4',Georgia,serif;font-size:42px;margin:8px 0 6px;font-weight:700;">Choose a practice test</h1>
+        <p style="font-family:'Source Serif 4',Georgia,serif;font-size:19px;color:#4b5563;margin:0 0 40px;max-width:620px;">Select a full-length digital practice exam to preview the question types, tools, and functionality you will see on test day.</p>
+
+        <div onClick="{{ startExam }}" style="cursor:pointer;background:#fff;border:1px solid #e2e6ee;border-radius:16px;padding:28px 30px;display:flex;align-items:center;gap:26px;box-shadow:0 1px 3px rgba(15,31,102,.06);transition:box-shadow .15s;" style-hover="box-shadow:0 8px 24px rgba(15,31,102,.12);border-color:#c7cede;">
+          <div style="width:70px;height:70px;border-radius:14px;background:#0f1f66;color:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto;">
+            <span style="font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-weight:700;font-size:28px;">X<sup style="font-size:16px;">2</sup></span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:22px;font-weight:700;font-family:'Source Serif 4',Georgia,serif;">AP Physics 1</div>
+            <div style="font-size:15px;color:#6b7280;margin-top:4px;">Section I · 40 multiple-choice questions · 1 hr 20 min · Test preview</div>
+          </div>
+          <div style="background:#ffdb00;color:#0b1020;font-weight:700;padding:12px 28px;border-radius:999px;font-size:16px;">Start</div>
+        </div>
+
+        <div style="margin-top:18px;background:#fff;border:1px dashed #d5dae6;border-radius:16px;padding:26px 30px;display:flex;align-items:center;gap:26px;opacity:.6;">
+          <div style="width:70px;height:70px;border-radius:14px;background:#eef1f8;flex:0 0 auto;"></div>
+          <div style="flex:1;">
+            <div style="font-size:22px;font-weight:700;font-family:'Source Serif 4',Georgia,serif;color:#6b7280;">More exams coming soon</div>
+            <div style="font-size:15px;color:#9aa0aa;margin-top:4px;">Additional subject previews will appear here.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ isExam }}" hint-placeholder-val="{{ true }}">
+  <div style="position:absolute;inset:0;display:flex;flex-direction:column;">
+
+    <!-- HEADER -->
+    <div style="flex:0 0 auto;background:linear-gradient(#eef2fa,#e4ebf6);padding:12px 26px 10px;position:relative;z-index:30;border-bottom:1px solid #d3dae8;">
+      <div style="position:absolute;top:8px;right:26px;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;">
+        {{ battPct }}%
+        <svg width="30" height="15" viewBox="0 0 30 15"><rect x="1" y="1" width="24" height="13" rx="2.5" fill="none" stroke="#0b1020" stroke-width="1.4"/><rect x="3" y="3" width="20" height="9" rx="1" fill="#0b1020"/><rect x="26" y="4.5" width="2.6" height="6" rx="1" fill="#0b1020"/></svg>
+      </div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+        <div style="min-width:230px;">
+          <div style="font-size:24px;font-weight:700;">Section I</div>
+          <div onClick="{{ toggleDirections }}" style="cursor:pointer;display:inline-flex;align-items:center;gap:7px;font-size:17px;font-weight:600;margin-top:4px;">
+            Directions
+            <svg width="14" height="9" viewBox="0 0 14 9" style="transform:{{ dirCaret }};transition:transform .15s;"><path d="M1 7L7 1L13 7" fill="none" stroke="#0b1020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div style="text-align:center;padding-top:2px;">
+          <sc-if value="{{ showTime }}" hint-placeholder-val="{{ true }}">
+            <div style="font-size:30px;font-weight:700;letter-spacing:.5px;line-height:1;">{{ timeStr }}</div>
+          </sc-if>
+          <sc-if value="{{ timerHidden }}">
+            <div style="font-size:30px;font-weight:700;line-height:1;color:#8a8f98;">– : – –</div>
+          </sc-if>
+          <div onClick="{{ toggleTimer }}" style="cursor:pointer;margin-top:6px;border:1.5px solid #0b1020;border-radius:999px;padding:3px 20px;font-size:14px;font-weight:600;display:inline-block;">{{ timerBtn }}</div>
+        </div>
+        <div style="display:flex;gap:26px;padding-right:96px;padding-top:2px;">
+          <div onClick="{{ toggleHighlights }}" style="cursor:pointer;text-align:center;width:74px;">
+            <svg width="42" height="20" viewBox="0 0 42 20"><path d="M3 15l7-7 3 3-7 7H3v-3z" fill="none" stroke="#0b1020" stroke-width="1.6" stroke-linejoin="round"/><path d="M11 7l3-3 3 3-3 3z" fill="none" stroke="#0b1020" stroke-width="1.6" stroke-linejoin="round"/><rect x="24" y="3" width="15" height="13" rx="2" fill="none" stroke="#0b1020" stroke-width="1.6"/><line x1="27" y1="7" x2="36" y2="7" stroke="#0b1020" stroke-width="1.3"/><line x1="27" y1="10" x2="36" y2="10" stroke="#0b1020" stroke-width="1.3"/><line x1="27" y1="13" x2="33" y2="13" stroke="#0b1020" stroke-width="1.3"/></svg>
+            <div style="font-size:12.5px;font-weight:600;margin-top:2px;">Highlights &amp; Notes</div>
+          </div>
+          <div onClick="{{ toggleCalc }}" style="cursor:pointer;text-align:center;width:66px;">
+            <svg width="24" height="26" viewBox="0 0 24 26"><rect x="3" y="1.5" width="18" height="23" rx="3" fill="none" stroke="#0b1020" stroke-width="1.6"/><rect x="6" y="4.5" width="12" height="5" rx="1" fill="none" stroke="#0b1020" stroke-width="1.3"/><circle cx="8" cy="13.5" r="1.3" fill="#0b1020"/><circle cx="12" cy="13.5" r="1.3" fill="#0b1020"/><circle cx="16" cy="13.5" r="1.3" fill="#0b1020"/><circle cx="8" cy="18" r="1.3" fill="#0b1020"/><circle cx="12" cy="18" r="1.3" fill="#0b1020"/><circle cx="16" cy="18" r="1.3" fill="#0b1020"/></svg>
+            <div style="font-size:12.5px;font-weight:600;margin-top:2px;">Calculator</div>
+          </div>
+          <div onClick="{{ toggleRef }}" style="cursor:pointer;text-align:center;width:70px;">
+            <div style="height:26px;display:flex;align-items:center;justify-content:center;"><span style="font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-weight:700;font-size:24px;">X<sup style="font-size:14px;">2</sup></span></div>
+            <div style="font-size:12.5px;font-weight:600;margin-top:2px;">Reference</div>
+          </div>
+          <div onClick="{{ toggleMore }}" style="cursor:pointer;text-align:center;width:52px;">
+            <div style="height:26px;display:flex;align-items:center;justify-content:center;"><svg width="6" height="22" viewBox="0 0 6 22"><circle cx="3" cy="3" r="2.4" fill="#0b1020"/><circle cx="3" cy="11" r="2.4" fill="#0b1020"/><circle cx="3" cy="19" r="2.4" fill="#0b1020"/></svg></div>
+            <div style="font-size:12.5px;font-weight:600;margin-top:2px;">More</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BANNER -->
+    <div style="flex:0 0 auto;background:#0f1f66;color:#fff;text-align:center;font-weight:700;font-size:14px;letter-spacing:1px;padding:11px;border-radius:0 0 12px 12px;position:relative;z-index:5;">THIS IS A TEST PREVIEW</div>
+
+    <!-- BODY -->
+    <div style="flex:1;min-height:0;display:flex;position:relative;">
+      <sc-if value="{{ hasStimulus }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:0 0 auto;width:{{ leftBasis }};overflow:auto;padding:34px 40px;font-family:'Source Serif 4',Georgia,serif;" class="bb-scroll">
+          <div style="font-size:21px;line-height:1.5;color:#111;">
+            <sc-for list="{{ stimParas }}" as="para" hint-placeholder-count="1">
+              <p style="margin:0 0 14px;text-wrap:pretty;">{{ para }}</p>
+            </sc-for>
+          </div>
+          <sc-if value="{{ hasFigure }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:20px;border:1px solid #cbd2df;border-radius:6px;max-width:560px;overflow:hidden;">
+              <div style="display:flex;align-items:center;gap:16px;padding:8px 14px;background:#f0f2f6;border-bottom:1px solid #cbd2df;font-family:'Helvetica Neue',sans-serif;font-size:15px;color:#374151;">
+                <span onClick="{{ zoomIn }}" style="cursor:pointer;width:26px;height:26px;border-radius:50%;background:#c3c8d0;color:#1f2937;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:600;line-height:1;">+</span>
+                <span onClick="{{ zoomOut }}" style="cursor:pointer;width:26px;height:26px;border-radius:50%;background:#c3c8d0;color:#1f2937;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:600;line-height:1;">−</span>
+                <span>{{ figPct }}%</span>
+                <span onClick="{{ resetZoom }}" style="cursor:pointer;">Reset</span>
+                <span style="color:#c3c8d0;">|</span>
+                <span style="cursor:pointer;font-size:15px;">⤢</span>
+              </div>
+              <div style="padding:24px;display:flex;justify-content:center;overflow:auto;">
+                <div style="transform:{{ figTransform }};transform-origin:center;transition:transform .12s;">
+                  <sc-if value="{{ figIsPulley }}">{{ pulleyFig }}</sc-if>
+                  <sc-if value="{{ figIsVT }}">{{ vtFig }}</sc-if>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+        <!-- divider -->
+        <div onMouseDown="{{ startDrag }}" style="flex:0 0 auto;width:2px;background:#3a3f4a;position:relative;cursor:col-resize;">
+          <div onMouseDown="{{ startDrag }}" style="position:absolute;top:50%;left:-9px;transform:translateY(-50%);width:20px;height:36px;background:#fff;border:1.5px solid #3a3f4a;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#3a3f4a;cursor:col-resize;">◄►</div>
+        </div>
+      </sc-if>
+
+      <!-- QUESTION PANEL -->
+      <div style="flex:1 1 50%;overflow:auto;padding:26px 44px 26px 36px;font-family:'Source Serif 4',Georgia,serif;" class="bb-scroll">
+        <div style="max-width:{{ qMaxWidth }};margin:0 auto;">
+          <!-- question header -->
+          <div style="display:flex;align-items:center;gap:12px;border-bottom:2px dashed #b6bdcb;padding-bottom:10px;margin-bottom:22px;">
+            <div style="background:#1f2430;color:#fff;font-family:'Helvetica Neue',sans-serif;font-weight:700;font-size:17px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:4px;">{{ qNum }}</div>
+            <div onClick="{{ toggleMark }}" style="cursor:pointer;display:inline-flex;align-items:center;gap:7px;font-family:'Helvetica Neue',sans-serif;font-size:16px;font-weight:600;">
+              <svg width="15" height="20" viewBox="0 0 15 20"><path d="M2 1h11v18l-5.5-4L2 19z" fill="{{ markFill }}" stroke="#0b1020" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              Mark for Review
+            </div>
+            <div style="flex:1;"></div>
+            <div onClick="{{ toggleElimMode }}" style="cursor:pointer;background:{{ elimBtnBg }};border-radius:8px;padding:6px 10px;display:flex;align-items:center;gap:5px;">
+              <span style="position:relative;font-family:'Helvetica Neue',sans-serif;font-weight:800;font-size:14px;color:{{ elimBtnColor }};line-height:1;">A<span style="position:absolute;left:-1px;right:-1px;top:50%;height:2px;background:{{ elimBtnColor }};"></span></span>
+              <span style="position:relative;font-family:'Helvetica Neue',sans-serif;font-weight:800;font-size:14px;color:{{ elimBtnColor }};line-height:1;">B<span style="position:absolute;left:-1px;right:-1px;top:50%;height:2px;background:{{ elimBtnColor }};"></span></span>
+              <span style="position:relative;font-family:'Helvetica Neue',sans-serif;font-weight:800;font-size:14px;color:{{ elimBtnColor }};line-height:1;">C<span style="position:absolute;left:-1px;right:-1px;top:50%;height:2px;background:{{ elimBtnColor }};"></span></span>
+            </div>
+          </div>
+          <!-- prompt -->
+          <div style="font-size:22px;line-height:1.5;color:#111;margin-bottom:24px;text-wrap:pretty;">{{ promptEl }}</div>
+          <!-- choices -->
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <sc-for list="{{ choices }}" as="choice" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:14px;">
+                <div onClick="{{ choice.onSelect }}" style="{{ choice.boxStyle }}">
+                  <div style="{{ choice.circleStyle }}">{{ choice.letter }}</div>
+                  <div style="{{ choice.bodyStyle }}">{{ choice.bodyEl }}</div>
+                  <sc-if value="{{ choice.eliminated }}"><div style="position:absolute;left:10px;right:10px;top:50%;height:2px;background:#1f2937;pointer-events:none;"></div></sc-if>
+                </div>
+                <div style="width:66px;flex:0 0 auto;display:flex;align-items:center;justify-content:flex-end;gap:6px;">
+                  <sc-if value="{{ choice.showUndo }}">
+                    <a onClick="{{ choice.onUndo }}" style="font-family:'Helvetica Neue',sans-serif;font-size:15px;font-weight:700;">Undo</a>
+                  </sc-if>
+                  <sc-if value="{{ choice.showElim }}">
+                    <div onClick="{{ choice.onElim }}" style="{{ choice.elimStyle }}"><span style="position:relative;line-height:1;">{{ choice.letter }}<span style="position:absolute;left:-3px;right:-3px;top:50%;height:1.5px;background:#4b5563;"></span></span></div>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <!-- REFERENCE DRAWER -->
+      <sc-if value="{{ refOpen }}">
+        <div style="flex:0 0 auto;width:640px;max-width:46%;border-left:1px solid #d3dae8;display:flex;flex-direction:column;background:#fff;">
+          <div style="background:#1f2430;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:16px 22px;">
+            <span style="font-size:22px;font-weight:700;">Reference</span>
+            <div style="display:flex;gap:20px;align-items:center;">
+              <span style="cursor:pointer;font-size:18px;">⤢</span>
+              <span onClick="{{ toggleRef }}" style="cursor:pointer;font-size:26px;line-height:1;">×</span>
+            </div>
+          </div>
+          <div style="flex:1;overflow:auto;padding:0 26px;" class="bb-scroll">
+            <div style="display:flex;justify-content:flex-end;gap:26px;padding:16px 0 4px;font-family:'Helvetica Neue',sans-serif;font-weight:700;font-size:15px;color:#1a56db;">
+              <span onClick="{{ expandAllRef }}" style="cursor:pointer;">Expand All</span>
+              <span onClick="{{ collapseAllRef }}" style="cursor:pointer;">Collapse All</span>
+            </div>
+            <sc-for list="{{ refSections }}" as="sec" hint-placeholder-count="6">
+              <div style="border-top:1px solid #e2e6ee;">
+                <div onClick="{{ sec.onToggle }}" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:20px 4px;">
+                  <span style="font-family:'Helvetica Neue',sans-serif;font-weight:700;font-size:19px;color:#1a56db;">{{ sec.title }}</span>
+                  <span style="font-size:26px;color:#1a56db;line-height:1;">{{ sec.sign }}</span>
+                </div>
+                <sc-if value="{{ sec.expanded }}">
+                  <div style="padding:6px 4px 26px;font-family:'Source Serif 4',Georgia,serif;">{{ sec.body }}</div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+
+    <!-- FOOTER -->
+    <div style="flex:0 0 auto;background:linear-gradient(#eef2fa,#e4ebf6);border-top:1px solid #d3dae8;padding:16px 30px;position:relative;z-index:30;display:flex;align-items:center;">
+      <div style="font-size:22px;font-weight:700;font-family:'Source Serif 4',Georgia,serif;">{{ studentName }}</div>
+      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);">
+        <div onClick="{{ toggleNav }}" style="cursor:pointer;background:#1f2430;color:#fff;font-weight:700;font-size:17px;padding:13px 26px;border-radius:999px;display:inline-flex;align-items:center;gap:10px;">
+          Question {{ qNum }} of {{ totalQ }}
+          <svg width="14" height="9" viewBox="0 0 14 9" style="transform:{{ navCaret }};"><path d="M1 2L7 8L13 2" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:14px;">
+        <sc-if value="{{ canBack }}">
+          <div onClick="{{ back }}" style="cursor:pointer;background:#0f1f66;color:#fff;font-weight:700;font-size:17px;padding:13px 34px;border-radius:999px;">Back</div>
+        </sc-if>
+        <div onClick="{{ next }}" style="cursor:pointer;background:#2a4aa0;color:#fff;font-weight:700;font-size:17px;padding:13px 40px;border-radius:999px;">{{ nextLabel }}</div>
+      </div>
+    </div>
+
+    <!-- NAV POPUP -->
+    <sc-if value="{{ navOpen }}">
+      <div style="position:absolute;left:50%;bottom:88px;transform:translateX(-50%);z-index:60;background:#fff;border:1px solid #e2e6ee;border-radius:16px;box-shadow:0 18px 50px rgba(15,31,102,.22);width:560px;padding:24px 30px 28px;font-family:'Helvetica Neue',sans-serif;">
+        <div style="text-align:center;font-size:22px;font-weight:700;position:relative;">Section I Questions
+          <span onClick="{{ toggleNav }}" style="position:absolute;right:0;top:0;cursor:pointer;font-size:24px;color:#374151;">×</span>
+        </div>
+        <div style="display:flex;justify-content:center;gap:30px;border-top:1px solid #e2e6ee;border-bottom:1px solid #e2e6ee;margin:16px 0;padding:12px 0;font-size:15px;font-weight:600;">
+          <span style="display:inline-flex;align-items:center;gap:7px;">⊙ Current</span>
+          <span style="display:inline-flex;align-items:center;gap:7px;"><span style="width:16px;height:16px;border:2px dashed #9aa0aa;border-radius:3px;display:inline-block;"></span> Unanswered</span>
+          <span style="display:inline-flex;align-items:center;gap:7px;"><svg width="12" height="15" viewBox="0 0 12 15"><path d="M1 1h10v13l-5-3.5L1 14z" fill="#d13b3b"/></svg> For Review</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:12px;">
+          <sc-for list="{{ navCells }}" as="cell" hint-placeholder-count="15">
+            <div onClick="{{ cell.onClick }}" style="{{ cell.style }}">{{ cell.n }}</div>
+          </sc-for>
+        </div>
+        <div style="text-align:center;margin-top:26px;">
+          <span onClick="{{ gotoReview }}" style="cursor:pointer;border:1.5px solid #1a56db;color:#1a56db;font-weight:700;padding:11px 26px;border-radius:999px;display:inline-block;">Go to Review Page</span>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- MORE MENU -->
+    <sc-if value="{{ moreOpen }}">
+      <div style="position:absolute;top:96px;right:24px;z-index:60;background:#fff;border-radius:12px;box-shadow:0 18px 50px rgba(15,31,102,.22);width:300px;padding:10px 0;font-family:'Helvetica Neue',sans-serif;">
+        <sc-for list="{{ moreItems }}" as="mi" hint-placeholder-count="6">
+          <div onClick="{{ mi.onClick }}" style="cursor:pointer;display:flex;align-items:center;gap:16px;padding:14px 22px;font-size:17px;" style-hover="background:#f4f6fb;">
+            <span style="width:22px;text-align:center;">{{ mi.icon }}</span>{{ mi.label }}
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- CALCULATOR WINDOW -->
+    <sc-if value="{{ calcOpen }}">
+      <div style="{{ calcWindowStyle }}">
+        <div style="display:flex;align-items:center;gap:16px;padding:12px 16px;border-bottom:1px solid #e2e6ee;flex:0 0 auto;">
+          <div onClick="{{ setCalcGraph }}" style="cursor:pointer;display:flex;align-items:center;gap:6px;font-weight:700;font-size:15px;border-bottom:{{ calcGraphUnderline }};padding-bottom:3px;">〜 Graphing</div>
+          <div onClick="{{ setCalcSci }}" style="cursor:pointer;display:flex;align-items:center;gap:6px;font-weight:600;font-size:15px;color:#374151;border-bottom:{{ calcSciUnderline }};padding-bottom:3px;">▦ Scientific</div>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:14px;">
+            <div onClick="{{ toggleCalcLarge }}" title="Toggle size" style="cursor:pointer;display:flex;align-items:center;justify-content:center;color:#374151;">{{ calcSizeIcon }}</div>
+            <div onClick="{{ toggleCalc }}" style="cursor:pointer;font-size:24px;color:#374151;line-height:1;">×</div>
+          </div>
+        </div>
+        <div style="flex:1;position:relative;overflow:hidden;background:#fff;">
+          <div id="desmos-mount" style="position:absolute;inset:0;"></div>
+        </div>
+        <sc-if value="{{ calcLarge }}">
+          <div onMouseDown="{{ startCalcResize }}" style="position:absolute;top:0;right:-3px;width:8px;height:100%;cursor:col-resize;z-index:2;"></div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- DIRECTIONS MODAL -->
+    <sc-if value="{{ directionsOpen }}">
+      <div style="position:absolute;top:74px;left:0;bottom:0;width:1080px;max-width:64%;z-index:50;background:#fff;box-shadow:6px 0 30px rgba(15,31,102,.18);display:flex;flex-direction:column;">
+        <div style="flex:1;overflow:auto;padding:38px 56px;font-family:'Source Serif 4',Georgia,serif;font-size:20px;line-height:1.55;color:#111;" class="bb-scroll">
+          <p style="font-weight:700;margin:0 0 28px;">The directions that follow are what you will see on exam day. This untimed preview is intended to represent the different question types and functionality you will encounter on exam day and has fewer multiple-choice questions than the exam.</p>
+          <p style="text-align:center;margin:0 0 22px;">Physics 1</p>
+          <p style="margin:0 0 22px;">Section I has 40 multiple-choice questions and lasts 1 hour and 20 minutes.</p>
+          <p style="margin:0 0 22px;">Each of the questions or incomplete statements is followed by four suggested answers or completions. Select the one that is best in each case.</p>
+          <div style="margin:0 0 22px;">{{ dirGravity }}</div>
+          <p style="margin:0 0 22px;">A calculator is allowed in this section, as well as a ruler and straightedge. You may use a handheld four-function, scientific, or graphing calculator, or the calculator available in this application.</p>
+          <p style="margin:0 0 40px;">Reference information, including lists of equations, can be used throughout the exam. A digital version is available in this application.</p>
+          <div style="text-align:right;">
+            <span onClick="{{ toggleDirections }}" style="cursor:pointer;background:#ffdb00;color:#0b1020;font-weight:700;padding:13px 42px;border-radius:999px;display:inline-block;font-family:'Helvetica Neue',sans-serif;">Close</span>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- HIGHLIGHTS TOAST -->
+    <sc-if value="{{ highlightsOpen }}">
+      <div style="position:absolute;top:100px;right:200px;z-index:60;background:#1f2430;color:#fff;padding:14px 20px;border-radius:10px;font-family:'Helvetica Neue',sans-serif;font-size:15px;max-width:300px;">
+        Select text in a passage to highlight it and add a note. <span onClick="{{ toggleHighlights }}" style="cursor:pointer;text-decoration:underline;">Dismiss</span>
+      </div>
+    </sc-if>
+
+  </div>
+</sc-if>
+
+<sc-if value="{{ isReview }}" hint-placeholder-val="{{ true }}">
+  <div style="position:absolute;inset:0;display:flex;flex-direction:column;">
+    <div style="flex:0 0 auto;background:linear-gradient(#eef2fa,#e4ebf6);padding:14px 26px;border-bottom:1px solid #d3dae8;">
+      <div style="font-size:24px;font-weight:700;">Section I</div>
+    </div>
+    <div style="flex:0 0 auto;background:#0f1f66;color:#fff;text-align:center;font-weight:700;font-size:14px;letter-spacing:1px;padding:11px;border-radius:0 0 12px 12px;">THIS IS A TEST PREVIEW</div>
+    <div style="flex:1;min-height:0;overflow:auto;padding:40px 32px 60px;" class="bb-scroll">
+      <div style="max-width:720px;margin:0 auto;">
+        <h1 style="text-align:center;font-family:'Source Serif 4',Georgia,serif;font-size:34px;font-weight:700;margin:0 0 4px;">Check Your Work</h1>
+        <p style="text-align:center;font-size:16px;color:#4b5563;margin:0 0 28px;font-family:'Helvetica Neue',sans-serif;">On test day, you won't be able to move on to the next section until time expires.<br>For these practice questions, you can review your answers before continuing.</p>
+        <div style="display:flex;justify-content:center;gap:30px;border-top:1px solid #e2e6ee;border-bottom:1px solid #e2e6ee;margin:0 0 26px;padding:12px 0;font-size:15px;font-weight:600;font-family:'Helvetica Neue',sans-serif;">
+          <span style="display:inline-flex;align-items:center;gap:7px;">&#9737; Current</span>
+          <span style="display:inline-flex;align-items:center;gap:7px;"><span style="width:16px;height:16px;border:2px dashed #9aa0aa;border-radius:3px;display:inline-block;"></span> Unanswered</span>
+          <span style="display:inline-flex;align-items:center;gap:7px;"><svg width="12" height="15" viewBox="0 0 12 15"><path d="M1 1h10v13l-5-3.5L1 14z" fill="#d13b3b"/></svg> For Review</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:14px;font-family:'Helvetica Neue',sans-serif;">
+          <sc-for list="{{ navCells }}" as="cell" hint-placeholder-count="15">
+            <div onClick="{{ cell.onClick }}" style="{{ cell.style }}">{{ cell.n }}</div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div style="flex:0 0 auto;background:linear-gradient(#eef2fa,#e4ebf6);border-top:1px solid #d3dae8;padding:16px 30px;display:flex;align-items:center;">
+      <div style="font-size:22px;font-weight:700;font-family:'Source Serif 4',Georgia,serif;">{{ studentName }}</div>
+      <div style="margin-left:auto;display:flex;gap:14px;">
+        <div onClick="{{ reviewBack }}" style="cursor:pointer;background:#0f1f66;color:#fff;font-weight:700;font-size:17px;padding:13px 34px;border-radius:999px;">Back</div>
+        <div onClick="{{ reviewNext }}" style="cursor:pointer;background:#2a4aa0;color:#fff;font-weight:700;font-size:17px;padding:13px 40px;border-radius:999px;">Next</div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ isFRQ }}" hint-placeholder-val="{{ true }}">
+  <div style="position:absolute;inset:0;display:flex;flex-direction:column;">
+    <div style="flex:0 0 auto;background:linear-gradient(#eef2fa,#e4ebf6);padding:12px 26px 10px;border-bottom:1px solid #d3dae8;position:relative;">
+      <div style="position:absolute;top:8px;right:26px;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;">{{ battPct }}% <svg width="30" height="15" viewBox="0 0 30 15"><rect x="1" y="1" width="24" height="13" rx="2.5" fill="none" stroke="#0b1020" stroke-width="1.4"/><rect x="3" y="3" width="20" height="9" rx="1" fill="#0b1020"/><rect x="26" y="4.5" width="2.6" height="6" rx="1" fill="#0b1020"/></svg></div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+        <div style="min-width:230px;"><div style="font-size:24px;font-weight:700;">Section II</div><div style="font-size:17px;font-weight:600;margin-top:4px;">Free Response</div></div>
+        <div style="text-align:center;padding-top:2px;">
+          <sc-if value="{{ showTime }}" hint-placeholder-val="{{ true }}"><div style="font-size:30px;font-weight:700;line-height:1;">{{ timeStr }}</div></sc-if>
+          <sc-if value="{{ timerHidden }}"><div style="font-size:30px;font-weight:700;line-height:1;color:#8a8f98;">– : – –</div></sc-if>
+          <div onClick="{{ toggleTimer }}" style="cursor:pointer;margin-top:6px;border:1.5px solid #0b1020;border-radius:999px;padding:3px 20px;font-size:14px;font-weight:600;display:inline-block;">{{ timerBtn }}</div>
+        </div>
+        <div style="display:flex;gap:26px;padding-right:96px;padding-top:2px;">
+          <div onClick="{{ toggleCalc }}" style="cursor:pointer;text-align:center;width:66px;"><svg width="24" height="26" viewBox="0 0 24 26"><rect x="3" y="1.5" width="18" height="23" rx="3" fill="none" stroke="#0b1020" stroke-width="1.6"/><rect x="6" y="4.5" width="12" height="5" rx="1" fill="none" stroke="#0b1020" stroke-width="1.3"/><circle cx="8" cy="13.5" r="1.3" fill="#0b1020"/><circle cx="12" cy="13.5" r="1.3" fill="#0b1020"/><circle cx="16" cy="13.5" r="1.3" fill="#0b1020"/><circle cx="8" cy="18" r="1.3" fill="#0b1020"/><circle cx="12" cy="18" r="1.3" fill="#0b1020"/><circle cx="16" cy="18" r="1.3" fill="#0b1020"/></svg><div style="font-size:12.5px;font-weight:600;margin-top:2px;">Calculator</div></div>
+          <div onClick="{{ toggleRef }}" style="cursor:pointer;text-align:center;width:70px;"><div style="height:26px;display:flex;align-items:center;justify-content:center;"><span style="font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-weight:700;font-size:24px;">X<sup style="font-size:14px;">2</sup></span></div><div style="font-size:12.5px;font-weight:600;margin-top:2px;">Reference</div></div>
+          <div onClick="{{ toggleMore }}" style="cursor:pointer;text-align:center;width:52px;"><div style="height:26px;display:flex;align-items:center;justify-content:center;"><svg width="6" height="22" viewBox="0 0 6 22"><circle cx="3" cy="3" r="2.4" fill="#0b1020"/><circle cx="3" cy="11" r="2.4" fill="#0b1020"/><circle cx="3" cy="19" r="2.4" fill="#0b1020"/></svg></div><div style="font-size:12.5px;font-weight:600;margin-top:2px;">More</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:0 0 auto;background:#0f1f66;color:#fff;text-align:center;font-weight:700;font-size:14px;letter-spacing:1px;padding:11px;border-radius:0 0 12px 12px;">THIS IS A TEST PREVIEW</div>
+    <div style="flex:1;min-height:0;display:flex;">
+      <div style="flex:0 0 auto;width:{{ leftBasis }};overflow:auto;padding:30px 40px;font-family:'Source Serif 4',Georgia,serif;" class="bb-scroll">
+        <div style="display:flex;align-items:center;gap:12px;border-bottom:2px dashed #b6bdcb;padding-bottom:10px;margin-bottom:20px;"><div style="background:#1f2430;color:#fff;font-family:'Helvetica Neue',sans-serif;font-weight:700;font-size:17px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:4px;">{{ frqNum }}</div><span style="font-family:'Helvetica Neue',sans-serif;font-size:16px;font-weight:600;">{{ frqLabel }}</span></div>
+        <div style="font-size:21px;line-height:1.5;color:#111;">
+          <sc-for list="{{ frqStimEls }}" as="p" hint-placeholder-count="1"><p style="margin:0 0 16px;text-wrap:pretty;">{{ p }}</p></sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;margin-top:8px;font-size:20px;line-height:1.5;color:#111;">
+          <sc-for list="{{ frqSubEls }}" as="p" hint-placeholder-count="3"><div style="text-wrap:pretty;">{{ p }}</div></sc-for>
+        </div>
+      </div>
+      <div style="flex:0 0 auto;width:2px;background:#3a3f4a;"></div>
+      <div style="flex:1;overflow:auto;padding:26px 40px;display:flex;flex-direction:column;font-family:'Helvetica Neue',sans-serif;">
+        <div style="font-size:18px;font-weight:700;margin-bottom:10px;font-family:'Source Serif 4',Georgia,serif;">Your Response</div>
+        <div style="display:flex;gap:4px;border:1px solid #cbd2df;border-bottom:none;border-radius:8px 8px 0 0;background:#f0f2f6;padding:6px 10px;">
+          <span style="width:30px;height:26px;display:flex;align-items:center;justify-content:center;font-weight:800;border-radius:4px;">B</span>
+          <span style="width:30px;height:26px;display:flex;align-items:center;justify-content:center;font-style:italic;font-weight:700;border-radius:4px;">I</span>
+          <span style="width:30px;height:26px;display:flex;align-items:center;justify-content:center;text-decoration:underline;font-weight:700;border-radius:4px;">U</span>
+          <span style="width:30px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:4px;">&#8226;&#8801;</span>
+          <span style="width:30px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:4px;">x&sup2;</span>
+        </div>
+        <textarea value="{{ frqAns }}" onChange="{{ onFrqInput }}" placeholder="Type your response here..." style="flex:1;min-height:260px;resize:none;border:1px solid #cbd2df;border-radius:0 0 8px 8px;padding:16px;font-size:17px;line-height:1.5;font-family:'Source Serif 4',Georgia,serif;outline:none;"></textarea>
+      </div>
+    </div>
+    <div style="flex:0 0 auto;background:linear-gradient(#eef2fa,#e4ebf6);border-top:1px solid #d3dae8;padding:16px 30px;display:flex;align-items:center;position:relative;">
+      <div style="font-size:22px;font-weight:700;font-family:'Source Serif 4',Georgia,serif;">{{ studentName }}</div>
+      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);"><div style="background:#1f2430;color:#fff;font-weight:700;font-size:17px;padding:13px 26px;border-radius:999px;">Question {{ frqNum }} of {{ frqTotal }}</div></div>
+      <div style="margin-left:auto;display:flex;gap:14px;">
+        <sc-if value="{{ frqCanBack }}"><div onClick="{{ frqBack }}" style="cursor:pointer;background:#0f1f66;color:#fff;font-weight:700;font-size:17px;padding:13px 34px;border-radius:999px;">Back</div></sc-if>
+        <div onClick="{{ frqNext }}" style="cursor:pointer;background:#2a4aa0;color:#fff;font-weight:700;font-size:17px;padding:13px 40px;border-radius:999px;">{{ frqNextLabel }}</div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ isDone }}" hint-placeholder-val="{{ true }}">
+  <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f4f6fb;text-align:center;padding:40px;">
+    <div style="width:74px;height:74px;border-radius:50%;background:#0f1f66;color:#fff;display:flex;align-items:center;justify-content:center;font-size:38px;">&#10003;</div>
+    <h1 style="font-family:'Source Serif 4',Georgia,serif;font-size:40px;font-weight:700;margin:24px 0 8px;">You're all done!</h1>
+    <p style="font-family:'Source Serif 4',Georgia,serif;font-size:20px;color:#4b5563;max-width:560px;margin:0 0 32px;">You've completed both sections of the AP Physics 1 test preview. On test day, your responses would be submitted here.</p>
+    <div onClick="{{ returnHome }}" style="cursor:pointer;background:#ffdb00;color:#0b1020;font-weight:700;font-size:18px;padding:14px 40px;border-radius:999px;">Return to Home</div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ isBreak }}" hint-placeholder-val="{{ true }}">
+  <div style="position:absolute;inset:0;background:#1c1c1c;color:#fff;padding:60px;overflow:auto;" class="bb-scroll">
+    <div style="position:absolute;top:26px;right:34px;background:#3a3a3a;border-radius:8px;padding:8px 14px;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;">{{ battPct }}% <svg width="26" height="13" viewBox="0 0 26 13"><rect x="1" y="1" width="20" height="11" rx="2" fill="none" stroke="#fff" stroke-width="1.3"/><rect x="3" y="3" width="16" height="7" rx="1" fill="#fff"/><rect x="22" y="4" width="2.2" height="5" rx="1" fill="#fff"/></svg></div>
+    <div style="max-width:1200px;margin:40px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start;">
+      <div style="display:flex;flex-direction:column;align-items:center;padding-top:80px;">
+        <div style="border:1px solid #555;border-radius:14px;padding:34px 70px;text-align:center;">
+          <div style="font-size:22px;font-weight:700;">Remaining Break Time:</div>
+          <div style="font-size:88px;font-weight:800;line-height:1.1;margin-top:8px;">{{ breakStr }}</div>
+        </div>
+        <div onClick="{{ resumeBreak }}" style="cursor:pointer;margin-top:34px;background:#ffdb00;color:#0b1020;font-weight:700;font-size:19px;padding:15px 40px;border-radius:999px;">Resume Testing</div>
+      </div>
+      <div style="font-family:'Helvetica Neue',sans-serif;">
+        <h1 style="font-size:38px;font-weight:800;margin:0;">Test Preview Break</h1>
+        <p style="font-size:19px;line-height:1.5;color:#e4e4e4;margin:20px 0 0;max-width:520px;">You can resume this practice test as soon as you're ready to move on. On test day, you'll wait until the clock counts down. Read below to see how breaks work on test day.</p>
+        <div style="border-top:1px solid #555;margin:32px 0;"></div>
+        <h2 style="font-size:32px;font-weight:800;margin:0;line-height:1.2;">Take a Break: Do Not Close Your Device</h2>
+        <p style="font-size:19px;color:#e4e4e4;margin:22px 0;">Place your exam booklet on your desk now.</p>
+        <p style="font-size:18px;font-weight:700;margin:0 0 14px;">Follow these rules during the break:</p>
+        <ol style="font-size:18px;line-height:1.5;color:#e4e4e4;padding-left:22px;margin:0;display:flex;flex-direction:column;gap:14px;">
+          <li>Do not disturb students who are still testing.</li>
+          <li>Do not exit the app or close your laptop.</li>
+          <li>Do not access phones, smartwatches, textbooks, notes, or the internet.</li>
+          <li>Do not eat or drink in the test room.</li>
+          <li>Do not speak in the test room; outside the test room, do not discuss the exam with anyone.</li>
+        </ol>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:34px;left:40px;font-size:22px;font-weight:700;font-family:'Source Serif 4',Georgia,serif;">{{ studentName }}</div>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;studentName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Conan Yi&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;examTitle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;AP Physics 1&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;sectionMinutes&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:80,&quot;min&quot;:1,&quot;max&quot;:180,&quot;unit&quot;:&quot;min&quot;,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  state = {
+    view:'home', qIndex:0, answers:{}, elim:{}, marked:{}, elimMode:true,
+    timeLeft:80*60, timerRunning:true, timerHidden:false,
+    directionsOpen:false, calcOpen:false, refOpen:false, moreOpen:false,
+    navOpen:false, highlightsOpen:false, calcTab:'graphing',
+    refExpanded:{0:true}, figScale:1, breakLeft:0, katexReady:false, splitPct:50,
+    frqIndex:0, frqAnswers:{}, calcLarge:false, calcWidth:640,
+  };
+
+  questions = [
+    { stim:["Blocks A and B, of masses \\(m_\\mathrm{A}\\) and \\(m_\\mathrm{B}\\), respectively, are at rest on a horizontal surface with negligible friction. Block A is attached to the table. Block C of mass \\(m_\\mathrm{C}\\) is suspended by a string that is tied to Block B and passes over a pulley as shown. The blocks all remain at rest."],
+      figure:"pulley",
+      prompt:"Which of the following gives the magnitude of the force exerted by Block A on Block B?",
+      choices:[{k:"m",t:"m_\\mathrm{B}\\,g"},{k:"m",t:"m_\\mathrm{C}\\,g"},{k:"m",t:"\\dfrac{m_\\mathrm{A}m_\\mathrm{C}g}{m_\\mathrm{A}+m_\\mathrm{B}}"},{k:"m",t:"\\dfrac{m_\\mathrm{B}m_\\mathrm{C}g}{m_\\mathrm{A}+m_\\mathrm{B}}"}], correct:1 },
+    { stim:["An object is subject to multiple forces that result in the object having horizontal and vertical velocity components \\(v_x\\) and \\(v_y\\), respectively, as a function of time, as shown."],
+      figure:"vt",
+      prompt:"Which of the following diagrams could represent the forces exerted on the object?",
+      choices:[{k:"v",v:[[0,1],[0,-1]]},{k:"v",v:[[1,1],[0,-1]]},{k:"v",v:[[1,1],[-1,0],[0,-1]]},{k:"v",v:[[0,-1],[1,0]]}], correct:0 },
+    { stim:["A car of mass \\(m\\) travels around a flat circular track of radius \\(r\\) at a constant speed \\(v\\). The track exerts a horizontal frictional force on the tires."],
+      prompt:"Which expression gives the magnitude of the net force on the car?",
+      choices:[{k:"m",t:"\\dfrac{mv^2}{r}"},{k:"m",t:"mv^2 r"},{k:"m",t:"\\dfrac{mv}{r^2}"},{k:"m",t:"0"}], correct:0 },
+    { prompt:"A spring with force constant \\(k\\) is compressed a distance \\(\\Delta x\\) from its natural length. The elastic potential energy stored in the spring is",
+      choices:[{k:"m",t:"k\\,\\Delta x"},{k:"m",t:"\\tfrac{1}{2}k\\,\\Delta x"},{k:"m",t:"\\tfrac{1}{2}k(\\Delta x)^2"},{k:"m",t:"k(\\Delta x)^2"}], correct:2 },
+    { prompt:"Two carts on a frictionless track have momenta \\(p_1=+4\\ \\mathrm{kg\\cdot m/s}\\) and \\(p_2=-1\\ \\mathrm{kg\\cdot m/s}\\). After a perfectly inelastic collision, the total momentum of the system is",
+      choices:[{k:"m",t:"+5\\ \\mathrm{kg\\cdot m/s}"},{k:"m",t:"+3\\ \\mathrm{kg\\cdot m/s}"},{k:"m",t:"-3\\ \\mathrm{kg\\cdot m/s}"},{k:"m",t:"0"}], correct:1 },
+    { prompt:"A projectile is launched from level ground with speed \\(v_0\\) at an angle \\(\\theta\\) above the horizontal. Ignoring air resistance, the time to reach maximum height is",
+      choices:[{k:"m",t:"\\dfrac{v_0\\sin\\theta}{g}"},{k:"m",t:"\\dfrac{v_0\\cos\\theta}{g}"},{k:"m",t:"\\dfrac{2v_0\\sin\\theta}{g}"},{k:"m",t:"\\dfrac{v_0^2\\sin 2\\theta}{g}"}], correct:0 },
+    { prompt:"A uniform rod of length \\(L\\) is pivoted at one end. A force \\(F\\) is applied perpendicular to the rod at its far end. The magnitude of the torque about the pivot is",
+      choices:[{k:"m",t:"FL"},{k:"m",t:"\\dfrac{FL}{2}"},{k:"m",t:"\\dfrac{F}{L}"},{k:"m",t:"F L^2"}], correct:0 },
+    { prompt:"A block of mass \\(m\\) attached to a spring of force constant \\(k\\) oscillates in simple harmonic motion. The period of oscillation is",
+      choices:[{k:"m",t:"2\\pi\\sqrt{\\dfrac{m}{k}}"},{k:"m",t:"2\\pi\\sqrt{\\dfrac{k}{m}}"},{k:"m",t:"\\dfrac{1}{2\\pi}\\sqrt{\\dfrac{m}{k}}"},{k:"m",t:"2\\pi\\,mk"}], correct:0 },
+    { prompt:"An object starts from rest and accelerates uniformly at \\(a\\) for a time \\(t\\). The distance traveled is",
+      choices:[{k:"m",t:"\\tfrac{1}{2}a t^2"},{k:"m",t:"a t^2"},{k:"m",t:"a t"},{k:"m",t:"\\tfrac{1}{2}a t"}], correct:0 },
+    { prompt:"A \\(2\\ \\mathrm{kg}\\) block slides across a surface with coefficient of kinetic friction \\(\\mu_k=0.30\\). Using \\(g=10\\ \\mathrm{m/s^2}\\), the magnitude of the friction force is",
+      choices:[{k:"m",t:"6\\ \\mathrm{N}"},{k:"m",t:"0.6\\ \\mathrm{N}"},{k:"m",t:"20\\ \\mathrm{N}"},{k:"m",t:"3\\ \\mathrm{N}"}], correct:0 },
+    { prompt:"Two point masses \\(m_1\\) and \\(m_2\\) are separated by a distance \\(r\\). The magnitude of the gravitational force between them is",
+      choices:[{k:"m",t:"G\\dfrac{m_1 m_2}{r^2}"},{k:"m",t:"G\\dfrac{m_1 m_2}{r}"},{k:"m",t:"G\\dfrac{m_1+m_2}{r^2}"},{k:"m",t:"G\\,m_1 m_2 r^2"}], correct:0 },
+    { prompt:"A ball of mass \\(m\\) moving at speed \\(v\\) strikes a wall and bounces straight back at the same speed. The magnitude of the change in momentum of the ball is",
+      choices:[{k:"m",t:"2mv"},{k:"m",t:"mv"},{k:"m",t:"0"},{k:"m",t:"\\tfrac{1}{2}mv"}], correct:0 },
+    { prompt:"A disk of rotational inertia \\(I\\) rotates with angular speed \\(\\omega\\). Its rotational kinetic energy is",
+      choices:[{k:"m",t:"\\tfrac{1}{2}I\\omega^2"},{k:"m",t:"I\\omega"},{k:"m",t:"\\tfrac{1}{2}I\\omega"},{k:"m",t:"I\\omega^2"}], correct:0 },
+    { prompt:"A fluid of density \\(\\rho\\) fills a container to depth \\(h\\). The gauge pressure at the bottom due to the fluid is",
+      choices:[{k:"m",t:"\\rho g h"},{k:"m",t:"\\dfrac{\\rho g}{h}"},{k:"m",t:"\\rho g h^2"},{k:"m",t:"\\dfrac{\\rho h}{g}"}], correct:0 },
+    { prompt:"A \\(1\\ \\mathrm{kg}\\) ball is released from rest at height \\(h\\). Ignoring air resistance and using energy conservation, its speed just before hitting the ground is",
+      choices:[{k:"m",t:"\\sqrt{2gh}"},{k:"m",t:"2gh"},{k:"m",t:"gh"},{k:"m",t:"\\sqrt{gh}"}], correct:0 },
+  ];
+
+  frqs = [
+    { label:"Question 1", parts:["A block of mass \\(m = 2\\ \\mathrm{kg}\\) is released from rest at the top of a frictionless incline of height \\(h = 1.8\\ \\mathrm{m}\\) that makes an angle \\(\\theta = 30^\\circ\\) with the horizontal. At the bottom, it slides onto a rough horizontal surface with coefficient of kinetic friction \\(\\mu_k = 0.25\\)."],
+      subs:["(a) Derive an expression for the speed of the block at the bottom of the incline in terms of \\(g\\) and \\(h\\), and calculate its value using \\(g = 10\\ \\mathrm{m/s^2}\\).","(b) Determine the distance \\(d\\) the block travels along the rough surface before coming to rest.","(c) On the axes provided, sketch the block's speed \\(v\\) as a function of time \\(t\\) from release until it stops. Justify the shape of each segment."] },
+    { label:"Question 2", parts:["A uniform disk of rotational inertia \\(I = \\tfrac{1}{2}MR^2\\), with \\(M = 4\\ \\mathrm{kg}\\) and \\(R = 0.3\\ \\mathrm{m}\\), is free to rotate about a fixed axle. A string wrapped around the rim is pulled with a constant force \\(F = 6\\ \\mathrm{N}\\)."],
+      subs:["(a) Calculate the magnitude of the torque \\(\\tau\\) exerted on the disk about its axle.","(b) Determine the angular acceleration \\(\\alpha\\) of the disk.","(c) The string is pulled for \\(t = 2\\ \\mathrm{s}\\). Find the angular speed \\(\\omega\\) and the rotational kinetic energy \\(K\\) of the disk at that instant."] },
+    { label:"Question 3", parts:["Two carts move toward each other on a frictionless track. Cart X has mass \\(m_\\mathrm{X} = 1.5\\ \\mathrm{kg}\\) moving at \\(v_\\mathrm{X} = +3\\ \\mathrm{m/s}\\); cart Y has mass \\(m_\\mathrm{Y} = 0.5\\ \\mathrm{kg}\\) moving at \\(v_\\mathrm{Y} = -4\\ \\mathrm{m/s}\\). They collide and stick together."],
+      subs:["(a) Determine the velocity of the combined carts immediately after the collision.","(b) Calculate the kinetic energy lost during the collision.","(c) State whether momentum is conserved and justify your answer with a physical argument."] },
+  ];
+
+  refTitles = [
+    { title:"Kinematics, Forces, Energy and Momentum", eqs:["v_x=v_{x0}+a_x t","x=x_0+v_{x0}t+\\tfrac{1}{2}a_x t^2","v_x^2=v_{x0}^2+2a_x(x-x_0)","\\vec{a}_{\\mathrm{sys}}=\\dfrac{\\sum\\vec F}{m_{\\mathrm{sys}}}=\\dfrac{\\vec F_{\\mathrm{net}}}{m_{\\mathrm{sys}}}","\\left|\\vec F_g\\right|=G\\dfrac{m_1 m_2}{r^2}","\\left|\\vec F_f\\right|\\le\\mu\\left|\\vec F_n\\right|","\\vec F_s=-k\\Delta\\vec x","U_s=\\tfrac{1}{2}k(\\Delta x)^2","K=\\tfrac{1}{2}mv^2","\\vec p=m\\vec v"] },
+    { title:"Rotation, Simple Harmonic Motion, and Fluids", eqs:["\\tau=rF\\sin\\theta","L=I\\omega","T=2\\pi\\sqrt{\\dfrac{m}{k}}","P=P_0+\\rho g h"] },
+    { title:"Constants and Conversion Factors", eqs:["g=10\\ \\mathrm{m/s^2}","G=6.67\\times10^{-11}\\ \\mathrm{N\\cdot m^2/kg^2}"] },
+    { title:"Unit Symbols", eqs:["\\text{meter (m), kilogram (kg), second (s), newton (N), joule (J)}"] },
+    { title:"Geometry and Trigonometry", eqs:["A_{\\text{circle}}=\\pi r^2","C=2\\pi r","V_{\\text{cyl}}=\\pi r^2 \\ell"] },
+    { title:"Values of Trigonometric Functions for Common Angles", eqs:["\\sin 30^\\circ=\\tfrac{1}{2}","\\cos 30^\\circ=\\tfrac{\\sqrt3}{2}","\\tan 45^\\circ=1"] },
+    { title:"Prefixes", eqs:["\\text{kilo (k)}=10^{3},\\quad \\text{centi (c)}=10^{-2},\\quad \\text{milli (m)}=10^{-3}"] },
+    { title:"Exam Conventions", eqs:["\\text{Directions of vectors are given relative to the +x and +y axes.}"] },
+  ];
+
+  componentDidMount(){
+    this._timer=setInterval(()=>{
+      this.setState(s=>{
+        const ns={};
+        if(s.view==='exam'&&s.timerRunning&&s.timeLeft>0) ns.timeLeft=s.timeLeft-1;
+        if(s.view==='frq'&&s.timerRunning&&s.timeLeft>0) ns.timeLeft=s.timeLeft-1;
+        if(s.view==='break'){ if(s.breakLeft>1){ ns.breakLeft=s.breakLeft-1; } else { ns.breakLeft=0; ns.view='frq'; ns.frqIndex=0; ns.timeLeft=90*60; ns.timerRunning=true; } }
+        return ns;
+      });
+    },1000);
+    this._checkKatex();
+    this._onMove=(e)=>{
+      if(this._dragging){ e.preventDefault(); const pct=Math.min(72,Math.max(28,(e.clientX/window.innerWidth)*100)); this.setState({splitPct:pct}); }
+      if(this._calcResizing){ e.preventDefault(); const w=Math.min(window.innerWidth-40,Math.max(420,e.clientX)); this.setState({calcWidth:w}); }
+    };
+    this._onUp=()=>{ if(this._dragging){this._dragging=false; document.body.style.userSelect='';} if(this._calcResizing){this._calcResizing=false; document.body.style.userSelect='';} };
+    window.addEventListener('mousemove',this._onMove);
+    window.addEventListener('mouseup',this._onUp);
+  }
+  componentDidUpdate(prevProps,prevState){ this._syncCalc(); }
+  _syncCalc(){
+    const want=this.state.calcOpen?this.state.calcTab:null;
+    if(want===this._mountedTab && (want===null || this._calc)) return;
+    clearTimeout(this._calcTimer);
+    this._calcTimer=setTimeout(()=>{
+      const w=this.state.calcOpen?this.state.calcTab:null;
+      if(w===null){ this._destroyCalc(); return; }
+      if(this._mountedTab===w && this._calc) return;
+      this._destroyCalc();
+      const el=document.getElementById('desmos-mount');
+      if(!el||!window.Desmos) return;
+      try{
+        this._calc = w==='scientific' ? window.Desmos.ScientificCalculator(el) : window.Desmos.GraphingCalculator(el,{expressionsCollapsed:false});
+        this._mountedTab=w;
+      }catch(e){ this._mountedTab=null; }
+    },30);
+  }
+  _destroyCalc(){ if(this._calc){ try{this._calc.destroy();}catch(e){} this._calc=null; } this._mountedTab=null; }  _checkKatex(){ if(window.katex){ if(!this.state.katexReady) this.setState({katexReady:true}); return;} setTimeout(()=>this._checkKatex(),120); }
+  componentWillUnmount(){ clearInterval(this._timer); this._destroyCalc(); window.removeEventListener('mousemove',this._onMove); window.removeEventListener('mouseup',this._onUp); }
+
+  esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  mathHtml(str){
+    if(!window.katex) return this.esc(str);
+    const re=/\\\[([\s\S]+?)\\\]|\\\(([\s\S]+?)\\\)/g;
+    let out='',last=0,m;
+    while((m=re.exec(str))){
+      out+=this.esc(str.slice(last,m.index));
+      const display=m[1]!==undefined; const tex=display?m[1]:m[2];
+      try{ out+=window.katex.renderToString(tex,{displayMode:display,throwOnError:false}); }catch(e){ out+=this.esc(tex); }
+      last=re.lastIndex;
+    }
+    out+=this.esc(str.slice(last));
+    return out;
+  }
+  texEl(tex,display,style){ let html; try{ html=window.katex?window.katex.renderToString(tex,{displayMode:!!display,throwOnError:false}):this.esc(tex);}catch(e){html=this.esc(tex);} return React.createElement('span',{style:style||{},dangerouslySetInnerHTML:{__html:html}}); }
+  mixEl(str,style){ return React.createElement('span',{style:style||{},dangerouslySetInnerHTML:{__html:this.mathHtml(str)}}); }
+
+  fmt(t){ t=Math.max(0,t|0); const h=(t/3600)|0,m=((t%3600)/60)|0,s=t%60; const p=n=>String(n).padStart(2,'0'); return h>0? h+':'+p(m)+':'+p(s):m+':'+p(s); }
+
+  // vector force diagram
+  vecEl(vectors,uid){
+    const R=React.createElement, ns=[];
+    const mid='ah'+uid;
+    ns.push(R('defs',{key:'d'},R('marker',{id:mid,markerWidth:7,markerHeight:7,refX:5.5,refY:3,orient:'auto'},R('path',{d:'M0,0 L6,3 L0,6 z',fill:'#111'}))));
+    for(let i=0;i<=6;i++){ ns.push(R('line',{key:'h'+i,x1:18,y1:16+i*11,x2:84,y2:16+i*11,stroke:'#444',strokeWidth:.5})); ns.push(R('line',{key:'v'+i,x1:18+i*11,y1:16,x2:18+i*11,y2:82,stroke:'#444',strokeWidth:.5})); }
+    const cx=51,cy=49;
+    (vectors||[]).forEach((v,i)=>{ ns.push(R('line',{key:'a'+i,x1:cx,y1:cy,x2:cx+v[0]*26,y2:cy-v[1]*26,stroke:'#111',strokeWidth:1.7,markerEnd:'url(#'+mid+')'})); });
+    ns.push(R('circle',{key:'dot',cx,cy,r:2.6,fill:'#111'}));
+    ns.push(R('line',{key:'ax',x1:100,y1:70,x2:100,y2:34,stroke:'#111',strokeWidth:1.5,markerEnd:'url(#'+mid+')'}));
+    ns.push(R('line',{key:'ay',x1:100,y1:70,x2:126,y2:70,stroke:'#111',strokeWidth:1.5,markerEnd:'url(#'+mid+')'}));
+    ns.push(R('text',{key:'ty',x:94,y:30,fontSize:9,fontStyle:'italic',fontFamily:'serif'},'+y'));
+    ns.push(R('text',{key:'tx',x:128,y:73,fontSize:9,fontStyle:'italic',fontFamily:'serif'},'+x'));
+    return R('svg',{width:190,height:120,viewBox:'0 0 135 92'},ns);
+  }
+
+  pulleyEl(){
+    const R=React.createElement, e=[];
+    // table: wall + top
+    e.push(R('line',{key:'w',x1:70,y1:30,x2:70,y2:230,stroke:'#111',strokeWidth:2}));
+    e.push(R('line',{key:'t',x1:70,y1:150,x2:470,y2:150,stroke:'#111',strokeWidth:2}));
+    // pulley
+    e.push(R('circle',{key:'p',cx:70,cy:118,r:16,fill:'none',stroke:'#111',strokeWidth:2}));
+    e.push(R('circle',{key:'pc',cx:70,cy:118,r:2.5,fill:'#111'}));
+    // block B
+    e.push(R('rect',{key:'B',x:200,y:96,width:70,height:54,fill:'none',stroke:'#111',strokeWidth:2}));
+    e.push(R('text',{key:'Bt',x:230,y:128,fontSize:22,fontFamily:'serif',textAnchor:'middle'},'B'));
+    // block A
+    e.push(R('rect',{key:'A',x:110,y:126,width:80,height:24,fill:'none',stroke:'#111',strokeWidth:2}));
+    e.push(R('text',{key:'At',x:150,y:118,fontSize:20,fontFamily:'serif',textAnchor:'middle'},'A'));
+    // strings
+    e.push(R('line',{key:'s1',x1:54,y1:118,x2:54,y2:210,stroke:'#111',strokeWidth:1.4}));
+    e.push(R('line',{key:'s2',x1:86,y1:112,x2:200,y2:112,stroke:'#111',strokeWidth:1.4}));
+    // block C
+    e.push(R('rect',{key:'C',x:34,y:210,width:40,height:40,fill:'none',stroke:'#111',strokeWidth:2}));
+    e.push(R('text',{key:'Ct',x:54,y:236,fontSize:20,fontFamily:'serif',textAnchor:'middle'},'C'));
+    // attachment marks
+    e.push(R('rect',{key:'m1',x:122,y:138,width:8,height:12,fill:'#9aa0aa'}));
+    e.push(R('rect',{key:'m2',x:170,y:138,width:8,height:12,fill:'#9aa0aa'}));
+    e.push(R('path',{key:'q1',d:'M126 168 q-6 -8 0 -16',fill:'none',stroke:'#111',strokeWidth:1.2}));
+    e.push(R('path',{key:'q2',d:'M174 168 q6 -8 0 -16',fill:'none',stroke:'#111',strokeWidth:1.2}));
+    e.push(R('text',{key:'att',x:150,y:190,fontSize:18,fontFamily:'serif',textAnchor:'middle'},'Attachment'));
+    return R('svg',{width:480,height:262,viewBox:'0 0 480 262'},e);
+  }
+  vtEl(){
+    const R=React.createElement, e=[];
+    // left plot vx
+    e.push(R('line',{key:'lx',x1:30,y1:30,x2:30,y2:150,stroke:'#111',strokeWidth:2,markerEnd:'url(#vtah)'}));
+    e.push(R('line',{key:'ly',x1:30,y1:150,x2:200,y2:150,stroke:'#111',strokeWidth:2,markerEnd:'url(#vtah)'}));
+    e.push(R('line',{key:'lc',x1:45,y1:85,x2:170,y2:85,stroke:'#111',strokeWidth:2}));
+    e.push(R('text',{key:'lvx',x:12,y:44,fontSize:18,fontStyle:'italic',fontFamily:'serif'},'v'));
+    e.push(R('text',{key:'lvx2',x:23,y:49,fontSize:12,fontStyle:'italic',fontFamily:'serif'},'x'));
+    e.push(R('text',{key:'lt',x:150,y:172,fontSize:16,fontFamily:'serif'},'Time'));
+    // right plot vy
+    e.push(R('line',{key:'rx',x1:250,y1:30,x2:250,y2:150,stroke:'#111',strokeWidth:2,markerEnd:'url(#vtah)'}));
+    e.push(R('line',{key:'ry',x1:250,y1:150,x2:420,y2:150,stroke:'#111',strokeWidth:2,markerEnd:'url(#vtah)'}));
+    e.push(R('line',{key:'rc',x1:262,y1:48,x2:400,y2:150,stroke:'#111',strokeWidth:2}));
+    e.push(R('text',{key:'rvy',x:232,y:44,fontSize:18,fontStyle:'italic',fontFamily:'serif'},'v'));
+    e.push(R('text',{key:'rvy2',x:243,y:49,fontSize:12,fontStyle:'italic',fontFamily:'serif'},'y'));
+    e.push(R('text',{key:'rt',x:370,y:172,fontSize:16,fontFamily:'serif'},'Time'));
+    e.push(R('defs',{key:'d'},R('marker',{id:'vtah',markerWidth:7,markerHeight:7,refX:5.5,refY:3,orient:'auto'},R('path',{d:'M0,0 L6,3 L0,6 z',fill:'#111'}))));
+    return R('svg',{width:460,height:190,viewBox:'0 0 440 185'},e);
+  }
+
+  // actions
+  startExam(){ const mins=(this.props&&this.props.sectionMinutes)||80; this.setState({view:'exam',qIndex:0,timeLeft:mins*60,timerRunning:true,timerHidden:false,directionsOpen:true,answers:{},elim:{},marked:{},navOpen:false,moreOpen:false,refOpen:false,calcOpen:false,figScale:1}); }
+  select(l){ this.setState(s=>({answers:{...s.answers,[s.qIndex]:l}})); }
+  toggleElim(l){ this.setState(s=>{ const cur=new Set(s.elim[s.qIndex]||[]); if(cur.has(l))cur.delete(l); else cur.add(l); const ans={...s.answers}; if(cur.has(l)&&ans[s.qIndex]===l) delete ans[s.qIndex]; return {elim:{...s.elim,[s.qIndex]:[...cur]},answers:ans}; }); }
+  toggleMark(){ this.setState(s=>({marked:{...s.marked,[s.qIndex]:!s.marked[s.qIndex]}})); }
+  go(d){ this.setState(s=>{ if(d>0 && s.qIndex>=this.questions.length-1) return {view:'review',navOpen:false}; return {qIndex:Math.min(this.questions.length-1,Math.max(0,s.qIndex+d)),navOpen:false,figScale:1}; }); }
+  jump(i){ this.setState({view:'exam',qIndex:i,navOpen:false,figScale:1}); }
+  gotoReview(){ this.setState({view:'review',navOpen:false}); }
+  zoom(d){ this.setState(s=>({figScale:Math.min(2,Math.max(.5,+(s.figScale+d).toFixed(2)))})); }
+  tPanel(k){ this.setState(s=>{ const o={directionsOpen:false,calcOpen:false,refOpen:false,moreOpen:false,navOpen:false,highlightsOpen:false}; return {[k]:!s[k], moreOpen:k==='moreOpen'?!s.moreOpen:false }; }); }
+  toggle(k){ this.setState(s=>({[k]:!s[k], moreOpen:false, navOpen:k==='navOpen'?!s.navOpen:false})); }
+  startBreak(){ this.setState({view:'break',breakLeft:10*60,moreOpen:false}); }
+  startFRQ(){ this.setState({view:'frq',frqIndex:0,timeLeft:90*60,timerRunning:true,timerHidden:false,moreOpen:false,navOpen:false,figScale:1,splitPct:50}); }
+  frqGo(d){ this.setState(s=>{ const n=s.frqIndex+d; if(n>=this.frqs.length) return {view:'done'}; return {frqIndex:Math.max(0,n),navOpen:false}; }); }
+  setFrqAns(v){ this.setState(s=>({frqAnswers:{...s.frqAnswers,[s.frqIndex]:v}})); }
+  resumeBreak(){ this.startFRQ(); }
+  exitExam(){ this.setState({view:'home',moreOpen:false}); }
+
+  renderVals(){
+    this._syncCalc();
+    const s=this.state, q=this.questions[s.qIndex]||{}, name=(this.props&&this.props.studentName)||'Conan Yi';
+    const answered=s.answers[s.qIndex], elimSet=new Set(s.elim[s.qIndex]||[]);
+    const serif="'Source Serif 4',Georgia,serif";
+
+    const boxBase="position:relative;display:flex;align-items:center;gap:16px;flex:1;padding:14px 20px;border:1.5px solid #8a8f98;border-radius:12px;background:#fff;cursor:pointer;min-height:56px;";
+    const circleBase="flex:0 0 auto;width:32px;height:32px;border-radius:50%;border:1.5px solid #4b5563;display:flex;align-items:center;justify-content:center;font-family:'Helvetica Neue',sans-serif;font-weight:700;font-size:15px;color:#1f2937;";
+    const choices=(q.choices||[]).map((c,i)=>{
+      const letter='ABCD'[i];
+      const sel=answered===letter, elim=elimSet.has(letter);
+      const body=c.k==='v'?this.vecEl(c.v, s.qIndex+'_'+i):this.texEl(c.t,false,{fontSize:'22px'});
+      return {
+        letter, bodyEl:body, eliminated:elim,
+        boxStyle: boxBase + (sel?"border:2.5px solid #1a56db;box-shadow:0 0 0 1px #1a56db;":"") + (elim?"opacity:.6;":""),
+        circleStyle: circleBase + (sel?"background:#1d4ed8;color:#fff;border-color:#1d4ed8;":"") + (elim?"color:#9aa0aa;border-color:#c3c8d0;":""),
+        bodyStyle: "color:#111;font-family:"+serif+";" + (elim?"color:#9aa0aa;":""),
+        onSelect: ()=>{ if(!elim) this.select(letter); },
+        showUndo: elim,
+        showElim: s.elimMode && !elim,
+        onElim: ()=>this.toggleElim(letter),
+        onUndo: ()=>this.toggleElim(letter),
+        elimStyle: "cursor:pointer;width:32px;height:32px;border-radius:50%;border:1.5px solid #4b5563;display:flex;align-items:center;justify-content:center;font-family:'Helvetica Neue',sans-serif;font-weight:700;font-size:14px;color:#4b5563;",
+      };
+    });
+
+    const navCells=this.questions.map((_,i)=>{
+      const cur=i===s.qIndex, ans=s.answers[i]!==undefined, mk=s.marked[i];
+      let st="width:100%;height:44px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;cursor:pointer;position:relative;";
+      if(cur) st+="background:#1a56db;color:#fff;";
+      else if(ans) st+="border:2px solid #1a56db;color:#1a56db;background:#fff;";
+      else st+="border:2px dashed #9aa0aa;color:#1a56db;background:#fff;";
+      if(mk&&!cur) st+="border-color:#d13b3b;color:#d13b3b;";
+      return { n:i+1, onClick:()=>this.jump(i), style:st };
+    });
+
+    const refSections=this.refTitles.map((r,i)=>{
+      const exp=!!s.refExpanded[i];
+      const body=React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:'18px',fontSize:'20px'}},
+        r.eqs.map((eq,j)=>this.texEl(eq,true,{key:j})));
+      return { title:r.title, sign:exp?'–':'+', expanded:exp, body, onToggle:()=>this.setState(st=>({refExpanded:{...st.refExpanded,[i]:!st.refExpanded[i]}})) };
+    });
+
+    const keyLabels=['x','y','a²','aᵇ','7','8','9','÷','(',')','<','>','4','5','6','×','|a|',',','≤','≥','1','2','3','−','√','π','7','8','0','.','=','+'];
+    const calcKeys=keyLabels.slice(0,16).map((l,i)=>({label:l,style:"height:44px;background:#eceef2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;color:#1f2937;"}));
+
+    const moreItems=[
+      {icon:'?',label:'Help',onClick:()=>this.setState({moreOpen:false})},
+      {icon:'⌨',label:'Shortcuts',onClick:()=>this.setState({moreOpen:false})},
+      {icon:'♿',label:'Assistive Technology',onClick:()=>this.setState({moreOpen:false})},
+      {icon:'≡',label:'Line Reader',onClick:()=>this.setState({moreOpen:false})},
+      {icon:'⏱',label:'Unscheduled Break',onClick:()=>this.startBreak()},
+      {icon:'⚠',label:'Exit the Exam',onClick:()=>this.exitExam()},
+    ];
+
+    return {
+      isHome:s.view==='home', isExam:s.view==='exam', isBreak:s.view==='break', isReview:s.view==='review', isFRQ:s.view==='frq', isDone:s.view==='done',
+      leftBasis:s.splitPct+'%', startDrag:()=>{ this._dragging=true; document.body.style.userSelect='none'; },
+      reviewBack:()=>this.jump(this.questions.length-1),
+      reviewNext:()=>this.startBreak(),
+      frqLabel:(this.frqs[s.frqIndex]||{}).label,
+      frqNum:s.frqIndex+1, frqTotal:this.frqs.length,
+      frqStimEls:((this.frqs[s.frqIndex]||{}).parts||[]).map((p)=>this.mixEl(p)),
+      frqSubEls:((this.frqs[s.frqIndex]||{}).subs||[]).map((p)=>this.mixEl(p)),
+      frqAns:s.frqAnswers[s.frqIndex]||'',
+      onFrqInput:(e)=>this.setFrqAns(e.target.value),
+      frqNext:()=>this.frqGo(1), frqBack:()=>this.frqGo(-1), frqCanBack:s.frqIndex>0,
+      frqNextLabel:s.frqIndex>=this.frqs.length-1?'Finish':'Next',
+      returnHome:()=>this.setState({view:'home'}),
+      studentName:name, battPct:100,
+      timeStr:this.fmt(s.timeLeft), showTime:!s.timerHidden, timerHidden:s.timerHidden,
+      timerBtn:s.timerHidden?'Show':'Hide', toggleTimer:()=>this.setState(st=>({timerHidden:!st.timerHidden})),
+      qNum:s.qIndex+1, totalQ:this.questions.length,
+      hasStimulus: !!(q.stim||q.figure), hasFigure: !!q.figure,
+      figIsPulley:q.figure==='pulley', figIsVT:q.figure==='vt',
+      pulleyFig:this.pulleyEl(), vtFig:this.vtEl(),
+      stimParas:(q.stim||[]).map((p,i)=>this.mixEl(p)),
+      promptEl:this.mixEl(q.prompt||''),
+      choices,
+      qMaxWidth: (q.stim||q.figure)?'none':'760px',
+      marked:!!s.marked[s.qIndex], markFill:s.marked[s.qIndex]?'#d13b3b':'none', toggleMark:()=>this.toggleMark(),
+      elimMode:s.elimMode, toggleElimMode:()=>this.setState(st=>({elimMode:!st.elimMode})),
+      elimBtnBg:s.elimMode?'#1d4ed8':'#e2e6ee', elimBtnColor:s.elimMode?'#fff':'#4b5563',
+      dirCaret:s.directionsOpen?'rotate(0deg)':'rotate(180deg)',
+      navCaret:s.navOpen?'rotate(180deg)':'rotate(0deg)',
+      canBack:s.qIndex>0, next:()=>this.go(1), back:()=>this.go(-1), nextLabel:'Next',
+      toggleDirections:()=>this.toggle('directionsOpen'),
+      toggleCalc:()=>this.toggle('calcOpen'),
+      toggleRef:()=>this.toggle('refOpen'),
+      toggleMore:()=>this.setState(st=>({moreOpen:!st.moreOpen,navOpen:false})),
+      toggleNav:()=>this.setState(st=>({navOpen:!st.navOpen,moreOpen:false})),
+      toggleHighlights:()=>this.toggle('highlightsOpen'),
+      directionsOpen:s.directionsOpen, calcOpen:s.calcOpen, refOpen:s.refOpen,
+      moreOpen:s.moreOpen, navOpen:s.navOpen, highlightsOpen:s.highlightsOpen,
+      dirGravity:this.mixEl('To simplify calculations, you may use \\(g = 10\\ \\mathrm{m/s^2}\\) in all problems.'),
+      navCells, refSections, moreItems,
+      figPct:Math.round(s.figScale*100), figTransform:'scale('+s.figScale+')',
+      zoomIn:()=>this.zoom(.25), zoomOut:()=>this.zoom(-.25), resetZoom:()=>this.setState({figScale:1}),
+      expandAllRef:()=>{ const o={}; this.refTitles.forEach((_,i)=>o[i]=true); this.setState({refExpanded:o}); },
+      collapseAllRef:()=>this.setState({refExpanded:{}}),
+      calcGraphUnderline:s.calcTab==='graphing'?'3px solid #1d4ed8':'3px solid transparent',
+      calcSciUnderline:s.calcTab==='scientific'?'3px solid #1d4ed8':'3px solid transparent',
+      setCalcGraph:()=>this.setState({calcTab:'graphing'}), setCalcSci:()=>this.setState({calcTab:'scientific'}),
+      calcLarge:s.calcLarge,
+      toggleCalcLarge:()=>this.setState(st=>({calcLarge:!st.calcLarge}),()=>{ if(this._calc&&this._calc.resize) try{this._calc.resize();}catch(e){} }),
+      calcSizeIcon: s.calcLarge
+        ? React.createElement('svg',{width:18,height:18,viewBox:'0 0 18 18'},React.createElement('path',{d:'M7 2H2v5M11 16h5v-5M2 11v5h5M16 7V2h-5',fill:'none',stroke:'#374151',strokeWidth:1.7,strokeLinecap:'round',strokeLinejoin:'round',transform:'scale(-1,1) translate(-18,0)'}))
+        : React.createElement('svg',{width:18,height:18,viewBox:'0 0 18 18'},React.createElement('path',{d:'M7 2H2v5M11 16h5v-5M2 11v5h5M16 7V2h-5',fill:'none',stroke:'#374151',strokeWidth:1.7,strokeLinecap:'round',strokeLinejoin:'round'})),
+      calcWindowStyle: s.calcLarge
+        ? 'position:absolute;top:74px;left:0;z-index:55;width:'+s.calcWidth+'px;height:calc(100% - 74px);background:#fff;border-right:1px solid #cbd2df;box-shadow:6px 0 24px rgba(15,31,102,.14);display:flex;flex-direction:column;font-family:\'Helvetica Neue\',sans-serif;'
+        : 'position:absolute;top:96px;left:24px;z-index:55;width:400px;height:560px;max-height:calc(100% - 120px);background:#fff;border:1px solid #cbd2df;border-radius:10px;box-shadow:0 12px 40px rgba(15,31,102,.22);display:flex;flex-direction:column;overflow:hidden;font-family:\'Helvetica Neue\',sans-serif;',
+      startCalcResize:()=>{ this._calcResizing=true; document.body.style.userSelect='none'; },
+      breakStr:this.fmt(s.breakLeft), resumeBreak:()=>this.resumeBreak(),
+      startExam:()=>this.startExam(),
+      gotoReview:()=>this.gotoReview(),
+    };
+  }
+
+  calcGridEl(){
+    const R=React.createElement, e=[]; const W=660,H=400,cx=W/2,cy=H/2,step=44;
+    for(let x=cx%step;x<W;x+=step) e.push(R('line',{key:'x'+x,x1:x,y1:0,x2:x,y2:H,stroke:'#e6e9ef',strokeWidth:1}));
+    for(let y=cy%step;y<H;y+=step) e.push(R('line',{key:'y'+y,x1:0,y1:y,x2:W,y2:y,stroke:'#e6e9ef',strokeWidth:1}));
+    e.push(R('line',{key:'ax',x1:0,y1:cy,x2:W,y2:cy,stroke:'#9aa0aa',strokeWidth:1.4}));
+    e.push(R('line',{key:'ay',x1:cx,y1:0,x2:cx,y2:H,stroke:'#9aa0aa',strokeWidth:1.4}));
+    return R('svg',{width:'100%',height:'100%',viewBox:'0 0 '+W+' '+H,preserveAspectRatio:'none',style:{display:'block'}},e);
+  }
+}
+</script>
+</body>
+</html>

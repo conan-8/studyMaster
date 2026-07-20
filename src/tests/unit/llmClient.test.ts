@@ -37,18 +37,18 @@ const mockFetch = vi.fn();
 let logSpy: MockInstance<typeof console.log>;
 
 beforeEach(() => {
-  process.env.OPENROUTER_API_KEY = "test-key";
+  process.env.ALIBABA_API_KEY = "test-key";
   vi.clearAllMocks();
   vi.stubGlobal("fetch", mockFetch);
   logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
   vi.spyOn(console, "error").mockImplementation(() => {});
 });
 
-afterEach(() => {
-  vi.unstubAllGlobals();
-  vi.restoreAllMocks();
-  delete process.env.OPENROUTER_API_KEY;
-});
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+    delete process.env.ALIBABA_API_KEY;
+  });
 
 describe("callLLM", () => {
   it("returns parsed data on a valid first response", async () => {
@@ -104,11 +104,11 @@ describe("callLLM", () => {
     );
   });
 
-  it("throws when OPENROUTER_API_KEY is missing", async () => {
-    delete process.env.OPENROUTER_API_KEY;
+  it("throws when ALIBABA_API_KEY is missing", async () => {
+    delete process.env.ALIBABA_API_KEY;
 
     await expect(callLLM({ user: "x", schema, purpose: "p" })).rejects.toThrow(
-      "OPENROUTER_API_KEY",
+      "ALIBABA_API_KEY",
     );
   });
 });

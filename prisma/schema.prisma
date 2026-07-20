@@ -1,15 +1,217 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum ExamMode {
+  FULLY_DIGITAL
+  HYBRID_DIGITAL
+}
+
+enum QuestionType {
+  MCQ
+  SAQ
+  DBQ
+  LEQ
+}
+
+enum SessionMode {
+  EXAM
+  PRACTICE
+  DIAGNOSTIC
+}
+
+enum SessionStatus {
+  IN_PROGRESS
+  COMPLETED
+  ABANDONED
+}
+
+enum RetestReason {
+  MISS
+  IDK
+  SPACED
+}
+
+enum RetestStatus {
+  PENDING
+  DONE
+}
+
+enum JobStatus {
+  PENDING
+  RUNNING
+  DONE
+  FAILED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  isAdmin   Boolean  @default(false)
+
+  examSessions     ExamSession[]
+  responses        Response[]
+  masteryRecords   MasteryRecord[]
+  retestQueueItems RetestQueueItem[]
+}
+
+model Subject {
+  id       String   @id @default(uuid())
+  code     String   @unique
+  name     String
+  examMode ExamMode
+
+  units      Unit[]
+  questions  Question[]
+  blueprints ExamBlueprint[]
+}
+
+model Unit {
+  id         String  @id @default(uuid())
+  subjectId  String
+  unitNumber Int
+  title      String
+  examWeight Float
+
+  subject Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  topics  Topic[]
+
+  @@unique([subjectId, unitNumber])
+}
+
+model Topic {
+  id     String @id @default(uuid())
+  unitId String
+  code   String
+  title  String
+
+  unit             Unit              @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  questions        Question[]
+  masteryRecords   MasteryRecord[]
+  retestQueueItems RetestQueueItem[]
+}
+
+model Question {
+  id                 String       @id @default(uuid())
+  subjectId          String
+  topicId            String
+  type               QuestionType
+  difficulty         Int
+  stem               String
+  stimulus           String?
+  choicesJson        Json?
+  correctAnswer      String?
+  rubricJson         Json?
+  explanation        String
+  misconceptionTags  String[]
+  sourceTag          String
+  isActive           Boolean      @default(true)
+  createdAt          DateTime     @default(now())
+
+  subject   Subject    @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  topic     Topic      @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  responses Response[]
+
+  @@index([subjectId, type, isActive])
+}
+
+model ExamBlueprint {
+  id           String @id @default(uuid())
+  subjectId    String
+  name         String
+  sectionsJson Json
+
+  subject      Subject       @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  examSessions ExamSession[]
+}
+
+model ExamSession {
+  id                  String        @id @default(uuid())
+  userId              String
+  blueprintId         String
+  mode                SessionMode
+  status              SessionStatus @default(IN_PROGRESS)
+  currentSectionIndex Int           @default(0)
+  timeMultiplier      Float         @default(1.0)
+  answersJson         Json
+  startedAt           DateTime      @default(now())
+  completedAt         DateTime?
+  scoreJson           Json?
+
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blueprint ExamBlueprint @relation(fields: [blueprintId], references: [id], onDelete: Cascade)
+  responses Response[]
+}
+
+model Response {
+  id                String   @id @default(uuid())
+  userId            String
+  questionId        String
+  examSessionId     String?
+  answer            String
+  isIDK             Boolean  @default(false)
+  isCorrect         Boolean?
+  frqGradeJson      Json?
+  misconceptionTags String[]
+  createdAt         DateTime @default(now())
+
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question    Question     @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  examSession ExamSession? @relation(fields: [examSessionId], references: [id], onDelete: SetNull)
+}
+
+model MasteryRecord {
+  id            String    @id @default(uuid())
+  userId        String
+  topicId       String
+  score         Float
+  attempts      Int       @default(0)
+  lastAttemptAt DateTime  @default(now())
+  nextReviewAt  DateTime?
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic Topic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, topicId])
+}
+
+model RetestQueueItem {
+  id           String       @id @default(uuid())
+  userId       String
+  topicId      String
+  scheduledFor DateTime
+  reason       RetestReason
+  status       RetestStatus @default(PENDING)
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic Topic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+}
+
+model Job {
+  id          String    @id @default(uuid())
+  type        String
+  payloadJson Json
+  status      JobStatus @default(PENDING)
+  resultJson  Json?
+  attempts    Int       @default(0)
+  createdAt   DateTime  @default(now())
+  runAfter    DateTime
+}
+
+model PromptRegistry {
+  id        String   @id @default(uuid())
+  name      String
+  version   Int
+  content   String
+  createdAt DateTime @default(now())
+
+  @@unique([name, version])
 }

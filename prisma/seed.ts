@@ -1,4 +1,5 @@
 import { PrismaClient, ExamMode } from "../src/generated/prisma";
+import { CURRICULUM_PARSER_PROMPT } from "../src/lib/curriculum/prompts";
 
 const prisma = new PrismaClient();
 
@@ -139,6 +140,16 @@ async function main() {
       name: "frq-saq-grader",
       version: 1,
       content: "TODO: write the FRQ/SAQ grading prompt",
+    },
+  });
+
+  await prisma.promptRegistry.upsert({
+    where: { name_version: { name: "curriculum-parser", version: 1 } },
+    update: { content: CURRICULUM_PARSER_PROMPT },
+    create: {
+      name: "curriculum-parser",
+      version: 1,
+      content: CURRICULUM_PARSER_PROMPT,
     },
   });
 }

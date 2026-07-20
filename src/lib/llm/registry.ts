@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { CURRICULUM_PARSER_PROMPT } from "@/lib/curriculum/prompts";
 
 export type Prompt = { content: string; version: number };
 
@@ -6,6 +7,10 @@ export const FALLBACK_PROMPTS: Record<string, Prompt> = {
   "frq-saq-grader": {
     version: 1,
     content: "TODO: write the FRQ/SAQ grading prompt",
+  },
+  "curriculum-parser": {
+    version: 1,
+    content: CURRICULUM_PARSER_PROMPT,
   },
 };
 

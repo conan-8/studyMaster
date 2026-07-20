@@ -97,6 +97,8 @@ model Topic {
   questions        Question[]
   masteryRecords   MasteryRecord[]
   retestQueueItems RetestQueueItem[]
+
+  @@unique([unitId, code])
 }
 
 model Question {

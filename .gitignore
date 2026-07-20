@@ -42,3 +42,6 @@ yarn-error.log*
 
 # opencode
 /.opencode/
+
+# curriculum source PDFs (large binaries, fetch from source)
+content/ced/*.pdf

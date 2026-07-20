@@ -51,6 +51,11 @@ enum JobStatus {
   FAILED
 }
 
+enum ReviewDecisionType {
+  APPROVED
+  REJECTED
+}
+
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
@@ -75,7 +80,7 @@ model Subject {
 }
 
 model Unit {
-  id         String  @id @default(uuid())
+  id         String @id @default(uuid())
   subjectId  String
   unitNumber Int
   title      String
@@ -102,25 +107,26 @@ model Topic {
 }
 
 model Question {
-  id                 String       @id @default(uuid())
-  subjectId          String
-  topicId            String
-  type               QuestionType
-  difficulty         Int
-  stem               String
-  stimulus           String?
-  choicesJson        Json?
-  correctAnswer      String?
-  rubricJson         Json?
-  explanation        String
-  misconceptionTags  String[]
-  sourceTag          String
-  isActive           Boolean      @default(true)
-  createdAt          DateTime     @default(now())
+  id                String       @id @default(uuid())
+  subjectId         String
+  topicId           String
+  type              QuestionType
+  difficulty        Int
+  stem              String
+  stimulus          String?
+  choicesJson       Json?
+  correctAnswer     String?
+  rubricJson        Json?
+  explanation       String
+  misconceptionTags String[]
+  sourceTag         String
+  isActive          Boolean      @default(true)
+  createdAt         DateTime     @default(now())
 
-  subject   Subject    @relation(fields: [subjectId], references: [id], onDelete: Cascade)
-  topic     Topic      @relation(fields: [topicId], references: [id], onDelete: Cascade)
-  responses Response[]
+  subject         Subject          @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  topic           Topic            @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  responses       Response[]
+  reviewDecisions ReviewDecision[]
 
   @@index([subjectId, type, isActive])
 }
@@ -226,4 +232,17 @@ model LLMCallLog {
   latencyMs    Int
   purpose      String
   createdAt    DateTime @default(now())
+}
+
+model ReviewDecision {
+  id         String             @id @default(uuid())
+  questionId String
+  decision   ReviewDecisionType
+  reason     String?
+  editedJson Json?
+  createdAt  DateTime           @default(now())
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
 }

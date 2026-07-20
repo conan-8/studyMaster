@@ -21,3 +21,30 @@ export const signupSchema = z.object({
     }),
   }),
 });
+
+export const reviewApproveSchema = z.object({
+  questionId: z.string().uuid("Invalid question id"),
+});
+
+export const reviewRejectSchema = z.object({
+  questionId: z.string().uuid("Invalid question id"),
+  reason: z.string().min(1, "A reason is required to reject a question"),
+});
+
+export const reviewBatchApproveSchema = z.object({
+  questionIds: z.array(z.string().uuid()).min(1, "No questions selected"),
+});
+
+export const reviewChoiceSchema = z.object({
+  id: z.string().min(1),
+  text: z.string().min(1),
+});
+
+export const reviewEditSchema = z.object({
+  questionId: z.string().uuid("Invalid question id"),
+  stem: z.string().min(1, "Stem is required"),
+  stimulus: z.string().optional(),
+  explanation: z.string().min(1, "Explanation is required"),
+  correctAnswer: z.string().optional(),
+  choicesJson: z.string().optional(),
+});

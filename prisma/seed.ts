@@ -131,6 +131,16 @@ async function main() {
   console.log(
     `Seeded ${subject.code} (${subject.name}) with ${subject.units.length} units and ${topicCount} topics`,
   );
+
+  await prisma.promptRegistry.upsert({
+    where: { name_version: { name: "frq-saq-grader", version: 1 } },
+    update: { content: "TODO: write the FRQ/SAQ grading prompt" },
+    create: {
+      name: "frq-saq-grader",
+      version: 1,
+      content: "TODO: write the FRQ/SAQ grading prompt",
+    },
+  });
 }
 
 main()

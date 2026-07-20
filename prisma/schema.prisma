@@ -215,3 +215,13 @@ model PromptRegistry {
 
   @@unique([name, version])
 }
+
+model LLMCallLog {
+  id           String   @id @default(uuid())
+  model        String
+  inputTokens  Int
+  outputTokens Int
+  latencyMs    Int
+  purpose      String
+  createdAt    DateTime @default(now())
+}

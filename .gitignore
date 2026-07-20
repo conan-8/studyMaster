@@ -34,3 +34,11 @@ yarn-error.log*
 
 # prisma generated client
 /src/generated/prisma
+
+# playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# opencode
+/.opencode/

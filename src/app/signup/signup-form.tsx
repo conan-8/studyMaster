@@ -3,66 +3,61 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { signup, type AuthState } from "@/lib/actions/auth";
+import { TextInput } from "@/components/text-input";
 
 const initialState: AuthState = {};
-
-const inputClasses =
-  "w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2.5 text-white placeholder-slate-500 outline-none transition focus:border-slate-500 focus:ring-1 focus:ring-slate-500";
 
 export function SignupForm() {
   const [state, formAction, pending] = useActionState(signup, initialState);
 
   return (
     <form action={formAction} className="space-y-5">
-      <div className="space-y-2">
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-slate-300"
-        >
-          Email
-        </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          required
-          autoComplete="email"
-          placeholder="you@example.com"
-          className={inputClasses}
-        />
-      </div>
+      <TextInput
+        id="email"
+        name="email"
+        label="Email"
+        type="email"
+        required
+        autoComplete="email"
+        placeholder="you@example.com"
+        error={state.fieldErrors?.email}
+      />
+
+      <TextInput
+        id="password"
+        name="password"
+        label="Password"
+        type="password"
+        required
+        minLength={6}
+        autoComplete="new-password"
+        placeholder="At least 6 characters"
+        error={state.fieldErrors?.password}
+      />
 
       <div className="space-y-2">
-        <label
-          htmlFor="password"
-          className="block text-sm font-medium text-slate-300"
-        >
-          Password
-        </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          required
-          minLength={6}
-          autoComplete="new-password"
-          placeholder="At least 6 characters"
-          className={inputClasses}
-        />
-      </div>
-
-      <div className="flex items-start gap-3">
-        <input
-          id="ageConfirm"
-          name="ageConfirm"
-          type="checkbox"
-          required
-          value="true"
-          className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-600 bg-slate-950 accent-white"
-        />
-        <label htmlFor="ageConfirm" className="text-sm text-slate-300">
-          I am 13 or older
-        </label>
+        <div className="flex items-start gap-3">
+          <input
+            id="ageConfirm"
+            name="ageConfirm"
+            type="checkbox"
+            required
+            value="true"
+            aria-invalid={state.fieldErrors?.ageConfirm ? true : undefined}
+            aria-describedby={
+              state.fieldErrors?.ageConfirm ? "ageConfirm-error" : undefined
+            }
+            className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-600 bg-slate-950 accent-white"
+          />
+          <label htmlFor="ageConfirm" className="text-sm text-slate-300">
+            I am 13 or older
+          </label>
+        </div>
+        {state.fieldErrors?.ageConfirm ? (
+          <p id="ageConfirm-error" role="alert" className="text-sm text-red-400">
+            {state.fieldErrors.ageConfirm}
+          </p>
+        ) : null}
       </div>
 
       {state.error ? (
@@ -71,9 +66,11 @@ export function SignupForm() {
         </p>
       ) : null}
 
-      {state.message ? (
-        <p className="text-sm text-emerald-400">{state.message}</p>
-      ) : null}
+      <div aria-live="polite" role="status">
+        {state.message ? (
+          <p className="text-sm text-emerald-400">{state.message}</p>
+        ) : null}
+      </div>
 
       <button
         type="submit"

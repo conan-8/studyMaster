@@ -3,52 +3,36 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { login, type AuthState } from "@/lib/actions/auth";
+import { TextInput } from "@/components/text-input";
 
 const initialState: AuthState = {};
-
-const inputClasses =
-  "w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2.5 text-white placeholder-slate-500 outline-none transition focus:border-slate-500 focus:ring-1 focus:ring-slate-500";
 
 export function LoginForm() {
   const [state, formAction, pending] = useActionState(login, initialState);
 
   return (
-    <form action={formAction} className="space-y-5" noValidate={false}>
-      <div className="space-y-2">
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-slate-300"
-        >
-          Email
-        </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          required
-          autoComplete="email"
-          placeholder="you@example.com"
-          className={inputClasses}
-        />
-      </div>
+    <form action={formAction} className="space-y-5">
+      <TextInput
+        id="email"
+        name="email"
+        label="Email"
+        type="email"
+        required
+        autoComplete="email"
+        placeholder="you@example.com"
+        error={state.fieldErrors?.email}
+      />
 
-      <div className="space-y-2">
-        <label
-          htmlFor="password"
-          className="block text-sm font-medium text-slate-300"
-        >
-          Password
-        </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          required
-          autoComplete="current-password"
-          placeholder="••••••••"
-          className={inputClasses}
-        />
-      </div>
+      <TextInput
+        id="password"
+        name="password"
+        label="Password"
+        type="password"
+        required
+        autoComplete="current-password"
+        placeholder="••••••••"
+        error={state.fieldErrors?.password}
+      />
 
       {state.error ? (
         <p role="alert" className="text-sm text-red-400">

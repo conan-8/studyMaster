@@ -5,8 +5,14 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: "StudyMate",
   description: "Exam preparation platform powered by Next.js and AI",
+  openGraph: {
+    title: "StudyMate",
+    description: "Exam preparation platform powered by Next.js and AI",
+    type: "website",
+  },
 };
 
 type RootLayoutProps = Readonly<{
@@ -16,7 +22,7 @@ type RootLayoutProps = Readonly<{
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="min-h-screen bg-slate-950 font-inter text-white antialiased">
+      <body className="min-h-screen bg-slate-950 text-white antialiased">
         {children}
       </body>
     </html>

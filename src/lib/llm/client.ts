@@ -1,10 +1,10 @@
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 
-const DEFAULT_MODEL = "claude-sonnet-4-5";
+const DEFAULT_MODEL = "anthropic/claude-sonnet-4";
 const DEFAULT_MAX_TOKENS = 1024;
 
-type Message = { role: "user" | "assistant"; content: string };
+type Message = { role: "system" | "user" | "assistant"; content: string };
 
 export type CallLLMOptions<T> = {
   system?: string;
@@ -15,9 +15,9 @@ export type CallLLMOptions<T> = {
   maxTokens?: number;
 };
 
-type AnthropicResponse = {
-  content?: { type: string; text?: string }[];
-  usage?: { input_tokens?: number; output_tokens?: number };
+type OpenRouterResponse = {
+  choices?: { message?: { content?: string } }[];
+  usage?: { prompt_tokens?: number; completion_tokens?: number };
 };
 
 function parseAndValidate<T>(
@@ -47,42 +47,43 @@ async function requestOnce(args: {
   messages: Message[];
   purpose: string;
 }): Promise<{ text: string }> {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
-    throw new Error("ANTHROPIC_API_KEY is not set");
+    throw new Error("OPENROUTER_API_KEY is not set");
   }
 
   const started = Date.now();
 
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
+  const messages: Message[] = [];
+  if (args.system) {
+    messages.push({ role: "system", content: args.system });
+  }
+  messages.push(...args.messages);
+
+  const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
+      Authorization: `Bearer ${apiKey}`,
       "content-type": "application/json",
     },
     body: JSON.stringify({
       model: args.model,
       max_tokens: args.maxTokens,
-      ...(args.system ? { system: args.system } : {}),
-      messages: args.messages,
+      messages,
     }),
   });
 
   if (!res.ok) {
     const body = await res.text();
-    throw new Error(`Anthropic API error ${res.status}: ${body}`);
+    throw new Error(`OpenRouter API error ${res.status}: ${body}`);
   }
 
-  const data = (await res.json()) as AnthropicResponse;
+  const data = (await res.json()) as OpenRouterResponse;
 
-  const text = (data.content ?? [])
-    .filter((b) => b.type === "text")
-    .map((b) => b.text ?? "")
-    .join("");
+  const text = data.choices?.[0]?.message?.content ?? "";
 
-  const inputTokens = data.usage?.input_tokens ?? 0;
-  const outputTokens = data.usage?.output_tokens ?? 0;
+  const inputTokens = data.usage?.prompt_tokens ?? 0;
+  const outputTokens = data.usage?.completion_tokens ?? 0;
   const latencyMs = Date.now() - started;
 
   console.log({

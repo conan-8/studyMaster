@@ -3,6 +3,1237 @@
     "code": "APUSH",
     "name": "AP U.S. History"
   },
-  "units": [],
-  "skills": []
+  "units": [
+    {
+      "unitNumber": 1,
+      "title": "Period 1: 1491–1607",
+      "examWeight": 0.05,
+      "topics": [
+        {
+          "code": "1.1",
+          "title": "Contextualizing Period 1",
+          "learningObjectives": [
+            {
+              "code": "Unit 1: Learning Objective A",
+              "statement": "Explain the context for European encounters in the Americas from 1491 to 1607."
+            }
+          ]
+        },
+        {
+          "code": "1.2",
+          "title": "Native American Societies Before European Contact",
+          "learningObjectives": [
+            {
+              "code": "Unit 1: Learning Objective B",
+              "statement": "Explain how and why various native populations in the period before European contact interacted with the natural environment in North America."
+            }
+          ]
+        },
+        {
+          "code": "1.3",
+          "title": "European Exploration in the Americas",
+          "learningObjectives": [
+            {
+              "code": "Unit 1: Learning Objective C",
+              "statement": "Explain the causes of exploration and conquest of the New World by various European nations."
+            }
+          ]
+        },
+        {
+          "code": "1.4",
+          "title": "Columbian Exchange, Spanish Exploration, and Conquest",
+          "learningObjectives": [
+            {
+              "code": "Unit 1: Learning Objective D",
+              "statement": "Explain causes of the Columbian Exchange and its effect on Europe and the Americas during the period after 1492."
+            }
+          ]
+        },
+        {
+          "code": "1.5",
+          "title": "Labor, Slavery, and Caste in the Spanish Colonial System",
+          "learningObjectives": [
+            {
+              "code": "Unit 1: Learning Objective E",
+              "statement": "Explain how the growth of the Spanish Empire in North America shaped the development of social and economic structures over time."
+            }
+          ]
+        },
+        {
+          "code": "1.6",
+          "title": "Cultural Interactions Between Europeans, Native Americans, and Africans",
+          "learningObjectives": [
+            {
+              "code": "Unit 1: Learning Objective F",
+              "statement": "Explain how and why European and Native American perspectives of others developed and changed in the period."
+            }
+          ]
+        },
+        {
+          "code": "1.7",
+          "title": "Causation in Period 1",
+          "learningObjectives": [
+            {
+              "code": "Unit 1: Learning Objective G",
+              "statement": "Explain the effects of the development of transatlantic voyages from 1491 to 1607."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "unitNumber": 2,
+      "title": "Period 2: 1607–1754",
+      "examWeight": 0.07,
+      "topics": [
+        {
+          "code": "2.1",
+          "title": "Contextualizing Period 2",
+          "learningObjectives": [
+            {
+              "code": "Unit 2: Learning Objective A",
+              "statement": "Explain the context for the colonization of North America from 1607 to 1754."
+            }
+          ]
+        },
+        {
+          "code": "2.2",
+          "title": "European Colonization",
+          "learningObjectives": [
+            {
+              "code": "Unit 2: Learning Objective B",
+              "statement": "Explain how and why various European colonies developed and expanded from 1607 to 1754."
+            }
+          ]
+        },
+        {
+          "code": "2.3",
+          "title": "The Regions of British Colonies",
+          "learningObjectives": [
+            {
+              "code": "Unit 2: Learning Objective C",
+              "statement": "Explain how and why environmental and other factors shaped the development and expansion of various British colonies that developed and expanded from 1607 to 1754."
+            }
+          ]
+        },
+        {
+          "code": "2.4",
+          "title": "Transatlantic Trade",
+          "learningObjectives": [
+            {
+              "code": "Unit 2: Learning Objective D",
+              "statement": "Explain causes and effects of transatlantic trade over time."
+            }
+          ]
+        },
+        {
+          "code": "2.5",
+          "title": "Interactions Between American Indians and Europeans",
+          "learningObjectives": [
+            {
+              "code": "Unit 2: Learning Objective E",
+              "statement": "Explain how and why interactions between various European nations and American Indians changed over time."
+            }
+          ]
+        },
+        {
+          "code": "2.6",
+          "title": "Slavery in the British Colonies",
+          "learningObjectives": [
+            {
+              "code": "Unit 2: Learning Objective F",
+              "statement": "Explain the causes and effects of slavery in the various British colonial regions."
+            },
+            {
+              "code": "Unit 2: Learning Objective G",
+              "statement": "Explain how enslaved people responded to slavery."
+            }
+          ]
+        },
+        {
+          "code": "2.7",
+          "title": "Colonial Society and Culture",
+          "learningObjectives": [
+            {
+              "code": "Unit 2: Learning Objective H",
+              "statement": "Explain how and why the movement of a variety of people and ideas across the Atlantic contributed to the development of American culture over time."
+            },
+            {
+              "code": "Unit 2: Learning Objective I",
+              "statement": "Explain how and why the different goals and interests of European leaders and colonists affected how they viewed themselves and their relationship with Britain."
+            }
+          ]
+        },
+        {
+          "code": "2.8",
+          "title": "Comparison in Period 2",
+          "learningObjectives": [
+            {
+              "code": "Unit 2: Learning Objective J",
+              "statement": "Compare the effects of the development of colonial society in the various regions of North America."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "unitNumber": 3,
+      "title": "Period 3: 1754–1800",
+      "examWeight": 0.135,
+      "topics": [
+        {
+          "code": "3.1",
+          "title": "Contextualizing Period 3",
+          "learningObjectives": [
+            {
+              "code": "Unit 3: Learning Objective A",
+              "statement": "Explain the context in which America gained independence and developed a sense of national identity."
+            }
+          ]
+        },
+        {
+          "code": "3.2",
+          "title": "The Seven Years' War (The French and Indian War)",
+          "learningObjectives": [
+            {
+              "code": "Unit 3: Learning Objective B",
+              "statement": "Explain the causes and effects of the Seven Years' War (the French and Indian War)."
+            }
+          ]
+        },
+        {
+          "code": "3.3",
+          "title": "Taxation Without Representation",
+          "learningObjectives": [
+            {
+              "code": "Unit 3: Learning Objective C",
+              "statement": "Explain how British colonial policies regarding North America led to the Revolutionary War."
+            }
+          ]
+        },
+        {
+          "code": "3.4",
+          "title": "Philosophical Foundations of the American Revolution",
+          "learningObjectives": [
+            {
+              "code": "Unit 3: Learning Objective D",
+              "statement": "Explain how and why colonial attitudes about government and the individual changed in the years leading up to the American Revolution."
+            }
+          ]
+        },
+        {
+          "code": "3.5",
+          "title": "The American Revolution",
+          "learningObjectives": [
+            {
+              "code": "Unit 3: Learning Objective E",
+              "statement": "Explain how various factors contributed to the American victory in the Revolution."
+            }
+          ]
+        },
+        {
+          "code": "3.6",
+          "title": "The Influence of Revolutionary Ideals",
+          "learningObjectives": [
+            {
+              "code": "Unit 3: Learning Objective F",
+              "statement": "Explain the various ways the American Revolution affected society."
+            },
+            {
+              "code": "Unit 3: Learning Objective G",
+              "statement": "Describe the global impact of the American Revolution."
+            }
+          ]
+        },
+        {
+          "code": "3.7",
+          "title": "The Articles of Confederation",
+          "learningObjectives": [
+            {
+              "code": "Unit 3: Learning Objective H",
+              "statement": "Explain how different forms of government developed and changed as a result of the Revolutionary Period."
+            }
+          ]
+        },
+        {
+          "code": "3.8",
+          "title": "The Constitutional Convention and Debates over Ratification",
+          "learningObjectives": [
+            {
+              "code": "Unit 3: Learning Objective I",
+              "statement": "Explain the differing ideological positions on the structure and function of the federal government."
+            }
+          ]
+        },
+        {
+          "code": "3.9",
+          "title": "The Constitution",
+          "learningObjectives": [
+            {
+              "code": "Unit 3: Learning Objective J",
+              "statement": "Explain the continuities and changes in the structure and functions of the government with the ratification of the Constitution."
+            }
+          ]
+        },
+        {
+          "code": "3.10",
+          "title": "Shaping a New Republic",
+          "learningObjectives": [
+            {
+              "code": "Unit 3: Learning Objective K",
+              "statement": "Explain how and why competition intensified conflicts among peoples and nations from 1754 to 1800."
+            },
+            {
+              "code": "Unit 3: Learning Objective L",
+              "statement": "Explain how and why political ideas, institutions, and party systems developed and changed in the new republic."
+            }
+          ]
+        },
+        {
+          "code": "3.11",
+          "title": "Developing an American Identity",
+          "learningObjectives": [
+            {
+              "code": "Unit 3: Learning Objective M",
+              "statement": "Explain the continuities and changes in American culture from 1754 to 1800."
+            }
+          ]
+        },
+        {
+          "code": "3.12",
+          "title": "Movement in the Early Republic",
+          "learningObjectives": [
+            {
+              "code": "Unit 3: Learning Objective N",
+              "statement": "Explain how and why migration and immigration to and within North America caused competition and conflict over time."
+            },
+            {
+              "code": "Unit 3: Learning Objective O",
+              "statement": "Explain the continuities and changes in regional attitudes about slavery as it expanded from 1754 to 1800."
+            }
+          ]
+        },
+        {
+          "code": "3.13",
+          "title": "Continuity and Change in Period 3",
+          "learningObjectives": [
+            {
+              "code": "Unit 3: Learning Objective P",
+              "statement": "Explain how the American independence movement affected society from 1754 to 1800."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "unitNumber": 4,
+      "title": "Period 4: 1800–1848",
+      "examWeight": 0.135,
+      "topics": [
+        {
+          "code": "4.1",
+          "title": "Contextualizing Period 4",
+          "learningObjectives": [
+            {
+              "code": "Unit 4: Learning Objective A",
+              "statement": "Explain the context in which the republic developed from 1800 to 1848."
+            }
+          ]
+        },
+        {
+          "code": "4.2",
+          "title": "The Rise of Political Parties and the Era of Jefferson",
+          "learningObjectives": [
+            {
+              "code": "Unit 4: Learning Objective B",
+              "statement": "Explain the causes and effects of policy debates in the early republic."
+            }
+          ]
+        },
+        {
+          "code": "4.3",
+          "title": "Politics and Regional Interests",
+          "learningObjectives": [
+            {
+              "code": "Unit 4: Learning Objective C",
+              "statement": "Explain how different regional interests affected debates about the role of the federal government in the early republic."
+            }
+          ]
+        },
+        {
+          "code": "4.4",
+          "title": "America on the World Stage",
+          "learningObjectives": [
+            {
+              "code": "Unit 4: Learning Objective D",
+              "statement": "Explain how and why American foreign policy developed and expanded over time."
+            }
+          ]
+        },
+        {
+          "code": "4.5",
+          "title": "Market Revolution: Industrialization",
+          "learningObjectives": [
+            {
+              "code": "Unit 4: Learning Objective E",
+              "statement": "Explain the causes and effects of the innovations in technology, agriculture, and commerce over time."
+            }
+          ]
+        },
+        {
+          "code": "4.6",
+          "title": "Market Revolution: Society and Culture",
+          "learningObjectives": [
+            {
+              "code": "Unit 4: Learning Objective F",
+              "statement": "Explain how and why innovation in technology, agriculture, and commerce affected various segments of American society over time."
+            }
+          ]
+        },
+        {
+          "code": "4.7",
+          "title": "Expanding Democracy",
+          "learningObjectives": [
+            {
+              "code": "Unit 4: Learning Objective G",
+              "statement": "Explain the causes and effects of the expansion of participatory democracy from 1800 to 1848."
+            }
+          ]
+        },
+        {
+          "code": "4.8",
+          "title": "Jackson and Federal Power",
+          "learningObjectives": [
+            {
+              "code": "Unit 4: Learning Objective H",
+              "statement": "Explain the causes and effects of continuing policy debates about the role of the federal government from 1800 to 1848."
+            }
+          ]
+        },
+        {
+          "code": "4.9",
+          "title": "The Development of an American Culture",
+          "learningObjectives": [
+            {
+              "code": "Unit 4: Learning Objective I",
+              "statement": "Explain how and why a new national culture developed from 1800 to 1848."
+            }
+          ]
+        },
+        {
+          "code": "4.10",
+          "title": "The Second Great Awakening",
+          "learningObjectives": [
+            {
+              "code": "Unit 4: Learning Objective J",
+              "statement": "Explain the causes of the Second Great Awakening."
+            }
+          ]
+        },
+        {
+          "code": "4.11",
+          "title": "An Age of Reform",
+          "learningObjectives": [
+            {
+              "code": "Unit 4: Learning Objective K",
+              "statement": "Explain how and why various reform movements developed and expanded from 1800 to 1848."
+            }
+          ]
+        },
+        {
+          "code": "4.12",
+          "title": "African Americans in the Early Republic",
+          "learningObjectives": [
+            {
+              "code": "Unit 4: Learning Objective L",
+              "statement": "Explain the continuities and changes in the experience of African Americans from 1800 to 1848."
+            }
+          ]
+        },
+        {
+          "code": "4.13",
+          "title": "The Society of the South in the Early Republic",
+          "learningObjectives": [
+            {
+              "code": "Unit 4: Learning Objective M",
+              "statement": "Explain how geographic and environmental factors shaped the development of the South from 1800 to 1848."
+            }
+          ]
+        },
+        {
+          "code": "4.14",
+          "title": "Causation in Period 4",
+          "learningObjectives": [
+            {
+              "code": "Unit 4: Learning Objective N",
+              "statement": "Explain the extent to which politics, economics, and foreign policy promoted the development of American identity from 1800 to 1848."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "unitNumber": 5,
+      "title": "Period 5: 1844–1877",
+      "examWeight": 0.135,
+      "topics": [
+        {
+          "code": "5.1",
+          "title": "Contextualizing Period 5",
+          "learningObjectives": [
+            {
+              "code": "Unit 5: Learning Objective A",
+              "statement": "Explain the context in which sectional conflict emerged from 1844 to 1877."
+            }
+          ]
+        },
+        {
+          "code": "5.2",
+          "title": "Manifest Destiny",
+          "learningObjectives": [
+            {
+              "code": "Unit 5: Learning Objective B",
+              "statement": "Explain the causes and effects of westward expansion from 1844 to 1877."
+            }
+          ]
+        },
+        {
+          "code": "5.3",
+          "title": "The Mexican–American War",
+          "learningObjectives": [
+            {
+              "code": "Unit 5: Learning Objective C",
+              "statement": "Explain the causes and effects of the Mexican–American War."
+            }
+          ]
+        },
+        {
+          "code": "5.4",
+          "title": "The Compromise of 1850",
+          "learningObjectives": [
+            {
+              "code": "Unit 5: Learning Objective D",
+              "statement": "Explain the similarities and differences in how regional attitudes affected federal policy in the period after the Mexican–American War."
+            }
+          ]
+        },
+        {
+          "code": "5.5",
+          "title": "Sectional Conflict: Regional Differences",
+          "learningObjectives": [
+            {
+              "code": "Unit 5: Learning Objective E",
+              "statement": "Explain the effects of immigration from various parts of the world on American culture from 1844 to 1877."
+            },
+            {
+              "code": "Unit 5: Learning Objective F",
+              "statement": "Explain how regional differences related to slavery caused tension in the years leading up to the Civil War."
+            }
+          ]
+        },
+        {
+          "code": "5.6",
+          "title": "Failure of Compromise",
+          "learningObjectives": [
+            {
+              "code": "Unit 5: Learning Objective G",
+              "statement": "Explain the political causes of the Civil War."
+            }
+          ]
+        },
+        {
+          "code": "5.7",
+          "title": "Election of 1860 and Secession",
+          "learningObjectives": [
+            {
+              "code": "Unit 5: Learning Objective H",
+              "statement": "Describe the effects of Lincoln's election."
+            }
+          ]
+        },
+        {
+          "code": "5.8",
+          "title": "Military Conflict in the Civil War",
+          "learningObjectives": [
+            {
+              "code": "Unit 5: Learning Objective I",
+              "statement": "Explain the various factors that contributed to the Union victory in the Civil War."
+            }
+          ]
+        },
+        {
+          "code": "5.9",
+          "title": "Government Policies During the Civil War",
+          "learningObjectives": [
+            {
+              "code": "Unit 5: Learning Objective J",
+              "statement": "Explain how Lincoln's leadership during the Civil War impacted American ideals over the course of the war."
+            }
+          ]
+        },
+        {
+          "code": "5.10",
+          "title": "Reconstruction",
+          "learningObjectives": [
+            {
+              "code": "Unit 5: Learning Objective K",
+              "statement": "Explain the effects of government policy during Reconstruction on society from 1865 to 1877."
+            }
+          ]
+        },
+        {
+          "code": "5.11",
+          "title": "Failure of Reconstruction",
+          "learningObjectives": [
+            {
+              "code": "Unit 5: Learning Objective L",
+              "statement": "Explain how and why Reconstruction resulted in continuity and change in regional and national understandings of what it meant to be American."
+            }
+          ]
+        },
+        {
+          "code": "5.12",
+          "title": "Comparison in Period 5",
+          "learningObjectives": [
+            {
+              "code": "Unit 5: Learning Objective M",
+              "statement": "Compare the relative significance of the effects of the Civil War on American values."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "unitNumber": 6,
+      "title": "Period 6: 1865–1898",
+      "examWeight": 0.135,
+      "topics": [
+        {
+          "code": "6.1",
+          "title": "Contextualizing Period 6",
+          "learningObjectives": [
+            {
+              "code": "Unit 6: Learning Objective A",
+              "statement": "Explain the historical context for the rise of industrial capitalism in the United States."
+            }
+          ]
+        },
+        {
+          "code": "6.2",
+          "title": "Westward Expansion: Economic Development",
+          "learningObjectives": [
+            {
+              "code": "Unit 6: Learning Objective B",
+              "statement": "Explain the causes and effects of the settlement of the West from 1877 to 1898."
+            }
+          ]
+        },
+        {
+          "code": "6.3",
+          "title": "Westward Expansion: Social and Cultural Development",
+          "learningObjectives": [
+            {
+              "code": "Unit 6: Learning Objective B",
+              "statement": "Explain the causes and effects of the settlement of the West from 1877 to 1898."
+            }
+          ]
+        },
+        {
+          "code": "6.4",
+          "title": "The \"New South\"",
+          "learningObjectives": [
+            {
+              "code": "Unit 6: Learning Objective C",
+              "statement": "Explain how various factors contributed to continuity and change in the \"New South\" from 1877 to 1898."
+            }
+          ]
+        },
+        {
+          "code": "6.5",
+          "title": "Technological Innovation",
+          "learningObjectives": [
+            {
+              "code": "Unit 6: Learning Objective D",
+              "statement": "Explain the effects of technological advances in the development of the United States over time."
+            }
+          ]
+        },
+        {
+          "code": "6.6",
+          "title": "The Rise of Industrial Capitalism",
+          "learningObjectives": [
+            {
+              "code": "Unit 6: Learning Objective E",
+              "statement": "Explain the socioeconomic continuities and changes associated with the growth of industrial capitalism from 1865 to 1898."
+            }
+          ]
+        },
+        {
+          "code": "6.7",
+          "title": "Labor in the Gilded Age",
+          "learningObjectives": [
+            {
+              "code": "Unit 6: Learning Objective E",
+              "statement": "Explain the socioeconomic continuities and changes associated with the growth of industrial capitalism from 1865 to 1898."
+            }
+          ]
+        },
+        {
+          "code": "6.8",
+          "title": "Immigration and Migration in the Gilded Age",
+          "learningObjectives": [
+            {
+              "code": "Unit 6: Learning Objective F",
+              "statement": "Explain how cultural and economic factors affected migration patterns over time."
+            }
+          ]
+        },
+        {
+          "code": "6.9",
+          "title": "Responses to Immigration in the Gilded Age",
+          "learningObjectives": [
+            {
+              "code": "Unit 6: Learning Objective G",
+              "statement": "Explain the various responses to immigration in the period over time."
+            }
+          ]
+        },
+        {
+          "code": "6.10",
+          "title": "Development of the Middle Class",
+          "learningObjectives": [
+            {
+              "code": "Unit 6: Learning Objective H",
+              "statement": "Explain the causes of increased economic opportunity and its effects on society."
+            }
+          ]
+        },
+        {
+          "code": "6.11",
+          "title": "Reform in the Gilded Age",
+          "learningObjectives": [
+            {
+              "code": "Unit 6: Learning Objective I",
+              "statement": "Explain how different reform movements responded to the rise of industrial capitalism in the Gilded Age."
+            }
+          ]
+        },
+        {
+          "code": "6.12",
+          "title": "Controversies over the Role of Government in the Gilded Age",
+          "learningObjectives": [
+            {
+              "code": "Unit 6: Learning Objective J",
+              "statement": "Explain continuities and changes in the role of the government in the U.S. economy."
+            }
+          ]
+        },
+        {
+          "code": "6.13",
+          "title": "Politics in the Gilded Age",
+          "learningObjectives": [
+            {
+              "code": "Unit 6: Learning Objective K",
+              "statement": "Explain the similarities and differences between the political parties during the Gilded Age."
+            }
+          ]
+        },
+        {
+          "code": "6.14",
+          "title": "Continuity and Change in Period 6",
+          "learningObjectives": [
+            {
+              "code": "Unit 6: Learning Objective L",
+              "statement": "Explain the extent to which industrialization brought change from 1865 to 1898."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "unitNumber": 7,
+      "title": "Period 7: 1890–1945",
+      "examWeight": 0.135,
+      "topics": [
+        {
+          "code": "7.1",
+          "title": "Contextualizing Period 7",
+          "learningObjectives": [
+            {
+              "code": "Unit 7: Learning Objective A",
+              "statement": "Explain the context in which America grew into its role as a world power."
+            }
+          ]
+        },
+        {
+          "code": "7.2",
+          "title": "Imperialism: Debates",
+          "learningObjectives": [
+            {
+              "code": "Unit 7: Learning Objective B",
+              "statement": "Explain the similarities and differences in attitudes about the nation's proper role in the world."
+            }
+          ]
+        },
+        {
+          "code": "7.3",
+          "title": "The Spanish–American War",
+          "learningObjectives": [
+            {
+              "code": "Unit 7: Learning Objective C",
+              "statement": "Explain the effects of the Spanish–American War."
+            }
+          ]
+        },
+        {
+          "code": "7.4",
+          "title": "The Progressives",
+          "learningObjectives": [
+            {
+              "code": "Unit 7: Learning Objective D",
+              "statement": "Compare the goals and effects of the Progressive reform movement."
+            },
+            {
+              "code": "Unit 7: Learning Objective E",
+              "statement": "Compare attitudes toward the use of natural resources from 1890 to 1945."
+            }
+          ]
+        },
+        {
+          "code": "7.5",
+          "title": "World War I: Military and Diplomacy",
+          "learningObjectives": [
+            {
+              "code": "Unit 7: Learning Objective F",
+              "statement": "Explain the causes and consequences of U.S. involvement in World War I."
+            }
+          ]
+        },
+        {
+          "code": "7.6",
+          "title": "World War I: Home Front",
+          "learningObjectives": [
+            {
+              "code": "Unit 7: Learning Objective G",
+              "statement": "Explain the causes and effects of international and internal migration patterns over time."
+            }
+          ]
+        },
+        {
+          "code": "7.7",
+          "title": "1920s: Innovations in Communication and Technology",
+          "learningObjectives": [
+            {
+              "code": "Unit 7: Learning Objective H",
+              "statement": "Explain the causes and effects of the innovations in communication and technology in the United States over time."
+            }
+          ]
+        },
+        {
+          "code": "7.8",
+          "title": "1920s: Cultural and Political Controversies",
+          "learningObjectives": [
+            {
+              "code": "Unit 7: Learning Objective G",
+              "statement": "Explain the causes and effects of international and internal migration patterns over time."
+            },
+            {
+              "code": "Unit 7: Learning Objective I",
+              "statement": "Explain the causes and effects of developments in popular culture in the United States over time."
+            }
+          ]
+        },
+        {
+          "code": "7.9",
+          "title": "The Great Depression",
+          "learningObjectives": [
+            {
+              "code": "Unit 7: Learning Objective J",
+              "statement": "Explain the causes of the Great Depression and its effects on the economy."
+            }
+          ]
+        },
+        {
+          "code": "7.10",
+          "title": "The New Deal",
+          "learningObjectives": [
+            {
+              "code": "Unit 7: Learning Objective K",
+              "statement": "Explain how the Great Depression and the New Deal impacted American political, social, and economic life over time."
+            }
+          ]
+        },
+        {
+          "code": "7.11",
+          "title": "Interwar Foreign Policy",
+          "learningObjectives": [
+            {
+              "code": "Unit 7: Learning Objective B",
+              "statement": "Explain the similarities and differences in attitudes about the nation's proper role in the world."
+            }
+          ]
+        },
+        {
+          "code": "7.12",
+          "title": "World War II: Mobilization",
+          "learningObjectives": [
+            {
+              "code": "Unit 7: Learning Objective L",
+              "statement": "Explain how and why U.S. participation in World War II transformed American society."
+            }
+          ]
+        },
+        {
+          "code": "7.13",
+          "title": "World War II: Military",
+          "learningObjectives": [
+            {
+              "code": "Unit 7: Learning Objective M",
+              "statement": "Explain the causes and effects of the victory of the United States and its allies over the Axis powers."
+            }
+          ]
+        },
+        {
+          "code": "7.14",
+          "title": "Postwar Diplomacy",
+          "learningObjectives": [
+            {
+              "code": "Unit 7: Learning Objective N",
+              "statement": "Explain the consequences of U.S. involvement in World War II."
+            }
+          ]
+        },
+        {
+          "code": "7.15",
+          "title": "Comparison in Period 7",
+          "learningObjectives": [
+            {
+              "code": "Unit 7: Learning Objective O",
+              "statement": "Compare the relative significance of the major events of the first half of the 20th century in shaping American identity."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "unitNumber": 8,
+      "title": "Period 8: 1945–1980",
+      "examWeight": 0.135,
+      "topics": [
+        {
+          "code": "8.1",
+          "title": "Contextualizing Period 8",
+          "learningObjectives": [
+            {
+              "code": "Unit 8: Learning Objective A",
+              "statement": "Explain the context for societal change from 1945 to 1980."
+            }
+          ]
+        },
+        {
+          "code": "8.2",
+          "title": "The Cold War from 1945 to 1980",
+          "learningObjectives": [
+            {
+              "code": "Unit 8: Learning Objective B",
+              "statement": "Explain the continuities and changes in Cold War policies from 1945 to 1980."
+            }
+          ]
+        },
+        {
+          "code": "8.3",
+          "title": "The Red Scare",
+          "learningObjectives": [
+            {
+              "code": "Unit 8: Learning Objective C",
+              "statement": "Explain the causes and effects of the Red Scare after World War II."
+            }
+          ]
+        },
+        {
+          "code": "8.4",
+          "title": "Economy after 1945",
+          "learningObjectives": [
+            {
+              "code": "Unit 8: Learning Objective D",
+              "statement": "Explain the causes of economic growth in the years after World War II."
+            },
+            {
+              "code": "Unit 8: Learning Objective E",
+              "statement": "Explain the causes and effects of the migration of various groups of Americans after 1945."
+            }
+          ]
+        },
+        {
+          "code": "8.5",
+          "title": "Culture after 1945",
+          "learningObjectives": [
+            {
+              "code": "Unit 8: Learning Objective F",
+              "statement": "Explain how mass culture has been maintained or challenged over time."
+            }
+          ]
+        },
+        {
+          "code": "8.6",
+          "title": "Early Steps in the Civil Rights Movement (1940s and 1950s)",
+          "learningObjectives": [
+            {
+              "code": "Unit 8: Learning Objective G",
+              "statement": "Explain how and why the civil rights movements developed and expanded from 1945 to 1960."
+            }
+          ]
+        },
+        {
+          "code": "8.7",
+          "title": "America as a World Power",
+          "learningObjectives": [
+            {
+              "code": "Unit 8: Learning Objective H",
+              "statement": "Explain the various military and diplomatic responses to international developments over time."
+            }
+          ]
+        },
+        {
+          "code": "8.8",
+          "title": "The Vietnam War",
+          "learningObjectives": [
+            {
+              "code": "Unit 8: Learning Objective I",
+              "statement": "Explain the causes and effects of the Vietnam War."
+            }
+          ]
+        },
+        {
+          "code": "8.9",
+          "title": "The Great Society",
+          "learningObjectives": [
+            {
+              "code": "Unit 8: Learning Objective J",
+              "statement": "Explain the causes and effects of continuing policy debates about the role of the federal government over time."
+            },
+            {
+              "code": "Unit 8: Learning Objective K",
+              "statement": "Explain the continuities and changes in immigration patterns over time."
+            }
+          ]
+        },
+        {
+          "code": "8.10",
+          "title": "The African American Civil Rights Movement (1960s)",
+          "learningObjectives": [
+            {
+              "code": "Unit 8: Learning Objective L",
+              "statement": "Explain how and why various groups responded to calls for the expansion of civil rights from 1960 to 1980."
+            },
+            {
+              "code": "Unit 8: Learning Objective M",
+              "statement": "Explain the various ways in which the federal government responded to the calls for the expansion of civil rights."
+            }
+          ]
+        },
+        {
+          "code": "8.11",
+          "title": "The Civil Rights Movement Expands",
+          "learningObjectives": [
+            {
+              "code": "Unit 8: Learning Objective L",
+              "statement": "Explain how and why various groups responded to calls for the expansion of civil rights from 1960 to 1980."
+            }
+          ]
+        },
+        {
+          "code": "8.12",
+          "title": "Youth Culture of the 1960s",
+          "learningObjectives": [
+            {
+              "code": "Unit 8: Learning Objective N",
+              "statement": "Explain how and why opposition to existing policies and values developed and changed over the course of the 20th century."
+            }
+          ]
+        },
+        {
+          "code": "8.13",
+          "title": "The Environment and Natural Resources from 1968 to 1980",
+          "learningObjectives": [
+            {
+              "code": "Unit 8: Learning Objective O",
+              "statement": "Explain how and why policies related to the environment developed and changed from 1968 to 1980."
+            }
+          ]
+        },
+        {
+          "code": "8.14",
+          "title": "Society in Transition",
+          "learningObjectives": [
+            {
+              "code": "Unit 8: Learning Objective J",
+              "statement": "Explain the causes and effects of continuing policy debates about the role of the federal government over time."
+            },
+            {
+              "code": "Unit 8: Learning Objective P",
+              "statement": "Explain the effects of the growth of religious movements over the course of the 20th century."
+            }
+          ]
+        },
+        {
+          "code": "8.15",
+          "title": "Continuity and Change in Period 8",
+          "learningObjectives": [
+            {
+              "code": "Unit 8: Learning Objective Q",
+              "statement": "Explain the extent to which the events of the period from 1945 to1980 reshaped national identity."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "unitNumber": 9,
+      "title": "Period 9: 1980–Present",
+      "examWeight": 0.05,
+      "topics": [
+        {
+          "code": "9.1",
+          "title": "Contextualizing Period 9",
+          "learningObjectives": [
+            {
+              "code": "Unit 9: Learning Objective A",
+              "statement": "Explain the context in which the United States faced international and domestic challenges after 1980."
+            }
+          ]
+        },
+        {
+          "code": "9.2",
+          "title": "Reagan and Conservatism",
+          "learningObjectives": [
+            {
+              "code": "Unit 9: Learning Objective B",
+              "statement": "Explain the causes and effects of continuing policy debates about the role of the federal government over time."
+            }
+          ]
+        },
+        {
+          "code": "9.3",
+          "title": "The End of the Cold War",
+          "learningObjectives": [
+            {
+              "code": "Unit 9: Learning Objective C",
+              "statement": "Explain the causes and effects of the end of the Cold War and its legacy."
+            }
+          ]
+        },
+        {
+          "code": "9.4",
+          "title": "A Changing Economy",
+          "learningObjectives": [
+            {
+              "code": "Unit 9: Learning Objective D",
+              "statement": "Explain the causes and effects of economic and technological change over time."
+            }
+          ]
+        },
+        {
+          "code": "9.5",
+          "title": "Migration and Immigration in the 1990s and 2000s",
+          "learningObjectives": [
+            {
+              "code": "Unit 9: Learning Objective E",
+              "statement": "Explain the causes and effects of domestic and international migration over time."
+            }
+          ]
+        },
+        {
+          "code": "9.6",
+          "title": "Challenges of the 21st Century",
+          "learningObjectives": [
+            {
+              "code": "Unit 9: Learning Objective F",
+              "statement": "Explain the causes and effects of the domestic and international challenges the United States has faced in the 21st century."
+            }
+          ]
+        },
+        {
+          "code": "9.7",
+          "title": "Causation in Period 9",
+          "learningObjectives": [
+            {
+              "code": "Unit 9: Learning Objective G",
+              "statement": "Explain the relative significance of the effects of change in the period after 1980 on American national identity."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "code": "1.A",
+      "name": "Identify a historical concept, development, or process."
+    },
+    {
+      "code": "1.B",
+      "name": "Explain a historical concept, development, or process."
+    },
+    {
+      "code": "2.A",
+      "name": "Identify a source's point of view, purpose, historical situation, and/or audience."
+    },
+    {
+      "code": "2.B",
+      "name": "Explain the point of view, purpose, historical situation, and/or audience of a source"
+    },
+    {
+      "code": "2.C",
+      "name": "Explain the significance of a source's point of view, purpose, historical situation, and/or audience, including how these might limit the use(s) of a source."
+    },
+    {
+      "code": "3.A",
+      "name": "Identify and describe a claim and/or argument in a text-based or non-text-based source."
+    },
+    {
+      "code": "3.B",
+      "name": "Identify the evidence used in a source to support an argument."
+    },
+    {
+      "code": "3.C",
+      "name": "Compare the arguments or main ideas of two sources."
+    },
+    {
+      "code": "3.D",
+      "name": "Explain how claims or evidence support, modify, or refute a source's argument"
+    },
+    {
+      "code": "4.A",
+      "name": "Identify and describe a historical context for a specific historical development or process."
+    },
+    {
+      "code": "4.B",
+      "name": "Explain how a specific historical development or process is situated within a broader historical context"
+    },
+    {
+      "code": "5.A",
+      "name": "Identify patterns among or connections between historical developments and processes."
+    },
+    {
+      "code": "5.B",
+      "name": "Explain how a historical development or process relates to another historical development or process"
+    },
+    {
+      "code": "6.A",
+      "name": "Make a historically defensible claim."
+    },
+    {
+      "code": "6.B",
+      "name": "Support an argument using specific and relevant evidence."
+    },
+    {
+      "code": "6.C",
+      "name": "Use historical reasoning to explain relationships among pieces of historical evidence"
+    },
+    {
+      "code": "6.D",
+      "name": "Corroborate, qualify, or modify an argument using diverse and alternative evidence in order to develop a complex argument."
+    }
+  ]
 }

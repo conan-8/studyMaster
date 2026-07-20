@@ -26,8 +26,8 @@ function fakeResponse(text: string) {
     ok: true,
     status: 200,
     json: async () => ({
-      content: [{ type: "text", text }],
-      usage: { input_tokens: 10, output_tokens: 5 },
+      choices: [{ message: { content: text } }],
+      usage: { prompt_tokens: 10, completion_tokens: 5 },
     }),
     text: async () => text,
   };
@@ -37,7 +37,7 @@ const mockFetch = vi.fn();
 let logSpy: MockInstance<typeof console.log>;
 
 beforeEach(() => {
-  process.env.ANTHROPIC_API_KEY = "test-key";
+  process.env.OPENROUTER_API_KEY = "test-key";
   vi.clearAllMocks();
   vi.stubGlobal("fetch", mockFetch);
   logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
@@ -47,7 +47,7 @@ beforeEach(() => {
 afterEach(() => {
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
-  delete process.env.ANTHROPIC_API_KEY;
+  delete process.env.OPENROUTER_API_KEY;
 });
 
 describe("callLLM", () => {
@@ -104,11 +104,11 @@ describe("callLLM", () => {
     );
   });
 
-  it("throws when ANTHROPIC_API_KEY is missing", async () => {
-    delete process.env.ANTHROPIC_API_KEY;
+  it("throws when OPENROUTER_API_KEY is missing", async () => {
+    delete process.env.OPENROUTER_API_KEY;
 
     await expect(callLLM({ user: "x", schema, purpose: "p" })).rejects.toThrow(
-      "ANTHROPIC_API_KEY",
+      "OPENROUTER_API_KEY",
     );
   });
 });

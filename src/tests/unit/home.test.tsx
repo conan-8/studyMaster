@@ -1,18 +1,22 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import Home from "@/app/page";
 
 describe("Home", () => {
-  it("renders the StudyMate heading", () => {
-    render(<Home />);
-    const heading = screen.getByRole("heading", { name: /studymate/i });
-    expect(heading).toBeInTheDocument();
-  });
+  it("redirects to the exam frontend", () => {
+    let caught: unknown;
+    try {
+      render(<Home />);
+    } catch (error) {
+      caught = error;
+    }
 
-  it("renders the description paragraph", () => {
-    render(<Home />);
-    expect(
-      screen.getByText(/intelligent exam preparation platform/i)
-    ).toBeInTheDocument();
+    expect(caught).toBeDefined();
+    const digest =
+      (caught as { digest?: string }).digest ?? String(
+        (caught as Error).message ?? caught,
+      );
+    expect(digest).toContain("NEXT_REDIRECT");
+    expect(digest).toContain("/exam");
   });
 });

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { LogoutButton } from "./logout-button";
@@ -34,6 +35,21 @@ export default async function AppPage() {
           <p className="text-sm text-slate-400">Signed in as</p>
           <p className="mt-1 text-lg font-medium text-white">{user.email}</p>
         </section>
+
+        <Link
+          href="/exam"
+          className="mt-6 flex items-center justify-between rounded-2xl border border-slate-800 bg-slate-900/60 p-6 transition hover:border-slate-600 hover:bg-slate-900"
+        >
+          <div>
+            <p className="text-lg font-semibold text-white">AP Physics 1 · Test Preview</p>
+            <p className="mt-1 text-sm text-slate-400">
+              Section I · 40 multiple-choice questions · 1 hr 20 min
+            </p>
+          </div>
+          <span className="rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-slate-950">
+            Start exam
+          </span>
+        </Link>
       </div>
     </main>
   );

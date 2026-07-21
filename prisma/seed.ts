@@ -1,5 +1,6 @@
 import { PrismaClient, ExamMode } from "../src/generated/prisma";
 import { CURRICULUM_PARSER_PROMPT } from "../src/lib/curriculum/prompts";
+import { QUESTION_GENERATOR_PROMPT } from "../src/lib/questions/prompts";
 
 const prisma = new PrismaClient();
 
@@ -150,6 +151,16 @@ async function main() {
       name: "curriculum-parser",
       version: 1,
       content: CURRICULUM_PARSER_PROMPT,
+    },
+  });
+
+  await prisma.promptRegistry.upsert({
+    where: { name_version: { name: "question-generator", version: 1 } },
+    update: { content: QUESTION_GENERATOR_PROMPT },
+    create: {
+      name: "question-generator",
+      version: 1,
+      content: QUESTION_GENERATOR_PROMPT,
     },
   });
 }

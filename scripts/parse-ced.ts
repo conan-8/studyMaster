@@ -254,17 +254,23 @@ async function main() {
     skills: dedupeSkills(collectedSkills),
   };
 
-  await mkdir(path.dirname(OUTPUT_PATH), { recursive: true });
-  await writeFile(OUTPUT_PATH, JSON.stringify(taxonomy, null, 2), "utf8");
-  console.log(`Wrote taxonomy to ${OUTPUT_PATH}`);
+  if (units.length > 0) {
+    await mkdir(path.dirname(OUTPUT_PATH), { recursive: true });
+    await writeFile(OUTPUT_PATH, JSON.stringify(taxonomy, null, 2), "utf8");
+    console.log(`Wrote taxonomy to ${OUTPUT_PATH}`);
 
-  try {
-    await persistTaxonomy(taxonomy);
-    console.log("Database upsert complete");
-  } catch (err) {
+    try {
+      await persistTaxonomy(taxonomy);
+      console.log("Database upsert complete");
+    } catch (err) {
+      console.warn(
+        "Database upsert failed:",
+        err instanceof Error ? err.message : String(err),
+      );
+    }
+  } else {
     console.warn(
-      "Database upsert failed:",
-      err instanceof Error ? err.message : String(err),
+      "No units extracted — leaving existing taxonomy and database untouched.",
     );
   }
 

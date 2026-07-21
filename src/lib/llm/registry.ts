@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { CURRICULUM_PARSER_PROMPT } from "@/lib/curriculum/prompts";
+import { QUESTION_GENERATOR_PROMPT } from "@/lib/questions/prompts";
 
 export type Prompt = { content: string; version: number };
 
@@ -11,6 +12,10 @@ export const FALLBACK_PROMPTS: Record<string, Prompt> = {
   "curriculum-parser": {
     version: 1,
     content: CURRICULUM_PARSER_PROMPT,
+  },
+  "question-generator": {
+    version: 1,
+    content: QUESTION_GENERATOR_PROMPT,
   },
 };
 

@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "parse:ced": "tsx scripts/parse-ced.ts"
+    "parse:ced": "tsx scripts/parse-ced.ts",
+    "generate:questions": "tsx scripts/generate-questions.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.0.1",

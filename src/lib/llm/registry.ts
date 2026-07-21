@@ -1,6 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import { CURRICULUM_PARSER_PROMPT } from "@/lib/curriculum/prompts";
-import { QUESTION_GENERATOR_PROMPT } from "@/lib/questions/prompts";
+import {
+  CSA_QUESTION_GENERATOR_PROMPT,
+  QUESTION_GENERATOR_PROMPT,
+} from "@/lib/questions/prompts";
 
 export type Prompt = { content: string; version: number };
 
@@ -16,6 +19,10 @@ export const FALLBACK_PROMPTS: Record<string, Prompt> = {
   "question-generator": {
     version: 1,
     content: QUESTION_GENERATOR_PROMPT,
+  },
+  "question-generator-APCSA": {
+    version: 1,
+    content: CSA_QUESTION_GENERATOR_PROMPT,
   },
 };
 

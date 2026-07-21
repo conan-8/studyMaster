@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { callLLM } from "@/lib/llm/client";
 import { getPrompt } from "@/lib/llm/registry";
 import {
+  CSA_QUESTION_GENERATOR_PROMPT,
   QUESTION_GENERATOR_PROMPT,
   buildUnitQuestionsMessage,
 } from "@/lib/questions/prompts";
@@ -13,12 +14,28 @@ import {
 } from "@/lib/questions/schema";
 import { QuestionType } from "@/generated/prisma";
 
-const SUBJECT_CODE = "APUSH";
-const TAXONOMY_PATH = "content/taxonomy/apush.json";
-const SOURCE_TAG = "generated:v2";
 const DEFAULT_PER_UNIT = 4;
 
-const BATCH_SCHEMA_DESCRIPTION = `{
+type SubjectConfig = {
+  code: string;
+  label: string;
+  promptName: string;
+  systemPrompt: string;
+  sourceTag: string;
+  taxonomyPath: string;
+  schemaDescription: string;
+  styleHint?: string;
+};
+
+const SUBJECT_CONFIGS: Record<string, SubjectConfig> = {
+  APUSH: {
+    code: "APUSH",
+    label: "AP U.S. History",
+    promptName: "question-generator",
+    systemPrompt: QUESTION_GENERATOR_PROMPT,
+    sourceTag: "generated:v2",
+    taxonomyPath: "content/taxonomy/apush.json",
+    schemaDescription: `{
   "questions": [
     {
       "topicCode": "<string: exact topic code from the list, e.g. 3.2>",
@@ -36,7 +53,46 @@ const BATCH_SCHEMA_DESCRIPTION = `{
       "misconceptionTags": ["<string: kebab-case tag>"]
     }
   ]
-}`;
+}`,
+  },
+  APCSA: {
+    code: "APCSA",
+    label: "AP Computer Science A",
+    promptName: "question-generator-APCSA",
+    systemPrompt: CSA_QUESTION_GENERATOR_PROMPT,
+    sourceTag: "generated:csa-v1",
+    taxonomyPath: "content/taxonomy/apcsa.json",
+    styleHint: `Every question should be a code-tracing exercise: put a short valid Java snippet in "stimulus" (plain text, no markdown fences) unless the topic is purely conceptual, and ask the student to predict output or execution behavior.`,
+    schemaDescription: `{
+  "questions": [
+    {
+      "topicCode": "<string: exact topic code from the list, e.g. 2.4>",
+      "stem": "<string: what does this code print / value of a variable after the loop / which statement is true>",
+      "stimulus": "<string|null: Java code snippet as plain text, no markdown fences>",
+      "choices": [
+        { "id": "A", "text": "<string>" },
+        { "id": "B", "text": "<string>" },
+        { "id": "C", "text": "<string>" },
+        { "id": "D", "text": "<string>" }
+      ],
+      "correctAnswer": "<string: one of A, B, C, D>",
+      "explanation": "<string: step-by-step trace; why distractors fail>",
+      "difficulty": "<integer 1-5>",
+      "misconceptionTags": ["<string: kebab-case tag>"]
+    }
+  ]
+}`,
+  },
+};
+
+const SUBJECT_CODE = process.env.SUBJECT_CODE ?? "APCSA";
+const config = SUBJECT_CONFIGS[SUBJECT_CODE];
+if (!config) {
+  console.error(
+    `Unknown SUBJECT_CODE "${SUBJECT_CODE}". Available: ${Object.keys(SUBJECT_CONFIGS).join(", ")}`,
+  );
+  process.exit(1);
+}
 
 type UnitView = {
   unitNumber: number;
@@ -46,33 +102,35 @@ type UnitView = {
 
 type FailedUnit = { label: string; error: string };
 
-async function resolvePrompt(): Promise<string> {
+async function resolvePrompt(subjectConfig: SubjectConfig): Promise<string> {
   try {
     await prisma.promptRegistry.upsert({
-      where: { name_version: { name: "question-generator", version: 1 } },
-      update: { content: QUESTION_GENERATOR_PROMPT },
+      where: {
+        name_version: { name: subjectConfig.promptName, version: 1 },
+      },
+      update: { content: subjectConfig.systemPrompt },
       create: {
-        name: "question-generator",
+        name: subjectConfig.promptName,
         version: 1,
-        content: QUESTION_GENERATOR_PROMPT,
+        content: subjectConfig.systemPrompt,
       },
     });
-    const prompt = await getPrompt("question-generator");
+    const prompt = await getPrompt(subjectConfig.promptName);
     return prompt.content;
   } catch (err) {
     console.warn(
       "Prompt registry unavailable, using built-in prompt:",
       err instanceof Error ? err.message : String(err),
     );
-    return QUESTION_GENERATOR_PROMPT;
+    return subjectConfig.systemPrompt;
   }
 }
 
-function loadLearningObjectives(): Map<string, string[]> {
+function loadLearningObjectives(taxonomyPath: string): Map<string, string[]> {
   const map = new Map<string, string[]>();
-  if (!existsSync(TAXONOMY_PATH)) return map;
+  if (!existsSync(taxonomyPath)) return map;
   try {
-    const taxonomy = JSON.parse(readFileSync(TAXONOMY_PATH, "utf8")) as {
+    const taxonomy = JSON.parse(readFileSync(taxonomyPath, "utf8")) as {
       units?: {
         topics?: { code: string; learningObjectives?: { statement: string }[] }[];
       }[];
@@ -123,11 +181,13 @@ async function main() {
   });
   if (!subject || subject.units.length === 0) {
     console.error(`No units found for ${SUBJECT_CODE} in the database.`);
-    console.error("Run `npm run parse:ced` first to upsert the taxonomy.");
+    console.error(
+      "Run `npx prisma db seed` first (CSA taxonomy comes from the seed, not parse:ced).",
+    );
     process.exit(1);
   }
 
-  const losByCode = loadLearningObjectives();
+  const losByCode = loadLearningObjectives(config.taxonomyPath);
   const units: UnitView[] = subject.units.map((unit) => ({
     unitNumber: unit.unitNumber,
     title: unit.title,
@@ -151,13 +211,15 @@ async function main() {
     units.flatMap((u) => u.topics.map((t) => [t.code, t.id] as const)),
   );
 
-  const systemPrompt = await resolvePrompt();
+  const systemPrompt = await resolvePrompt(config);
 
   const deleted = await prisma.question.deleteMany({
-    where: { sourceTag: SOURCE_TAG, isActive: false },
+    where: { sourceTag: config.sourceTag, isActive: false, subjectId: subject.id },
   });
   if (deleted.count > 0) {
-    console.log(`Cleared ${deleted.count} pending ${SOURCE_TAG} questions`);
+    console.log(
+      `Cleared ${deleted.count} pending ${config.sourceTag} questions`,
+    );
   }
 
   const failedUnits: FailedUnit[] = [];
@@ -170,13 +232,15 @@ async function main() {
         await callLLM({
           system: systemPrompt,
           user: buildUnitQuestionsMessage(
-            BATCH_SCHEMA_DESCRIPTION,
+            config.schemaDescription,
             perUnit,
             unit.title,
             buildTopicsBlock(unit),
+            config.label,
+            config.styleHint,
           ),
           schema: unitMcqBatchSchema,
-          purpose: `question-generator-unit-${unit.unitNumber}`,
+          purpose: `question-generator-${config.code}-unit-${unit.unitNumber}`,
           maxTokens: 8192,
         }),
       );
@@ -205,7 +269,7 @@ async function main() {
             correctAnswer: mcq.correctAnswer,
             explanation: mcq.explanation,
             misconceptionTags: mcq.misconceptionTags,
-            sourceTag: SOURCE_TAG,
+            sourceTag: config.sourceTag,
             isActive: false,
           },
         });

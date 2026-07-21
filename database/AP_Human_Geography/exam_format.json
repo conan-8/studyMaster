@@ -1,0 +1,49 @@
+{
+  "subject": {
+    "code": "AP_HUMAN_GEO",
+    "name": "AP Human Geography",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 135,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 60,
+      "durationMinutes": 60,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response",
+      "type": "FRQ",
+      "questionCount": 3,
+      "durationMinutes": 75,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "II-1", "name": "FRQ 1 (No Stimulus)", "questionCount": 1, "durationMinutes": 25 },
+        { "id": "II-2", "name": "FRQ 2 (One Stimulus)", "questionCount": 1, "durationMinutes": 25 },
+        { "id": "II-3", "name": "FRQ 3 (Two Stimuli)", "questionCount": 1, "durationMinutes": 25 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Thinking Geographically", "weightPercent": { "min": 8, "max": 10 } },
+    { "unit": 2, "title": "Population and Migration Patterns and Processes", "weightPercent": { "min": 12, "max": 17 } },
+    { "unit": 3, "title": "Cultural Patterns and Processes", "weightPercent": { "min": 12, "max": 17 } },
+    { "unit": 4, "title": "Political Patterns and Processes", "weightPercent": { "min": 12, "max": 17 } },
+    { "unit": 5, "title": "Agriculture and Rural Land-Use Patterns and Processes", "weightPercent": { "min": 12, "max": 17 } },
+    { "unit": 6, "title": "Cities and Urban Land-Use Patterns and Processes", "weightPercent": { "min": 12, "max": 17 } },
+    { "unit": 7, "title": "Industrial and Economic Development Patterns and Processes", "weightPercent": { "min": 12, "max": 17 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. FRQ scored by readers; each question worth 6-7 points. Section I is 50% and Section II is 50% of the total score.",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed.",
+    "referenceSheet": false,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (FRQ) completed on paper."
+  }
+}

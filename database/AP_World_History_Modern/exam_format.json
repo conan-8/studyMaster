@@ -1,0 +1,71 @@
+{
+  "subject": {
+    "code": "AP_WORLD_HISTORY",
+    "name": "AP World History: Modern",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 195,
+  "sections": [
+    {
+      "id": "IA",
+      "name": "Section IA: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 55,
+      "durationMinutes": 55,
+      "weightPercent": 40,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "IB",
+      "name": "Section IB: Short Answer Questions",
+      "type": "FRQ",
+      "questionCount": 3,
+      "durationMinutes": 40,
+      "weightPercent": 20,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "IB-1", "name": "SAQ 1 (Required)", "questionCount": 1, "durationMinutes": 13 },
+        { "id": "IB-2", "name": "SAQ 2 (Required)", "questionCount": 1, "durationMinutes": 13 },
+        { "id": "IB-3", "name": "SAQ 3 or 4 (Choice)", "questionCount": 1, "durationMinutes": 14 }
+      ]
+    },
+    {
+      "id": "IIA",
+      "name": "Section IIA: Document-Based Question",
+      "type": "ESSAY",
+      "questionCount": 1,
+      "durationMinutes": 60,
+      "weightPercent": 25,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "IIB",
+      "name": "Section IIB: Long Essay Question",
+      "type": "ESSAY",
+      "questionCount": 1,
+      "durationMinutes": 40,
+      "weightPercent": 15,
+      "calculatorAllowed": false,
+      "subParts": []
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "The Global Tapestry, 1200-1450", "weightPercent": { "min": 8, "max": 10 } },
+    { "unit": 2, "title": "Networks of Exchange, 1200-1450", "weightPercent": { "min": 8, "max": 10 } },
+    { "unit": 3, "title": "Land-Based Empires, 1450-1750", "weightPercent": { "min": 12, "max": 15 } },
+    { "unit": 4, "title": "Transoceanic Interconnections, 1450-1750", "weightPercent": { "min": 12, "max": 15 } },
+    { "unit": 5, "title": "Revolutions, 1750-1900", "weightPercent": { "min": 12, "max": 15 } },
+    { "unit": 6, "title": "Consequences of Industrialization, 1750-1900", "weightPercent": { "min": 12, "max": 15 } },
+    { "unit": 7, "title": "Global Conflict, 1900-Present", "weightPercent": { "min": 8, "max": 10 } },
+    { "unit": 8, "title": "Cold War and Decolonization, 1900-Present", "weightPercent": { "min": 8, "max": 10 } },
+    { "unit": 9, "title": "Globalization, 1900-Present", "weightPercent": { "min": 8, "max": 10 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. SAQs scored 0-3 each. DBQ scored on a 7-point rubric. LEQ scored on a 6-point rubric. Section I is 60% (MCQ 40% + SAQ 20%) and Section II is 40% (DBQ 25% + LEQ 15%).",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed.",
+    "referenceSheet": false,
+    "deliveryNotes": "Section IA (MCQ) completed digitally via Bluebook app. Sections IB, IIA, IIB completed on paper. Students choose one of three LEQ prompts."
+  }
+}

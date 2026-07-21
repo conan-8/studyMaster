@@ -1,0 +1,43 @@
+{
+  "subject": {
+    "code": "AP_CSP",
+    "name": "AP Computer Science Principles",
+    "examMode": "FULLY_DIGITAL"
+  },
+  "totalDurationMinutes": 120,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 70,
+      "durationMinutes": 120,
+      "weightPercent": 70,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Create Performance Task",
+      "type": "PERFORMANCE_TASK",
+      "questionCount": 1,
+      "durationMinutes": 0,
+      "weightPercent": 30,
+      "calculatorAllowed": false,
+      "subParts": []
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Creative Development", "weightPercent": { "min": 5, "max": 7 } },
+    { "unit": 2, "title": "Data", "weightPercent": { "min": 17, "max": 22 } },
+    { "unit": 3, "title": "Algorithms and Programming", "weightPercent": { "min": 30, "max": 35 } },
+    { "unit": 4, "title": "Computing Systems and Networks", "weightPercent": { "min": 11, "max": 15 } },
+    { "unit": 5, "title": "Impact of Computing", "weightPercent": { "min": 21, "max": 26 } }
+  ],
+  "scoringNotes": "MCQ scored by machine (70%). Create Performance Task submitted through the AP Digital Portfolio (30%). The performance task includes a program code, a video, and written responses.",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed.",
+    "referenceSheet": false,
+    "deliveryNotes": "End-of-course exam completed entirely digitally via Bluebook app. Create Performance Task completed during course and submitted via AP Digital Portfolio before the exam."
+  }
+}

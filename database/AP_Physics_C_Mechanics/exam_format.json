@@ -1,0 +1,45 @@
+{
+  "subject": {
+    "code": "AP_PHYS_C_MECH",
+    "name": "AP Physics C: Mechanics",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 90,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 35,
+      "durationMinutes": 45,
+      "weightPercent": 50,
+      "calculatorAllowed": true,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response",
+      "type": "FRQ",
+      "questionCount": 3,
+      "durationMinutes": 45,
+      "weightPercent": 50,
+      "calculatorAllowed": true,
+      "subParts": []
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Kinematics", "weightPercent": { "min": 14, "max": 20 } },
+    { "unit": 2, "title": "Newton's Laws of Motion", "weightPercent": { "min": 17, "max": 23 } },
+    { "unit": 3, "title": "Work, Energy, and Power", "weightPercent": { "min": 14, "max": 17 } },
+    { "unit": 4, "title": "Systems of Particles and Linear Momentum", "weightPercent": { "min": 14, "max": 17 } },
+    { "unit": 5, "title": "Rotation", "weightPercent": { "min": 14, "max": 20 } },
+    { "unit": 6, "title": "Oscillations", "weightPercent": { "min": 6, "max": 14 } },
+    { "unit": 7, "title": "Gravitation", "weightPercent": { "min": 6, "max": 14 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. FRQ scored by readers; each question worth 15 points. Section I is 50% and Section II is 50% of the total score.",
+  "specialPolicies": {
+    "calculatorPolicy": "Four-function, scientific, or graphing calculator allowed on both sections.",
+    "referenceSheet": true,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (FRQ) completed on paper. An equation sheet and table of constants are provided."
+  }
+}

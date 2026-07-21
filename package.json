@@ -14,7 +14,8 @@
     "generate:questions": "tsx scripts/generate-questions.ts",
     "unpack:bluebook": "node scripts/unpack-bluebook.mjs",
     "smoke:bluebook": "node scripts/smoke-bluebook.mjs",
-    "smoke:bluebook:served": "node scripts/smoke-bluebook-served.mjs"
+    "smoke:bluebook:served": "node scripts/smoke-bluebook-served.mjs",
+    "validate:exam-formats": "tsx scripts/validate-exam-formats.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.0.1",

@@ -1,0 +1,71 @@
+{
+  "subject": {
+    "code": "AP_US_HISTORY",
+    "name": "AP United States History",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 195,
+  "sections": [
+    {
+      "id": "IA",
+      "name": "Section IA: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 55,
+      "durationMinutes": 55,
+      "weightPercent": 40,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "IB",
+      "name": "Section IB: Short Answer Questions",
+      "type": "FRQ",
+      "questionCount": 3,
+      "durationMinutes": 40,
+      "weightPercent": 20,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "IB-1", "name": "SAQ 1 (Required)", "questionCount": 1, "durationMinutes": 13 },
+        { "id": "IB-2", "name": "SAQ 2 (Required)", "questionCount": 1, "durationMinutes": 13 },
+        { "id": "IB-3", "name": "SAQ 3 or 4 (Choice)", "questionCount": 1, "durationMinutes": 14 }
+      ]
+    },
+    {
+      "id": "IIA",
+      "name": "Section IIA: Document-Based Question",
+      "type": "ESSAY",
+      "questionCount": 1,
+      "durationMinutes": 60,
+      "weightPercent": 25,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "IIB",
+      "name": "Section IIB: Long Essay Question",
+      "type": "ESSAY",
+      "questionCount": 1,
+      "durationMinutes": 40,
+      "weightPercent": 15,
+      "calculatorAllowed": false,
+      "subParts": []
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Period 1: 1491-1607", "weightPercent": { "min": 4, "max": 6 } },
+    { "unit": 2, "title": "Period 2: 1607-1754", "weightPercent": { "min": 6, "max": 8 } },
+    { "unit": 3, "title": "Period 3: 1754-1800", "weightPercent": { "min": 10, "max": 17 } },
+    { "unit": 4, "title": "Period 4: 1800-1848", "weightPercent": { "min": 10, "max": 17 } },
+    { "unit": 5, "title": "Period 5: 1844-1877", "weightPercent": { "min": 10, "max": 17 } },
+    { "unit": 6, "title": "Period 6: 1865-1898", "weightPercent": { "min": 10, "max": 17 } },
+    { "unit": 7, "title": "Period 7: 1890-1945", "weightPercent": { "min": 10, "max": 17 } },
+    { "unit": 8, "title": "Period 8: 1945-1980", "weightPercent": { "min": 10, "max": 17 } },
+    { "unit": 9, "title": "Period 9: 1980-Present", "weightPercent": { "min": 4, "max": 6 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. SAQs scored 0-3 each. DBQ scored on a 7-point rubric. LEQ scored on a 6-point rubric. Section I is 60% (MCQ 40% + SAQ 20%) and Section II is 40% (DBQ 25% + LEQ 15%).",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed.",
+    "referenceSheet": false,
+    "deliveryNotes": "Section IA (MCQ) completed digitally via Bluebook app. Sections IB, IIA, IIB completed on paper. Students choose one of two LEQ prompts."
+  }
+}

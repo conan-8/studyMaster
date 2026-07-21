@@ -1,0 +1,66 @@
+{
+  "subject": {
+    "code": "AP_CALC_AB",
+    "name": "AP Calculus AB",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 195,
+  "sections": [
+    {
+      "id": "IA",
+      "name": "Section IA: Multiple Choice (No Calculator)",
+      "type": "MCQ",
+      "questionCount": 30,
+      "durationMinutes": 60,
+      "weightPercent": 33.3,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "IB",
+      "name": "Section IB: Multiple Choice (Calculator Allowed)",
+      "type": "MCQ",
+      "questionCount": 15,
+      "durationMinutes": 45,
+      "weightPercent": 16.7,
+      "calculatorAllowed": true,
+      "subParts": []
+    },
+    {
+      "id": "IIA",
+      "name": "Section IIA: Free Response (Calculator Allowed)",
+      "type": "FRQ",
+      "questionCount": 2,
+      "durationMinutes": 30,
+      "weightPercent": 16.7,
+      "calculatorAllowed": true,
+      "subParts": []
+    },
+    {
+      "id": "IIB",
+      "name": "Section IIB: Free Response (No Calculator)",
+      "type": "FRQ",
+      "questionCount": 4,
+      "durationMinutes": 60,
+      "weightPercent": 33.3,
+      "calculatorAllowed": false,
+      "subParts": []
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Limits and Continuity", "weightPercent": { "min": 10, "max": 12 } },
+    { "unit": 2, "title": "Differentiation: Definition and Fundamental Properties", "weightPercent": { "min": 10, "max": 12 } },
+    { "unit": 3, "title": "Differentiation: Composite, Implicit, and Inverse Functions", "weightPercent": { "min": 9, "max": 13 } },
+    { "unit": 4, "title": "Contextual Applications of Differentiation", "weightPercent": { "min": 10, "max": 15 } },
+    { "unit": 5, "title": "Analytical Applications of Differentiation", "weightPercent": { "min": 10, "max": 15 } },
+    { "unit": 6, "title": "Integration and Accumulation of Change", "weightPercent": { "min": 10, "max": 12 } },
+    { "unit": 7, "title": "Differential Equations", "weightPercent": { "min": 6, "max": 12 } },
+    { "unit": 8, "title": "Applications of Integration", "weightPercent": { "min": 10, "max": 15 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. FRQ scored by readers on a 0-9 scale per question. Total composite score converted to 1-5 AP scale. Section I (MCQ) is 50% and Section II (FRQ) is 50% of the total score.",
+  "specialPolicies": {
+    "calculatorPolicy": "Graphing calculator required for Section IB and Section IIA. Approved calculators include TI-84 Plus, TI-Nspire, and Casio fx-9750GII series.",
+    "referenceSheet": false,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (FRQ) completed on paper and uploaded or mailed. Students bring their own approved calculator."
+  }
+}

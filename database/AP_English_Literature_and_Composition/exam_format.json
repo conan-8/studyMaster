@@ -1,0 +1,48 @@
+{
+  "subject": {
+    "code": "AP_ENG_LIT",
+    "name": "AP English Literature and Composition",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 180,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 55,
+      "durationMinutes": 60,
+      "weightPercent": 45,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response Essays",
+      "type": "ESSAY",
+      "questionCount": 3,
+      "durationMinutes": 120,
+      "weightPercent": 55,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "II-1", "name": "Poetry Analysis Essay", "questionCount": 1, "durationMinutes": 40 },
+        { "id": "II-2", "name": "Prose Fiction Analysis Essay", "questionCount": 1, "durationMinutes": 40 },
+        { "id": "II-3", "name": "Literary Argument Essay (Open-Ended)", "questionCount": 1, "durationMinutes": 40 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Short Fiction I", "weightPercent": { "min": 15, "max": 20 } },
+    { "unit": 2, "title": "Poetry I", "weightPercent": { "min": 15, "max": 20 } },
+    { "unit": 3, "title": "Longer Fiction or Drama I", "weightPercent": { "min": 15, "max": 20 } },
+    { "unit": 4, "title": "Short Fiction II", "weightPercent": { "min": 15, "max": 20 } },
+    { "unit": 5, "title": "Poetry II", "weightPercent": { "min": 15, "max": 20 } },
+    { "unit": 6, "title": "Longer Fiction or Drama II", "weightPercent": { "min": 15, "max": 20 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. Each essay scored on a 0-6 rubric (thesis, evidence/commentary, sophistication). Section I is 45% and Section II is 55% of the total score.",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed.",
+    "referenceSheet": false,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (essays) completed on paper. The open-ended essay allows students to choose from a list of literary works."
+  }
+}

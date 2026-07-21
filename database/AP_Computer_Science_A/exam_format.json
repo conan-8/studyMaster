@@ -1,0 +1,53 @@
+{
+  "subject": {
+    "code": "AP_CSA",
+    "name": "AP Computer Science A",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 180,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 40,
+      "durationMinutes": 90,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response",
+      "type": "FRQ",
+      "questionCount": 4,
+      "durationMinutes": 90,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "II-1", "name": "Methods and Control Structures", "questionCount": 1, "durationMinutes": 22 },
+        { "id": "II-2", "name": "Class", "questionCount": 1, "durationMinutes": 22 },
+        { "id": "II-3", "name": "Array/ArrayList", "questionCount": 1, "durationMinutes": 23 },
+        { "id": "II-4", "name": "2D Array", "questionCount": 1, "durationMinutes": 23 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Primitive Types", "weightPercent": { "min": 2.5, "max": 5 } },
+    { "unit": 2, "title": "Using Objects", "weightPercent": { "min": 5, "max": 7.5 } },
+    { "unit": 3, "title": "Boolean Expressions and if Statements", "weightPercent": { "min": 15, "max": 17.5 } },
+    { "unit": 4, "title": "Iteration", "weightPercent": { "min": 17.5, "max": 22.5 } },
+    { "unit": 5, "title": "Writing Classes", "weightPercent": { "min": 5, "max": 7.5 } },
+    { "unit": 6, "title": "Array", "weightPercent": { "min": 10, "max": 15 } },
+    { "unit": 7, "title": "ArrayList", "weightPercent": { "min": 2.5, "max": 7.5 } },
+    { "unit": 8, "title": "2D Array", "weightPercent": { "min": 7.5, "max": 10 } },
+    { "unit": 9, "title": "Inheritance", "weightPercent": { "min": 5, "max": 10 } },
+    { "unit": 10, "title": "Recursion", "weightPercent": { "min": 5, "max": 7.5 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. FRQ scored by readers; each question worth 9 points. Section I is 50% and Section II is 50% of the total score.",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed or needed.",
+    "referenceSheet": true,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (FRQ) completed on paper. A Java Quick Reference sheet is provided."
+  }
+}

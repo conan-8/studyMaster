@@ -1,0 +1,50 @@
+{
+  "subject": {
+    "code": "AP_CHEM",
+    "name": "AP Chemistry",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 195,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 60,
+      "durationMinutes": 90,
+      "weightPercent": 50,
+      "calculatorAllowed": true,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response",
+      "type": "FRQ",
+      "questionCount": 7,
+      "durationMinutes": 105,
+      "weightPercent": 50,
+      "calculatorAllowed": true,
+      "subParts": [
+        { "id": "II-Long", "name": "Long FRQ (Questions 1-3)", "questionCount": 3, "durationMinutes": 69 },
+        { "id": "II-Short", "name": "Short FRQ (Questions 4-7)", "questionCount": 4, "durationMinutes": 36 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Atomic Structure and Properties", "weightPercent": { "min": 7, "max": 9 } },
+    { "unit": 2, "title": "Molecular and Ionic Compound Structure and Properties", "weightPercent": { "min": 7, "max": 9 } },
+    { "unit": 3, "title": "Intermolecular Forces and Properties", "weightPercent": { "min": 18, "max": 22 } },
+    { "unit": 4, "title": "Chemical Reactions", "weightPercent": { "min": 7, "max": 9 } },
+    { "unit": 5, "title": "Kinetics", "weightPercent": { "min": 7, "max": 9 } },
+    { "unit": 6, "title": "Thermodynamics", "weightPercent": { "min": 7, "max": 9 } },
+    { "unit": 7, "title": "Equilibrium", "weightPercent": { "min": 7, "max": 9 } },
+    { "unit": 8, "title": "Acids and Bases", "weightPercent": { "min": 11, "max": 15 } },
+    { "unit": 9, "title": "Applications of Thermodynamics", "weightPercent": { "min": 7, "max": 9 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. FRQ scored by readers; long FRQs worth 10 points each, short FRQs worth 4 points each. Section I is 50% and Section II is 50% of the total score.",
+  "specialPolicies": {
+    "calculatorPolicy": "Four-function, scientific, or graphing calculator allowed on both sections.",
+    "referenceSheet": true,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (FRQ) completed on paper. A periodic table and formula/equation sheet are provided."
+  }
+}

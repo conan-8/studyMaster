@@ -1,0 +1,46 @@
+{
+  "subject": {
+    "code": "AP_PSYCH",
+    "name": "AP Psychology",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 160,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 75,
+      "durationMinutes": 90,
+      "weightPercent": 66.7,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response",
+      "type": "FRQ",
+      "questionCount": 2,
+      "durationMinutes": 70,
+      "weightPercent": 33.3,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "II-AAQ", "name": "Article Analysis Question", "questionCount": 1, "durationMinutes": 25 },
+        { "id": "II-EBQ", "name": "Evidence-Based Question", "questionCount": 1, "durationMinutes": 45 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Biological Bases of Behavior", "weightPercent": { "min": 17, "max": 21 } },
+    { "unit": 2, "title": "Cognition", "weightPercent": { "min": 17, "max": 21 } },
+    { "unit": 3, "title": "Development and Learning", "weightPercent": { "min": 13, "max": 17 } },
+    { "unit": 4, "title": "Social Psychology and Personality", "weightPercent": { "min": 15, "max": 19 } },
+    { "unit": 5, "title": "Mental and Physical Health", "weightPercent": { "min": 15, "max": 19 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. FRQ scored by readers; AAQ worth 3 points, EBQ worth 7 points. Section I is 66.7% and Section II is 33.3% of the total score.",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed.",
+    "referenceSheet": false,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (FRQ) completed on paper. The AAQ includes a provided research article excerpt."
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "subject": {
+    "code": "AP_ENG_LANG",
+    "name": "AP English Language and Composition",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 195,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 45,
+      "durationMinutes": 60,
+      "weightPercent": 45,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response Essays",
+      "type": "ESSAY",
+      "questionCount": 3,
+      "durationMinutes": 135,
+      "weightPercent": 55,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "II-1", "name": "Synthesis Essay", "questionCount": 1, "durationMinutes": 55 },
+        { "id": "II-2", "name": "Rhetorical Analysis Essay", "questionCount": 1, "durationMinutes": 40 },
+        { "id": "II-3", "name": "Argument Essay", "questionCount": 1, "durationMinutes": 40 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Rhetorical Situation: Reading and Writing", "weightPercent": { "min": 15, "max": 20 } },
+    { "unit": 2, "title": "Rhetorical Situation: Writing", "weightPercent": { "min": 17, "max": 22 } },
+    { "unit": 3, "title": "Claims and Evidence", "weightPercent": { "min": 20, "max": 25 } },
+    { "unit": 4, "title": "Organization and Commentary", "weightPercent": { "min": 20, "max": 25 } },
+    { "unit": 5, "title": "Style and Syntax", "weightPercent": { "min": 15, "max": 20 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. Each essay scored on a 0-6 rubric (thesis, evidence/commentary, sophistication). Section I is 45% and Section II is 55% of the total score. The Synthesis Essay includes a 15-minute reading period within the 55 minutes.",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed.",
+    "referenceSheet": false,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (essays) completed on paper. Synthesis Essay provides 6-7 sources for students to incorporate."
+  }
+}

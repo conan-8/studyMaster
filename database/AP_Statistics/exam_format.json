@@ -1,0 +1,50 @@
+{
+  "subject": {
+    "code": "AP_STAT",
+    "name": "AP Statistics",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 180,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 40,
+      "durationMinutes": 90,
+      "weightPercent": 50,
+      "calculatorAllowed": true,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response",
+      "type": "FRQ",
+      "questionCount": 6,
+      "durationMinutes": 90,
+      "weightPercent": 50,
+      "calculatorAllowed": true,
+      "subParts": [
+        { "id": "II-A", "name": "Questions 1-5 (Standard FRQ)", "questionCount": 5, "durationMinutes": 65 },
+        { "id": "II-B", "name": "Question 6 (Investigative Task)", "questionCount": 1, "durationMinutes": 25 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Exploring One-Variable Data", "weightPercent": { "min": 15, "max": 23 } },
+    { "unit": 2, "title": "Exploring Two-Variable Data", "weightPercent": { "min": 5, "max": 7 } },
+    { "unit": 3, "title": "Collecting Data", "weightPercent": { "min": 2, "max": 5 } },
+    { "unit": 4, "title": "Probability, Random Variables, and Probability Distributions", "weightPercent": { "min": 7, "max": 12 } },
+    { "unit": 5, "title": "Sampling Distributions", "weightPercent": { "min": 7, "max": 12 } },
+    { "unit": 6, "title": "Inference for Categorical Data: Proportions", "weightPercent": { "min": 7, "max": 12 } },
+    { "unit": 7, "title": "Inference for Quantitative Data: Means", "weightPercent": { "min": 7, "max": 12 } },
+    { "unit": 8, "title": "Inference for Categorical Data: Chi-Square", "weightPercent": { "min": 2, "max": 5 } },
+    { "unit": 9, "title": "Inference for Quantitative Data: Slopes", "weightPercent": { "min": 2, "max": 5 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. FRQ scored by readers; Questions 1-5 scored 0-4 each, Question 6 (Investigative Task) scored 0-4. Section I is 50% and Section II is 50% of the total score.",
+  "specialPolicies": {
+    "calculatorPolicy": "Graphing calculator with statistical capabilities required. Approved calculators include TI-84 Plus, TI-Nspire, and Casio fx-9750GII series.",
+    "referenceSheet": true,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (FRQ) completed on paper. A statistics formula sheet is provided. Students bring their own approved calculator."
+  }
+}

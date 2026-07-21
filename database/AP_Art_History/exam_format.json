@@ -1,0 +1,55 @@
+{
+  "subject": {
+    "code": "AP_ART_HISTORY",
+    "name": "AP Art History",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 180,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 80,
+      "durationMinutes": 60,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response",
+      "type": "FRQ",
+      "questionCount": 6,
+      "durationMinutes": 120,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "II-1", "name": "Comparison (Long Essay)", "questionCount": 1, "durationMinutes": 25 },
+        { "id": "II-2", "name": "Visual Analysis (Long Essay)", "questionCount": 1, "durationMinutes": 25 },
+        { "id": "II-3", "name": "Contextual Analysis", "questionCount": 1, "durationMinutes": 15 },
+        { "id": "II-4", "name": "Contextual Analysis", "questionCount": 1, "durationMinutes": 15 },
+        { "id": "II-5", "name": "Attribution", "questionCount": 1, "durationMinutes": 20 },
+        { "id": "II-6", "name": "Continuity and Change", "questionCount": 1, "durationMinutes": 20 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Global Prehistory", "weightPercent": 4 },
+    { "unit": 2, "title": "Ancient Mediterranean", "weightPercent": 15 },
+    { "unit": 3, "title": "Early Europe and Colonial Americas", "weightPercent": 21 },
+    { "unit": 4, "title": "Later Europe and Americas", "weightPercent": 21 },
+    { "unit": 5, "title": "Indigenous Americas", "weightPercent": 6 },
+    { "unit": 6, "title": "Africa", "weightPercent": 7 },
+    { "unit": 7, "title": "West and Central Asia", "weightPercent": 2.5 },
+    { "unit": 8, "title": "South, East, and Southeast Asia", "weightPercent": 8 },
+    { "unit": 9, "title": "The Pacific", "weightPercent": 4 },
+    { "unit": 10, "title": "Global Contemporary", "weightPercent": 15 }
+  ],
+  "scoringNotes": "MCQ scored by machine. FRQ scored by readers; long essays worth 6 points each, short essays worth 3-4 points each. Section I is 50% and Section II is 50% of the total score.",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed.",
+    "referenceSheet": false,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (FRQ) completed on paper. Color images of artworks provided in the exam."
+  }
+}

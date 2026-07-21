@@ -1,0 +1,69 @@
+{
+  "subject": {
+    "code": "AP_EURO_HISTORY",
+    "name": "AP European History",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 195,
+  "sections": [
+    {
+      "id": "IA",
+      "name": "Section IA: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 55,
+      "durationMinutes": 55,
+      "weightPercent": 40,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "IB",
+      "name": "Section IB: Short Answer Questions",
+      "type": "FRQ",
+      "questionCount": 3,
+      "durationMinutes": 40,
+      "weightPercent": 20,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "IB-1", "name": "SAQ 1 (Required)", "questionCount": 1, "durationMinutes": 13 },
+        { "id": "IB-2", "name": "SAQ 2 (Required)", "questionCount": 1, "durationMinutes": 13 },
+        { "id": "IB-3", "name": "SAQ 3 or 4 (Choice)", "questionCount": 1, "durationMinutes": 14 }
+      ]
+    },
+    {
+      "id": "IIA",
+      "name": "Section IIA: Document-Based Question",
+      "type": "ESSAY",
+      "questionCount": 1,
+      "durationMinutes": 60,
+      "weightPercent": 25,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "IIB",
+      "name": "Section IIB: Long Essay Question",
+      "type": "ESSAY",
+      "questionCount": 1,
+      "durationMinutes": 40,
+      "weightPercent": 15,
+      "calculatorAllowed": false,
+      "subParts": []
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Renaissance and Exploration, 1450-1648", "weightPercent": { "min": 10, "max": 15 } },
+    { "unit": 2, "title": "Age of Reformation, 1450-1648", "weightPercent": { "min": 10, "max": 15 } },
+    { "unit": 3, "title": "Absolutism and Constitutionalism, 1648-1815", "weightPercent": { "min": 10, "max": 15 } },
+    { "unit": 4, "title": "Scientific, Philosophical, and Political Developments, 1648-1815", "weightPercent": { "min": 10, "max": 15 } },
+    { "unit": 5, "title": "Industrialization and Its Effects, 1815-1914", "weightPercent": { "min": 10, "max": 15 } },
+    { "unit": 6, "title": "Total War and Instability, 1914-1945", "weightPercent": { "min": 10, "max": 15 } },
+    { "unit": 7, "title": "Cold War and Contemporary Europe, 1945-Present", "weightPercent": { "min": 10, "max": 15 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. SAQs scored 0-3 each. DBQ scored on a 7-point rubric. LEQ scored on a 6-point rubric. Section I is 60% (MCQ 40% + SAQ 20%) and Section II is 40% (DBQ 25% + LEQ 15%).",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed.",
+    "referenceSheet": false,
+    "deliveryNotes": "Section IA (MCQ) completed digitally via Bluebook app. Sections IB, IIA, IIB completed on paper. Students choose one of three LEQ prompts."
+  }
+}

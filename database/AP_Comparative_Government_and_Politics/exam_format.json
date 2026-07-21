@@ -1,0 +1,48 @@
+{
+  "subject": {
+    "code": "AP_COMP_GOV",
+    "name": "AP Comparative Government and Politics",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 150,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 55,
+      "durationMinutes": 60,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response",
+      "type": "FRQ",
+      "questionCount": 4,
+      "durationMinutes": 90,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "II-1", "name": "Concept Application", "questionCount": 1, "durationMinutes": 20 },
+        { "id": "II-2", "name": "Quantitative Analysis", "questionCount": 1, "durationMinutes": 20 },
+        { "id": "II-3", "name": "Comparative Analysis", "questionCount": 1, "durationMinutes": 20 },
+        { "id": "II-4", "name": "Argument Essay", "questionCount": 1, "durationMinutes": 30 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Political Systems, Regimes, and Governments", "weightPercent": { "min": 18, "max": 27 } },
+    { "unit": 2, "title": "Political Institutions", "weightPercent": { "min": 22, "max": 33 } },
+    { "unit": 3, "title": "Political Culture and Participation", "weightPercent": { "min": 18, "max": 27 } },
+    { "unit": 4, "title": "Party and Electoral Systems and Citizen Organizations", "weightPercent": { "min": 13, "max": 18 } },
+    { "unit": 5, "title": "Methods of Political Analysis", "weightPercent": { "min": 10, "max": 15 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. FRQ scored by readers; Concept Application and Quantitative Analysis worth 4 points each, Comparative Analysis worth 5 points, Argument Essay worth 6 points. Section I is 50% and Section II is 50%.",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed.",
+    "referenceSheet": false,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (FRQ) completed on paper. Questions reference the six core countries: China, Iran, Mexico, Nigeria, Russia, and the United Kingdom."
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "subject": {
+    "code": "AP_ENV_SCI",
+    "name": "AP Environmental Science",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 160,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 80,
+      "durationMinutes": 90,
+      "weightPercent": 60,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response",
+      "type": "FRQ",
+      "questionCount": 3,
+      "durationMinutes": 70,
+      "weightPercent": 40,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "II-1", "name": "Design an Investigation", "questionCount": 1, "durationMinutes": 23 },
+        { "id": "II-2", "name": "Analyze Environmental Problems and Propose Solutions", "questionCount": 1, "durationMinutes": 23 },
+        { "id": "II-3", "name": "Analyze Environmental Problems and Propose Solutions (Mathematical)", "questionCount": 1, "durationMinutes": 24 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "The Living World: Ecosystems", "weightPercent": { "min": 6, "max": 8 } },
+    { "unit": 2, "title": "Biodiversity", "weightPercent": { "min": 6, "max": 8 } },
+    { "unit": 3, "title": "Populations", "weightPercent": { "min": 10, "max": 15 } },
+    { "unit": 4, "title": "Earth Systems and Resources", "weightPercent": { "min": 7, "max": 10 } },
+    { "unit": 5, "title": "Land and Water Use", "weightPercent": { "min": 10, "max": 15 } },
+    { "unit": 6, "title": "Energy Resources and Consumption", "weightPercent": { "min": 10, "max": 15 } },
+    { "unit": 7, "title": "Air Pollution", "weightPercent": { "min": 7, "max": 10 } },
+    { "unit": 8, "title": "Aquatic and Terrestrial Pollution", "weightPercent": { "min": 7, "max": 10 } },
+    { "unit": 9, "title": "Global Change", "weightPercent": { "min": 15, "max": 20 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. FRQ scored by readers; each question worth 10 points. Section I is 60% and Section II is 40% of the total score.",
+  "specialPolicies": {
+    "calculatorPolicy": "Four-function calculator allowed on both sections.",
+    "referenceSheet": false,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (FRQ) completed on paper."
+  }
+}

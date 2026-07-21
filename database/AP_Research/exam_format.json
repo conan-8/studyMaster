@@ -1,0 +1,48 @@
+{
+  "subject": {
+    "code": "AP_RESEARCH",
+    "name": "AP Research",
+    "examMode": "THROUGH_COURSE"
+  },
+  "totalDurationMinutes": 0,
+  "sections": [
+    {
+      "id": "Paper",
+      "name": "Academic Paper",
+      "type": "PERFORMANCE_TASK",
+      "questionCount": 1,
+      "durationMinutes": 0,
+      "weightPercent": 75,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "Paper-Proposal", "name": "Research Proposal", "questionCount": 1, "durationMinutes": 0 },
+        { "id": "Paper-Final", "name": "Final Academic Paper (4000-5000 words)", "questionCount": 1, "durationMinutes": 0 }
+      ]
+    },
+    {
+      "id": "Presentation",
+      "name": "Presentation and Oral Defense",
+      "type": "ORAL_DEFENSE",
+      "questionCount": 1,
+      "durationMinutes": 20,
+      "weightPercent": 25,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "Pres-Multimedia", "name": "Multimedia Presentation", "questionCount": 1, "durationMinutes": 10 },
+        { "id": "Pres-Defense", "name": "Oral Defense (Panel Questions)", "questionCount": 1, "durationMinutes": 10 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Inquiry and Research Design", "weightPercent": { "min": 20, "max": 25 } },
+    { "unit": 2, "title": "Data Collection and Analysis", "weightPercent": { "min": 20, "max": 25 } },
+    { "unit": 3, "title": "Academic Writing and Communication", "weightPercent": { "min": 25, "max": 30 } },
+    { "unit": 4, "title": "Presentation and Defense", "weightPercent": { "min": 20, "max": 25 } }
+  ],
+  "scoringNotes": "Academic Paper (75%): scored on research question, methodology, analysis, and argument. Presentation and Oral Defense (25%): scored on delivery and ability to defend research. No end-of-course exam. Scored on a 1-5 AP scale.",
+  "specialPolicies": {
+    "calculatorPolicy": "Not applicable.",
+    "referenceSheet": false,
+    "deliveryNotes": "No timed end-of-course exam. All assessment through course-embedded performance tasks submitted via AP Digital Portfolio. Part of the AP Capstone program. Requires completion of AP Seminar as a prerequisite."
+  }
+}

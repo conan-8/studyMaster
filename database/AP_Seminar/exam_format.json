@@ -1,0 +1,63 @@
+{
+  "subject": {
+    "code": "AP_SEMINAR",
+    "name": "AP Seminar",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 120,
+  "sections": [
+    {
+      "id": "PT",
+      "name": "Team Project and Presentation",
+      "type": "PERFORMANCE_TASK",
+      "questionCount": 1,
+      "durationMinutes": 0,
+      "weightPercent": 20,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "PT-Report", "name": "Team Multimedia Presentation", "questionCount": 1, "durationMinutes": 0 },
+        { "id": "PT-IRR", "name": "Individual Research Report", "questionCount": 1, "durationMinutes": 0 },
+        { "id": "PT-Oral", "name": "Team Oral Defense", "questionCount": 1, "durationMinutes": 0 }
+      ]
+    },
+    {
+      "id": "IR",
+      "name": "Individual Research-Based Essay and Presentation",
+      "type": "PERFORMANCE_TASK",
+      "questionCount": 1,
+      "durationMinutes": 0,
+      "weightPercent": 35,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "IR-IRR", "name": "Individual Research Report", "questionCount": 1, "durationMinutes": 0 },
+        { "id": "IR-Presentation", "name": "Individual Multimedia Presentation", "questionCount": 1, "durationMinutes": 0 },
+        { "id": "IR-Oral", "name": "Oral Defense", "questionCount": 1, "durationMinutes": 0 }
+      ]
+    },
+    {
+      "id": "EOC",
+      "name": "End-of-Course Exam",
+      "type": "FRQ",
+      "questionCount": 4,
+      "durationMinutes": 120,
+      "weightPercent": 45,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "EOC-1", "name": "Source-Based Questions (3 questions)", "questionCount": 3, "durationMinutes": 60 },
+        { "id": "EOC-2", "name": "Argument Essay", "questionCount": 1, "durationMinutes": 60 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Question and Explore", "weightPercent": { "min": 20, "max": 25 } },
+    { "unit": 2, "title": "Understand and Analyze", "weightPercent": { "min": 20, "max": 25 } },
+    { "unit": 3, "title": "Evaluate Multiple Perspectives", "weightPercent": { "min": 20, "max": 25 } },
+    { "unit": 4, "title": "Synthesize and Communicate", "weightPercent": { "min": 20, "max": 25 } }
+  ],
+  "scoringNotes": "Performance tasks scored by College Board readers via AP Digital Portfolio. End-of-course exam scored by readers. Team Project (20%) + Individual Research (35%) + End-of-Course Exam (45%).",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed.",
+    "referenceSheet": false,
+    "deliveryNotes": "Performance tasks completed during the course and submitted via AP Digital Portfolio. End-of-course exam completed digitally via Bluebook app. Part of the AP Capstone program."
+  }
+}

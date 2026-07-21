@@ -1,0 +1,49 @@
+{
+  "subject": {
+    "code": "AP_BIO",
+    "name": "AP Biology",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 180,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 60,
+      "durationMinutes": 90,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response",
+      "type": "FRQ",
+      "questionCount": 6,
+      "durationMinutes": 90,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "II-Long", "name": "Long FRQ (Questions 1-2)", "questionCount": 2, "durationMinutes": 46 },
+        { "id": "II-Short", "name": "Short FRQ (Questions 3-6)", "questionCount": 4, "durationMinutes": 44 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Chemistry of Life", "weightPercent": { "min": 8, "max": 11 } },
+    { "unit": 2, "title": "Cell Structure and Function", "weightPercent": { "min": 10, "max": 13 } },
+    { "unit": 3, "title": "Cellular Energetics", "weightPercent": { "min": 12, "max": 16 } },
+    { "unit": 4, "title": "Cell Communication and Cell Cycle", "weightPercent": { "min": 10, "max": 15 } },
+    { "unit": 5, "title": "Heredity", "weightPercent": { "min": 8, "max": 11 } },
+    { "unit": 6, "title": "Gene Expression and Regulation", "weightPercent": { "min": 12, "max": 16 } },
+    { "unit": 7, "title": "Natural Selection", "weightPercent": { "min": 13, "max": 20 } },
+    { "unit": 8, "title": "Ecology", "weightPercent": { "min": 10, "max": 15 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. FRQ scored by readers; long FRQs worth 8-9 points each, short FRQs worth 4 points each. Section I is 50% and Section II is 50% of the total score.",
+  "specialPolicies": {
+    "calculatorPolicy": "Four-function calculator with square root capability allowed on both sections. No graphing calculators.",
+    "referenceSheet": true,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (FRQ) completed on paper. A formula sheet is provided."
+  }
+}

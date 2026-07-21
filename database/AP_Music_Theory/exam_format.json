@@ -1,0 +1,67 @@
+{
+  "subject": {
+    "code": "AP_MUSIC_THEORY",
+    "name": "AP Music Theory",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 155,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 75,
+      "durationMinutes": 80,
+      "weightPercent": 45,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response (Written)",
+      "type": "FRQ",
+      "questionCount": 7,
+      "durationMinutes": 55,
+      "weightPercent": 45,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "II-1", "name": "Harmonic Dictation", "questionCount": 1, "durationMinutes": 10 },
+        { "id": "II-2", "name": "Melodic Dictation", "questionCount": 1, "durationMinutes": 10 },
+        { "id": "II-3", "name": "Harmonic Dictation II", "questionCount": 1, "durationMinutes": 10 },
+        { "id": "II-4", "name": "Melodic Dictation II", "questionCount": 1, "durationMinutes": 10 },
+        { "id": "II-5", "name": "Part Writing from Figured Bass", "questionCount": 1, "durationMinutes": 5 },
+        { "id": "II-6", "name": "Part Writing from Roman Numerals", "questionCount": 1, "durationMinutes": 5 },
+        { "id": "II-7", "name": "Harmonizing a Melody", "questionCount": 1, "durationMinutes": 5 }
+      ]
+    },
+    {
+      "id": "III",
+      "name": "Section III: Sight-Singing",
+      "type": "SIGHT_SINGING",
+      "questionCount": 2,
+      "durationMinutes": 20,
+      "weightPercent": 10,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "III-1", "name": "Sight-Singing 1 (Major Key)", "questionCount": 1, "durationMinutes": 10 },
+        { "id": "III-2", "name": "Sight-Singing 2 (Minor Key)", "questionCount": 1, "durationMinutes": 10 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Music Fundamentals", "weightPercent": { "min": 2, "max": 4 } },
+    { "unit": 2, "title": "Harmony and Voice Leading", "weightPercent": { "min": 25, "max": 35 } },
+    { "unit": 3, "title": "Melodic Composition", "weightPercent": { "min": 5, "max": 10 } },
+    { "unit": 4, "title": "Harmonic Dictation", "weightPercent": { "min": 7, "max": 12 } },
+    { "unit": 5, "title": "Melodic Dictation", "weightPercent": { "min": 7, "max": 12 } },
+    { "unit": 6, "title": "Part Writing", "weightPercent": { "min": 10, "max": 15 } },
+    { "unit": 7, "title": "Sight-Singing", "weightPercent": { "min": 8, "max": 12 } },
+    { "unit": 8, "title": "Score Analysis", "weightPercent": { "min": 10, "max": 15 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. Written FRQ scored by readers. Sight-singing responses recorded and scored by readers. Section I is 45%, Section II (written) is 45%, and Section III (sight-singing) is 10%.",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed.",
+    "referenceSheet": false,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (written FRQ) completed on paper with staff notation. Section III (sight-singing) recorded via microphone. Students may use a piano/keyboard during the 75-second practice period for sight-singing."
+  }
+}

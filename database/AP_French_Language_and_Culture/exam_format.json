@@ -1,0 +1,52 @@
+{
+  "subject": {
+    "code": "AP_FRENCH",
+    "name": "AP French Language and Culture",
+    "examMode": "FULLY_DIGITAL"
+  },
+  "totalDurationMinutes": 125,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice (Interpretive Listening and Reading)",
+      "type": "MCQ",
+      "questionCount": 65,
+      "durationMinutes": 65,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "I-Listening", "name": "Interpretive Listening", "questionCount": 30, "durationMinutes": 25 },
+        { "id": "I-Reading", "name": "Interpretive Reading", "questionCount": 35, "durationMinutes": 40 }
+      ]
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response (Interpersonal and Presentational)",
+      "type": "FRQ",
+      "questionCount": 4,
+      "durationMinutes": 60,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "II-IW", "name": "Interpersonal Writing", "questionCount": 1, "durationMinutes": 15 },
+        { "id": "II-PS", "name": "Presentational Speaking", "questionCount": 1, "durationMinutes": 18 },
+        { "id": "II-IS", "name": "Interpersonal Speaking", "questionCount": 1, "durationMinutes": 12 },
+        { "id": "II-PW", "name": "Presentational Writing", "questionCount": 1, "durationMinutes": 15 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Families in Different Societies", "weightPercent": { "min": 16, "max": 20 } },
+    { "unit": 2, "title": "Personal and Public Identities", "weightPercent": { "min": 16, "max": 20 } },
+    { "unit": 3, "title": "Beauty and Aesthetics", "weightPercent": { "min": 16, "max": 20 } },
+    { "unit": 4, "title": "Science and Technology", "weightPercent": { "min": 16, "max": 20 } },
+    { "unit": 5, "title": "Contemporary Life", "weightPercent": { "min": 16, "max": 20 } },
+    { "unit": 6, "title": "Global Challenges", "weightPercent": { "min": 16, "max": 20 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. Speaking responses scored by trained readers; writing responses scored by trained readers. Section I is 50% and Section II is 50% of the total score.",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed.",
+    "referenceSheet": false,
+    "deliveryNotes": "Entire exam completed digitally via Bluebook app. Speaking responses recorded via microphone."
+  }
+}

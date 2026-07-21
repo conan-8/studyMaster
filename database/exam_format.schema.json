@@ -1,0 +1,149 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://studymaste.dev/schemas/exam_format.json",
+  "title": "AP Exam Format",
+  "description": "Structured exam format data for an AP subject",
+  "type": "object",
+  "required": ["subject", "totalDurationMinutes", "sections", "unitWeights", "scoringNotes", "specialPolicies"],
+  "properties": {
+    "subject": {
+      "type": "object",
+      "required": ["code", "name", "examMode"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^AP_[A-Z0-9_]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "examMode": {
+          "type": "string",
+          "enum": ["FULLY_DIGITAL", "HYBRID_DIGITAL", "PORTFOLIO", "THROUGH_COURSE"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "totalDurationMinutes": {
+      "type": "number",
+      "minimum": 0
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "type", "questionCount", "durationMinutes", "weightPercent", "calculatorAllowed", "subParts"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "enum": ["MCQ", "FRQ", "ESSAY", "PERFORMANCE_TASK", "PORTFOLIO", "SIGHT_SINGING", "ORAL_DEFENSE"]
+          },
+          "questionCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "durationMinutes": {
+            "type": "number",
+            "minimum": 0
+          },
+          "weightPercent": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "calculatorAllowed": {
+            "type": "boolean"
+          },
+          "subParts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "name", "questionCount", "durationMinutes"],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "questionCount": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "durationMinutes": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "unitWeights": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["unit", "title", "weightPercent"],
+        "properties": {
+          "unit": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "weightPercent": {
+            "oneOf": [
+              { "type": "number", "minimum": 0, "maximum": 100 },
+              {
+                "type": "object",
+                "required": ["min", "max"],
+                "properties": {
+                  "min": { "type": "number", "minimum": 0, "maximum": 100 },
+                  "max": { "type": "number", "minimum": 0, "maximum": 100 }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "scoringNotes": {
+      "type": "string"
+    },
+    "specialPolicies": {
+      "type": "object",
+      "required": ["calculatorPolicy", "referenceSheet", "deliveryNotes"],
+      "properties": {
+        "calculatorPolicy": {
+          "type": "string"
+        },
+        "referenceSheet": {
+          "type": "boolean"
+        },
+        "deliveryNotes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

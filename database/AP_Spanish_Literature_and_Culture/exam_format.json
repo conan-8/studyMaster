@@ -1,0 +1,47 @@
+{
+  "subject": {
+    "code": "AP_SPANISH_LIT",
+    "name": "AP Spanish Literature and Culture",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 180,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 65,
+      "durationMinutes": 80,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response",
+      "type": "FRQ",
+      "questionCount": 4,
+      "durationMinutes": 100,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "II-1", "name": "Short Answer: Text Explanation", "questionCount": 1, "durationMinutes": 15 },
+        { "id": "II-2", "name": "Short Answer: Text and Art Comparison", "questionCount": 1, "durationMinutes": 15 },
+        { "id": "II-3", "name": "Text Comparison", "questionCount": 1, "durationMinutes": 35 },
+        { "id": "II-4", "name": "Analysis of a Single Text", "questionCount": 1, "durationMinutes": 35 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Medieval Literature and Early Modern Period", "weightPercent": { "min": 20, "max": 25 } },
+    { "unit": 2, "title": "Enlightenment, Romanticism, and Realism", "weightPercent": { "min": 20, "max": 25 } },
+    { "unit": 3, "title": "Modernism and Generation of '98", "weightPercent": { "min": 20, "max": 25 } },
+    { "unit": 4, "title": "Contemporary Literature (20th-21st Century)", "weightPercent": { "min": 25, "max": 30 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. FRQ scored by readers; short answers worth 4 points each, essays worth 6 points each. Section I is 50% and Section II is 50% of the total score.",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed.",
+    "referenceSheet": false,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (FRQ) completed on paper. Questions reference the required reading list of works in Spanish."
+  }
+}

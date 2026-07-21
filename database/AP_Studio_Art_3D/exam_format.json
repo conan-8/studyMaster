@@ -1,0 +1,43 @@
+{
+  "subject": {
+    "code": "AP_STUDIO_3D",
+    "name": "AP 3-D Art and Design",
+    "examMode": "PORTFOLIO"
+  },
+  "totalDurationMinutes": 0,
+  "sections": [
+    {
+      "id": "SI",
+      "name": "Sustained Investigation",
+      "type": "PORTFOLIO",
+      "questionCount": 15,
+      "durationMinutes": 0,
+      "weightPercent": 60,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "SI-Images", "name": "Sustained Investigation Images (Two Views Per Work)", "questionCount": 15, "durationMinutes": 0 },
+        { "id": "SI-Written", "name": "Written Responses (Practice, Experimentation, Revision)", "questionCount": 2, "durationMinutes": 0 }
+      ]
+    },
+    {
+      "id": "SW",
+      "name": "Selected Works",
+      "type": "PORTFOLIO",
+      "questionCount": 5,
+      "durationMinutes": 0,
+      "weightPercent": 40,
+      "calculatorAllowed": false,
+      "subParts": []
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Sustained Investigation: Practice, Experimentation, and Revision", "weightPercent": 60 },
+    { "unit": 2, "title": "Selected Works: Skillful Synthesis of Materials, Processes, and Ideas", "weightPercent": 40 }
+  ],
+  "scoringNotes": "Portfolio scored by readers. Sustained Investigation (60%): 15 images (two views per 3D work) plus written responses. Selected Works (40%): 5 works demonstrating skillful synthesis. Scored on a 1-5 AP scale.",
+  "specialPolicies": {
+    "calculatorPolicy": "Not applicable.",
+    "referenceSheet": false,
+    "deliveryNotes": "No timed exam. Portfolio submitted digitally through the AP Digital Portfolio. 3D works require two views (front and back/side). Students submit throughout the course and finalize by the portfolio deadline."
+  }
+}

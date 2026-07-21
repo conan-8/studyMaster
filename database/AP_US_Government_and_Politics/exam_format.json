@@ -1,0 +1,48 @@
+{
+  "subject": {
+    "code": "AP_US_GOV",
+    "name": "AP United States Government and Politics",
+    "examMode": "HYBRID_DIGITAL"
+  },
+  "totalDurationMinutes": 180,
+  "sections": [
+    {
+      "id": "I",
+      "name": "Section I: Multiple Choice",
+      "type": "MCQ",
+      "questionCount": 55,
+      "durationMinutes": 80,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "II",
+      "name": "Section II: Free Response",
+      "type": "FRQ",
+      "questionCount": 4,
+      "durationMinutes": 100,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": [
+        { "id": "II-1", "name": "Concept Application", "questionCount": 1, "durationMinutes": 20 },
+        { "id": "II-2", "name": "Quantitative Analysis", "questionCount": 1, "durationMinutes": 20 },
+        { "id": "II-3", "name": "SCOTUS Comparison", "questionCount": 1, "durationMinutes": 20 },
+        { "id": "II-4", "name": "Argument Essay", "questionCount": 1, "durationMinutes": 40 }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Foundations of American Democracy", "weightPercent": { "min": 15, "max": 22 } },
+    { "unit": 2, "title": "Interactions Among Branches of Government", "weightPercent": { "min": 25, "max": 36 } },
+    { "unit": 3, "title": "Civil Liberties and Civil Rights", "weightPercent": { "min": 13, "max": 18 } },
+    { "unit": 4, "title": "American Political Ideologies and Beliefs", "weightPercent": { "min": 10, "max": 15 } },
+    { "unit": 5, "title": "Political Participation", "weightPercent": { "min": 20, "max": 27 } }
+  ],
+  "scoringNotes": "MCQ scored by machine. FRQ scored by readers; Concept Application and Quantitative Analysis worth 4 points each, SCOTUS Comparison worth 4 points, Argument Essay worth 6 points. Section I is 50% and Section II is 50%.",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator allowed.",
+    "referenceSheet": false,
+    "deliveryNotes": "Section I completed digitally via Bluebook app. Section II (FRQ) completed on paper. Required foundational documents and Supreme Court cases referenced in questions."
+  }
+}

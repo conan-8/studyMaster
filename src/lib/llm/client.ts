@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 
-const DEFAULT_MODEL = "qwen3.8-max";
+const DEFAULT_MODEL = "minimax/minimax-m3";
 const DEFAULT_MAX_TOKENS = 1024;
 
 type Message = { role: "system" | "user" | "assistant"; content: string };
@@ -15,7 +15,7 @@ export type CallLLMOptions<T> = {
   maxTokens?: number;
 };
 
-type DashScopeResponse = {
+type OpenRouterResponse = {
   choices?: { message?: { content?: string } }[];
   usage?: { prompt_tokens?: number; completion_tokens?: number };
 };
@@ -47,9 +47,9 @@ async function requestOnce(args: {
   messages: Message[];
   purpose: string;
 }): Promise<{ text: string }> {
-  const apiKey = process.env.ALIBABA_API_KEY;
+  const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
-    throw new Error("ALIBABA_API_KEY is not set");
+    throw new Error("OPENROUTER_API_KEY is not set");
   }
 
   const started = Date.now();
@@ -61,7 +61,7 @@ async function requestOnce(args: {
   messages.push(...args.messages);
 
   const res = await fetch(
-    "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+    "https://openrouter.ai/api/v1/chat/completions",
     {
       method: "POST",
       headers: {
@@ -78,10 +78,10 @@ async function requestOnce(args: {
 
   if (!res.ok) {
     const body = await res.text();
-    throw new Error(`DashScope API error ${res.status}: ${body}`);
+    throw new Error(`OpenRouter API error ${res.status}: ${body}`);
   }
 
-  const data = (await res.json()) as DashScopeResponse;
+  const data = (await res.json()) as OpenRouterResponse;
 
   const text = data.choices?.[0]?.message?.content ?? "";
 

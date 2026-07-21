@@ -177,7 +177,7 @@ async function main() {
           ),
           schema: unitMcqBatchSchema,
           purpose: `question-generator-unit-${unit.unitNumber}`,
-          maxTokens: 4096,
+          maxTokens: 8192,
         }),
       );
 

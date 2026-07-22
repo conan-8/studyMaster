@@ -288,6 +288,7 @@
 <style>
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;height:100%;background:#fff;}
+  body{zoom:0.85;}
   .katex .msupsub{font-size:82%;}
   a{color:#1a56db;text-decoration:underline;cursor:pointer;}
   a:hover{color:#123a9e;}
@@ -863,8 +864,8 @@ class Component extends DCLogic {
     this._timer=setInterval(()=>{
       this.setState(s=>{
         const ns={};
-        if(s.view==='exam'&&s.timerRunning&&s.timeLeft>0) ns.timeLeft=s.timeLeft-1;
-        if(s.view==='frq'&&s.timerRunning&&s.timeLeft>0) ns.timeLeft=s.timeLeft-1;
+        if(s.view==='exam'&&s.timerRunning){ if(s.timeLeft>0){ ns.timeLeft=s.timeLeft-1; } else { ns.view='review'; ns.navOpen=false; ns.moreOpen=false; ns.directionsOpen=false; ns.refOpen=false; ns.highlightsOpen=false; } }
+        if(s.view==='frq'&&s.timerRunning){ if(s.timeLeft>0){ ns.timeLeft=s.timeLeft-1; } else { ns.view='done'; ns.moreOpen=false; ns.refOpen=false; ns.highlightsOpen=false; } }
         if(s.view==='break'){ if(s.breakLeft>1){ ns.breakLeft=s.breakLeft-1; } else { ns.breakLeft=0; ns.view='frq'; ns.frqIndex=0; ns.timeLeft=90*60; ns.timerRunning=true; } }
         return ns;
       });
@@ -874,8 +875,8 @@ class Component extends DCLogic {
     this._onKey=(e)=>this._handleKey(e); document.addEventListener('keydown',this._onKey);
     this._onMove=(e)=>{
       if(this._dragging){ e.preventDefault(); const pct=Math.min(72,Math.max(28,(e.clientX/window.innerWidth)*100)); this.setState({splitPct:pct}); }
-      if(this._calcResizing){ e.preventDefault(); const w=Math.min(window.innerWidth-40,Math.max(420,e.clientX)); this.setState({calcWidth:w}); }
-      if(this._lrDrag){ e.preventDefault(); this.setState({lineReaderY:Math.min(window.innerHeight-60,Math.max(70,e.clientY))}); }
+      if(this._calcResizing){ e.preventDefault(); const z=parseFloat(getComputedStyle(document.body).zoom)||1; const w=Math.min(window.innerWidth-40,Math.max(420,e.clientX/z)); this.setState({calcWidth:w}); }
+      if(this._lrDrag){ e.preventDefault(); const z=parseFloat(getComputedStyle(document.body).zoom)||1; this.setState({lineReaderY:Math.min(window.innerHeight/z-60,Math.max(70,e.clientY/z))}); }
     };
     this._onUp=()=>{ if(this._dragging){this._dragging=false; document.body.style.userSelect='';} if(this._calcResizing){this._calcResizing=false; document.body.style.userSelect='';} if(this._lrDrag){this._lrDrag=false; document.body.style.userSelect='';} };
     window.addEventListener('mousemove',this._onMove);

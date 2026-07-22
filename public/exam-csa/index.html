@@ -287,6 +287,7 @@
 <style>
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;height:100%;background:#fff;}
+  body{zoom:0.85;}
   .katex .msupsub{font-size:82%;}
   a{color:#1a56db;text-decoration:underline;cursor:pointer;}
   a:hover{color:#123a9e;}
@@ -1386,8 +1387,8 @@ System.out.println(s.describe());`,
     this._timer=setInterval(()=>{
       this.setState(s=>{
         const ns={};
-        if(s.view==='exam'&&s.timerRunning&&s.timeLeft>0) ns.timeLeft=s.timeLeft-1;
-        if(s.view==='frq'&&s.timerRunning&&s.timeLeft>0) ns.timeLeft=s.timeLeft-1;
+        if(s.view==='exam'&&s.timerRunning){ if(s.timeLeft>0){ ns.timeLeft=s.timeLeft-1; } else { ns.view='review'; ns.navOpen=false; ns.moreOpen=false; ns.directionsOpen=false; ns.refOpen=false; ns.highlightsOpen=false; } }
+        if(s.view==='frq'&&s.timerRunning){ if(s.timeLeft>0){ ns.timeLeft=s.timeLeft-1; } else { ns.view='done'; ns.moreOpen=false; ns.refOpen=false; ns.highlightsOpen=false; } }
         if(s.view==='break'){ if(s.breakLeft>1){ ns.breakLeft=s.breakLeft-1; } else { ns.breakLeft=0; ns.view='frq'; ns.frqIndex=0; ns.timeLeft=90*60; ns.timerRunning=true; } }
         return ns;
       });
@@ -1397,7 +1398,7 @@ System.out.println(s.describe());`,
     this._onKey=(e)=>this._handleKey(e); document.addEventListener('keydown',this._onKey);
     this._onMove=(e)=>{
       if(this._dragging){ e.preventDefault(); const pct=Math.min(72,Math.max(28,(e.clientX/window.innerWidth)*100)); this.setState({splitPct:pct}); }
-      if(this._lrDrag){ e.preventDefault(); this.setState({lineReaderY:Math.min(window.innerHeight-60,Math.max(70,e.clientY))}); }
+      if(this._lrDrag){ e.preventDefault(); const z=parseFloat(getComputedStyle(document.body).zoom)||1; this.setState({lineReaderY:Math.min(window.innerHeight/z-60,Math.max(70,e.clientY/z))}); }
     };
     this._onUp=()=>{ if(this._dragging){this._dragging=false; document.body.style.userSelect='';} if(this._lrDrag){this._lrDrag=false; document.body.style.userSelect='';} };
     window.addEventListener('mousemove',this._onMove);
@@ -1423,7 +1424,7 @@ System.out.println(s.describe());`,
   texEl(tex,display,style){ let html; try{ html=window.katex?window.katex.renderToString(tex,{displayMode:!!display,throwOnError:false}):this.esc(tex);}catch(e){html=this.esc(tex);} return React.createElement('span',{style:style||{},dangerouslySetInnerHTML:{__html:html}}); }
   mixEl(str,style){ return React.createElement('span',{style:style||{},dangerouslySetInnerHTML:{__html:this.mathHtml(str)}}); }
   codeEl(code,style){
-    const base={fontFamily:"Consolas,'Courier New',monospace",fontSize:'17px',lineHeight:1.45,
+    const base={fontFamily:"Consolas,'Courier New',monospace",fontSize:'17px',fontWeight:600,lineHeight:1.45,
       background:'#f6f8fa',border:'1px solid #dfe3ec',borderRadius:'8px',
       padding:'16px 18px',margin:'0 0 16px',whiteSpace:'pre',overflowX:'auto',color:'#111'};
     return React.createElement('pre',{style:Object.assign(base,style||{})},code);
@@ -1492,7 +1493,7 @@ System.out.println(s.describe());`,
     const refSections=this.refTitles.map((r,i)=>{
       const exp=!!s.refExpanded[i];
       const body=React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:'8px'}},
-        (r.lines||[]).map((ln,j)=>React.createElement('div',{key:'l'+j,style:{fontFamily:"Consolas,'Courier New',monospace",fontSize:'16px',lineHeight:1.5,color:'#111'}},ln)),
+        (r.lines||[]).map((ln,j)=>React.createElement('div',{key:'l'+j,style:{fontFamily:"Consolas,'Courier New',monospace",fontSize:'16px',fontWeight:600,lineHeight:1.5,color:'#111'}},ln)),
         (r.notes||[]).map((n,j)=>React.createElement('div',{key:'n'+j,style:{fontFamily:"'Source Serif 4',Georgia,serif",fontSize:'16px',lineHeight:1.5,color:'#4b5563'}},'• '+n)));
       return { title:r.title, sign:exp?'–':'+', expanded:exp, body,
         onToggle:()=>this.setState(st=>({refExpanded:{...st.refExpanded,[i]:!st.refExpanded[i]}})) };

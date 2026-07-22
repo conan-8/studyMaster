@@ -1534,8 +1534,8 @@ System.out.println(s.describe());`,
       promptEl:this.mixEl(q.prompt||''),
       choices,
       qMaxWidth: ((q.stim&&q.stim.length)||q.code)?'none':'760px',
-      marked:!!s.marked[s.qIndex], markFill:s.marked[s.qIndex]?'#d13b3b':'none', toggleMark:()=>this.toggleMark(),
-      elimMode:s.elimMode, toggleElimMode:()=>this.setState(st=>({elimMode:!st.elimMode})),
+      markFill:s.marked[s.qIndex]?'#d13b3b':'none', toggleMark:()=>this.toggleMark(),
+      toggleElimMode:()=>this.setState(st=>({elimMode:!st.elimMode})),
       elimBtnBg:s.elimMode?'#1d4ed8':'#e2e6ee', elimBtnColor:s.elimMode?'#fff':'#4b5563',
       dirCaret:s.directionsOpen?'rotate(0deg)':'rotate(180deg)',
       navCaret:s.navOpen?'rotate(180deg)':'rotate(0deg)',
@@ -1558,11 +1558,10 @@ System.out.println(s.describe());`,
       onStimMouseUp:(e)=>this.applyHighlight(e),
       frqBold:()=>this.frqWrapSel('**','**'), frqItalic:()=>this.frqWrapSel('*','*'), frqUnderline:()=>this.frqWrapSel('__','__'), frqBullet:()=>this.frqBulletLines(), frqSuperscript:()=>this.frqSup(),
       helpOpen:s.helpOpen, shortcutsOpen:s.shortcutsOpen, atOpen:s.atOpen, closeHelp:()=>this.setState({helpOpen:false}), closeShortcuts:()=>this.setState({shortcutsOpen:false}), closeAt:()=>this.setState({atOpen:false}), stopProp:(e)=>e.stopPropagation(),
-      lineReaderOn:s.lineReaderOn, lineReaderY:s.lineReaderY, toggleLineReader:()=>this.setState((st)=>({lineReaderOn:!st.lineReaderOn,lineReaderY:st.lineReaderY||Math.round(window.innerHeight*0.4)})), startLineReaderDrag:()=>this.startLineReaderDrag(),
+      lineReaderOn:s.lineReaderOn, lineReaderY:s.lineReaderY, startLineReaderDrag:()=>this.startLineReaderDrag(),
     };
   }
 }
 </script>
-
 
 </body></html>

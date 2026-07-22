@@ -43,6 +43,14 @@ Run the validation script to check all files:
 npx tsx scripts/validate-exam-formats.ts
 ```
 
+## Static Mock Exams
+
+The static practice exams under `public/` are built to match their subject's
+`exam_format.json` (sections, timing, question counts, and policies):
+
+- `public/exam/` — AP Physics 1 (reduced preview: Section I, 15 questions, 80 min)
+- `public/exam-csa/` — AP Computer Science A (full-length: 40 MCQ / 90 min + 4 FRQ / 90 min, no calculator, Java Quick Reference)
+
 ## Data Source
 
 Exam formats reflect the 2025–26 College Board course and exam descriptions.

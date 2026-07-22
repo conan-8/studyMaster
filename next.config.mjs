@@ -12,6 +12,7 @@ const nextConfig = {
         // Next.js serves public/exam/index.html at /exam/index.html but not at
         // the pretty URL /exam (no directory-index resolution for public/).
         { source: "/exam", destination: "/exam/index.html" },
+        { source: "/exam-csa", destination: "/exam-csa/index.html" },
       ],
     };
   },

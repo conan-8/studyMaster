@@ -1,9 +1,11 @@
 import { PrismaClient, ExamMode } from "../src/generated/prisma";
+import type { Prisma } from "../src/generated/prisma";
 import { CURRICULUM_PARSER_PROMPT } from "../src/lib/curriculum/prompts";
 import {
   CSA_QUESTION_GENERATOR_PROMPT,
   QUESTION_GENERATOR_PROMPT,
 } from "../src/lib/questions/prompts";
+import { loadExamFormat } from "../src/lib/exam-format/loader";
 
 const prisma = new PrismaClient();
 
@@ -179,6 +181,102 @@ const apcsaSeed: SubjectSeed = {
 
 const SUBJECT_SEEDS: SubjectSeed[] = [apushSeed, apcsaSeed];
 
+// ---------------------------------------------------------------------------
+// ExamBlueprint seeding (R1-R14)
+// ---------------------------------------------------------------------------
+// The APCSA subject gets exactly one MOCK blueprint + exactly one PRACTICE
+// blueprint (two rows total). ExamBlueprint has no natural unique key (only
+// `id`), so idempotency is guaranteed by an explicit find-then-create-or-update
+// keyed on {subjectId, name}; re-running the seed never duplicates a row (R14).
+//
+// These names are the single source of truth and MUST match the constants in
+// src/lib/exam/blueprints.ts (PRACTICE_BLUEPRINT_NAME / MOCK_BLUEPRINT_NAME).
+const APCSA_SUBJECT_CODE = "APCSA";
+const MOCK_BLUEPRINT_NAME = "AP Computer Science A Mock Exam";
+const PRACTICE_BLUEPRINT_NAME = "APCSA Quick Practice";
+const APCSA_EXAM_FORMAT_FOLDER = "AP_Computer_Science_A";
+
+/**
+ * MOCK sectionsJson derived from the REAL CSA format file (R6-R11): two sections
+ * in order, Section I (MCQ 40/90/50, empty subParts) then Section II (type stored
+ * as the literal string "FRQ", 4/90/50, four subParts II-1..II-4). No FRQ
+ * Question rows are created and the QuestionType enum is unchanged (R11/R12).
+ */
+function buildMockSectionsJson(): Prisma.InputJsonValue {
+  const format = loadExamFormat(APCSA_EXAM_FORMAT_FOLDER);
+  return format.sections.map((section) => ({
+    id: section.id,
+    name: section.name,
+    type: section.type,
+    questionCount: section.questionCount,
+    durationMinutes: section.durationMinutes,
+    weightPercent: section.weightPercent,
+    calculatorAllowed: section.calculatorAllowed,
+    subParts: section.subParts.map((subPart) => ({
+      id: subPart.id,
+      name: subPart.name,
+      questionCount: subPart.questionCount,
+      durationMinutes: subPart.durationMinutes,
+    })),
+  }));
+}
+
+/**
+ * PRACTICE sectionsJson (R7): exactly one MCQ section with questionCount 10. The
+ * per-unit scope is applied at assembly time and is NOT stored per blueprint row.
+ */
+function buildPracticeSectionsJson(): Prisma.InputJsonValue {
+  return [
+    {
+      id: "I",
+      name: "Quick Practice",
+      type: "MCQ",
+      questionCount: 10,
+      durationMinutes: 20,
+      weightPercent: 100,
+      calculatorAllowed: false,
+      subParts: [],
+    },
+  ];
+}
+
+/** Idempotent create-or-update keyed on {subjectId, name} (R14). */
+async function upsertBlueprint(
+  subjectId: string,
+  name: string,
+  sectionsJson: Prisma.InputJsonValue,
+): Promise<void> {
+  const existing = await prisma.examBlueprint.findFirst({ where: { subjectId, name } });
+  if (existing) {
+    await prisma.examBlueprint.update({
+      where: { id: existing.id },
+      data: { sectionsJson },
+    });
+  } else {
+    await prisma.examBlueprint.create({
+      data: { subjectId, name, sectionsJson },
+    });
+  }
+}
+
+/**
+ * Seed exactly one MOCK + one PRACTICE APCSA blueprint (R1-R5). The subject is
+ * resolved by code "APCSA" (never a hardcoded id — R4). Idempotent across runs.
+ */
+async function seedBlueprints(): Promise<void> {
+  const subject = await prisma.subject.findUnique({ where: { code: APCSA_SUBJECT_CODE } });
+  if (!subject) {
+    throw new Error(`Subject not found for code "${APCSA_SUBJECT_CODE}"`);
+  }
+
+  await upsertBlueprint(subject.id, MOCK_BLUEPRINT_NAME, buildMockSectionsJson());
+  await upsertBlueprint(subject.id, PRACTICE_BLUEPRINT_NAME, buildPracticeSectionsJson());
+
+  console.log(
+    `Seeded ${APCSA_SUBJECT_CODE} blueprints: "${MOCK_BLUEPRINT_NAME}" (MOCK) and "${PRACTICE_BLUEPRINT_NAME}" (PRACTICE)`,
+  );
+}
+
 async function seedSubject(seed: SubjectSeed): Promise<void> {
   const subject = await prisma.subject.upsert({
     where: { code: seed.code },
@@ -232,6 +330,8 @@ async function main() {
   for (const seed of SUBJECT_SEEDS) {
     await seedSubject(seed);
   }
+
+  await seedBlueprints();
 
   await prisma.promptRegistry.upsert({
     where: { name_version: { name: "frq-saq-grader", version: 1 } },

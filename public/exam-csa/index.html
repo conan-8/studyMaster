@@ -1367,20 +1367,56 @@ System.out.println(s.describe());`,
 
   refTitles = [
     { title:"String",
-      lines:["int length()","String substring(int from, int to)","String substring(int from)","int indexOf(String str)","int indexOf(String str, int from)","boolean equals(String other)","int compareTo(String other)"],
-      notes:["Indices of characters in a string run from 0 to length() - 1.","substring(from, to) includes the character at index from but not the character at index to.","indexOf returns -1 when str is not found.","compareTo returns a value less than 0, equal to 0, or greater than 0 when the string comes before, matches, or comes after other in dictionary order."] },
+      entries:[
+        {sig:"int length()", desc:"Returns the number of characters in the string"},
+        {sig:"String substring(int from, int to)", desc:"Returns the substring beginning at index from and ending at index to \u2013 1"},
+        {sig:"String substring(int from)", desc:"Returns the substring beginning at index from and extending to the end of the string"},
+        {sig:"int indexOf(String str)", desc:"Returns the index of the first occurrence of str; returns \u20131 if not found"},
+        {sig:"int indexOf(String str, int from)", desc:"Returns the index of the first occurrence of str, starting at index from; returns \u20131 if not found"},
+        {sig:"boolean equals(String other)", desc:"Returns true if the calling string is equal to other; returns false otherwise"},
+        {sig:"int compareTo(String other)", desc:"Returns a value < 0 if the calling string is lexicographically less than other; returns 0 if equal; returns > 0 if greater"},
+      ],
+      notes:["Indices of characters in a string run from 0 to length() \u2013 1.","substring(from, to) includes the character at index from but not the character at index to."] },
     { title:"ArrayList<E>",
-      lines:["int size()","boolean add(E obj)","void add(int index, E obj)","E remove(int index)","E get(int index)","E set(int index, E obj)","int indexOf(Object obj)","boolean contains(Object obj)","boolean isEmpty()","void clear()"],
-      notes:["Indices of elements run from 0 to size() - 1.","add(index, obj) shifts elements at index and beyond one position to the right; remove(index) shifts the remaining elements one position to the left.","set(index, obj) replaces the element at index and returns the object previously stored there."] },
+      entries:[
+        {sig:"int size()", desc:"Returns the number of elements in the list"},
+        {sig:"boolean add(E obj)", desc:"Appends obj to the end of the list; returns true"},
+        {sig:"void add(int index, E obj)", desc:"Inserts obj at position index, shifting elements at index and beyond one position to the right"},
+        {sig:"E remove(int index)", desc:"Removes the element at position index, shifting elements beyond one position to the left; returns the removed element"},
+        {sig:"E get(int index)", desc:"Returns the element at position index"},
+        {sig:"E set(int index, E obj)", desc:"Replaces the element at position index with obj; returns the element previously at that position"},
+        {sig:"int indexOf(Object obj)", desc:"Returns the index of the first occurrence of obj; returns \u20131 if not found"},
+        {sig:"boolean contains(Object obj)", desc:"Returns true if obj is in the list; returns false otherwise"},
+        {sig:"boolean isEmpty()", desc:"Returns true if the list has no elements; returns false otherwise"},
+        {sig:"void clear()", desc:"Removes all elements from the list"},
+      ],
+      notes:["Indices of elements run from 0 to size() \u2013 1."] },
     { title:"Math",
-      lines:["static int abs(int x)","static double abs(double x)","static double pow(double base, double exponent)","static double sqrt(double x)","static double random()"],
-      notes:["Math.random() returns a value in the range 0.0 <= value < 1.0."] },
+      entries:[
+        {sig:"static int abs(int x)", desc:"Returns the absolute value of x"},
+        {sig:"static double abs(double x)", desc:"Returns the absolute value of x"},
+        {sig:"static double pow(double base, double exponent)", desc:"Returns base raised to the power exponent"},
+        {sig:"static double sqrt(double x)", desc:"Returns the square root of x"},
+        {sig:"static double random()", desc:"Returns a random value in the range 0.0 \u2264 value < 1.0"},
+      ],
+      notes:[] },
     { title:"Object and Comparable",
-      lines:["boolean equals(Object other)","String toString()","public interface Comparable<E>","int compareTo(E other)"],
-      notes:["compareTo returns a value less than 0, equal to 0, or greater than 0 when this object is less than, equal to, or greater than other."] },
+      entries:[
+        {sig:"boolean equals(Object other)", desc:"Returns true if the calling object is equal to other; returns false otherwise"},
+        {sig:"String toString()", desc:"Returns a string representation of the calling object"},
+        {sig:"public interface Comparable<E>", desc:""},
+        {sig:"int compareTo(E other)", desc:"Returns a value < 0 if the calling object is less than other; returns 0 if equal; returns > 0 if greater"},
+      ],
+      notes:[] },
     { title:"Exam Conventions",
-      lines:["int[] a = new int[n];","int[][] m = new int[r][c];","for (Type item : collection) { }","// single-line comment    /* multi-line comment */"],
-      notes:["Elements of a newly created numeric array are initialized to 0.","Assume that any code shown on the exam compiles and runs as written."] },
+      entries:[
+        {sig:"int[] a = new int[n];", desc:"Creates an array of n int values, all initialized to 0"},
+        {sig:"int[][] m = new int[r][c];", desc:"Creates a 2D array with r rows and c columns, all initialized to 0"},
+        {sig:"for (Type item : collection) { }", desc:"Enhanced for loop; iterates over each element in collection"},
+        {sig:"// single-line comment", desc:""},
+        {sig:"/* multi-line comment */", desc:""},
+      ],
+      notes:["Assume that any code shown on the exam compiles and runs as written."] },
   ];
 
   componentDidMount(){
@@ -1492,9 +1528,15 @@ System.out.println(s.describe());`,
 
     const refSections=this.refTitles.map((r,i)=>{
       const exp=!!s.refExpanded[i];
-      const body=React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:'8px'}},
-        (r.lines||[]).map((ln,j)=>React.createElement('div',{key:'l'+j,style:{fontFamily:"Consolas,'Courier New',monospace",fontSize:'16px',fontWeight:600,lineHeight:1.5,color:'#111'}},ln)),
-        (r.notes||[]).map((n,j)=>React.createElement('div',{key:'n'+j,style:{fontFamily:"'Source Serif 4',Georgia,serif",fontSize:'16px',lineHeight:1.5,color:'#4b5563'}},'• '+n)));
+      const mono={fontFamily:"Consolas,'Courier New',monospace",fontSize:'15px',fontWeight:600,lineHeight:1.45,color:'#111'};
+      const descStyle={fontFamily:"'Source Serif 4',Georgia,serif",fontSize:'15px',lineHeight:1.45,color:'#374151'};
+      const rows=(r.entries||[]).map((e,j)=>React.createElement('tr',{key:'r'+j,style:{borderBottom:'1px solid #eef1f6'}},
+        React.createElement('td',{style:Object.assign({},mono,{padding:'7px 12px 7px 0',verticalAlign:'top',whiteSpace:'nowrap'})},e.sig),
+        React.createElement('td',{style:Object.assign({},descStyle,{padding:'7px 0 7px 12px',verticalAlign:'top'})},e.desc)));
+      const noteEls=(r.notes||[]).map((n,j)=>React.createElement('div',{key:'n'+j,style:{fontFamily:"'Source Serif 4',Georgia,serif",fontSize:'14px',lineHeight:1.5,color:'#6b7280',padding:'4px 0'}},'• '+n));
+      const body=React.createElement('div',null,
+        React.createElement('table',{style:{width:'100%',borderCollapse:'collapse'}},React.createElement('tbody',null,rows)),
+        noteEls.length?React.createElement('div',{style:{marginTop:'8px',borderTop:'1px solid #e2e6ee',paddingTop:'6px'}},noteEls):null);
       return { title:r.title, sign:exp?'–':'+', expanded:exp, body,
         onToggle:()=>this.setState(st=>({refExpanded:{...st.refExpanded,[i]:!st.refExpanded[i]}})) };
     });

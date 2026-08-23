@@ -12,7 +12,7 @@
       "properties": {
         "code": {
           "type": "string",
-          "pattern": "^AP_[A-Z0-9_]+$"
+          "pattern": "^(AP|SAT)_[A-Z0-9_]+$"
         },
         "name": {
           "type": "string",

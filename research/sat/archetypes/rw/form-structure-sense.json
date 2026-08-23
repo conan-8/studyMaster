@@ -1,0 +1,55 @@
+{
+  "slug": "form-structure-sense",
+  "skill": "Form, Structure, and Sense",
+  "domain": "Standard English Conventions",
+  "stimulusShape": {
+    "type": "passage",
+    "lengthWords": [25, 90],
+    "structure": "One or two sentences of expository prose with a blank where a grammatical form must be supplied: a verb form (tense, agreement, participle), a pronoun, a plural/possessive noun, a comparison element, or a parallel-structure completion. The rest of the sentence supplies the grammatical signals (time markers, subject, antecedent) that determine the correct form."
+  },
+  "stemTemplates": [
+    "Which choice completes the text so that it conforms to the conventions of Standard English?",
+    "Which choice completes the text with the most logical and precise word or phrase?"
+  ],
+  "answerMode": "best-phrase",
+  "choicePatterns": "Four variants of the same word or phrase in different grammatical forms (e.g. 'has yielded' / 'yielded' / 'yields' / 'had yielded'; 'its' / 'it's' / 'their' / 'they're'). Exactly one matches every grammatical signal in the sentence; the others each violate one.",
+  "distractorLogic": [
+    "Tense/aspect mismatch: a form inconsistent with the sentence's time markers or the sequence of events",
+    "Agreement trap: a verb or pronoun agreeing with a nearby noun that is not its true subject/antecedent (intervening prepositional phrase, inverted order, 'each/everyone' singulars)",
+    "Non-finite error: a participle or infinitive where a finite verb is required (or vice versa), producing a fragment or dangling modifier",
+    "Case/number error: pronoun in the wrong case or number; possessive vs contraction ('its/it's', 'their/they're')",
+    "Parallelism or comparison fault: a form that breaks a parallel series or renders a comparison illogical ('more than any' vs 'more than any other')"
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Subject and verb adjacent; agreement and tense obvious from an explicit time marker ('in 1998', 'each year')",
+      "Common verb forms; distractors are plainly ungrammatical when read aloud",
+      "Simple pronoun-antecedent with no intervening nouns"
+    ],
+    "medium": [
+      "An intervening phrase separates subject from verb, or the sentence inverts order ('Among the finds ___ a shard')",
+      "Tense choice depends on relating two events (past perfect vs simple past)",
+      "Parallel structure across a two- or three-part series"
+    ],
+    "hard": [
+      "Collective, indefinite, or delayed subjects ('each of the samples', 'the data') requiring a firm number judgment per convention",
+      "Subjunctive or hypothetical mood, or perfect progressive aspect distinctions",
+      "Comparison logic traps ('than any other' requirement) combined with an agreement distractor",
+      "Multiple simultaneous signals (tense + agreement + parallelism) where each distractor satisfies some signals but violates one"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose the grammatical phenomenon (subject-verb agreement with an intervener, tense sequence, pronoun case, parallelism, comparison logic). 2. Write a sentence whose syntax makes the phenomenon decisive: plant the signals (time adverbials, the true subject, the antecedent, the series) deliberately. 3. For medium/hard, add a decoy — a nearby noun that disagrees in number with the true subject, or two events inviting tense confusion. 4. Place the blank at the tested form. 5. Keep the prose neutral and expository so grammar, not meaning, drives the choice.",
+    "keyConstruction": "The correct choice satisfies every planted signal: correct number against the true subject, correct tense against the time markers, correct case/number against the antecedent, correct parallel form against the series. State to yourself which signal rules out each alternative before finalizing.",
+    "distractorConstruction": "Build distractors by violating exactly one signal each: the form that agrees with the decoy noun, the tense that matches the wrong event, the pronoun matching a nearer but wrong antecedent, the form that breaks the parallel. Every distractor must be producible by a plausible misparse of the sentence, not by random error.",
+    "validationChecklist": [
+      "The grammatical signals in the sentence objectively determine one form",
+      "Each distractor violates exactly one identifiable signal",
+      "Choices are the same word/phrase varying only in grammatical form",
+      "No dialect-dependent or style-debatable judgment is tested",
+      "Passage is 25-90 words, original, with the blank producing a grammatical sentence only with the key",
+      "Possessive/contraction items use forms that are genuinely confusable in context"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] }
+}

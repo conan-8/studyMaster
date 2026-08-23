@@ -1,0 +1,57 @@
+{
+  "slug": "cross-text-connections",
+  "skill": "Cross-Text Connections",
+  "domain": "Craft and Structure",
+  "stimulusShape": {
+    "type": "dual-passage",
+    "lengthWords": [60, 160],
+    "structure": "Two short labeled texts (Text 1 and Text 2), each 1-3 sentences (roughly 30-80 words each), on a shared topic. Each text has a distinct, identifiable stance or finding: they may disagree outright, or one may complicate, extend, or explain the other. The question asks how one author would respond to a claim in the other text, how the texts relate, or where they agree."
+  },
+  "stemTemplates": [
+    "Based on the texts, how would the author of Text 2 most likely respond to the claim in Text 1?",
+    "Which choice best describes the relationship between Text 1 and Text 2?",
+    "Based on the texts, on which point would the authors most likely agree?",
+    "Based on the texts, how would <person in Text 2> most likely characterize <finding in Text 1>?"
+  ],
+  "answerMode": "which-statement",
+  "choicePatterns": "Four statements describing a response, relationship, or point of agreement. Exactly one accurately tracks BOTH texts' stances; distractors misassign a stance, invent agreement/disagreement, or respond to the wrong element of the target text.",
+  "distractorLogic": [
+    "Stance swap: attributing Text 1's position to Text 2 or vice versa",
+    "Relationship mislabel: claiming direct refutation where Text 2 merely complicates, or agreement where the texts address different questions",
+    "Wrong target: the response engages a detail of Text 1 other than the one the stem asks about",
+    "Fabricated position: a response neither text gives the author any basis to hold",
+    "Overstated disagreement: portraying a partial or conditional difference as wholesale rejection"
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Two texts with clearly opposed or clearly aligned single-sentence theses",
+      "Stem asks about an explicit claim that appears in near-identical terms in both texts",
+      "Distractors plainly misassign stances"
+    ],
+    "medium": [
+      "Relationship is non-binary: Text 2 extends, complicates, or partially confirms Text 1",
+      "Agreement variant where the shared point is implicit in one text",
+      "Distractors include a stance swap and a wrong-target response"
+    ],
+    "hard": [
+      "Each text carries a qualified, hedged stance (X is true but only under condition Y) that must be tracked precisely",
+      "The correct response must reconcile a subtle difference in scope, mechanism, or time frame",
+      "Distractors are near-correct but invert a condition, or treat a difference in emphasis as a difference in position",
+      "Response variant requires inferring an author's reaction to a claim the author never directly addresses"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Pick a topic with two genuinely distinct but non-caricatured angles (a debated cause of a historical trend; two explanations of an animal behavior; conflicting takes on a technology's effect). 2. Write down each author's stance in one line before drafting, including any qualifiers. 3. Draft Text 1 with an explicit, quotable claim. 4. Draft Text 2 so its stance relates to Text 1's in exactly one clear way (challenges, complicates, supports with new evidence, explains differently). 5. Ensure each text is independently coherent and the shared topic is obvious.",
+    "keyConstruction": "Write the correct answer so that both halves of it check out: it must accurately represent Text 1's claim AND accurately represent Text 2's stance (or the agreed point). Test by swapping text labels — the answer must become false.",
+    "distractorConstruction": "Build: (a) a stance-swap choice that would be correct if the labels were reversed, (b) a choice describing a real feature of the relationship but with the wrong label (e.g. 'refutes' for 'complicates'), (c) a choice responding to a different claim or inventing a position. For agreement variants, include a point only one author actually holds and a point neither holds.",
+    "validationChecklist": [
+      "Each text's stance can be stated in one sentence and is supported by that text alone",
+      "The correct answer is verified against both texts independently",
+      "The stance-swap test fails the correct answer (it is label-sensitive)",
+      "Both texts are 30-80 words each, original, and clearly on a shared topic",
+      "The stem names the specific claim or relationship being asked about",
+      "No distractor describes a relationship the two texts could plausibly be read as having"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] }
+}

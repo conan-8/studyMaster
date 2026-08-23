@@ -1,0 +1,55 @@
+{
+  "slug": "words-in-context",
+  "skill": "Words in Context",
+  "domain": "Craft and Structure",
+  "stimulusShape": {
+    "type": "passage",
+    "lengthWords": [25, 80],
+    "structure": "A very short passage of 1-2 sentences containing a single blank. The surrounding sentence(s) supply the semantic constraints — definition-like restatement, example, contrast, or cause — that fix the meaning the missing word must carry. Register is formal/academic prose across literature, science, history, and the arts."
+  },
+  "stemTemplates": [
+    "Which choice completes the text with the most logical and precise word or phrase?",
+    "As used in the text, what does the word \"<word>\" most nearly mean?"
+  ],
+  "answerMode": "best-word",
+  "choicePatterns": "Four single words (occasionally short phrases) of similar register and the same part of speech. Exactly one fits both the meaning demanded by the context and the sentence's collocations; the other three are plausible-sounding near-misses.",
+  "distractorLogic": [
+    "Right register, wrong meaning: a word of matching formality whose sense does not fit the context",
+    "Correct word, wrong sense: a polysemous word whose secondary meaning tempts but whose required sense fails (or vice versa)",
+    "Near-synonym, wrong collocation: a word close in meaning that does not combine naturally with the surrounding words (e.g. 'performed a mistake')",
+    "Partial fit: a word that satisfies one clause's clue but contradicts another",
+    "Thematic lure: a word associated with the passage's topic but not with the blank's specific slot"
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Common, high-frequency words (e.g. 'disputed', 'advantage', 'ordinary')",
+      "Context clue is direct: a restatement or clear antonym/synonym signal adjacent to the blank",
+      "Distractors are clearly semantically off"
+    ],
+    "medium": [
+      "Mid-frequency academic vocabulary (e.g. 'tenuous', 'novel', 'concede')",
+      "The clue requires reading the full sentence or both sentences, not just neighbors of the blank",
+      "One distractor is a genuine near-synonym ruled out by a subtle semantic mismatch"
+    ],
+    "hard": [
+      "Low-frequency or secondary-meaning words (e.g. 'sanction', 'arrest', 'fashion' as verbs)",
+      "The trap is the wrong sense of a plausible word: the familiar meaning fails, a rarer meaning fits (or the reverse)",
+      "Clues are distributed and indirect — contrast across clauses, or an example whose implication must be abstracted",
+      "All four choices share register and rough thematic zone"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose the target word FIRST (match difficulty: common word for easy, secondary-sense word for hard). 2. Write 1-2 sentences in which the context genuinely constrains the blank: include a restatement, example, contrast, or causal link that pins the required meaning. 3. Place the blank so the sentence is grammatical with the target word inserted. 4. Check the clue is sufficient: someone who knows the words but not the topic must be able to solve it from context alone. 5. Keep the passage self-contained and original.",
+    "keyConstruction": "The correct choice is the target word itself, used in the sense the context demands. Verify: (a) dictionary sense matches the contextual clue, (b) the word collocates naturally with its neighbors, (c) no other choice satisfies both (a) and (b).",
+    "distractorConstruction": "Pick three words of the same part of speech and register. Assign each a trap: (a) a word matching the topic's theme but not the blank's required sense, (b) a near-synonym of the target that fails on collocation or on one clause's clue, (c) for hard items, a word whose familiar sense tempts but whose required sense is wrong (or an unfamiliar word whose actual sense is wrong). Never include a word that arguably fits — one best answer only.",
+    "validationChecklist": [
+      "Only one choice produces a sentence that is both meaningful and consistent with every contextual clue",
+      "All four choices share part of speech and register",
+      "The context contains at least one explicit constraint (restatement, example, contrast, cause) fixing the required sense",
+      "The item is solvable from context without topic-specific knowledge",
+      "Passage is 25-80 words, original, and grammatical with the key inserted",
+      "For vocabulary-in-context variant, the quoted word is actually used in the passage in the tested sense"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] }
+}

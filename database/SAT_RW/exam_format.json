@@ -1,0 +1,42 @@
+{
+  "subject": {
+    "code": "SAT_RW",
+    "name": "SAT Reading & Writing",
+    "examMode": "FULLY_DIGITAL"
+  },
+  "totalDurationMinutes": 64,
+  "sections": [
+    {
+      "id": "MOD1",
+      "name": "Module 1",
+      "type": "MCQ",
+      "questionCount": 27,
+      "durationMinutes": 32,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": []
+    },
+    {
+      "id": "MOD2",
+      "name": "Module 2",
+      "type": "MCQ",
+      "questionCount": 27,
+      "durationMinutes": 32,
+      "weightPercent": 50,
+      "calculatorAllowed": false,
+      "subParts": []
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Information and Ideas", "weightPercent": 26 },
+    { "unit": 2, "title": "Craft and Structure", "weightPercent": 28 },
+    { "unit": 3, "title": "Standard English Conventions", "weightPercent": 26 },
+    { "unit": 4, "title": "Expression of Ideas", "weightPercent": 20 }
+  ],
+  "scoringNotes": "Each section (Reading & Writing, and Math) is scored on a 200-800 scale; the two sections combine for a total SAT score of 400-1600. The Reading & Writing section is module-adaptive: Module 2 difficulty (easier or harder version) is selected based on performance in Module 1. Scores are equated across test forms using an equating process so that a given score represents consistent performance regardless of the test date.",
+  "specialPolicies": {
+    "calculatorPolicy": "No calculator is relevant. The Reading & Writing section contains no calculator-dependent questions.",
+    "referenceSheet": false,
+    "deliveryNotes": "Fully digital exam delivered in the Bluebook app. Module-adaptive: Module 2 difficulty (higher or lower difficulty version) is determined by Module 1 performance. Passages are short (25-150 words) with exactly one question per passage."
+  }
+}

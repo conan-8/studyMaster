@@ -1,0 +1,24 @@
+{
+  "sourceId": "ssqb-fixture-sys-003",
+  "section": "math",
+  "domain": "Algebra",
+  "skill": "systems-linear-equations",
+  "difficultyOfficial": "hard",
+  "difficultyInternal": 4,
+  "questionType": "grid_in",
+  "stimulus": {
+    "type": "none",
+    "text": null,
+    "tableJson": null,
+    "figureAsset": null
+  },
+  "stem": "A theater sells adult tickets for $12 and student tickets for $8. On Saturday it sold 150 tickets for a total of $1,560. How many adult tickets were sold?",
+  "choices": [],
+  "correctAnswer": "90",
+  "rationale": "With a + s = 150 and 12a + 8s = 1560, substituting s = 150 - a gives 12a + 8(150 - a) = 1560, so 4a = 360 and a = 90.",
+  "sourceUrl": "https://example.invalid/fixture/sys-003",
+  "harvestedAt": "2026-08-22T18:47:40.812Z",
+  "allowedUses": [
+    "internal_eval"
+  ]
+}

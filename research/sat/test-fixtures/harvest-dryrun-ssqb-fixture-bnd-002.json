@@ -1,0 +1,41 @@
+{
+  "sourceId": "ssqb-fixture-bnd-002",
+  "section": "reading-writing",
+  "domain": "Standard English Conventions",
+  "skill": "boundaries",
+  "difficultyOfficial": "easy",
+  "difficultyInternal": 2,
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "passage",
+    "text": "The museum's new exhibit features tools from three continents ______ each display case is arranged to highlight how similar problems were solved independently.",
+    "tableJson": null,
+    "figureAsset": null
+  },
+  "stem": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "continents, each"
+    },
+    {
+      "id": "B",
+      "text": "continents; each"
+    },
+    {
+      "id": "C",
+      "text": "continents each"
+    },
+    {
+      "id": "D",
+      "text": "continents, and each"
+    }
+  ],
+  "correctAnswer": "B",
+  "rationale": "Two independent clauses must be joined by a semicolon, a period, or a coordinating conjunction; the semicolon is the only boundary that avoids a comma splice or run-on.",
+  "sourceUrl": "https://example.invalid/fixture/bnd-002",
+  "harvestedAt": "2026-08-22T18:47:40.812Z",
+  "allowedUses": [
+    "internal_eval"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "sourceId": "ssqb-fixture-wic-001",
+  "section": "reading-writing",
+  "domain": "Craft and Structure",
+  "skill": "words-in-context",
+  "difficultyOfficial": "medium",
+  "difficultyInternal": 3,
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "passage",
+    "text": "Biologist Mara Okafor studies how prairie plants respond to drought. Rather than wilting uniformly, some species ______ their resources, shutting down growth in older leaves while keeping new shoots alive.",
+    "tableJson": null,
+    "figureAsset": null
+  },
+  "stem": "As used in the text, what does the word \"husband\" most nearly mean if it replaces the blank in a later edition that reads \"husband their resources\"?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "marry"
+    },
+    {
+      "id": "B",
+      "text": "conserve"
+    },
+    {
+      "id": "C",
+      "text": "surrender"
+    },
+    {
+      "id": "D",
+      "text": "multiply"
+    }
+  ],
+  "correctAnswer": "B",
+  "rationale": "\"Husband\" is used in its less common verbal sense of managing a resource economically; the plants conserve resources by sacrificing older leaves.",
+  "sourceUrl": "https://example.invalid/fixture/wic-001",
+  "harvestedAt": "2026-08-22T18:47:40.812Z",
+  "allowedUses": [
+    "internal_eval"
+  ]
+}

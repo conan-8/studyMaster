@@ -1,0 +1,68 @@
+{
+  "subject": {
+    "code": "SAT_MATH",
+    "name": "SAT Math",
+    "examMode": "FULLY_DIGITAL"
+  },
+  "totalDurationMinutes": 70,
+  "sections": [
+    {
+      "id": "MOD1",
+      "name": "Module 1",
+      "type": "MCQ",
+      "questionCount": 22,
+      "durationMinutes": 35,
+      "weightPercent": 50,
+      "calculatorAllowed": true,
+      "subParts": [
+        {
+          "id": "MCQ1",
+          "name": "Multiple Choice",
+          "questionCount": 17,
+          "durationMinutes": 26
+        },
+        {
+          "id": "SPR1",
+          "name": "Student-Produced Response (Grid-In)",
+          "questionCount": 5,
+          "durationMinutes": 9
+        }
+      ]
+    },
+    {
+      "id": "MOD2",
+      "name": "Module 2",
+      "type": "MCQ",
+      "questionCount": 22,
+      "durationMinutes": 35,
+      "weightPercent": 50,
+      "calculatorAllowed": true,
+      "subParts": [
+        {
+          "id": "MCQ2",
+          "name": "Multiple Choice",
+          "questionCount": 17,
+          "durationMinutes": 26
+        },
+        {
+          "id": "SPR2",
+          "name": "Student-Produced Response (Grid-In)",
+          "questionCount": 5,
+          "durationMinutes": 9
+        }
+      ]
+    }
+  ],
+  "unitWeights": [
+    { "unit": 1, "title": "Algebra", "weightPercent": 35 },
+    { "unit": 2, "title": "Advanced Math", "weightPercent": 35 },
+    { "unit": 3, "title": "Problem-Solving and Data Analysis", "weightPercent": 15 },
+    { "unit": 4, "title": "Geometry and Trigonometry", "weightPercent": 15 }
+  ],
+  "scoringNotes": "The Math section is scored on a 200-800 scale; combined with Reading & Writing (200-800) for a total SAT score of 400-1600. Module-adaptive: Module 2 difficulty (easier or harder version) is selected based on Module 1 performance. Scores are equated across test forms so that a given score represents consistent performance regardless of the test date.",
+  "specialPolicies": {
+    "calculatorPolicy": "Calculator allowed throughout the entire section. The Desmos graphing calculator is built into the Bluebook app and available for all questions in both modules.",
+    "referenceSheet": true,
+    "deliveryNotes": "Fully digital exam delivered in the Bluebook app. Module-adaptive: Module 2 difficulty (higher or lower difficulty version) is determined by Module 1 performance. Grid-in (student-produced response) answers are entered as a decimal or fraction in the range 0-9999."
+  }
+}

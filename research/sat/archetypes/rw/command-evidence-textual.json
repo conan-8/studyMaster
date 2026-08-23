@@ -1,0 +1,57 @@
+{
+  "slug": "command-evidence-textual",
+  "skill": "Command of Evidence: Textual",
+  "domain": "Information and Ideas",
+  "stimulusShape": {
+    "type": "passage",
+    "lengthWords": [40, 130],
+    "structure": "A 1-3 sentence passage, usually in a science or social-science register, that sets up a research context and ends with a specific claim, hypothesis, or prediction — often ending in a blank after the claim is framed. The item asks which finding or piece of evidence would most directly support (or weaken) that claim."
+  },
+  "stemTemplates": [
+    "Which finding, if true, would most directly support <researcher>'s claim?",
+    "Which finding, if true, would most directly weaken the student's hypothesis?",
+    "Which choice most logically completes the text?",
+    "Which quotation from <source> would most effectively illustrate the claim?"
+  ],
+  "answerMode": "which-statement",
+  "choicePatterns": "Four findings or statements, each describing a plausible observation or result in the passage's domain. Exactly one bears directly on the causal or explanatory mechanism in the claim; the others are on-topic but off-mechanism.",
+  "distractorLogic": [
+    "A finding that supports a nearby but different claim (right topic, wrong mechanism)",
+    "A finding that is consistent with the claim but does not discriminate between it and rival explanations (too weak to count as support)",
+    "A finding that actually weakens or complicates the claim, dressed in supportive wording",
+    "A restatement of the claim itself rather than independent evidence for it",
+    "A finding about the wrong population, time period, or variable named in the claim"
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Claim is simple and causal ('X increases Y'); one choice tests exactly that link",
+      "Distractors are clearly irrelevant or obviously reverse the predicted direction",
+      "Passage vocabulary is everyday"
+    ],
+    "medium": [
+      "Claim contains a comparison or qualification ('more effective than', 'only when') that the evidence must match",
+      "Distractors are on-mechanism but off-scope (wrong group or condition)",
+      "Passage requires tracking a two-step setup before the claim"
+    ],
+    "hard": [
+      "Claim is conditional, comparative, or about a mechanism; evidence must isolate a variable",
+      "Multiple choices point in the 'right direction' but only one isolates the claimed cause",
+      "Weaken variant where the strongest weakener attacks an assumption, not the conclusion directly",
+      "Technical register with precise terminology the student must map onto the claim"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Invent a plausible research scenario (a team studying lichen growth, a linguist analyzing dialect shift). 2. Write 1-2 sentences of context naming the researchers and what they investigated. 3. End with an explicit claim/hypothesis containing a clear logical shape: causal ('A causes B'), comparative ('A outperforms B'), or conditional ('A holds only under C'). 4. Optionally end with a blank after '...would most directly support the claim that ______.' 5. Keep the passage free of any actual results — the evidence lives only in the choices.",
+    "keyConstruction": "Design the correct finding so that, if true, it directly instantiates or tests the claim's exact logical shape: same variables, same direction, same population, same conditions. For a causal claim, the best evidence shows the cause present/absent tracking the effect. For a comparative claim, it shows the named comparison under the named conditions.",
+    "distractorConstruction": "Build distractors as findings that are each plausible in the scenario: (a) one about a related variable that does not address the claimed mechanism, (b) one showing the claimed relationship in the wrong population or condition, (c) one whose direction subtly opposes the claim or that merely restates it. Verify each distractor fails on a logical ground you can articulate in one sentence.",
+    "validationChecklist": [
+      "The claim has an explicit logical shape (causal/comparative/conditional) written into the passage",
+      "The correct answer matches the claim's variables, direction, population, and conditions exactly",
+      "Each distractor fails for a distinct, articulable reason",
+      "No choice requires outside scientific knowledge beyond the passage's own framing",
+      "Passage is 40-130 words and original",
+      "If using a blank, the passage reads coherently up to the blank"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] }
+}

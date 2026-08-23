@@ -1,0 +1,56 @@
+{
+  "slug": "text-structure-purpose",
+  "skill": "Text Structure and Purpose",
+  "domain": "Craft and Structure",
+  "stimulusShape": {
+    "type": "passage",
+    "lengthWords": [40, 130],
+    "structure": "A 1-3 sentence passage (occasionally 4) with one sentence underlined for the function variant. The passage has a clear rhetorical architecture: a claim plus elaboration, a problem plus response, a view plus a qualification, etc. Variants ask about the underlined sentence's function, the main purpose of the whole text, or the overall structure."
+  },
+  "stemTemplates": [
+    "Which choice best describes the function of the underlined sentence in the text as a whole?",
+    "Which choice best states the main purpose of the text?",
+    "Which choice best describes the overall structure of the text?"
+  ],
+  "answerMode": "best-phrase",
+  "choicePatterns": "Four descriptions of rhetorical function or structure, typically one to two lines each, phrased as 'It <verb phrase>...' or 'The text <verb>...'. Exactly one matches both the content and the rhetorical role of the target; distractors describe plausible roles the sentence or text does not actually play.",
+  "distractorLogic": [
+    "Content-not-role trap: the choice accurately summarizes what the sentence says but misdescribes what it does",
+    "Role reversal: describing evidence as the claim it supports, or a concession as the main assertion",
+    "Overstatement: naming a stronger rhetorical move than occurs ('refutes' where the text merely 'qualifies'; 'proves' where it 'suggests')",
+    "Wrong-object trap: describing the function of a different sentence in the passage",
+    "Structure swap: naming a recognizable architecture (chronology, problem-solution, compare-contrast) that fits a different passage shape"
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Two-sentence passage with a transparent architecture (claim + example, question + answer)",
+      "Underlined sentence plays an obvious role (gives an example, states the thesis)",
+      "Distractors describe roles absent from the passage"
+    ],
+    "medium": [
+      "Three-sentence passage; the underlined sentence plays a relational role (qualifies, concedes, illustrates, pivots)",
+      "Distractors include the content-not-role trap and one role reversal",
+      "Main-purpose variant where the purpose must be inferred from the whole, not from a single sentence"
+    ],
+    "hard": [
+      "Underlined sentence plays a subtle role (anticipates an objection, narrows a generalization, recontextualizes earlier evidence)",
+      "Distractors differ only in the strength or direction of the named rhetorical verb",
+      "Literary passages where function must be read through tone and implication",
+      "Overall-structure variant with two plausible architectures distinguishable only by close reading"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose the rhetorical architecture first (claim+example, view+qualification, problem+response, observation+interpretation). 2. Write a passage that genuinely instantiates it, sentence by sentence; label each sentence's role in your notes. 3. For the function variant, underline the sentence whose role is both non-trivial and unambiguous on close reading. 4. For structure/purpose variants, ensure the passage's shape is singular — it must not equally fit a second architecture. 5. Keep content concrete and original (a historical practice, a study finding, an artist's choice).",
+    "keyConstruction": "Phrase the correct answer as the rhetorical role plus a light content gloss: 'It provides an example that illustrates the claim about X.' Use a verb calibrated to the actual strength of the move (qualifies, not refutes; suggests, not establishes). The verb must be defensible from the passage's wording.",
+    "distractorConstruction": "Build: (a) a choice that restates the target sentence's content while mislabeling its role, (b) a choice describing the role of another sentence in the passage, (c) a choice naming a stronger or opposite rhetorical move with an inaccurate verb. For structure variants, offer architectures that share surface features with the true one.",
+    "validationChecklist": [
+      "Every sentence of the passage has an identifiable role, and the underlined sentence's role is unique",
+      "The correct answer's rhetorical verb is exactly calibrated (no over- or understatement)",
+      "Each distractor fails on role, object, or verb strength — name the failure for each",
+      "The passage does not plausibly instantiate a second architecture",
+      "Passage is 40-130 words and original; exactly one sentence is underlined for the function variant",
+      "Answer choices are parallel in grammatical form"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] }
+}

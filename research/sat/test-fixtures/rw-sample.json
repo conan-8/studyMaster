@@ -1,0 +1,27 @@
+{
+  "sourceId": "ssqb-fixture-rw-0001",
+  "section": "reading-writing",
+  "domain": "Craft and Structure",
+  "skill": "words-in-context",
+  "difficultyOfficial": "easy",
+  "difficultyInternal": 2,
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "passage",
+    "text": "When the city opened its new library, residents expected long lines during the first week. Instead, the initial excitement soon waned, and by the end of the month the reading rooms were often quiet.",
+    "tableJson": null,
+    "figureAsset": null
+  },
+  "stem": "As used in the text, what does the word \"waned\" most nearly mean?",
+  "choices": [
+    { "id": "A", "text": "Diminished" },
+    { "id": "B", "text": "Returned" },
+    { "id": "C", "text": "Strengthened" },
+    { "id": "D", "text": "Shifted" }
+  ],
+  "correctAnswer": "A",
+  "rationale": "The passage contrasts initial excitement with later quiet reading rooms, so \"waned\" most nearly means diminished.",
+  "sourceUrl": "https://satsuitequestionbank.collegeboard.org/",
+  "harvestedAt": "2026-08-22T00:00:00Z",
+  "allowedUses": ["internal_eval"]
+}

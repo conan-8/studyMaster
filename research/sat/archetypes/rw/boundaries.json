@@ -1,0 +1,54 @@
+{
+  "slug": "boundaries",
+  "skill": "Boundaries",
+  "domain": "Standard English Conventions",
+  "stimulusShape": {
+    "type": "passage",
+    "lengthWords": [25, 80],
+    "structure": "One or two sentences of expository prose containing a blank at a syntactic boundary: between clauses, around a parenthetical or appositive, after an introductory element, or within a list. The blank is where punctuation and/or connecting words must go. Choices are variants of the same words with different punctuation or connectors."
+  },
+  "stemTemplates": [
+    "Which choice completes the text so that it conforms to the conventions of Standard English?"
+  ],
+  "answerMode": "best-phrase",
+  "choicePatterns": "Four variants of the text at the blank, differing only in punctuation and/or connector (e.g. 'study, however,' / 'study; however,' / 'study however,' / 'study. However,'). Exactly one produces a grammatically complete, conventionally punctuated sentence; the others create comma splices, fragments, run-ons, or mis-punctuated supplements.",
+  "distractorLogic": [
+    "Comma splice: joining two independent clauses with a comma alone",
+    "Semicolon misuse: semicolon before a dependent clause, a phrase, or an incomplete second element",
+    "Missing boundary: no punctuation where a parenthetical, appositive, or introductory element requires it (or an unclosed paired comma/dash)",
+    "False boundary: punctuation splitting elements that must stay together (between subject and verb, within a restrictive clause, before 'because')",
+    "Wrong connector: a subordinating conjunction or conjunctive adverb whose punctuation requirements the choice violates (e.g. 'however' used like 'but')"
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Single clear boundary: two short independent clauses, or one obvious introductory phrase",
+      "Distractors produce unmistakable run-ons or fragments",
+      "No parenthetical or embedded material to obscure clause structure"
+    ],
+    "medium": [
+      "Sentence contains an intervening phrase that hides the true clause boundaries",
+      "Choices test semicolon vs comma with a conjunctive adverb ('however', 'therefore')",
+      "Nonrestrictive appositive or parenthetical requiring paired punctuation"
+    ],
+    "hard": [
+      "Long sentence with multiple embedded clauses; the test-taker must parse which elements are independent",
+      "Restrictive vs nonrestrictive distinction determines whether commas are required",
+      "Colon/dash usage where the preceding clause must be independent, or list punctuation with internal commas",
+      "Distractors each fix one error while introducing another"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose the boundary phenomenon to test (comma splice repair, conjunctive adverb punctuation, appositive commas, colon before a list, subject-verb separation). 2. Write a sentence whose syntax creates that boundary — for hard items, embed phrases to disguise it. 3. Place the blank exactly at the boundary. 4. Draft the choice set by varying punctuation/connector around fixed words. 5. Read the full sentence with each choice inserted to confirm exactly one is conventional.",
+    "keyConstruction": "The correct choice applies the governing rule: independent clause + semicolon/period + independent clause; comma + coordinating conjunction for joined independent clauses; paired commas around nonrestrictive supplements; no punctuation within a restrictive element. Verify by parsing the finished sentence: every clause complete, every supplement closed, no fused or fragmented elements.",
+    "distractorConstruction": "Generate distractors by applying the standard wrong moves for the phenomenon: comma where a semicolon belongs (splice), semicolon where a comma belongs (fragmented second element), missing second comma of a pair, comma splitting subject from verb. Keep all choices plausible-looking; the words themselves should never be the cue — only the punctuation/logic differs.",
+    "validationChecklist": [
+      "The sentence parses unambiguously: clause types (independent/dependent) at the blank are objectively determinable",
+      "Exactly one choice yields a conventional, complete sentence",
+      "Each distractor commits exactly one identifiable convention error",
+      "Choices differ only in punctuation/connector, not in wording (except where the connector is the tested feature)",
+      "Passage is 25-80 words, original, and topically neutral expository prose",
+      "The correct answer respects both grammar and standard punctuation convention (no style-debatable calls)"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] }
+}

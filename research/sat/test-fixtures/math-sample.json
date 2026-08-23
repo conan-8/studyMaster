@@ -1,0 +1,22 @@
+{
+  "sourceId": "ssqb-fixture-math-0001",
+  "section": "math",
+  "domain": "Algebra",
+  "skill": "systems-linear-equations",
+  "difficultyOfficial": "hard",
+  "difficultyInternal": 4,
+  "questionType": "grid_in",
+  "stimulus": {
+    "type": "none",
+    "text": null,
+    "tableJson": null,
+    "figureAsset": null
+  },
+  "stem": "If 2x + y = 30 and x - y = 6, what is the value of x?",
+  "choices": [],
+  "correctAnswer": "12",
+  "rationale": "Adding the equations gives 3x = 36, so x = 12. (Then y = 6.)",
+  "sourceUrl": "https://satsuitequestionbank.collegeboard.org/",
+  "harvestedAt": "2026-08-22T00:00:00Z",
+  "allowedUses": ["internal_eval"]
+}

@@ -1,47 +1,19 @@
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
+# OS
 .DS_Store
 *.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
 # env files
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*.local
 
-# vercel
-.vercel
-
-# typescript
+# editor / tooling
+.idea/
+.vscode/
 *.tsbuildinfo
 
-# prisma generated client
-/src/generated/prisma
-
-# playwright
-/test-results/
-/playwright-report/
-/playwright/.cache/
-
-# opencode
-/.opencode/
-
-# curriculum source PDFs (large binaries, fetch from source)
-content/ced/*.pdf
+# harvested College Board SAT content — internal use only, never commit
+research/sat/question-bank/
+research/sat/assets/
+research/sat/index.jsonl
+research/sat/.harvest-progress.json

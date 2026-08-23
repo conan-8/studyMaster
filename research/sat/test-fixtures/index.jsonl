@@ -1,0 +1,3 @@
+{"sourceId":"ssqb-fixture-wic-001","section":"reading-writing","domain":"Craft and Structure","skill":"words-in-context","difficultyOfficial":"medium","questionType":"mcq","path":"test-fixtures/harvest-dryrun-ssqb-fixture-wic-001.json"}
+{"sourceId":"ssqb-fixture-bnd-002","section":"reading-writing","domain":"Standard English Conventions","skill":"boundaries","difficultyOfficial":"easy","questionType":"mcq","path":"test-fixtures/harvest-dryrun-ssqb-fixture-bnd-002.json"}
+{"sourceId":"ssqb-fixture-sys-003","section":"math","domain":"Algebra","skill":"systems-linear-equations","difficultyOfficial":"hard","questionType":"grid_in","path":"test-fixtures/harvest-dryrun-ssqb-fixture-sys-003.json"}

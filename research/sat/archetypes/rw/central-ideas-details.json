@@ -1,0 +1,57 @@
+{
+  "slug": "central-ideas-details",
+  "skill": "Central Ideas and Details",
+  "domain": "Information and Ideas",
+  "stimulusShape": {
+    "type": "passage",
+    "lengthWords": [30, 120],
+    "structure": "A single self-contained passage of 1-3 sentences (occasionally 4) from science, history/social science, or literary contexts. The passage states or implies one dominant point and supports it with one or two concrete details. No blank is required for the main-idea variant; a detail variant asks about a specific fact stated in the text."
+  },
+  "stemTemplates": [
+    "Which choice best states the main idea of the text?",
+    "Which choice best states the central idea of the text?",
+    "According to the text, what is true of <subject>?",
+    "Based on the text, how does <entity A> compare to <entity B>?"
+  ],
+  "answerMode": "which-statement",
+  "choicePatterns": "Four complete declarative statements of similar length and register. For main-idea items, exactly one captures the passage's dominant point at the right scope; the other three are true-sounding statements at the wrong scope or wrong slant. For detail items, exactly one is a faithful paraphrase of a stated fact.",
+  "distractorLogic": [
+    "A true supporting detail presented as the main idea (subordinate point inflated to thesis)",
+    "An overgeneralization that extends the passage's claim beyond its stated scope or population",
+    "A subtle reversal of a stated relationship (e.g. cause and effect swapped, 'more' flipped to 'fewer')",
+    "A plausible statement relying on outside knowledge that the passage never asserts",
+    "A misattribution: assigning a belief or finding to the wrong person, group, or time period named in the passage"
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Short passage (30-60 words) with an explicit topic sentence in the first line",
+      "Distractors clearly off-topic or contradicted by the text",
+      "Detail questions pointing at a fact stated in nearly the same words as the answer"
+    ],
+    "medium": [
+      "Main idea distributed across two or three sentences; answer requires synthesis, not sentence-matching",
+      "Distractors are genuine details from the passage that are not the central point",
+      "Moderate paraphrase distance between passage wording and the correct answer"
+    ],
+    "hard": [
+      "Main idea only implied; passage presents findings or a scenario without a thesis sentence",
+      "Distractors are near-paraphrases of the correct answer with one altered qualifier, scope word, or relationship",
+      "Dense syntax, embedded clauses, or technical vocabulary (e.g. ecology, economics) raising reading load",
+      "Detail item asks about a fact stated obliquely (via pronoun reference or negation)"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Pick a concrete topic (an animal behavior, a historical technique, a physics finding, an artist's method). 2. Decide the single dominant point the passage will make; write it down as a one-line thesis for your own reference. 3. Write 1-3 sentences that establish the topic, deliver the thesis (explicitly for easy/medium, implicitly for hard), and add one or two supporting details that are clearly subordinate. 4. Ensure the passage is self-contained: no outside knowledge needed, no unresolved references. 5. For a detail variant, plant one specific checkable fact and point the stem at it.",
+    "keyConstruction": "Write the correct answer as an accurate paraphrase of your reference thesis (or of the targeted detail). Keep its scope exactly equal to the passage's claim — same subject, same qualifier, same direction of relationship. Do not reuse the passage's exact phrasing; paraphrase at medium distance.",
+    "distractorConstruction": "Build the three distractors from distinct trap mechanisms: (a) promote a real supporting detail from the passage to thesis status, (b) widen or narrow the scope of the true claim (e.g. 'all pollinators' for 'many bee species'), (c) reverse a relationship or introduce a plausible-sounding claim the passage never makes. Every distractor must be defensibly wrong on rereading, not merely less elegant.",
+    "validationChecklist": [
+      "The correct answer is provable from the passage alone, with no outside knowledge",
+      "Exactly one choice matches the passage's scope and direction; the other three fail for a nameable reason",
+      "No distractor is a true statement of the passage's main point",
+      "Passage is 30-120 words, self-contained, and original",
+      "Stem matches one of the stemTemplates verbatim or near-verbatim",
+      "For detail items, the asked fact is explicitly present in the passage"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] }
+}

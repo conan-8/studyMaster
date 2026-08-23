@@ -1,0 +1,55 @@
+{
+  "slug": "rhetorical-synthesis",
+  "skill": "Rhetorical Synthesis",
+  "domain": "Expression of Ideas",
+  "stimulusShape": {
+    "type": "notes",
+    "lengthWords": [60, 150],
+    "structure": "A short framing sentence ('While researching a topic, a student has taken the following notes:') followed by 4-6 bulleted factual notes about a topic — a person, study, artifact, or event. After the notes, a stated rhetorical goal ('The student wants to emphasize X to an audience already familiar with Y.'). The answer choices are sentences that use some subset of the notes to accomplish that goal."
+  },
+  "stemTemplates": [
+    "The student wants to <goal>. Which choice most effectively uses the relevant information from the notes to accomplish this goal?",
+    "The student wants to emphasize <aspect> to an audience unfamiliar with <topic>. Which choice most effectively uses the relevant information from the notes to accomplish this goal?"
+  ],
+  "answerMode": "which-statement",
+  "choicePatterns": "Four complete sentences, each drawing on the notes. Exactly one both selects the notes relevant to the stated goal and uses them accurately to accomplish it; distractors use irrelevant notes, pursue a different goal, distort a fact, or present relevant facts without accomplishing the rhetorical move the goal requires.",
+  "distractorLogic": [
+    "Relevance failure: the sentence uses accurate notes that do not serve the stated goal (right facts, wrong job)",
+    "Goal substitution: the sentence accomplishes a nearby but different goal (defines the term when the goal was to emphasize its influence; narrates when the goal was to compare)",
+    "Fact distortion: the sentence subtly misstates a note (wrong date, swapped attribution, inflated figure)",
+    "Structure mismatch: the goal asks for a comparison or contrast but the sentence merely lists facts side by side without making the comparative move",
+    "Omission of the key note: the sentence addresses the goal but leaves out the single most decisive note, making it less effective than the key"
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Goal maps cleanly onto a subset of notes; only one choice uses goal-relevant notes at all",
+      "Distractors clearly pursue other goals or contain obvious distortions",
+      "Notes are simple facts with no ambiguity about which serve the goal"
+    ],
+    "medium": [
+      "Two choices use relevant notes; they differ in accuracy or in whether the rhetorical move is actually performed",
+      "One distractor is accurate and relevant but accomplishes a different goal",
+      "Notes include one plausible-but-irrelevant fact that tempts inclusion"
+    ],
+    "hard": [
+      "Multiple choices use only relevant, accurate notes; discrimination requires judging which best performs the rhetorical move (e.g. explicit comparison vs juxtaposition)",
+      "Goal has two components ('emphasize X to an audience already familiar with Y') and distractors serve only one",
+      "The decisive difference between key and distractor is a subtle distortion or a missing qualifier",
+      "Notes contain near-duplicate facts where selection precision matters"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose a topic and generate 4-6 specific, checkable invented facts (dates, names, numbers, properties) — write them as clean bulleted notes, each one self-contained. 2. Decide the rhetorical goal and mark which notes are relevant to it; ensure at least one note is relevant and at least one is a tempting irrelevance. 3. Write the framing sentence and the goal statement, including audience framing for harder items. 4. Fact-check the notes against each other for internal consistency (dates, names). 5. All facts must be invented for a fictional or generic scenario unless genuinely common knowledge.",
+    "keyConstruction": "Write the correct sentence to: (a) draw only on goal-relevant notes, (b) state every borrowed fact exactly as the notes state it, and (c) actually perform the rhetorical move — if the goal is 'emphasize the contrast', the sentence must contrast; if 'introduce to an unfamiliar audience', it must define/orient. It should be plainly more effective than any distractor on re-reading against the goal.",
+    "distractorConstruction": "Build: (a) an accurate sentence about goal-irrelevant notes, (b) a sentence using relevant notes but performing a different rhetorical move (listing instead of comparing), (c) a sentence that serves the goal but distorts one fact or omits the decisive note. Keep all four choices similar in length and polish so quality of writing is not the cue.",
+    "validationChecklist": [
+      "Every fact used in every choice is checked verbatim against the notes",
+      "The goal is explicit and maps to an identifiable subset of notes",
+      "Exactly one choice is simultaneously relevant, accurate, and rhetorically effective for the goal",
+      "No choice requires information not present in the notes",
+      "Notes total 60-150 words across 4-6 bullets; all content is original/invented",
+      "Choices are comparable in length and style so selection logic, not polish, determines the answer"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] }
+}

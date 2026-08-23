@@ -1,0 +1,54 @@
+{
+  "slug": "transitions",
+  "skill": "Transitions",
+  "domain": "Expression of Ideas",
+  "stimulusShape": {
+    "type": "passage",
+    "lengthWords": [30, 90],
+    "structure": "Two sentences (occasionally a sentence pair within a three-sentence passage) with a blank at the start of the second sentence — '______, ...' — where a transitional word or phrase must express the logical relationship between the two ideas. The content of both sentences is fully given; only the connector is missing."
+  },
+  "stemTemplates": [
+    "Which choice completes the text with the most logical transition?"
+  ],
+  "answerMode": "best-phrase",
+  "choicePatterns": "Four transitional words or phrases (e.g. 'However,' / 'Similarly,' / 'For example,' / 'Accordingly,'). Exactly one names the true logical relationship between the two sentences; the others name plausible but wrong relationships — contrast, addition, exemplification, cause-effect, concession, sequence.",
+  "distractorLogic": [
+    "Wrong logical relation: the most common trap — offering contrast ('however') where the logic is cause ('therefore'), addition ('moreover') where it is contrast, etc.",
+    "Direction reversal within a relation: a transition of the right family but wrong polarity ('conversely' for a parallel, not opposed, case)",
+    "Relation that fits sentence 2 alone but not the pair: the connector coheres with the second sentence's internal logic while misdescribing the link between sentences",
+    "Exemplification/illustration trap: 'for example' when sentence 2 is not an instance of sentence 1's general claim (or omitting it when it is)",
+    "Redundancy/register misfit: a connector that duplicates meaning already in the sentences or is tonally wrong for the passage"
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Obvious binary relation: clear contrast or clear continuation between the sentences",
+      "The four choices span four different logical families, so one read of the pair suffices",
+      "Everyday content requiring no inference about the relationship"
+    ],
+    "medium": [
+      "The relationship must be inferred from content, not signaled by mirrored wording",
+      "Two choices come from the same family (two contrast transitions), forcing a polarity judgment",
+      "Cause vs correlation vs sequence ambiguity between the sentences"
+    ],
+    "hard": [
+      "Subtle relations: concession vs contrast ('nevertheless' vs 'by contrast'), elaboration vs example ('in fact' vs 'for instance'), result vs inference ('accordingly' vs 'thus' vs 'then')",
+      "The surface cue points one way (shared vocabulary suggesting 'similarly') while the deep logic points another (a contrast)",
+      "Sentence 2 partially fulfills an expectation set by sentence 1, requiring a concession transition",
+      "All four choices are grammatically fine; only the semantic logic discriminates"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose the target logical relationship first (contrast, cause-effect, addition, exemplification, concession, sequence). 2. Write sentence 1 making a claim or stating a fact. 3. Write sentence 2 so that its relationship to sentence 1 is exactly the target — and check no other relationship fits equally well. 4. Place the blank at the head of sentence 2 followed by a comma. 5. For hard items, plant a surface cue suggesting a different relation than the true one.",
+    "keyConstruction": "The correct transition names the target relationship with the right polarity and strength. Verify by reading the pair aloud with the key inserted: the logical bridge should feel inevitable, and replacing it with any distractor should produce a detectable non sequitur.",
+    "distractorConstruction": "Choose distractors from the relationships a hasty reader might diagnose: the 'surface' relation suggested by shared or opposed vocabulary, the relation sentence 2 has to its own content rather than to sentence 1, and a same-family transition with reversed polarity. Ensure at least one distractor is from a different family for coverage and none is grammatically impossible (grammar must not be the cue).",
+    "validationChecklist": [
+      "The true relationship between the sentences is nameable in one word (contrast, cause, example, addition, concession, sequence)",
+      "No distractor's named relationship can be defended as the actual one",
+      "All four choices are grammatical at the blank",
+      "Both sentences are fully meaningful without the transition (content is given; only logic is tested)",
+      "Passage is 30-90 words, original, two sentences minimum",
+      "The correct transition is followed by a comma in standard style"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] }
+}

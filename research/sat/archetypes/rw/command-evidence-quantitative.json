@@ -1,0 +1,57 @@
+{
+  "slug": "command-evidence-quantitative",
+  "skill": "Command of Evidence: Quantitative",
+  "domain": "Information and Ideas",
+  "stimulusShape": {
+    "type": "passage+table",
+    "lengthWords": [40, 140],
+    "structure": "A 1-3 sentence passage presenting an argument, hypothesis, or conclusion, paired with a compact table (or simple bar/line graph) of invented data — typically 3-6 rows by 2-4 columns with headers. The passage usually ends in a blank; the correct completion must be the statement that accurately uses the data to support the passage's claim."
+  },
+  "stemTemplates": [
+    "Which choice most effectively uses data from the table to support the researchers' hypothesis?",
+    "Which choice most effectively uses data from the table to complete the statement?",
+    "Which choice best describes data from the table that weaken the student's claim?",
+    "According to the table, which choice is true of <category>?"
+  ],
+  "answerMode": "which-statement",
+  "choicePatterns": "Four statements that each cite or summarize data from the table. Exactly one is both numerically faithful to the table and logically aligned with the passage's claim; the others misread the table, cite irrelevant cells, or report accurate numbers that do not address the claim.",
+  "distractorLogic": [
+    "Misread of the table: wrong row, wrong column, or swapped categories",
+    "Accurate data citation that is irrelevant to the claim being supported (right numbers, wrong job)",
+    "Trend reversal: reporting an increase as a decrease, or the higher value as the lower",
+    "Unit or scale error: ignoring percentages vs counts, or per-capita vs totals",
+    "Aggregation error: citing an overall figure when the claim concerns a subgroup (or vice versa)"
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Small table (3-4 rows, 2 columns) with one obviously decisive row",
+      "Claim points directly at a single comparison visible at a glance",
+      "Distractor misreads are gross (wrong variable entirely)"
+    ],
+    "medium": [
+      "Table with 4-6 rows; the supporting comparison requires reading two or three cells",
+      "One distractor cites accurate but claim-irrelevant data",
+      "Passage claim contains a qualifier the data must match (e.g. 'after treatment', 'in urban sites')"
+    ],
+    "hard": [
+      "Supporting evidence requires comparing changes (deltas or ratios), not single values",
+      "Multiple distractors cite real table values that nearly fit; only one matches the claim's exact condition and direction",
+      "Units/percentages trap or a subgroup-vs-total trap is live",
+      "Weaken variant requiring identification of the row that contradicts the trend"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose a scenario that naturally yields a small dataset (crop yields under three fertilizers, museum attendance by year, enzyme reaction rates by temperature). 2. Write the passage: 1-2 sentences of context plus one claim or a sentence ending in a blank. 3. Design the table AFTER the claim: invent numbers such that exactly one clean comparison supports the claim, the values are realistic and internally consistent, and no unintended comparison supports the claim equally well. 4. Label the table with a title, row/column headers, and units. 5. Keep tables small enough to verify by eye.",
+    "keyConstruction": "Write the correct answer as a statement that names the exact cells/comparison in the table and ties them to the claim: 'X was 42 while Y was 18, consistent with the claim that...'. The numbers in the answer must match the table exactly, and the comparison must mirror the claim's direction and conditions.",
+    "distractorConstruction": "Build distractors by: (a) citing a real table value attached to the wrong category or condition, (b) citing accurate data for a comparison that does not bear on the claim, (c) reversing a trend or misreading a unit. Compute every number in every choice against the table; the correct choice must be the only one that is both accurate and relevant.",
+    "validationChecklist": [
+      "Every number quoted in every choice is checked against the table cell by cell",
+      "Exactly one choice is simultaneously accurate about the data and relevant to the claim",
+      "The table supports no unintended reading that makes a distractor defensible",
+      "Headers, units, and row labels are unambiguous",
+      "Passage is 40-140 words; table is 3-6 rows by 2-4 columns",
+      "All scenario content and data are invented and original"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] }
+}

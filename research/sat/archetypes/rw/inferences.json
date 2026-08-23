@@ -1,0 +1,56 @@
+{
+  "slug": "inferences",
+  "skill": "Inferences",
+  "domain": "Information and Ideas",
+  "stimulusShape": {
+    "type": "passage",
+    "lengthWords": [40, 130],
+    "structure": "A 1-3 sentence passage that lays out premises — a set of observations, facts, or a scenario — and ends with a blank (typically after 'Therefore,...' or an equivalent framing). The blank must be filled by the conclusion that the premises most strongly support, one inferential step beyond what is stated."
+  },
+  "stemTemplates": [
+    "Which choice most logically completes the text?",
+    "Which conclusion is most strongly supported by the text?",
+    "It can most reasonably be inferred from the text that ______."
+  ],
+  "answerMode": "which-statement",
+  "choicePatterns": "Four candidate conclusions of similar length. Exactly one follows from the premises with the least added assumption; the others either restate a premise, overshoot the evidence, contradict a premise, or import an unsupported real-world belief.",
+  "distractorLogic": [
+    "Restatement trap: a choice that paraphrases a premise instead of drawing a conclusion from the premises together",
+    "Overreach: a conclusion stronger, broader, or more certain than the premises license ('always', 'proves', 'the only')",
+    "Contradiction: a choice quietly incompatible with one stated premise",
+    "Plausibility trap: a conclusion that sounds true in the real world but is not grounded in the passage",
+    "Wrong-direction inference: a conclusion that reverses the conditional or correlation the premises establish"
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Two premises with one obvious joint implication",
+      "Distractors are restatements or clearly unsupported claims",
+      "Everyday topic with no technical vocabulary"
+    ],
+    "medium": [
+      "Three premises; the inference requires combining at least two of them",
+      "One distractor is a near-miss overreach differing only in a qualifier",
+      "The correct conclusion requires a small paraphrase of premise content"
+    ],
+    "hard": [
+      "Inference depends on noticing what the premises rule out (an eliminative or comparative structure)",
+      "Multiple choices are directionally correct; only one is calibrated in scope and certainty",
+      "Premises involve quantities, rates, or a correlation the student must not over-read as causation",
+      "Dense or formal register (economics, ecology, literary criticism)"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Decide the target conclusion first — write it as a one-line inference that goes exactly one step beyond stated facts. 2. Work backward: write 2-3 premises that jointly entail (or strongly support) that conclusion without stating it. 3. Ensure the premises are individually true-sounding, mutually consistent, and contain no accidental entailment of any distractor. 4. End the passage with a blank after a concluding marker ('Therefore,', 'This suggests that', 'Taken together, these findings indicate that'). 5. Keep the domain self-contained.",
+    "keyConstruction": "The correct answer states the target conclusion at precisely the scope and certainty the premises support: no stronger modal ('must' when 'may' is warranted), no broader population, no added causal claim. Paraphrase it so it does not echo premise wording too closely.",
+    "distractorConstruction": "Construct: (a) a restatement of the most salient premise, (b) an overreach version of the correct conclusion (add an absolute qualifier or widen the scope), (c) a choice that is plausible in the world but disconnected from the premises or subtly contradicted by one. Each distractor should tempt a specific misreading, not merely be random.",
+    "validationChecklist": [
+      "The correct conclusion follows from the premises with minimal added assumption",
+      "No premise alone states the conclusion",
+      "Each distractor maps to a named trap (restatement, overreach, contradiction, implausible grounding)",
+      "No distractor is entailed by the premises",
+      "Passage is 40-130 words, self-contained, and original",
+      "Blank placement produces a grammatical sentence with the correct choice inserted"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] }
+}

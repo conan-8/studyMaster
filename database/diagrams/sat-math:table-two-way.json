@@ -1,0 +1,53 @@
+{
+  "archetypeId": "sat-math:table-two-way",
+  "title": "Two-Way Frequency Table",
+  "description": "A 2×2 contingency table of counts with row and column totals and a grand total. Serves Problem-Solving and Data Analysis (probability-conditional): conditional probability, relative frequency, and association questions. Only the four inner cells are authored — totals are derived.",
+  "subjectsApplicable": ["SAT_MATH"],
+  "paramsSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["rowCategories", "columnCategories", "cells", "tableTitle"],
+    "properties": {
+      "tableTitle": { "type": ["string", "null"], "maxLength": 60 },
+      "rowCategories": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "description": "Labels for the two rows (e.g. ['Junior', 'Senior']).",
+        "items": { "type": "string", "minLength": 1, "maxLength": 20 }
+      },
+      "columnCategories": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "description": "Labels for the two columns (e.g. ['Passed', 'Failed']).",
+        "items": { "type": "string", "minLength": 1, "maxLength": 20 }
+      },
+      "cells": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "description": "cells[r][c] = count in row r, column c. At least one cell must be positive (renderer validates).",
+        "items": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "type": "integer", "minimum": 0, "maximum": 999 }
+        }
+      },
+      "cornerLabel": {
+        "type": ["string", "null"],
+        "maxLength": 20,
+        "description": "Label for the top-left corner cell describing the row variable; null leaves it blank."
+      },
+      "showTotals": {
+        "type": "boolean",
+        "default": true,
+        "description": "Append the Total row and Total column. Set false when the question asks students to compute them."
+      }
+    }
+  },
+  "rendererRef": "TwoWayTable",
+  "notes": "Renderer guarantees: row totals, column totals, and grand total are COMPUTED from cells — they are never parameters, so totals can never contradict inner cells; totals row/column are bolded with a double rule; an all-zero table is rejected at parse time."
+}

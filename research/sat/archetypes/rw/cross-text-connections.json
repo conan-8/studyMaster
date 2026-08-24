@@ -2,9 +2,14 @@
   "slug": "cross-text-connections",
   "skill": "Cross-Text Connections",
   "domain": "Craft and Structure",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:cross-text-connections",
   "stimulusShape": {
-    "type": "dual-passage",
-    "lengthWords": [60, 160],
+    "type": "dual_text",
+    "lengthWords": [
+      60,
+      160
+    ],
     "structure": "Two short labeled texts (Text 1 and Text 2), each 1-3 sentences (roughly 30-80 words each), on a shared topic. Each text has a distinct, identifiable stance or finding: they may disagree outright, or one may complicate, extend, or explain the other. The question asks how one author would respond to a claim in the other text, how the texts relate, or where they agree."
   },
   "stemTemplates": [
@@ -16,11 +21,26 @@
   "answerMode": "which-statement",
   "choicePatterns": "Four statements describing a response, relationship, or point of agreement. Exactly one accurately tracks BOTH texts' stances; distractors misassign a stance, invent agreement/disagreement, or respond to the wrong element of the target text.",
   "distractorLogic": [
-    "Stance swap: attributing Text 1's position to Text 2 or vice versa",
-    "Relationship mislabel: claiming direct refutation where Text 2 merely complicates, or agreement where the texts address different questions",
-    "Wrong target: the response engages a detail of Text 1 other than the one the stem asks about",
-    "Fabricated position: a response neither text gives the author any basis to hold",
-    "Overstated disagreement: portraying a partial or conditional difference as wholesale rejection"
+    {
+      "misconceptionId": "SAT_RW:cross-text-connections-stance-swap",
+      "trap": "Stance swap: attributing Text 1's position to Text 2 or vice versa"
+    },
+    {
+      "misconceptionId": "SAT_RW:cross-text-connections-relationship-mislabel",
+      "trap": "Relationship mislabel: claiming direct refutation where Text 2 merely complicates, or agreement where the texts address different questions"
+    },
+    {
+      "misconceptionId": "SAT_RW:cross-text-connections-wrong-target",
+      "trap": "Wrong target: the response engages a detail of Text 1 other than the one the stem asks about"
+    },
+    {
+      "misconceptionId": "SAT_RW:cross-text-connections-fabricated-position",
+      "trap": "Fabricated position: a response neither text gives the author any basis to hold"
+    },
+    {
+      "misconceptionId": "SAT_RW:cross-text-connections-overstated-disagreement",
+      "trap": "Overstated disagreement: portraying a partial or conditional difference as wholesale rejection"
+    }
   ],
   "difficultyLevers": {
     "easy": [
@@ -53,5 +73,9 @@
       "No distractor describes a relationship the two texts could plausibly be read as having"
     ]
   },
-  "exemplarSlots": { "easy": [], "medium": [], "hard": [] }
+  "exemplarSlots": {
+    "easy": [],
+    "medium": [],
+    "hard": []
+  }
 }

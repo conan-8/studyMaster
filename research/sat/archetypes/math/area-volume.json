@@ -1,0 +1,74 @@
+{
+  "slug": "area-volume",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:area-volume",
+  "skill": "Area and Volume",
+  "domain": "Geometry and Trigonometry",
+  "stimulusShape": {
+    "type": "passage",
+    "lengthWords": [20, 70],
+    "structure": "A word problem giving a real-world object (room, garden, container, ramp, prism, cylinder) with two or three measurements and asking for an area, surface area, or volume — or a scaled-copy question ('each dimension is doubled...'). SAT reference formulas (A = lw, A = (1/2)bh, V = lwh, V = pi r^2 h, etc.) are assumed available. Occasionally a right-triangle dimension requires the Pythagorean theorem first to obtain the height used in the formula. The asked measure (area vs perimeter vs volume) is named in context: 'how much soil to cover' (area), 'fencing for the border' (perimeter), 'how much water to fill' (volume)."
+  },
+  "stemTemplates": [
+    "What is the area, in square <units>, of the <shape>?",
+    "What is the volume, in cubic <units>, of the <solid>?",
+    "How much <material> is needed to completely cover the <surface>?",
+    "If each dimension of the <shape> is multiplied by <k>, the area is multiplied by what factor?"
+  ],
+  "answerMode": "computed-number",
+  "choicePatterns": "Four numeric values (sometimes k*pi for circles/cylinders) in the asked units. One is the correct measure; the others are the sibling measure (area where volume asked), the un-halved triangle area, the slant-side product, or the linear scale factor wrongly reused for area/volume — each exactly computable from the same givens.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:area-volume-computing-area-when-perimeter-asked",
+      "trap": "Offers the sibling measure: for a 5 by 8 rectangle, lists 40 (area) when perimeter 26 is asked — or 26 when 40 is asked. Computable by evaluating the other measure's formula on the same dimensions; contexts use 'border/fencing' vs 'cover/paint' to force the distinction."
+    },
+    {
+      "misconceptionId": "SAT_MATH:area-volume-linear-scaling-applied-to-area",
+      "trap": "Offers the linear scale factor for area/volume questions: for 'each side doubled', lists 2 (or the doubled area read as 2x) instead of 4 for area, and 2 or 4 instead of 8 for volume. Computable as k^1 (or k^2 offered when k^3 is the key)."
+    },
+    {
+      "misconceptionId": "SAT_MATH:area-volume-triangle-area-missing-half",
+      "trap": "Offers b x h for triangle area: for base 10 and height 6, lists 60 instead of the key 30 — exactly 2x the key. Computable as b x h; used in triangular garden/ramp contexts and in surface-area items with triangular faces."
+    },
+    {
+      "misconceptionId": "SAT_MATH:area-volume-slant-height-used-as-height",
+      "trap": "Offers base x slant side for a parallelogram (10 x 6 = 60 instead of 10 x 5 = 50), or cone/pyramid volumes computed with the slant length. Computable by substituting the slanted edge where the perpendicular height belongs; requires the stimulus to give both a slant measure and a perpendicular measure."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Rectangle or triangle with integer dimensions; area or perimeter asked, context word ('cover' vs 'fence') picks the formula",
+      "Rectangular prism volume with dimensions 2-12; single multiplication chain",
+      "Scale factor 2 with a plain 'is the area doubled or quadrupled?' choice set"
+    ],
+    "medium": [
+      "Composite figure: L-shaped room or a prism plus half-cylinder top, requiring sum or difference of two areas",
+      "Pythagorean preamble: the height must be found (3-4-5 style triple) before the area formula",
+      "Surface area of a prism: five or six faces summed, with a triangular face pulling in the 1/2",
+      "Cylinder volume in k*pi form (r and h from 2-10)"
+    ],
+    "hard": [
+      "Scaling in reverse: given the area or volume multiplier, find the linear factor (area 9x -> sides 3x)",
+      "Two-step quantity: area x depth for soil needed, with unit conversion (feet to yards) between steps",
+      "Slant-height traps: parallelogram or regular pyramid where slant and height both appear",
+      "Change-of-dimension comparison: 'the width doubles and the height halves — what happens to the volume?'"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Pick the target measure (area, perimeter, surface area, volume, or scale factor) and a context word that names it in real terms (paint to cover, fence for border, water to fill). 2. Choose integer dimensions 2-30 with area answers <= 900 and volume answers <= 2,000. 3. For circle/cylinder items pick r in 2-10 and h in 2-15 so the k*pi coefficient stays integer. 4. For slant-height items give both a slant side and a perpendicular height (Pythagorean-consistent pairs like 5-12-13). 5. For scaling items fix k in {2, 3, 1/2, 3/2} and ask for the area or volume multiplier, not the new measurement.",
+    "keyConstruction": "Apply the reference formula for the ASKED measure: A = lw, A = (1/2)bh, V = lwh, V = pi r^2 h, SA = sum of faces. Scaling: multiply the measure by k^2 (areas) or k^3 (volumes). Verify by unit check (square vs cubic) and by re-deriving with the context word: 'fill' means volume, 'cover' means area, 'around' means perimeter/circumference.",
+    "distractorConstruction": "Compute four siblings from the same dimensions: (a) the other measure (area <-> perimeter swap); (b) b x h without the 1/2 for triangles (2x the key); (c) base x slant (or slant-computed volume) when a slant measure is given; (d) the linear k offered as the area/volume multiplier in scaling items (and k^2 offered when k^3 is asked). Check each distractor differs from the key and from one another; never round — all values must be exact.",
+    "validationChecklist": [
+      "Dimensions are integers 2-30 (or halves like 7.5 for hard items); answers exact integers or k*pi with integer k",
+      "The context word uniquely fixes the asked measure — no ambiguous 'size of the room' phrasing",
+      "Triangle items include the 2x distractor; parallelogram/pyramid slant items state both slant and height explicitly",
+      "Scaling answers expressed as multipliers (4, 8, 9), distinct from any new-measurement value",
+      "Grid-in keys fit the 4-column grid; mcq keys keep units in the stem ('in square feet')",
+      "Pythagorean preambles use true triples (3-4-5, 5-12-13, 8-15-17 and multiples) so the height is exact"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Area: rectangle lw, triangle (1/2)bh, parallelogram b x (perpendicular h). Volume: prism lwh, cylinder pi r^2 h. Surface area: sum the faces (prism: 2lw + 2lh + 2wh). Scaling: lengths x k, areas x k^2, volumes x k^3. Verify with the unit sentence — square units can only come from a two-factor product; a length inside a formula must be perpendicular.",
+  "numericConstraints": "Integer dimensions 2-30; areas <= 900 square units; volumes <= 2,000 cubic units; cylinders in k*pi form with r in 2-10, h in 2-15 and integer k; scale factors from {2, 3, 1/2, 3/2}; all answers exact and grid-in compatible (<= 4 characters).",
+  "questionTypeNotes": "Strong grid_in lean — the SAT's area/volume items are predominantly student-produced numeric responses. Use mcq for scaling-multiplier questions (2 vs 4 vs 8 choices), sibling-measure traps where the two measures are close in magnitude, and k*pi selection items where matching coefficients is the task."
+}

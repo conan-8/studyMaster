@@ -2,9 +2,14 @@
   "slug": "command-evidence-quantitative",
   "skill": "Command of Evidence: Quantitative",
   "domain": "Information and Ideas",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:command-evidence-quantitative",
   "stimulusShape": {
-    "type": "passage+table",
-    "lengthWords": [40, 140],
+    "type": "passage_table",
+    "lengthWords": [
+      40,
+      140
+    ],
     "structure": "A 1-3 sentence passage presenting an argument, hypothesis, or conclusion, paired with a compact table (or simple bar/line graph) of invented data — typically 3-6 rows by 2-4 columns with headers. The passage usually ends in a blank; the correct completion must be the statement that accurately uses the data to support the passage's claim."
   },
   "stemTemplates": [
@@ -16,11 +21,26 @@
   "answerMode": "which-statement",
   "choicePatterns": "Four statements that each cite or summarize data from the table. Exactly one is both numerically faithful to the table and logically aligned with the passage's claim; the others misread the table, cite irrelevant cells, or report accurate numbers that do not address the claim.",
   "distractorLogic": [
-    "Misread of the table: wrong row, wrong column, or swapped categories",
-    "Accurate data citation that is irrelevant to the claim being supported (right numbers, wrong job)",
-    "Trend reversal: reporting an increase as a decrease, or the higher value as the lower",
-    "Unit or scale error: ignoring percentages vs counts, or per-capita vs totals",
-    "Aggregation error: citing an overall figure when the claim concerns a subgroup (or vice versa)"
+    {
+      "misconceptionId": "SAT_RW:command-evidence-quantitative-table-misread",
+      "trap": "Misread of the table: wrong row, wrong column, or swapped categories"
+    },
+    {
+      "misconceptionId": "SAT_RW:command-evidence-quantitative-irrelevant-data",
+      "trap": "Accurate data citation that is irrelevant to the claim being supported (right numbers, wrong job)"
+    },
+    {
+      "misconceptionId": "SAT_RW:command-evidence-quantitative-trend-reversal",
+      "trap": "Trend reversal: reporting an increase as a decrease, or the higher value as the lower"
+    },
+    {
+      "misconceptionId": "SAT_RW:command-evidence-quantitative-unit-scale-error",
+      "trap": "Unit or scale error: ignoring percentages vs counts, or per-capita vs totals"
+    },
+    {
+      "misconceptionId": "SAT_RW:command-evidence-quantitative-aggregation-error",
+      "trap": "Aggregation error: citing an overall figure when the claim concerns a subgroup (or vice versa)"
+    }
   ],
   "difficultyLevers": {
     "easy": [
@@ -53,5 +73,9 @@
       "All scenario content and data are invented and original"
     ]
   },
-  "exemplarSlots": { "easy": [], "medium": [], "hard": [] }
+  "exemplarSlots": {
+    "easy": [],
+    "medium": [],
+    "hard": []
+  }
 }

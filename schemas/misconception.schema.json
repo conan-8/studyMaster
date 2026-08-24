@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://studymaste.dev/schemas/misconception.schema.json",
+  "title": "Subject Misconception Library",
+  "description": "Validates a subject misconception library file (database/<SUBJECT>/misconceptions.json): the catalog of student misunderstandings that distractors are wired to and that misconception-stat rows aggregate against.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["subject", "misconceptions"],
+  "properties": {
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "name"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^(AP|SAT)_[A-Z0-9_]+$",
+          "description": "Subject code, e.g. 'SAT_RW', 'SAT_MATH'"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Display name, e.g. 'SAT Reading and Writing'"
+        }
+      }
+    },
+    "misconceptions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "taxonomyCode",
+          "name",
+          "description",
+          "detectionSignal",
+          "remediationNote"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Z]+[A-Z0-9_]*:[a-z0-9-]+$",
+            "description": "Subject-scoped misconception ID, e.g. 'SAT_RW:transitions-wrong-relation'"
+          },
+          "taxonomyCode": {
+            "type": "string",
+            "pattern": "^[A-Z]+[A-Z0-9_]*:[a-z0-9-]+$",
+            "description": "Skill node code this misconception belongs to, e.g. 'SAT_RW:transitions'"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Short name for the misconception"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "description": "What the student misunderstanding actually is"
+          },
+          "detectionSignal": {
+            "type": "string",
+            "minLength": 1,
+            "description": "How picking a distractor wired to this ID manifests in student behavior/data"
+          },
+          "remediationNote": {
+            "type": "string",
+            "minLength": 1,
+            "description": "1-2 sentence teaching angle for fixing the misconception"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "slug": "linear-equations-two-vars",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:linear-equations-two-vars",
+  "skill": "Linear Equations in Two Variables",
+  "domain": "Algebra",
+  "stimulusShape": {
+    "type": "none",
+    "lengthWords": null,
+    "structure": "No stimulus in the canonical form: the given line data sits in the stem itself — an equation in standard form Ax + By = C or slope-intercept form, or a point together with a slope / parallel / perpendicular condition. The ask targets the slope, an intercept, or a full equation of a line. Context variant: a one-sentence scenario (at most 40 words) naming a rate and a condition ('a line representing the cost...'); graph readings for this skill are covered by the linear-functions archetype, so no figure variant is used here."
+  },
+  "stemTemplates": [
+    "What is the slope of the graph of <equation> in the xy-plane?",
+    "What is the y-intercept of the graph of <equation> in the xy-plane?",
+    "Which equation is an equation of the line that passes through (<x1>, <y1>) and is <parallel or perpendicular> to the line with equation <equation>?",
+    "What is the sum of the x-intercept and the y-intercept of the graph of <equation>?"
+  ],
+  "answerMode": "number-or-equation",
+  "choicePatterns": "For slope/intercept asks: four numbers or fractions built from the equation's coefficients with signs or axes exchanged. For equation asks: four equations in slope-intercept form sharing numbers with the key but with the anchor coordinate's sign dropped, the perpendicular slope not reciprocated, or intercepts swapped. Exactly one choice is satisfied by every given point.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:linear-equations-two-vars-x-y-intercept-swap",
+      "trap": "For an intercept ask on 2x + 3y = 12 (true x-intercept 6, y-intercept 4), offer 4 when the x-intercept is asked — the value from setting the wrong variable to zero; computable as the other axis' intercept."
+    },
+    {
+      "misconceptionId": "SAT_MATH:linear-equations-two-vars-standard-form-slope-sign-error",
+      "trap": "For Ax + By = C with positive A, B, offer slope A/B instead of -A/B — the unnegated coefficient ratio: for 3x + 4y = 12, offer 3/4 instead of -3/4; computable by dropping the sign flip that solving for y requires."
+    },
+    {
+      "misconceptionId": "SAT_MATH:linear-equations-two-vars-point-slope-sign-error",
+      "trap": "Through (2, -5) with slope 3 (key y = 3x - 11), offer y = 3x - 1 — built from y - 5 = 3(x - 2) with the double negative dropped; computable as the key's y-intercept shifted up by 2|y1| (or, for the x-side slip, the line through (x1, -y1))."
+    },
+    {
+      "misconceptionId": "SAT_MATH:linear-equations-two-vars-perpendicular-slope-not-reciprocated",
+      "trap": "Perpendicular to a line of slope 2 through a given point, offer the line of slope -2 (negated, not reciprocated) and the line of slope 1/2 (reciprocated, sign kept) alongside the key's -1/2; computable as -m and +1/m for true -1/m."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Slope or intercept read directly from a y = mx + b equation",
+      "Integer slope and intercept; single-step conversion",
+      "Given point has positive coordinates so point-slope signs are trivial"
+    ],
+    "medium": [
+      "Standard form requiring the -A/B rule or a full solve-for-y conversion",
+      "Equation construction through a point with a negative coordinate",
+      "Intercept pairs from Ax + By = C with A, B at least 2 (both intercepts asked or summed)"
+    ],
+    "hard": [
+      "Perpendicular construction with fractional slope through an off-axis point with negative coordinates",
+      "Two-point equation where neither point is an intercept and both are off-quadrant",
+      "Indirect asks: sum of intercepts, intercept of a line related by a shift, or matching a requested non-default form"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose the target quantity (slope, single intercept, full equation, intercept sum). 2. For standard-form items pick A, B, C so both intercepts C/A and C/B are integers (C a common multiple of A and B); for construction items pick the anchor point with at least one negative coordinate — that is where the sign bugs bite. 3. Keep coefficients within |12| and slopes within |6| or their reciprocals.",
+    "keyConstruction": "Solve for y once, completely: Ax + By = C gives y = (-A/B)x + C/B, so slope = -A/B and y-intercept = C/B; set y = 0 for the x-intercept C/A. For construction asks, write y - y1 = m(x - x1) with parentheses on negative coordinates, simplify, and verify the given point substitutes in and the slope condition (parallel: same m; perpendicular: m·m2 = -1) holds.",
+    "distractorConstruction": "Build each wrong choice from one bug on the SAME given data: unnegated A/B; the other axis' intercept; the point-slope line with the double negative dropped (key intercept plus 2|y1|); perpendicular slope offered as -m or 1/m instead of -1/m. Expand every choice to slope-intercept form and confirm all four graphs are distinct lines.",
+    "validationChecklist": [
+      "The key passes through every given point (substitute) and satisfies the stated slope condition",
+      "Intercepts asked singly are integers; equation answers use SAT-clean small coefficients (|A|, |B| ≤ 12)",
+      "Choices match the requested form (slope-intercept vs standard) — at most one choice in a different form",
+      "Construction items use an anchor point with a negative coordinate so the sign bugs are live",
+      "No choice duplicates the key after expansion and simplification"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Convert once to slope-intercept form: Ax + By = C → y = (-A/B)x + C/B, giving slope -A/B, y-intercept C/B, x-intercept C/A. For construction asks use point-slope y - y1 = m(x - x1) with the coordinates in parentheses, then expand; verify by substituting the given point and checking the parallel/perpendicular condition.",
+  "numericConstraints": "Integer intercepts (choose C divisible by A and B) or clean fractions with denominators ≤ 6; coefficients |A|, |B| ≤ 12; |slope| ≤ 6 or simple unit fractions; anchor coordinates in [-8, 8] with at least one negative.",
+  "questionTypeNotes": "MCQ dominant (equation choices for construction asks); slope and intercept asks also appear as grid-ins with numeric keys."
+}

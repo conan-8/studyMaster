@@ -1,0 +1,47 @@
+{
+  "archetypeId": "sat-math:dot-plot",
+  "title": "Dot Plot (Line Plot)",
+  "description": "Dots stacked above a number line, one dot per data value. Serves Problem-Solving and Data Analysis (one-variable-data): mean/median/mode comparisons, spread, and effect of removing a value — all computable from the same entries the figure shows.",
+  "subjectsApplicable": ["SAT_MATH"],
+  "paramsSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["entries", "axisLabel"],
+    "properties": {
+      "entries": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 12,
+        "description": "Distinct values on the number line with their dot counts; the full dataset is entries expanded by count.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["value", "count"],
+          "properties": {
+            "value": { "type": "number", "minimum": -20, "maximum": 20, "multipleOf": 0.5 },
+            "count": { "type": "integer", "minimum": 1, "maximum": 6, "description": "Dots stacked at this value; capped so columns never exceed the figure height." }
+          }
+        }
+      },
+      "axisLabel": { "type": "string", "minLength": 1, "maxLength": 24 },
+      "tickStep": {
+        "type": ["number", "null"],
+        "enum": [null, 0.5, 1, 2, 5],
+        "description": "Number-line tick spacing; null lets the renderer pick the coarsest step that still lands on every entry value."
+      },
+      "markMean": {
+        "type": "boolean",
+        "default": false,
+        "description": "Draw a triangle marker at the dataset mean (computed from entries, never authored)."
+      },
+      "markMedian": {
+        "type": "boolean",
+        "default": false,
+        "description": "Draw a vertical tick at the dataset median (computed from entries, never authored)."
+      }
+    }
+  },
+  "rendererRef": "DotPlot",
+  "notes": "Renderer guarantees: entries are sorted by value before drawing; duplicate values are a parse-time error; axis extent is padded one tick beyond min/max entry so no dot sits on an axis end; mean/median markers (if requested) are computed from the expanded dataset, so statistics questions derive from the identical data."
+}

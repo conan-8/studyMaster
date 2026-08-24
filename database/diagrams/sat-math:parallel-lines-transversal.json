@@ -1,0 +1,52 @@
+{
+  "archetypeId": "sat-math:parallel-lines-transversal",
+  "title": "Parallel Lines Cut by a Transversal",
+  "description": "Two horizontal parallel lines cut by a transversal, producing the standard eight numbered angles. Serves Geometry and Trigonometry (lines-angles-triangles): corresponding/alternate angles, same-side interior supplementary pairs, and 'solve for x' angle-expression questions.",
+  "subjectsApplicable": ["SAT_MATH"],
+  "paramsSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["transversalAngleDegrees", "givenAngle", "highlightAngles", "lineLabels"],
+    "properties": {
+      "transversalAngleDegrees": {
+        "type": "number",
+        "minimum": 30,
+        "maximum": 150,
+        "multipleOf": 5,
+        "description": "Acute/obtuse tilt of the transversal measured from the horizontal lines; bounds keep intersections visually distinct (never near-parallel or perpendicular-degenerate)."
+      },
+      "givenAngle": {
+        "type": ["object", "null"],
+        "additionalProperties": false,
+        "required": ["position", "measureText"],
+        "description": "The one angle whose measure is printed on the figure; null if the stem gives it verbally. All other seven measures are derivable from this one.",
+        "properties": {
+          "position": { "type": "integer", "minimum": 1, "maximum": 8, "description": "Standard numbering: 1-4 at the top intersection (1 upper-left, 2 upper-right, 3 lower-left, 4 lower-right), 5-8 same order at the bottom intersection." },
+          "measureText": { "type": "string", "minLength": 1, "maxLength": 10, "description": "e.g. '110°' or '(3x + 10)°'." }
+        }
+      },
+      "highlightAngles": {
+        "type": "array",
+        "minItems": 0,
+        "maxItems": 4,
+        "description": "Positions (1-8) to shade with angle arcs, e.g. the pair the question asks about; positions are unique (renderer validates).",
+        "items": { "type": "integer", "minimum": 1, "maximum": 8 }
+      },
+      "lineLabels": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["top", "bottom", "transversal"],
+        "properties": {
+          "top": { "type": ["string", "null"], "maxLength": 4, "description": "e.g. 'l'." },
+          "bottom": { "type": ["string", "null"], "maxLength": 4, "description": "e.g. 'm'." },
+          "transversal": { "type": ["string", "null"], "maxLength": 4, "description": "e.g. 't'." }
+        }
+      },
+      "showParallelMarks": { "type": "boolean", "default": true, "description": "Draw matching arrowheads on the two lines." },
+      "showAngleNumbers": { "type": "boolean", "default": true, "description": "Print the 1-8 numerals in each angle region." }
+    }
+  },
+  "rendererRef": "ParallelLinesTransversal",
+  "notes": "Renderer guarantees: the two lines are mathematically parallel (same slope, drawn from one parameter), so angle relationships are exact; the eight angle regions use the fixed numbering documented in givenAngle.position; angle arcs for highlightAngles are drawn at a fixed radius inside each region and never overlap the numerals; transversalAngleDegrees is a rendering tilt only — it does not constrain labeled measures."
+}

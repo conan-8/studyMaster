@@ -1,0 +1,82 @@
+{
+  "slug": "lines-angles-triangles",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:lines-angles-triangles",
+  "skill": "Lines, Angles, and Triangles",
+  "domain": "Geometry and Trigonometry",
+  "stimulusShape": {
+    "type": "figure",
+    "lengthWords": null,
+    "structure": "A labeled figure: either a triangle with one or two angle expressions (like 'x degrees' and '(2x + 15) degrees') and occasionally congruence tick marks, or two parallel lines cut by a transversal producing eight numbered angles with one measure given. The figure's given angles and any parallel-marking arrows are the entire data set; a one-line caption may state parallelism or a perimeter/side relationship. Algebraic angle expressions keep the item in solve-for-x form."
+  },
+  "stemTemplates": [
+    "What is the value of x?",
+    "What is the measure, in degrees, of angle <number/name>?",
+    "In the figure, lines l and m are parallel. Which statement about the angles must be true?",
+    "The two triangles shown are similar. What is the length of segment <AB>?"
+  ],
+  "answerMode": "computed-number-or-statement",
+  "choicePatterns": "Four numeric angle measures or side lengths (all positive integers), or four 'must be true' statements about the figure. Numeric distractors are the values produced by the wrong total (90 vs 180 vs 360), the complement of the key, the key's supplement, or the exterior-angle-shortcut value; statement choices each assert a relationship requiring unstated parallelism or a wrong pairing.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:lines-angles-triangles-complementary-supplementary-swap",
+      "trap": "Offers the complement where the supplement is needed (or vice versa): for a 65-degree angle in a linear pair, offers 25 (90 - 65) alongside the key 115 (180 - 65). Computable as 90 - a or 180 - a whichever is wrong for the drawn configuration."
+    },
+    {
+      "misconceptionId": "SAT_MATH:lines-angles-triangles-assuming-equal-angles-without-parallel",
+      "trap": "Value or statement distractor built on unstated parallelism: sets a corresponding angle equal to the given one when the figure shows no parallel arrows, or (statement form) asserts 'angle 1 = angle 5 must be true' in a figure without the parallel hypothesis. Computable as the given angle itself where the key requires solving."
+    },
+    {
+      "misconceptionId": "SAT_MATH:lines-angles-triangles-triangle-sum-360-error",
+      "trap": "Offers the third angle computed with the quadrilateral sum: for 50 and 60 given, offers 250 (360 - 110) instead of 70 (180 - 110) — always exactly 180 more than the key. Computable as 360 - (a + b)."
+    },
+    {
+      "misconceptionId": "SAT_MATH:lines-angles-triangles-exterior-angle-single-remote",
+      "trap": "For exterior-angle items, offers ONE remote interior angle (the given one, or the computed other one) instead of their sum: remote angles 50 and 70, offers 50 or 70 alongside the key 120. Computable by dropping the addition step."
+    },
+    {
+      "misconceptionId": "SAT_MATH:lines-angles-triangles-similarity-ratio-misapplied-to-sides",
+      "trap": "In similar-triangle proportion items, offers the value from mismatched pairing: pairs the small triangle's long side with the big triangle's short side, yielding the reciprocal-scaled answer (for scale factor 2, half the correct length). Computable as (a x c)/b with the sides crossed."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Single-step: triangle with two given integer angles (multiples of 5), find the third",
+      "Linear pair or vertical angles with the given measure a multiple of 5 or 10",
+      "Parallel lines explicitly marked, one given angle, one named angle — corresponding or alternate"
+    ],
+    "medium": [
+      "Algebraic expressions: angles x and (2x + 15) in a linear pair or triangle, solve then answer the angle (not x)",
+      "Exterior angle theorem items with the exterior given, one remote interior asked",
+      "Two-step transversal: use one relationship to find a second unknown angle",
+      "Similar triangles with scale factor 2 and a clear correspondence diagram"
+    ],
+    "hard": [
+      "Similar triangles where correspondence must be inferred from marked congruent angles (not position), pairing the sides correctly is the whole task",
+      "Triangle with an exterior angle AND an algebraic expression, requiring the theorem and a solve chain",
+      "Figures WITHOUT the parallel hypothesis where distractors import it — 'which must be true' format",
+      "Multi-triangle configurations: an angle of the big triangle equals the sum of the two small triangles' remote angles, requiring decomposition"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose the configuration: plain triangle, exterior-angle setup, or transversal. 2. Fix all angles first as integers, multiples of 5, summing correctly (triangle interiors to 180; the transversal set to the given angle and its supplements). 3. For solve items, replace one or two measures with expressions in x that evaluate to the fixed integers. 4. Render with sat-math:triangle-labeled (angleLabels) or sat-math:parallel-lines-transversal (givenAngle, highlightAngles); include parallel arrows ONLY when the parallel theorem is licensed. 5. Caption states any relationship not visible in the figure.",
+    "keyConstruction": "Triangle: 180 - (a + b). Linear pair: 180 - a; vertical: equal; complementary: 90 - a. Transversal (parallel licensed): corresponding/alternate equal, co-interior supplementary (180 - a). Exterior: sum of remote interiors. Similar triangles: match sides opposite equal angles, then solve the proportion for x. Verify every key by re-summing the configuration to its total.",
+    "distractorConstruction": "All angle distractors are computable from the same givens: (a) 90 - a where 180 - a is the key (and the reverse); (b) 360 - (a + b) (always key + 180); (c) the given or other remote interior angle where the sum is the key; (d) the copied given angle where solving is required (unstated-parallelism trap). Similarity distractors: recompute the proportion with crossed pairings (small-long side to big-short side) for the reciprocal-scaled value, and the scale-factor-omitted value. Statement items: build claims asserting equal/supplementary angles that hold ONLY under parallelism, plus one true claim that holds without it.",
+    "validationChecklist": [
+      "All angle measures are positive integers, multiples of 5, and each triangle's angles sum to exactly 180",
+      "Parallel arrows/marks appear only when the parallel-line relationships are intended; unstated-parallelism items contain no such marks",
+      "Algebraic expressions evaluate to the pre-fixed integers (no negative or zero angles for any choice of the solved x)",
+      "Each numeric distractor differs from the key and other distractors; the 360-sum distractor is exactly key + 180",
+      "Figure labels (angle numbers/expressions) match the stem's references one-to-one",
+      "Similar-triangle items state or mark the congruent angles; the correct correspondence is uniquely determined by them"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Angle chase: triangle interiors sum to 180; a linear pair sums to 180; vertical angles are equal; complementary pairs sum to 90. With parallel lines (marked): corresponding and alternate angles equal, same-side interior supplementary. Exterior angle = sum of the two remote interiors. Similar triangles: side opposite equal angles correspond; proportion big/big = small/small solved for x. Verify by re-summing every triangle to 180 and every line to 180 (or 360 around a point).",
+  "numericConstraints": "Angle measures positive multiples of 5 (min 10, max 170); solved angles also multiples of 5; algebraic coefficients keep x integer and positive; similar-figure side lengths integers 3-30 with scale factors 1.5, 2, or 3; all numeric answers grid-in compatible integers.",
+  "questionTypeNotes": "Balanced mcq/grid_in: solve-for-x and find-the-angle items split evenly between student-produced responses and choices. Use mcq for 'which statement must be true' items (the unstated-parallelism traps) and when the distractor set (complement, key+180, remote-interior copies) reads cleanly as four choices; grid_in favors clean angle-chase computations.",
+  "diagramSpec": {
+    "allowedArchetypeIds": ["sat-math:triangle-labeled", "sat-math:parallel-lines-transversal"],
+    "typicalUse": "triangle-labeled renders the angle-chasing and similarity items (vertices, angleLabels carrying numbers or x-expressions, optional right-angle mark); parallel-lines-transversal renders the eight-angle configuration with givenAngle and highlighted target angles, parallel arrows included only when licensed."
+  }
+}

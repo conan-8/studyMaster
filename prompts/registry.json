@@ -1,0 +1,12 @@
+{
+  "prompts": [
+    {
+      "id": "question-generator",
+      "version": "1.0.0",
+      "file": "question-generator/v1.0.0.md",
+      "agent": "G1",
+      "description": "Generates one original SAT question from an archetype spec + misconception library slice",
+      "changelog": "initial version"
+    }
+  ]
+}

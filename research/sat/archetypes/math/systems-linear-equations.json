@@ -1,0 +1,80 @@
+{
+  "slug": "systems-linear-equations",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:systems-linear-equations",
+  "skill": "Systems of Linear Equations",
+  "domain": "Algebra",
+  "stimulusShape": {
+    "type": "none",
+    "lengthWords": null,
+    "structure": "Canonical: two linear equations in x and y presented together in the stem, sometimes dressed in a 30-60 word context (two totals, two mixes, two pricing plans) or shown as the graph of both lines (diagram archetype sat-math:graph-system-two-lines) with the intersection marked. The ask: a coordinate of the solution, a combination like x + y, a parameter forcing no/infinitely many solutions, or the number of solutions."
+  },
+  "stemTemplates": [
+    "If (x, y) is the solution to the given system of equations, what is the value of <target>?",
+    "What is the solution (x, y) to the given system of equations?",
+    "How many solutions does the given system of equations have?",
+    "If the system of equations has no solution, what is the value of <parameter>?"
+  ],
+  "answerMode": "number-or-count",
+  "choicePatterns": "Four numbers (a coordinate, a combination, or a count phrased as 'no solution' / 'exactly one' / 'infinitely many') or four ordered pairs. Distractors carry the other coordinate, the solution of a corrupted elimination, or the miscounted solution total; on parameter items, the value that makes the lines coincide or merely differ in intercept.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:systems-linear-equations-solving-for-x-when-asked-for-y",
+      "trap": "Ask for y (or x + y); offer x — the first variable the solver isolates. For a system with solution (4, 6) asking x + y, offer 4 instead of 10; computable by solving correctly and then reporting the wrong component or leaving the combination un-combined."
+    },
+    {
+      "misconceptionId": "SAT_MATH:systems-linear-equations-elimination-scales-one-side-only",
+      "trap": "Scale one equation by k to align coefficients but leave its constant unscaled; offer the solution of the corrupted system. For 2x + y = 12 and x + 2y = 9 with the intended elimination, the bug equation 2x + 4y = 9 yields y = -1 instead of y = 2; computable by solving the corrupted system exactly."
+    },
+    {
+      "misconceptionId": "SAT_MATH:systems-linear-equations-substitution-into-same-equation",
+      "trap": "Offer 'infinitely many solutions' (or 'no solution', reading the tautology 0 = 0 as a contradiction) for a system with a unique intersection — the outcome of substituting the solved expression back into the equation it came from."
+    },
+    {
+      "misconceptionId": "SAT_MATH:systems-linear-equations-parallel-treated-as-one-solution",
+      "trap": "For a no-solution system (same slope, different intercepts), offer a numeric pair — often (0, k) from reading the elimination's 0x = 6 as x = 0 — or 'exactly one solution' on count asks."
+    },
+    {
+      "misconceptionId": "SAT_MATH:systems-linear-equations-adding-when-subtracting-needed",
+      "trap": "Same-signed matching coefficients: offer the result of ADDING the equations instead of subtracting. For 2x + 3y = 12 and 2x + y = 8, the bug path 4x + 4y = 20 collapses to x + y = 5 and a wrong solved pair; computable by solving the sum-combined system (or offering x + y = (c1 + c2)/4 as a single value when a coordinate is asked)."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "One equation already solved for a variable, so substitution is a single step",
+      "Integer solution with both coordinates positive and coefficients of 1",
+      "Ask is for a single coordinate"
+    ],
+    "medium": [
+      "Elimination requires a scale factor of 2 or 3 on one equation",
+      "Ask is for a combination (x + y, 2x - y) rather than a bare coordinate",
+      "Context system (two totals or pricing plans) requiring translation then solving"
+    ],
+    "hard": [
+      "No-solution / infinitely-many parameter items: find k so the lines are parallel or identical",
+      "Both equations need scaling, with subtraction required (matched coefficient signs)",
+      "Grid-in combination asks where stopping at the first variable found is the live trap"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Pick the solution (p, q) first as small integers in [-12, 12]. 2. Choose coefficients a, b, d, e in [-5, 5] (not both zero per equation) and compute the constants c1 = ap + bq, c2 = dp + eq so the system is consistent by construction. 3. For parameter items, build line 2 as a multiple of line 1 with the parameter k in one coefficient or the constant. 4. Context variant: name two quantities whose totals give the two equations (tickets and drinks, hours and rates).",
+    "keyConstruction": "Solve by elimination (scale to match one variable's coefficients, add opposite-sign equations or subtract same-sign ones, back-substitute) AND cross-check by substitution — both paths must return (p, q). For count asks compare slopes and intercepts: m1 = m2 with b1 = b2 gives infinitely many, m1 = m2 with b1 ≠ b2 gives none, otherwise exactly one.",
+    "distractorConstruction": "Generate the mechanical bug outputs on THIS system: the other coordinate (or the un-combined partial); the solution of the corrupted system with one constant left unscaled; the added-instead-of-subtracted result; 'infinitely many' where the system is unique; a forced numeric pair like (0, k) for parallel systems. Verify each distractor equals its bug's exact output and that all choices are distinct.",
+    "validationChecklist": [
+      "(p, q) satisfies both original equations exactly (substitute both)",
+      "All offered numbers are distinct and no distractor accidentally equals the key",
+      "Coefficients within |5|, constants within |60|; solutions integer unless difficulty requires a clean fraction (denominator ≤ 12)",
+      "Count asks include all three options: no solution, exactly one, infinitely many",
+      "Graph variants: intersection coordinates are integers inside the grid window and match the algebraic solution; intersection dot omitted for no-solution items",
+      "Context items name quantities with consistent units across both equations, and every stated number is used"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Elimination: scale one equation to match one variable's coefficients, add (opposite signs) or subtract (same signs), back-substitute. Cross-check with substitution: solve one equation for a variable and substitute into the OTHER equation. Counts from slope comparison: m1 = m2 and b1 = b2 → infinitely many; m1 = m2 and b1 ≠ b2 → none; else exactly one.",
+  "numericConstraints": "Integer solution pairs with coordinates in [-12, 12]; coefficients within |5|; constants within |60|; combination asks (x + y) integer by construction; graph variants need integer intersections inside the window.",
+  "questionTypeNotes": "Classic grid-in territory for coordinate and combination asks ('what is x + y'); count and parameter asks are MCQ. Re-read-the-ask is the dominant failure mode — distractors must keep that trap live.",
+  "diagramSpec": {
+    "allowedArchetypeIds": ["sat-math:graph-system-two-lines"],
+    "typicalUse": "Graph variant: both lines drawn with their intersection marked (integer coordinates inside the window); the stem asks for the solution, the number of solutions, or the interpretation of the intersection point. For no-solution items the lines are parallel and markIntersection is false."
+  }
+}

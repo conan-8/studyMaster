@@ -1,0 +1,221 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://studymaste.dev/schemas/archetype.schema.json",
+  "title": "Question Archetype",
+  "description": "Formalizes and extends the de-facto archetype shape in research/sat/archetypes/<section>/<slug>.json (see rw/transitions.json). One archetype describes how to generate original questions for a single taxonomy skill. NOTE: distractorLogic is an array of {misconceptionId, trap} objects — this changes the current rw files, which use plain strings and are being converted separately.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "slug",
+    "subjectCode",
+    "taxonomyCode",
+    "skill",
+    "domain",
+    "stimulusShape",
+    "stemTemplates",
+    "answerMode",
+    "choicePatterns",
+    "distractorLogic",
+    "difficultyLevers",
+    "generationRecipe",
+    "exemplarSlots"
+  ],
+  "properties": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Kebab-case archetype slug, equal to the skill slug, e.g. 'transitions'"
+    },
+    "subjectCode": {
+      "type": "string",
+      "pattern": "^(AP|SAT)_[A-Z0-9_]+$",
+      "description": "Subject code, e.g. 'SAT_RW', 'SAT_MATH'"
+    },
+    "taxonomyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]+[A-Z0-9_]*:[a-z0-9-]+$",
+      "description": "Skill node code in the subject taxonomy, e.g. 'SAT_RW:transitions'"
+    },
+    "skill": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Skill display name, e.g. 'Transitions'"
+    },
+    "domain": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Domain display name, e.g. 'Expression of Ideas'"
+    },
+    "stimulusShape": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "lengthWords", "structure"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["passage", "table", "figure", "notes", "dual_text", "passage_table", "none"]
+        },
+        "lengthWords": {
+          "oneOf": [
+            {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": { "type": "integer", "minimum": 0 }
+            },
+            { "type": "null" }
+          ],
+          "description": "[min, max] word count for the stimulus, or null when not word-bounded (e.g. pure figure stimuli)"
+        },
+        "structure": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Prose description of the stimulus' structural anatomy"
+        }
+      }
+    },
+    "stemTemplates": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Question stem templates; '<goal>'-style placeholders allowed"
+    },
+    "answerMode": {
+      "type": "string",
+      "minLength": 1,
+      "description": "What form the answer takes, e.g. 'best-phrase', 'which-statement'"
+    },
+    "choicePatterns": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Prose description of what the four choices look like and how they relate to the key"
+    },
+    "distractorLogic": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["misconceptionId", "trap"],
+        "properties": {
+          "misconceptionId": {
+            "type": "string",
+            "pattern": "^[A-Z]+[A-Z0-9_]*:[a-z0-9-]+$",
+            "description": "ID of the misconception this distractor is wired to, e.g. 'SAT_RW:transitions-wrong-relation'; must exist in the subject misconception library"
+          },
+          "trap": {
+            "type": "string",
+            "minLength": 1,
+            "description": "How the distractor exploits the misconception"
+          }
+        }
+      }
+    },
+    "difficultyLevers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["easy", "medium", "hard"],
+      "properties": {
+        "easy": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "medium": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "hard": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "generationRecipe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stimulusConstruction",
+        "keyConstruction",
+        "distractorConstruction",
+        "validationChecklist"
+      ],
+      "properties": {
+        "stimulusConstruction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "keyConstruction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "distractorConstruction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "validationChecklist": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "exemplarSlots": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["easy", "medium", "hard"],
+      "properties": {
+        "easy": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "IDs of approved exemplar questions at easy difficulty; may be empty"
+        },
+        "medium": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "hard": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "answerComputation": {
+      "type": "string",
+      "minLength": 1,
+      "description": "OPTIONAL math extension: how the correct answer is computed and verified (solve path, check-by-substitution, etc.)"
+    },
+    "numericConstraints": {
+      "type": "string",
+      "minLength": 1,
+      "description": "OPTIONAL math extension: nice-number / grid-in friendliness constraints (integer answers, denominators <= 12, answer fits 4-column grid, etc.)"
+    },
+    "questionTypeNotes": {
+      "type": "string",
+      "minLength": 1,
+      "description": "OPTIONAL math extension: mcq vs grid_in guidance for this archetype"
+    },
+    "diagramSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowedArchetypeIds", "typicalUse"],
+      "properties": {
+        "allowedArchetypeIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+:[a-z0-9-]+$",
+            "description": "Diagram archetype ID, e.g. 'sat-math:graph-line'"
+          }
+        },
+        "typicalUse": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "description": "OPTIONAL math extension: which diagram archetypes this question archetype may use"
+    }
+  }
+}

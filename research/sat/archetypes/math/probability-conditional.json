@@ -1,0 +1,77 @@
+{
+  "slug": "probability-conditional",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:probability-conditional",
+  "skill": "Probability and Conditional Probability",
+  "domain": "Problem-Solving and Data Analysis",
+  "stimulusShape": {
+    "type": "passage_table",
+    "lengthWords": [15, 45],
+    "structure": "A one-to-two sentence survey setup ('A group of students were asked whether they take art or music') followed by a 2x2 contingency table of counts with row totals, column totals, and a grand total. The stem selects a person at random and either asks an unconditional probability from the table or a conditional probability narrowing the universe to one row or column ('given that the student takes art, ...'). No other information is needed — every probability is a ratio of table cells."
+  },
+  "stemTemplates": [
+    "If a survey respondent is selected at random, what is the probability that the respondent <property>?",
+    "Given that the respondent is in <group B>, what is the probability that the respondent <property A>?",
+    "What is the probability that a randomly selected <unit> is <A> or <B>?",
+    "What is the probability that a randomly selected <unit> is <A>, given that the unit is NOT <B>?"
+  ],
+  "answerMode": "computed-probability",
+  "choicePatterns": "Four probabilities expressed as fractions (or decimals 0-1): the key (joint or conditional cell ratio) plus values built by wrong-denominator division — joint over grand total, the transposed conditional, the complement. Fractions are preferred and must not share values; every choice reduces to a denominator of 12 or fewer or is a clean decimal.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:probability-conditional-conditional-denominator-error",
+      "trap": "Offers the JOINT probability when the conditional is asked: cell(B, A) / grandTotal instead of cell(B, A) / rowTotal(B). Computable for every generated table; the distractor is always smaller than the key because the grand total exceeds the condition total."
+    },
+    {
+      "misconceptionId": "SAT_MATH:probability-conditional-numerator-denominator-swap",
+      "trap": "Offers the transposed conditional P(target | condition) vs P(condition | target): cell(B, A) / colTotal(A) instead of cell(B, A) / rowTotal(B). Computable by dividing the same cell by the wrong margin; both reduce cleanly when margins are friendly."
+    },
+    {
+      "misconceptionId": "SAT_MATH:probability-conditional-adding-dependent-probabilities",
+      "trap": "For 'or' questions on non-exclusive events, offers P(A) + P(B) without subtracting the overlap (or offers a sum > the correct union). Computable as (rowTotal(A) + colTotal(B)) / grandTotal where the key subtracts the shared cell once."
+    },
+    {
+      "misconceptionId": "SAT_MATH:probability-conditional-ignoring-complement",
+      "trap": "For 'does NOT' / 'neither' questions, offers the direct probability p where the key is 1 - p (or the complement computed against the wrong total in conditional form). The pair always sums to 1 (or to the conditional total); computable by stopping one step early."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Unconditional probability: favorable cell or row over the grand total (e.g., P(takes music) = 90/200)",
+      "Conditional with the condition row visually dominant and counts that reduce at a glance (e.g., 30/50 = 3/5)",
+      "'And' questions on mutually exclusive categories where the cell itself is the favorable count"
+    ],
+    "medium": [
+      "Conditional with two-step reduction: cell 24, row total 64 -> 3/8",
+      "Complement questions: 'not in group' requiring 1 - p as an explicit final step",
+      "'Or' question on overlapping categories requiring the overlap subtraction"
+    ],
+    "hard": [
+      "Complement INSIDE a condition: 'given group B, probability of NOT A' = (rowTotal(B) - cell(B, A)) / rowTotal(B)",
+      "Transposed-conditional discrimination: stems phrased 'what is the probability the <target-group> person is <condition>' so the transpose is the salient trap",
+      "Two-stage selection without replacement from small totals (5 items, draw 2) phrased off the same table data",
+      "'At least one' questions on two draws, requiring the complement shortcut"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Pick two binary categorical variables (art/music, owns cat/dog, voted early/by mail, junior/senior x calculus/no-calculus). 2. Choose the grand total from 50-500 (multiples of 10 preferred). 3. Fill the four cells with integers whose margins are friendly — each row and column total divisible by 4 at minimum when that margin is a denominator. 4. Verify the conditional key and its transpose both reduce to denominators <= 12 so the swap distractor is a legitimate fraction. 5. Render with the sat-math:table-two-way archetype and caption in one sentence.",
+    "keyConstruction": "Unconditional: favorable / grandTotal. Conditional: cell / conditionTotal (the row or column AFTER 'given that'). Union: (favorableA + favorableB - bothCell) / total. Complement: 1 - direct, or (total - favorable) / total. Reduce all fractions to lowest terms. Verify by re-deriving from margins: cell must equal rowTotal - otherCellInRow and colTotal - otherCellInColumn.",
+    "distractorConstruction": "Compute, don't invent: (a) joint-over-grand-total whenever the condition margin should be the denominator; (b) same cell over the WRONG margin (the transpose) — always computable when margins are chosen distinct; (c) the add-without-subtract union for 'or' items; (d) the direct probability for 'not' items (the key's complement). Render every distractor in the same fraction form as the key. Check no two choices coincide after reduction.",
+    "validationChecklist": [
+      "Grand total 50-500 (multiple of 10); all cells, margins, and the grand total are positive integers that cross-check",
+      "The key reduces to denominator <= 12 or is a terminating decimal <= 0.999; grid-in items use fractions like 3/8 (student gridded as 3/8) or decimals",
+      "The condition row/column total differs from the grand total and from the transpose margin so distractors (a) and (b) are distinct numbers",
+      "Complement and transpose distractors do not accidentally equal the key",
+      "The stem's 'given that' clause names exactly one group and the asked property is unambiguous",
+      "Survey context is realistic (school, voters, customers); no zero cells unless the item type requires impossibility"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "P(A | B) = cell(A, B) / total(B), where total(B) is the margin of the row or column named after 'given that'. P(A or B) = (favorableA + favorableB - both) / total. P(not A) = 1 - P(A); inside a condition, P(not A | B) = (total(B) - cell(A, B)) / total(B). Verify each key by checking cells sum to margins and margins sum to the grand total, and that the key lies in [0, 1].",
+  "numericConstraints": "Totals 50-500 (multiples of 10); integer cells; keys reduce to denominators <= 12 (3/8, 5/12 style) or terminate by hundredths; probabilities strictly between 0 and 1; grid-in keys expressible as fraction or <= 4-character decimal.",
+  "questionTypeNotes": "Strong grid_in lean — the SAT's conditional-probability items are predominantly student-produced responses (fraction or decimal both accepted). Use mcq for union/complement items where the wrong-operation arithmetic (add-without-subtract, stopped-one-step-early) is best offered as choices, and for 'which expression gives P(A|B)' setup-recognition variants.",
+  "diagramSpec": {
+    "allowedArchetypeIds": ["sat-math:table-two-way"],
+    "typicalUse": "The 2x2 contingency table of counts with margins is the sole stimulus for this archetype: rowCategories/columnCategories set the two binary variables, cells carry integer counts, and every stem probability is a ratio of cells to a margin or grand total."
+  }
+}

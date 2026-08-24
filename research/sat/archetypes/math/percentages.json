@@ -1,0 +1,82 @@
+{
+  "slug": "percentages",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:percentages",
+  "skill": "Percentages",
+  "domain": "Problem-Solving and Data Analysis",
+  "stimulusShape": {
+    "type": "passage_table",
+    "lengthWords": [25, 80],
+    "structure": "A commerce or measurement scenario (store pricing with discount, tax, or tip; population or enrollment growth/decline; test-score or battery-level change) stating an original value, a percent rate, and the direction of change — or two values from which a percent change is asked. Some items add a 2-3 row table of items vs. prices or years vs. values. Exactly one of four operations is tested: percent OF, percent increase/decrease RESULT, percent CHANGE between values, or REVERSE percent (recover the original from the result)."
+  },
+  "stemTemplates": [
+    "What is the final price of the item after the discount and tax?",
+    "By what percent did the <quantity> increase from <value1> to <value2>?",
+    "The price of the item was $<final> after a <p>% increase. What was the original price?",
+    "What is <p>% of <value>?"
+  ],
+  "answerMode": "computed-number",
+  "choicePatterns": "Four numeric values in dollars, items, or percent — each the exact output of applying the wrong operation or wrong base to the given numbers: the change amount instead of the final amount, percent of the new value instead of the old, percents added instead of compounded, the final value reduced by the percent instead of divided. All choices share the key's units and magnitude range.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:percentages-percent-of-vs-percent-increase",
+      "trap": "Offers the change amount as the answer when the final amount is asked: for a $80 item with a 15% markup, lists $12 (0.15 x 80) alongside the key $92; for a 30% discount, lists 0.30 x P instead of 0.70 x P. Computable as r x original where the key is (1 +/- r) x original."
+    },
+    {
+      "misconceptionId": "SAT_MATH:percentages-percent-change-wrong-base",
+      "trap": "Divides the difference by the NEW value: for a change from 80 to 100, offers 20% (20/100) instead of 25% (20/80). Computable as (new - old)/new x 100 where the key divides by the original."
+    },
+    {
+      "misconceptionId": "SAT_MATH:percentages-successive-percents-added",
+      "trap": "Adds successive percents instead of compounding: for 20% off then 10% off, offers 0.70 x P as the final price (or '30%' as the total discount) alongside the key 0.80 x 0.90 x P = 0.72 x P (28% total). Computable as (1 - (r1 + r2)) x original."
+    },
+    {
+      "misconceptionId": "SAT_MATH:percentages-reverse-percent-subtracts-percent-of-final",
+      "trap": "Back-solves by taking the percent of the FINAL value: for 'after a 25% increase the price is $60', offers $45 (60 - 0.25 x 60) instead of $48 (60/1.25). Computable as final x (1 - r) where the key is final/(1 + r)."
+    },
+    {
+      "misconceptionId": "SAT_MATH:percentages-decimal-point-slip",
+      "trap": "Shifts the percent two places the wrong way: for 4% of 250, offers 100 (0.4 x 250) instead of 10; answers exactly 10x or 1/10x the key. Use sparingly — with small percents (0.5%, 4%) so the slip stays plausible."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Single percent-of or single discount with a friendly original ($50, $200) and rate a multiple of 10%",
+      "The change amount and the final amount differ by a wide, checkable margin",
+      "Percent asked between two values where the original is the smaller and obviously the 'from' value"
+    ],
+    "medium": [
+      "Reverse percent: original asked from the final value after an increase or decrease",
+      "Percent decrease where the original exceeds the new value, or values crossing 100 (percent over 100)",
+      "Two-step money chain: discount then tax, each applied to the running amount",
+      "Rates that are not multiples of 10 (15%, 6% tax) forcing genuine decimal work"
+    ],
+    "hard": [
+      "Successive changes in the same direction whose add-vs-compound gap is the whole question (is 20% then 10% off equal to 30% off?)",
+      "Opposite-direction chain (increase then decrease) landing near but not on the original — the 'r% up then r% down never returns' structure",
+      "Percent change between values where the difference must itself be computed from a table or two-step comparison",
+      "Finding the rate given original and final, with distractor bases (new-value base) numerically plausible"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose the operation tested: percent OF, final-after-change, percent change, or reverse percent. 2. Choose a context (retail price, tip/tax, population, downloads, battery). 3. Pick SAT-clean numbers: originals $20-$90 or round populations 200-90,000; rates multiples of 5 (occasionally 6% or 8.25% tax at medium+); successive chains from {10%, 15%, 20%, 25%, 30%}. 4. For table stimuli, list 2-3 rows of items and prices and target one row. 5. State the direction and the asked quantity (final amount, change amount, original, or the rate itself) unambiguously.",
+    "keyConstruction": "final = original x (1 + r) for increase, (1 - r) for decrease; percent change = (new - original)/original x 100; reverse: original = final / (1 +/- r). Round money to the cent only when the rate forces it (prefer rates keeping cents whole). Verify forward: reapply the stated change to the computed key and confirm the stated final value.",
+    "distractorConstruction": "All distractors are exact evaluations of the base-confused or operation-swapped formulas on the SAME numbers: (a) r x original (change amount) when final is asked; (b) (new - old)/new x 100 (wrong base); (c) (1 - r1 - r2) x original (added percents) in chain items; (d) final x (1 - r) (percent of final) in reverse items; (e) 10x the key when the rate is under 5% (decimal slip). Include only the distractors matching the item's operation; never mix incompatible families into one item's choice set.",
+    "validationChecklist": [
+      "The asked quantity (final / change / original / rate) is stated in one unambiguous sentence",
+      "Prices stay $2-$90, populations 200-90,000, rates multiples of 5% except deliberate tax rates",
+      "Money keys are exact to the cent (no rounding instruction needed) and grid-in compatible; percent keys are integers or terminating decimals",
+      "Each distractor is the exact value of its misconception formula on this item's numbers, and no two choices coincide",
+      "The add-vs-compound gap (chain items) or up-vs-down asymmetry is at least $1 or 1 percentage point so the key is decisively different",
+      "No choice exceeds realistic bounds (no negative prices, no percents over 500%)"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Percent of: r% x V (convert percent to decimal by dividing by 100 first). Final after change: V x (1 +/- r). Percent change: |new - old|/old x 100 with old = the 'from' value. Reverse: original = final/(1 +/- r). Chains: multiply factors in order (0.80 x 0.90 for 20% then 10% off). Verify every key by running the statement forward from the key.",
+  "numericConstraints": "Money keys exact to the cent and <= 4 grid characters ($2-$90 originals); percent keys integers or one-decimal (e.g., 12.5%); rates from {5, 10, 15, 20, 25, 30, 40, 50, 75} plus tax-style {6, 8}; populations round numbers so percent change divides cleanly.",
+  "questionTypeNotes": "Balanced mcq/grid_in with a grid_in lean for computed final amounts and originals (the SAT prefers student-produced responses where a single number is the answer). Use mcq for percent-change-with-wrong-base items (four plausible percents) and for chain items where 'which expression gives the final price' setup questions appear.",
+  "diagramSpec": {
+    "allowedArchetypeIds": ["sat-math:table-data"],
+    "typicalUse": "A 2-3 row item/price table (or year/value table) grounds a percent-change or reverse-percent question in tabular data; the stem quotes a row and asks for the percent change between rows or the original behind a listed final value."
+  }
+}

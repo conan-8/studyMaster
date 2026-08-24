@@ -2,6 +2,8 @@
   "slug": "command-evidence-textual",
   "skill": "Command of Evidence: Textual",
   "domain": "Information and Ideas",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:command-evidence-textual",
   "stimulusShape": {
     "type": "passage",
     "lengthWords": [40, 130],
@@ -16,11 +18,26 @@
   "answerMode": "which-statement",
   "choicePatterns": "Four findings or statements, each describing a plausible observation or result in the passage's domain. Exactly one bears directly on the causal or explanatory mechanism in the claim; the others are on-topic but off-mechanism.",
   "distractorLogic": [
-    "A finding that supports a nearby but different claim (right topic, wrong mechanism)",
-    "A finding that is consistent with the claim but does not discriminate between it and rival explanations (too weak to count as support)",
-    "A finding that actually weakens or complicates the claim, dressed in supportive wording",
-    "A restatement of the claim itself rather than independent evidence for it",
-    "A finding about the wrong population, time period, or variable named in the claim"
+    {
+      "misconceptionId": "SAT_RW:command-evidence-textual-nearby-claim",
+      "trap": "A finding that supports a nearby but different claim (right topic, wrong mechanism)"
+    },
+    {
+      "misconceptionId": "SAT_RW:command-evidence-textual-non-discriminating",
+      "trap": "A finding that is consistent with the claim but does not discriminate between it and rival explanations (too weak to count as support)"
+    },
+    {
+      "misconceptionId": "SAT_RW:command-evidence-textual-undermining-evidence",
+      "trap": "A finding that actually weakens or complicates the claim, dressed in supportive wording"
+    },
+    {
+      "misconceptionId": "SAT_RW:command-evidence-textual-restatement-as-evidence",
+      "trap": "A restatement of the claim itself rather than independent evidence for it"
+    },
+    {
+      "misconceptionId": "SAT_RW:command-evidence-textual-scope-mismatch",
+      "trap": "A finding about the wrong population, time period, or variable named in the claim"
+    }
   ],
   "difficultyLevers": {
     "easy": [

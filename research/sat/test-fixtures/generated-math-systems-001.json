@@ -1,0 +1,75 @@
+{
+  "id": "gen-sat-math-systems-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:systems-linear-equations",
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "figure",
+    "text": null,
+    "tableJson": null,
+    "diagram": {
+      "archetypeId": "sat-math:graph-system-two-lines",
+      "parameters": {
+        "line1": {
+          "slope": 2,
+          "yIntercept": -5,
+          "label": "l"
+        },
+        "line2": {
+          "slope": -0.5,
+          "yIntercept": 5,
+          "label": "m"
+        },
+        "intersectionIsInteger": true,
+        "markIntersection": true,
+        "xRange": {
+          "min": -5,
+          "max": 10
+        },
+        "labelLines": true
+      }
+    }
+  },
+  "stem": "The graph shows the lines 2x − y = 5 and x + 2y = 10 in the xy-plane. The two lines intersect at point P. What is the y-coordinate of P?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "1",
+      "misconceptionId": "SAT_MATH:systems-linear-equations-elimination-scales-one-side-only"
+    },
+    {
+      "id": "B",
+      "text": "3",
+      "misconceptionId": null
+    },
+    {
+      "id": "C",
+      "text": "4",
+      "misconceptionId": "SAT_MATH:systems-linear-equations-solving-for-x-when-asked-for-y"
+    },
+    {
+      "id": "D",
+      "text": "5",
+      "misconceptionId": "SAT_MATH:systems-linear-equations-adding-when-subtracting-needed"
+    }
+  ],
+  "correctAnswer": "B",
+  "rationale": "Solve by elimination: multiply x + 2y = 10 by 2 to get 2x + 4y = 20, then subtract 2x − y = 5 to get 5y = 15, so y = 3 (and back-substituting gives x = 4, matching the marked intersection (4, 3) on the graph). Choice C is the x-coordinate — the correct solution reported as the wrong component. Choice A comes from scaling only the variable terms of x + 2y = 10 (writing 2x + 4y = 10), which yields 5y = 5 and y = 1. Choice D comes from subtracting the left sides while adding the right sides, giving 5y = 25 and y = 5.",
+  "difficultyTarget": 3,
+  "provenance": {
+    "archetypeSlug": "systems-linear-equations",
+    "promptVersion": "n/a-v0",
+    "model": "hand-authored",
+    "generatedAt": "2026-08-24T12:30:00Z",
+    "contentHash": "0c20c47b70c98da5e34beba7a70f3737dc61bf20af5e32cd6c2d99e76541a5a1"
+  },
+  "review": {
+    "status": "approved",
+    "reviewer": "w8-integration",
+    "notes": "hand-authored integration fixture"
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

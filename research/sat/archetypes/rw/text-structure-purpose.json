@@ -2,6 +2,8 @@
   "slug": "text-structure-purpose",
   "skill": "Text Structure and Purpose",
   "domain": "Craft and Structure",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:text-structure-purpose",
   "stimulusShape": {
     "type": "passage",
     "lengthWords": [40, 130],
@@ -15,11 +17,26 @@
   "answerMode": "best-phrase",
   "choicePatterns": "Four descriptions of rhetorical function or structure, typically one to two lines each, phrased as 'It <verb phrase>...' or 'The text <verb>...'. Exactly one matches both the content and the rhetorical role of the target; distractors describe plausible roles the sentence or text does not actually play.",
   "distractorLogic": [
-    "Content-not-role trap: the choice accurately summarizes what the sentence says but misdescribes what it does",
-    "Role reversal: describing evidence as the claim it supports, or a concession as the main assertion",
-    "Overstatement: naming a stronger rhetorical move than occurs ('refutes' where the text merely 'qualifies'; 'proves' where it 'suggests')",
-    "Wrong-object trap: describing the function of a different sentence in the passage",
-    "Structure swap: naming a recognizable architecture (chronology, problem-solution, compare-contrast) that fits a different passage shape"
+    {
+      "misconceptionId": "SAT_RW:text-structure-purpose-content-not-role",
+      "trap": "Content-not-role trap: the choice accurately summarizes what the sentence says but misdescribes what it does"
+    },
+    {
+      "misconceptionId": "SAT_RW:text-structure-purpose-role-reversal",
+      "trap": "Role reversal: describing evidence as the claim it supports, or a concession as the main assertion"
+    },
+    {
+      "misconceptionId": "SAT_RW:text-structure-purpose-overstatement",
+      "trap": "Overstatement: naming a stronger rhetorical move than occurs ('refutes' where the text merely 'qualifies'; 'proves' where it 'suggests')"
+    },
+    {
+      "misconceptionId": "SAT_RW:text-structure-purpose-wrong-object",
+      "trap": "Wrong-object trap: describing the function of a different sentence in the passage"
+    },
+    {
+      "misconceptionId": "SAT_RW:text-structure-purpose-structure-swap",
+      "trap": "Structure swap: naming a recognizable architecture (chronology, problem-solution, compare-contrast) that fits a different passage shape"
+    }
   ],
   "difficultyLevers": {
     "easy": [

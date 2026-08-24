@@ -1,0 +1,82 @@
+{
+  "slug": "right-triangles-trig",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:right-triangles-trig",
+  "skill": "Right Triangles and Trigonometry",
+  "domain": "Geometry and Trigonometry",
+  "stimulusShape": {
+    "type": "figure",
+    "lengthWords": null,
+    "structure": "A right triangle rendered with the right-angle mark, one acute angle labeled with its measure or a Greek letter, and two or three sides labeled with lengths or expressions (one side unknown). Contexts: ladder against a wall, ramp, kite string, guy wire, or a plain geometric triangle. Variants: two sides given with a leg asked (Pythagoras), an angle and a side given with another side asked (trig ratio), a ratio asked in pure fraction form (opposite/hypotenuse choices), or sin A given with cos B asked (cofunction)."
+  },
+  "stemTemplates": [
+    "What is the value of sin <theta>?",
+    "What is the length of segment <BC>?",
+    "What is the measure, in degrees, of angle <BAC> to the nearest degree?",
+    "In the triangle, sin A = 5/13. What is the value of cos B?"
+  ],
+  "answerMode": "computed-number-or-ratio",
+  "choicePatterns": "For ratio items: four fractions built from the triangle's three sides (the correct ratio plus the swapped-neighbor, hypotenuse-in-tangent, and Pythagorean-complement ratios). For side/angle items: four numbers — the swapped-ratio solution, the add-the-squares leg, the reciprocal, and the key. All fractions use the triangle's actual side lengths so every choice is computable.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:right-triangles-trig-sin-cos-swap",
+      "trap": "Offers adjacent/hypotenuse when sin is asked (or opposite/hypotenuse when cos is asked): for opposite 3, adjacent 4, hypotenuse 5, offers 4/5 beside the key 3/5. Computable by exchanging the two legs in the ratio."
+    },
+    {
+      "misconceptionId": "SAT_MATH:right-triangles-trig-tan-as-opposite-over-hypotenuse",
+      "trap": "Offers opposite/hypotenuse when tan is asked: 3/5 instead of 3/4. Computable by substituting the hypotenuse for the adjacent leg; pairs naturally with the sin-cos swap for full choice sets."
+    },
+    {
+      "misconceptionId": "SAT_MATH:right-triangles-trig-pythagorean-adds-when-hypotenuse-known",
+      "trap": "For missing-leg items, offers sqrt(a^2 + c^2): for hypotenuse 13 and leg 5, offers about 13.9 (or its squared form 194 in 'what is x^2' variants) instead of 12. Computable by adding the squares when subtracting is required."
+    },
+    {
+      "misconceptionId": "SAT_MATH:right-triangles-trig-complement-cofunction-error",
+      "trap": "For cofunction items (sin A given, cos B asked), offers sin A's value as cos A, or claims cos B cannot be determined: given sin A = 5/13, offers 5/13 as cos A (key 12/13) or 'not enough information'. Computable from the same triangle — cos B = sin A = 5/13 IS the key, so the trap is re-pointing it at the same angle or withholding it."
+    },
+    {
+      "misconceptionId": "SAT_MATH:right-triangles-trig-inverse-trig-as-division",
+      "trap": "For angle items, offers the bare ratio (0.75 or 3/4) or the ratio times 90 as the angle: reports 0.75 instead of 36.9 (about 37 degrees). Computable by stopping at the ratio step; keeps decimal and degree forms distinct so the bug is visible."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Pythagorean triple with the hypotenuse unknown (add the squares): 3-4-5, 6-8-10, 5-12-13",
+      "Ratio identification with the angle's opposite and hypotenuse labeled directly",
+      "Whole-number sides; sine or cosine asked, one swap distractor"
+    ],
+    "medium": [
+      "Missing leg with hypotenuse given (subtract the squares) — the add-direction trap live",
+      "Solve a side via sin/cos with a clean ratio: hypotenuse 10, angle 30 degrees, opposite asked",
+      "Cofunction item: sin A given as a triple ratio, cos B asked",
+      "Angle to the nearest degree from a 3-4-5 style ratio (arctan 3/4 = 37 degrees)"
+    ],
+    "hard": [
+      "Algebraic sides: legs x and x + 7 with hypotenuse 13-style setups solved through the quadratic",
+      "Two-step: find the third side by Pythagoras, THEN a trig ratio of another angle",
+      "Applications requiring choosing the correct ratio: shadow/bearings contexts where opposite vs adjacent must be inferred from the figure",
+      "Angle-chase plus trig: the asked angle must be found via complement before the ratio applies"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Pick a Pythagorean triple family (3-4-5, 5-12-13, 8-15-17, 7-24-25 and integer multiples) and scale it to keep sides 3-60. 2. Decide the asked quantity: a ratio (label the angle and sides), a side (give an angle 15-75 degrees consistent with the triple, or two sides), or an angle (give two sides with a nice inverse). 3. Render with sat-math:triangle-labeled: rightAngleAt pins the right angle, sideLabels carry the lengths, angleLabels the Greek letter or measure. 4. For application contexts (ladder, ramp, wire), bind each side to a real object; keep the same numbers.",
+    "keyConstruction": "Ratios: label the sides from the TARGET angle's perspective, then SOH-CAH-TOA (sin = opp/hyp, cos = adj/hyp, tan = opp/adj). Missing leg: sqrt(hyp^2 - leg^2) (subtract — the hypotenuse is largest). Missing hypotenuse: sqrt(a^2 + b^2). Angle: inverse function matching the given pair (O/H -> arcsin, A/H -> arccos, O/A -> arctan), rounded per the stem ('to the nearest degree'). Cofunction: in a right triangle A + B = 90, so sin A = cos B. Verify: squares re-sum, and each ratio's numerator/denominator are actual labeled sides.",
+    "distractorConstruction": "Every distractor reuses the triangle's own sides: (a) legs exchanged (sin-cos swap: 4/5 for 3/5); (b) hypotenuse swapped into tangent (3/5 for 3/4); (c) sqrt(a^2 + c^2) (or 194-style squared value) for missing-leg items; (d) for cofunction items, the same ratio assigned to the same angle (cos A = 5/13) or a 'cannot be determined' choice; (e) for angle items, the bare ratio (0.75) and/or ratio x 90. Keep fractions unreduced ONLY if the sides are labeled that way; otherwise reduce consistently across choices.",
+    "validationChecklist": [
+      "Side lengths form an exact Pythagorean triple (or solve to integers) — no irrational sides except deliberate sqrt-answer keys",
+      "The right angle is visibly marked in the figure and the hypotenuse is the longest side",
+      "Given angle measures are integers 15-75 (or special angles 30/45/60) consistent with the triple's ratios",
+      "Angle-answer items state the rounding rule ('to the nearest degree') and the key is that rounded integer",
+      "Every distractor is built from the triangle's labeled sides and differs from the key and other distractors",
+      "Application contexts map objects to sides unambiguously (the ladder IS the hypotenuse, the wall IS the opposite leg)"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Label sides from the target angle: Opposite, Adjacent, Hypotenuse. SOH-CAH-TOA gives the ratio; solve the equation for the unknown side (cross-multiply). Pythagoras: c^2 = a^2 + b^2; when c is known, the missing leg is sqrt(c^2 - known^2) — subtract. Angles: apply the matching inverse trig function (degrees). Cofunction: A + B = 90 so sin A = cos B, cos A = sin B, tan A = cot B. Verify by re-summing squares and by magnitude checks (leg < hypotenuse always).",
+  "numericConstraints": "Triples from {3-4-5, 5-12-13, 8-15-17, 7-24-25} and integer multiples keeping sides 3-60; ratios from labeled sides (denominators 5, 13, 17, 25 after scaling); angles integers 15-75 with special angles 30/45/60 common; angle keys rounded integers; decimal keys terminating; grid-in answers <= 4 characters (37, 12, 10).",
+  "questionTypeNotes": "mcq dominates ratio-identification and cofunction items (fractions as choices make the swap bugs visible); grid_in fits missing-side computations (integer legs/hypotenuses) and nearest-degree angles. Roughly 60/40 mcq to grid_in.",
+  "diagramSpec": {
+    "allowedArchetypeIds": ["sat-math:triangle-labeled"],
+    "typicalUse": "The right triangle with rightAngleAt mark, sideLabels carrying the triple's lengths or expressions, and angleLabels naming the target acute angle — the single figure for ratio identification, side solving, and cofunction items."
+  }
+}

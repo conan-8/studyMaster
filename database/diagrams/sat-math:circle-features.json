@@ -1,0 +1,46 @@
+{
+  "archetypeId": "sat-math:circle-features",
+  "title": "Circle with Marked Features",
+  "description": "A circle with its center and 1–3 features (radius, diameter, chord, tangent line, or central angle), each placed by angle and labeled. Serves Geometry and Trigonometry (circles): radius/diameter relationships, arc length, central angles, area, and circle-equation questions.",
+  "subjectsApplicable": ["SAT_MATH"],
+  "paramsSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["center", "radius", "features", "showCenterDot"],
+    "properties": {
+      "center": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["x", "y"],
+        "description": "Center coordinates in the figure frame.",
+        "properties": {
+          "x": { "type": "number", "minimum": 4, "maximum": 8 },
+          "y": { "type": "number", "minimum": 4, "maximum": 8 }
+        }
+      },
+      "radius": { "type": "number", "minimum": 2, "maximum": 4, "description": "Figure-units radius; bounds keep every feature inside the canvas." },
+      "features": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 3,
+        "description": "Marked circle elements. angleDegrees positions the feature on the circle (0° = 3 o'clock, counterclockwise).",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "angleDegrees", "label"],
+          "properties": {
+            "type": { "type": "string", "enum": ["radius", "diameter", "chord", "tangent", "central_angle"] },
+            "angleDegrees": { "type": "number", "minimum": 0, "maximum": 360, "multipleOf": 5, "description": "Primary placement angle; for central_angle this is the start of the arc." },
+            "sweepDegrees": { "type": ["number", "null"], "minimum": 10, "maximum": 180, "description": "Required for central_angle (arc extent); ignored otherwise." },
+            "label": { "type": "string", "minLength": 1, "maxLength": 10, "description": "Feature text (e.g. 'r', '6', point names)." }
+          }
+        }
+      },
+      "centerLabel": { "type": ["string", "null"], "maxLength": 4, "description": "Label at the center dot (commonly 'O'); null hides it." },
+      "showCenterDot": { "type": "boolean" }
+    }
+  },
+  "rendererRef": "CircleFeatures",
+  "notes": "Renderer guarantees: every feature is constructed from center + radius + angles (a diameter is the segment through center at angleDegrees, a tangent is perpendicular to the radius at that point) — lengths in labels are never geometric data, so figure and geometry cannot conflict; features must be at least 20° apart at the circumference (validated) so labels never collide; no axes are drawn unless a future coordinate variant requires them."
+}

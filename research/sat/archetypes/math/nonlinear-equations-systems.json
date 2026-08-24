@@ -1,0 +1,76 @@
+{
+  "slug": "nonlinear-equations-systems",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:nonlinear-equations-systems",
+  "skill": "Nonlinear Equations and Systems",
+  "domain": "Advanced Math",
+  "stimulusShape": {
+    "type": "none",
+    "lengthWords": null,
+    "structure": "No stimulus in the canonical form: a quadratic equation (factorable or quadratic-formula territory), a cancelable equation like x² = 5x, a radical/rational equation with an extraneous root, or a linear-quadratic system sits in the stem. Context variant: a 20-60 word area/projectile scenario that collapses to the equation. The ask: a solution, sum or product of solutions, a coordinate from the system, or the number of real solutions."
+  },
+  "stemTemplates": [
+    "What is the sum of the solutions to the given equation?",
+    "Which of the following is a solution to the given equation?",
+    "If (x, y) is a solution to the given system of equations, what is the value of <target>?",
+    "How many real solutions does the given equation have?"
+  ],
+  "answerMode": "number-or-count",
+  "choicePatterns": "Four numbers (a root, a sum, a coordinate, or a count) or four solution sets ('3 only', '-1 and 3', 'no real solutions'); distractors are the canceled-away root, the sign-flipped roots, the extraneous candidate, and the miscounted solution total. Exactly one choice matches the fully checked solution set.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:nonlinear-equations-systems-dividing-by-variable-loses-root",
+      "trap": "For x² = 5x, offer only 5 (x = 0 canceled away) on solution asks; on count asks offer 1 instead of 2; on product asks offer the nonzero-root computation instead of 0; computable by dividing both sides by x and reporting the single surviving root."
+    },
+    {
+      "misconceptionId": "SAT_MATH:nonlinear-equations-systems-zero-product-partial-solve",
+      "trap": "For (x - 2)(x + 7) = 0, offer 2 only; on sum asks offer 2 instead of -5 (the true sum of 2 and -7); computable by solving the first factor only and stopping."
+    },
+    {
+      "misconceptionId": "SAT_MATH:nonlinear-equations-systems-quadratic-formula-sign-error",
+      "trap": "For x² - 2x - 3 = 0 (roots -1 and 3), offer the roots 1 and -3 (both signs flipped — the -b double-negative slip); or, computing the discriminant as b² - 4ac with a negative c subtracted (4 - 12 = -8 instead of 4 + 12 = 16), offer 'no real solutions'; computable by negating the true roots or dropping the sign on 4ac."
+    },
+    {
+      "misconceptionId": "SAT_MATH:nonlinear-equations-systems-extraneous-root-accepted",
+      "trap": "For √(2x + 3) = x, squaring yields candidates 3 and -1 where only 3 checks; offer both -1 and 3 (or the count 2 instead of 1); computable by reporting every squared-equation candidate without substituting back into the original."
+    },
+    {
+      "misconceptionId": "SAT_MATH:nonlinear-equations-systems-discriminant-sign-misread",
+      "trap": "For a tangent system (discriminant exactly 0), offer 'two solutions'; for a non-intersecting parabola-line pair, offer 'two' instead of 'none'; computable by shifting the count per the reversed test (zero discriminant read as two, negative read as two, positive read as none)."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Monic quadratic factorable over the integers with small roots (|r| ≤ 8) and distinct roots",
+      "Zero-product structure already visible in the stem; ask for one root",
+      "No radicals, no fractions — every candidate checks"
+    ],
+    "medium": [
+      "Non-monic quadratic or one needing rearrangement to standard form first",
+      "Sum/product asks where both roots must be found (Viete check available)",
+      "Linear-quadratic system solved by substitution with integer intersection points"
+    ],
+    "hard": [
+      "Cancelable shape x² = kx or a repeated factor where dividing loses the zero solution",
+      "Radical or rational equations where exactly one candidate is extraneous and must be rejected by checking",
+      "Discriminant parameter items: find k for exactly one intersection (tangency) or none"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose the roots first: distinct integers r1 ≠ r2 in [-12, 12] (or a double root for tangency items). 2. Build the equation by expanding (x - r1)(x - r2) = 0, or the cancelable shape x² = (r1 + r2)x with 0 as a root. 3. Systems: pick a line passing through two integer points of the parabola y = (x - r1)(x - r2), or tangent to it for count/parameter items. 4. Radical/rational variants: design so squaring produces exactly one extraneous candidate (e.g. √(2x + 3) = x with candidates 3 and -1).",
+    "keyConstruction": "Move everything to one side and factor; set EACH factor to zero and take both roots. For systems, substitute the linear equation into the nonlinear one and solve the resulting quadratic. Check every reported root by substituting into the ORIGINAL equation (or both equations of the system) — this is the step that rejects extraneous candidates. Sum/product keys verify against Viete: r1 + r2 = -b/a, r1·r2 = c/a.",
+    "distractorConstruction": "Generate the mechanical bug outputs: the single root after canceling x; the first factor's root only; both roots sign-flipped; 'no real solutions' from a mis-signed discriminant; all squaring candidates including the extraneous one; the reversed discriminant count. Verify each distractor is a clean number on this item and that all choices are distinct.",
+    "validationChecklist": [
+      "Every key root substitutes to 0 in the original equation (or satisfies both system equations) — extraneous candidates excluded",
+      "Sum and product keys match Viete's formulas for the final quadratic",
+      "Roots are integers or simple radicals; coefficients ≤ 12 in absolute value; discriminants are perfect squares or zero when factoring is intended",
+      "Radical/rational variants: no key root zeroes a denominator or leaves a negative under the radical; exactly one extraneous candidate exists for the trap",
+      "Count asks have a definite answer (0, 1, 2, or 3) with the discriminant computed correctly",
+      "All four choices distinct; solution-set choices ('3 only' vs '-1 and 3') ordered consistently"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Rearrange to one side, factor, and apply zero-product to BOTH factors; use the quadratic formula with signed a, b, c (parenthesized substitution) when unfactorable; for systems, substitute the linear equation into the nonlinear one. Every candidate must be checked in the original equation before it counts; counts come from the discriminant: positive = two, zero = one (tangent), negative = none.",
+  "numericConstraints": "Integer roots in [-12, 12]; coefficients ≤ 12 in absolute value; discriminants perfect squares or zero for factorable items; radical/rational items designed with one valid and one extraneous candidate; grid-in keys non-negative.",
+  "questionTypeNotes": "Grid-in heavy (root, sum, product, and coordinate asks with numeric keys); count and solution-set asks are MCQ. 'Sum of solutions' is the classic grid-in carrier for the partial-solve trap."
+}

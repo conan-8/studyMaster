@@ -1,0 +1,73 @@
+{
+  "slug": "sample-statistics-margin-error",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:sample-statistics-margin-error",
+  "skill": "Sample Statistics and Margin of Error",
+  "domain": "Problem-Solving and Data Analysis",
+  "stimulusShape": {
+    "type": "passage",
+    "lengthWords": [40, 100],
+    "structure": "A research-report paragraph stating (a) who was sampled and how ('a random sample of 200 city residents'), (b) a sample statistic (a percentage like 52%, or a mean like 42 grams with units), and (c) an associated margin of error ('with an associated margin of error of 3%'). Variants report two candidates/groups each with estimate and margin, or state a sample-size change and ask about its effect. Every quantity needed appears in the passage; no figure or table is used."
+  },
+  "stemTemplates": [
+    "Based on the survey, which of the following is a plausible value for the percent of all <population> who <behavior>?",
+    "Which of the following statements is supported by the survey results?",
+    "What effect does increasing the sample size have on the margin of error?",
+    "Which of the following best describes why the margin of error is needed in this survey?"
+  ],
+  "answerMode": "which-statement",
+  "choicePatterns": "Four STATEMENTS (not numbers), each a full claim about the estimate, the interval, the population, or the effect of sample size — exactly one consistent with the reported statistics. A statement distractor is a named misconception expressed as a study claim: the point estimate declared exact, the interval taken one-sided, a larger sample declared more uncertain, or a biased sample declared representative. Plausible-value variants embed numbers inside the statements (a value outside estimate ± ME).",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:sample-statistics-margin-error-larger-sample-larger-margin",
+      "trap": "Statement distractor claiming the margin of error increases (or is unchanged) when the sample size grows: 'The margin of error would increase to more than 3%' for a repeat with 400 residents. Expresses the no-directional-model bug as a design claim about n."
+    },
+    {
+      "misconceptionId": "SAT_MATH:sample-statistics-margin-error-interval-misapplied",
+      "trap": "Statement or value distractor applying the margin to the wrong quantity or one side only: offers 55% (estimate + ME only) as the interval's upper end phrased as 'between 52% and 55%', or a plausible value just outside 49-55% rejected/accepted with the band shifted. Built by mutating exactly one side or one unit of the correct interval claim."
+    },
+    {
+      "misconceptionId": "SAT_MATH:sample-statistics-margin-error-biased-sample-generalization",
+      "trap": "Statement distractor extending the result to a population the sampling frame does not cover: 'The survey shows that about 52% of all city residents exercise weekly' when only gym members were surveyed. Expresses the representativeness bug as a generalization claim."
+    },
+    {
+      "misconceptionId": "SAT_MATH:sample-statistics-margin-error-estimate-treated-as-exact",
+      "trap": "Statement distractor asserting certainty: 'The percent of all residents who exercise weekly is exactly 52%' or ruling out 54% as impossible. Expresses the point-estimate bug as a precision claim; built by deleting the interval qualifier from the true claim."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Single random sample, one percentage with margin; plausible-value choices where one sits inside the interval and three sit far outside (by 5+ points)",
+      "Direction-of-effect item with a large sample-size doubling (100 to 10,000) so 'decreases' is discriminable",
+      "Interval endpoints are whole numbers and the interval is wide"
+    ],
+    "medium": [
+      "Plausible-value choices hovering just at and just beyond the interval endpoints (e.g., key 54, distractors 55, 48, 56 for 52 ± 3)",
+      "Two groups with overlapping intervals asked whether a difference is established ('Group A 48 ± 4 vs Group B 54 ± 4: can it be concluded A < B?')",
+      "Why-margin-of-error items mixing correct-precision claims with exact-value claims"
+    ],
+    "hard": [
+      "Sample-size effect asked quantitatively ('ME roughly like 1/sqrt(n): 100 -> 400 cuts ME from 6% to about 3%')",
+      "Biased-frame items where the numbers are perfect but the sample source is off (gym members for city residents)",
+      "Nested claims: each choice combines a plausible value AND a generalization scope, and only one matches both the interval and the sampled population",
+      "Reconciling two surveys with different sample sizes and non-overlapping vs overlapping intervals"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose a population and behavior (city residents, voters, a school's students; weekly exercise, approval of a policy, owning a bike). 2. Pick n from 50-500 (typically 100-400) and a percentage from 15-85 so the interval stays inside 0-100. 3. Set ME to 2-6 percentage points, wider for smaller n. 4. State the sampling method — random for most items, deliberately biased (a subpopulation or voluntary poll) for the representativeness items. 5. Close with the report sentence citing estimate and margin verbatim.",
+    "keyConstruction": "Interval: estimate - ME to estimate + ME; plausible values are those strictly inside (endpoint inclusion stated in the stem when used). Effect of n: ME shrinks as n grows (roughly 1/sqrt(n) — doubling n fourfold roughly halves ME). Valid generalization scope: exactly the population that was randomly sampled. Verify the interval endpoints stay within [0, 100] and that the key claim names only quantities or scopes the passage supplies.",
+    "distractorConstruction": "STATEMENT-DISTRUCTOR PATTERN (this archetype does not compute numeric keys for its choices): each wrong choice is a named misconception rendered as a study-design claim, in the same sentence shape as the key so surface reading cannot discriminate. Templates: (a) 'The margin of error would increase/stay the same' for a sample-size change; (b) 'between <estimate> and <estimate + ME>' / plausible values one point outside the true band; (c) '<estimate>% of ALL <wider population> ...' for a biased frame; (d) 'exactly <estimate>%' / 'a value of <inside-band> is not plausible'. Write each by mutating exactly ONE element of the true claim (a side, a scope, a hedge word, a direction), then confirm only the key survives re-reading the passage's numbers and sampling description.",
+    "validationChecklist": [
+      "Survey totals 50-500; percentages 15-85; margins of error 2-6 whole points; interval stays within 0-100",
+      "Every choice is a complete sentence in the key's grammatical shape — numbers appear inside statements, not as naked options",
+      "Exactly one choice is consistent with the passage's estimate, margin, sample size, and sampling frame",
+      "Each distractor mutates exactly one element of the true claim and maps to a single misconception id",
+      "Plausible-value items state endpoint handling ('between 49% and 55%, inclusive' or values strictly between) so the key is unambiguous",
+      "The passage states WHO was sampled; generalization-scope choices match or overreach that stated population precisely"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Plausible values: estimate - ME <= v <= estimate + ME (52% ± 3% gives the band 49-55%). Sample-size effect: ME decreases as n increases (roughly 1/sqrt(n); quadrupling n roughly halves ME). Valid claims: point estimates are not exact — only interval-level statements are licensed. Verify by recomputing the band and re-checking the sampling frame named in the passage.",
+  "numericConstraints": "n from 50-500 (typical 100-400); percentages 15-85 (whole numbers); margins of error 2-6 whole percentage points; interval endpoints whole numbers within 0-100; no numeric grid-in answers (choices are statements).",
+  "questionTypeNotes": "Nearly all mcq — this archetype's answers are STATEMENTS, so it contributes no grid_in items. The generator must build four claim sentences per item, not four numbers: replicate the key's sentence shape and mutate one element per distractor (direction of ME change, one interval side, generalization scope, hedge word). Reading-level similarity across choices is deliberate and required."
+}

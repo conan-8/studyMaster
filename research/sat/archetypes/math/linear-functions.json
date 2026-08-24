@@ -1,0 +1,76 @@
+{
+  "slug": "linear-functions",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:linear-functions",
+  "skill": "Linear Functions",
+  "domain": "Algebra",
+  "stimulusShape": {
+    "type": "passage",
+    "lengthWords": [15, 70],
+    "structure": "A scenario with a constant rate of change and a starting value (membership fees, filling tanks, printing plans, earnings): one sentence names the initial amount, another the per-unit rate with units. Variants carrying the same m and b: a table of at least 3 input-output pairs spaced by 1 or 2, or the graph of y = mx + b (diagram archetype sat-math:graph-line) with lattice points marked. The stem asks to build, interpret, or evaluate f(x) = mx + b, or to compute slope from data."
+  },
+  "stemTemplates": [
+    "Which function models <dependent quantity> as a function of <independent variable>?",
+    "What is the slope of the line that passes through (<x1>, <y1>) and (<x2>, <y2>)?",
+    "What is the value of f(<input expression>)?",
+    "What does the number <parameter> mean in the given context?"
+  ],
+  "answerMode": "function-or-number",
+  "choicePatterns": "For model-building asks: four functions f(x) = mx + b assembled from the same context numbers with m and b swapped or built from misread data; for computation asks: four numbers — the true slope/evaluation and its reciprocal, negation, or notation-bug twin. All choices are plausible linear models; exactly one matches every given data point.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:linear-functions-slope-intercept-swap",
+      "trap": "Model-building trap: with rate r and initial value s in context (key f(x) = rx + s), offer f(x) = sx + r — the two numbers with roles exchanged; computable by literally swapping the key's m and b."
+    },
+    {
+      "misconceptionId": "SAT_MATH:linear-functions-slope-rise-run-inversion",
+      "trap": "Two-point slope trap: offer Δx/Δy instead of Δy/Δx — through (2, 3) and (6, 11) (true slope 2), offer 1/2; computable by swapping numerator and denominator of the true slope. Pairs naturally with |m| > 1 so the reciprocal is visibly different."
+    },
+    {
+      "misconceptionId": "SAT_MATH:linear-functions-slope-sign-from-inconsistent-point-order",
+      "trap": "Offer the negation of the true slope, computed as (y2 - y1)/(x1 - x2) — subtracting coordinates in opposite orders: through (1, 5) and (3, 9), offer -2 instead of 2; computable as the sign-flip of the key."
+    },
+    {
+      "misconceptionId": "SAT_MATH:linear-functions-function-notation-as-multiplication",
+      "trap": "Evaluation trap: for f(x) = 2x + 1 asked f(x + 3), offer 2x + 4 (evaluating f then appending the +3) instead of 2x + 7; for f(2 + 3), offer f(2) + f(3) = 12 instead of f(5) = 11; computable as key minus the increment applied to the wrong place."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Slope and intercept read straight from a graph with lattice points or from a y = mx + b equation",
+      "Context where the rate and starting value appear verbatim in separate sentences",
+      "Evaluation f(k) for a positive integer k on a given formula"
+    ],
+    "medium": [
+      "Slope from two points where the rise or run is negative, or from a table requiring two-row differencing",
+      "Model-building where the rate must be derived from two data pairs before writing f",
+      "Interpretation asks for m or b with units ('per hour' vs starting amount)"
+    ],
+    "hard": [
+      "Evaluate f(x + h) or compose inputs — the whole-input substitution with a binomial",
+      "Compare two linear functions (which exceeds which, and after how many units)",
+      "Distractor sets where m and b values are shared across all four choices in permuted roles, so only full checking discriminates"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Fix the parameters first: integer slope m in [-6, 6] (or simple halves/thirds) and integer intercept b in [-10, 10], with m ≠ b and |m| ≠ 1 to keep bug twins distinct. 2. Write the scenario so the starting value and the per-unit rate each get one sentence with units. 3. Table variant: generate at least 3 rows from (x, mx + b); graph variant: render sat-math:graph-line with the SAME m and b and mark lattice points the stem can reference.",
+    "keyConstruction": "Build f(x) = mx + b and verify against TWO given data points (substitute both). For slope asks, compute (y2 - y1)/(x2 - x1) keeping the same point first on top and bottom, then check the sign against the direction of change in the table/graph. For evaluation asks, replace x with the ENTIRE input in parentheses before simplifying.",
+    "distractorConstruction": "Generate each mechanical twin: swap m and b; invert the slope fraction; negate the slope; evaluate f(x + h) as (value at x) + h or as f(x) + f(h). Choose parameters (m ≠ b, m ≠ 1/m, b ≠ 0) so the four choices are all distinct, and keep every choice a plausible linear model for the context.",
+    "validationChecklist": [
+      "Rate and starting value are each stated exactly once, in different sentences or table columns",
+      "The key fits every given data point (substitute at least two)",
+      "Graph variants share m and b with the stem; marked points are lattice points inside the grid window",
+      "Numbers are SAT-clean: |m| ≤ 6, |b| ≤ 10, slopes integer or reciprocal pairs like 2 and 1/2",
+      "Interpretation choices carry correct units ('per x' on the rate, plain units on the intercept)",
+      "No choice duplicates the key or another choice after simplification"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Read m and b directly from y = mx + b, or compute m = (y2 - y1)/(x2 - x1) with consistent point order, then use one data pair to recover b. Verify the model by substituting two known points. For f(input) asks, substitute the whole input with parentheses, then simplify; check one numeric case (e.g. f(2 + 3) must equal f(5)).",
+  "numericConstraints": "Integer slopes and intercepts wherever possible; |m| ≤ 6, |b| ≤ 10; table x-values spaced by 1 or 2 with integer outputs; answers are integers or fractions with denominators ≤ 12; avoid m = 1, m = 0, m = b, and |m| = 1/m so bug twins stay distinct.",
+  "questionTypeNotes": "Model-building and interpretation asks are MCQ (function or sentence choices); slope and value asks split between MCQ and grid-in (numeric key).",
+  "diagramSpec": {
+    "allowedArchetypeIds": ["sat-math:graph-line"],
+    "typicalUse": "Graph variant: the line y = mx + b is drawn with marked lattice points; the stem asks for the slope, the intercepts, a function value at a marked point, or the interpretation of m and b in context. The figure's slope and yIntercept parameters are the same values the choices are built from."
+  }
+}

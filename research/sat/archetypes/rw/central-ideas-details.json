@@ -2,6 +2,8 @@
   "slug": "central-ideas-details",
   "skill": "Central Ideas and Details",
   "domain": "Information and Ideas",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:central-ideas-details",
   "stimulusShape": {
     "type": "passage",
     "lengthWords": [30, 120],
@@ -16,11 +18,26 @@
   "answerMode": "which-statement",
   "choicePatterns": "Four complete declarative statements of similar length and register. For main-idea items, exactly one captures the passage's dominant point at the right scope; the other three are true-sounding statements at the wrong scope or wrong slant. For detail items, exactly one is a faithful paraphrase of a stated fact.",
   "distractorLogic": [
-    "A true supporting detail presented as the main idea (subordinate point inflated to thesis)",
-    "An overgeneralization that extends the passage's claim beyond its stated scope or population",
-    "A subtle reversal of a stated relationship (e.g. cause and effect swapped, 'more' flipped to 'fewer')",
-    "A plausible statement relying on outside knowledge that the passage never asserts",
-    "A misattribution: assigning a belief or finding to the wrong person, group, or time period named in the passage"
+    {
+      "misconceptionId": "SAT_RW:central-ideas-details-detail-as-main",
+      "trap": "A true supporting detail presented as the main idea (subordinate point inflated to thesis)"
+    },
+    {
+      "misconceptionId": "SAT_RW:central-ideas-details-overgeneralization",
+      "trap": "An overgeneralization that extends the passage's claim beyond its stated scope or population"
+    },
+    {
+      "misconceptionId": "SAT_RW:central-ideas-details-relationship-reversal",
+      "trap": "A subtle reversal of a stated relationship (e.g. cause and effect swapped, 'more' flipped to 'fewer')"
+    },
+    {
+      "misconceptionId": "SAT_RW:central-ideas-details-outside-knowledge",
+      "trap": "A plausible statement relying on outside knowledge that the passage never asserts"
+    },
+    {
+      "misconceptionId": "SAT_RW:central-ideas-details-misattribution",
+      "trap": "A misattribution: assigning a belief or finding to the wrong person, group, or time period named in the passage"
+    }
   ],
   "difficultyLevers": {
     "easy": [

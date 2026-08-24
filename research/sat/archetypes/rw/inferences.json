@@ -2,6 +2,8 @@
   "slug": "inferences",
   "skill": "Inferences",
   "domain": "Information and Ideas",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:inferences",
   "stimulusShape": {
     "type": "passage",
     "lengthWords": [40, 130],
@@ -15,11 +17,26 @@
   "answerMode": "which-statement",
   "choicePatterns": "Four candidate conclusions of similar length. Exactly one follows from the premises with the least added assumption; the others either restate a premise, overshoot the evidence, contradict a premise, or import an unsupported real-world belief.",
   "distractorLogic": [
-    "Restatement trap: a choice that paraphrases a premise instead of drawing a conclusion from the premises together",
-    "Overreach: a conclusion stronger, broader, or more certain than the premises license ('always', 'proves', 'the only')",
-    "Contradiction: a choice quietly incompatible with one stated premise",
-    "Plausibility trap: a conclusion that sounds true in the real world but is not grounded in the passage",
-    "Wrong-direction inference: a conclusion that reverses the conditional or correlation the premises establish"
+    {
+      "misconceptionId": "SAT_RW:inferences-restatement-trap",
+      "trap": "Restatement trap: a choice that paraphrases a premise instead of drawing a conclusion from the premises together"
+    },
+    {
+      "misconceptionId": "SAT_RW:inferences-overreach",
+      "trap": "Overreach: a conclusion stronger, broader, or more certain than the premises license ('always', 'proves', 'the only')"
+    },
+    {
+      "misconceptionId": "SAT_RW:inferences-contradiction",
+      "trap": "Contradiction: a choice quietly incompatible with one stated premise"
+    },
+    {
+      "misconceptionId": "SAT_RW:inferences-plausibility-trap",
+      "trap": "Plausibility trap: a conclusion that sounds true in the real world but is not grounded in the passage"
+    },
+    {
+      "misconceptionId": "SAT_RW:inferences-wrong-direction",
+      "trap": "Wrong-direction inference: a conclusion that reverses the conditional or correlation the premises establish"
+    }
   ],
   "difficultyLevers": {
     "easy": [

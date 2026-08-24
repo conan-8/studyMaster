@@ -1,0 +1,60 @@
+{
+  "archetypeId": "sat-math:graph-line",
+  "title": "Linear Function Graph",
+  "description": "A single line in the xy-plane, drawn from slope m and y-intercept b. Serves the Algebra domain (linear-functions, linear-equations-two-vars): stems reference the same m and b as the figure, e.g. slope/interpretation and point-on-line questions.",
+  "subjectsApplicable": ["SAT_MATH"],
+  "paramsSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["slope", "yIntercept", "xRange", "markedPoints"],
+    "properties": {
+      "slope": {
+        "type": "number",
+        "minimum": -6,
+        "maximum": 6,
+        "description": "Slope m of y = mx + b. Use SAT-clean values (integers or simple halves/thirds)."
+      },
+      "yIntercept": {
+        "type": "number",
+        "minimum": -10,
+        "maximum": 10,
+        "description": "Y-intercept b; must lie inside the grid so the line visibly crosses the y-axis."
+      },
+      "xRange": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["min", "max"],
+        "properties": {
+          "min": { "type": "integer", "minimum": -10, "maximum": -1 },
+          "max": { "type": "integer", "minimum": 1, "maximum": 10 }
+        }
+      },
+      "markedPoints": {
+        "type": "array",
+        "minItems": 0,
+        "maxItems": 3,
+        "description": "Points dotted and labeled on the line; each must satisfy y = slope*x + yIntercept (renderer validates).",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["x", "y", "label"],
+          "properties": {
+            "x": { "type": "number", "minimum": -10, "maximum": 10 },
+            "y": { "type": "number", "minimum": -10, "maximum": 10 },
+            "label": { "type": "string", "maxLength": 8 }
+          }
+        }
+      },
+      "xAxisLabel": { "type": "string", "maxLength": 4, "default": "x" },
+      "yAxisLabel": { "type": "string", "maxLength": 4, "default": "y" },
+      "showIntercepts": {
+        "type": "boolean",
+        "default": false,
+        "description": "Dot the axis intercepts without textual labels."
+      }
+    }
+  },
+  "rendererRef": "GraphLine",
+  "notes": "Renderer guarantees: integer grid lines at every unit within xRange and symmetric y-extent computed from the line; axes with arrows; marked points are validated to lie on the line and are auto-offset so labels never overlap the line or each other; slope of 0 draws a horizontal line (allowed); the line always spans the full visible grid."
+}

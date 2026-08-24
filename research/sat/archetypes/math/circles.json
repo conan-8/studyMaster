@@ -1,0 +1,82 @@
+{
+  "slug": "circles",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:circles",
+  "skill": "Circles",
+  "domain": "Geometry and Trigonometry",
+  "stimulusShape": {
+    "type": "figure",
+    "lengthWords": null,
+    "structure": "Either a drawn circle with center O and labeled features (radius or diameter segment, a chord, a tangent line, a central angle or inscribed angle with its arc) rendered via sat-math:circle-features, or an equation-driven variant where the standard form (x - h)^2 + (y - k)^2 = r^2 appears in the stem with no figure. Question targets: circumference/area from radius or diameter, arc length and sector area from a central angle, inscribed-angle measure from an arc, and reading/writing center and radius from the equation."
+  },
+  "stemTemplates": [
+    "What is the area of the circle, in terms of pi?",
+    "What is the length of arc ABC?",
+    "What is the measure, in degrees, of angle ABC (an inscribed angle)?",
+    "What is the radius of the circle whose equation is <equation>?"
+  ],
+  "answerMode": "computed-number-or-expression",
+  "choicePatterns": "Four values in k*pi form (areas, circumferences, arc/sector measures with integer k) or four coordinate pairs / integers (center, radius, angle measures). Each distractor is the same computation with the radius-diameter confusion (4x for areas, 2x for lengths), the un-square-rooted r^2, the sign-flipped center, or the full-circle value where a fraction applies.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:circles-radius-diameter-swap",
+      "trap": "Offers the area/circumference computed with the diameter as radius: for diameter 10, offers 100 pi (key 25 pi, 4x) or circumference 5 pi vs key 10 pi (2x). Computable by plugging d where r belongs; works in both directions (r given, d computed)."
+    },
+    {
+      "misconceptionId": "SAT_MATH:circles-equation-radius-not-squared",
+      "trap": "For equation items, offers the right-hand constant as the radius (= 36 for '= 36') or offers an equation ending '= 5' when writing for r = 5. Computable by skipping the square-root (or squaring) step; pairs with center choices kept correct to isolate the bug."
+    },
+    {
+      "misconceptionId": "SAT_MATH:circles-center-sign-error",
+      "trap": "For (x - 3)^2 + (y + 4)^2 = 25, offers center (-3, 4) (or (3, 4)) instead of (3, -4). Computable by copying the visible signs instead of solving each parenthesis to zero; keeps the radius choice correct to isolate the sign bug."
+    },
+    {
+      "misconceptionId": "SAT_MATH:circles-arc-sector-uses-full-circle",
+      "trap": "For arc/sector items, offers the full circumference or area (r = 6, 60 degrees: offers 12 pi instead of 2 pi arc, 36 pi instead of 6 pi sector), or the inverted fraction 360/theta producing values 36x the key for 60 degrees. Computable by omitting the theta/360 multiplier or inverting it."
+    },
+    {
+      "misconceptionId": "SAT_MATH:circles-inscribed-angle-treated-as-central",
+      "trap": "For inscribed-angle items, offers the arc measure itself (80 for an 80-degree arc, key 40), or for 'find the arc' variants offers half the arc. Computable by applying the central-angle rule (or halving when doubling is needed) to the vertex-on-the-circle configuration."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Radius given, area or circumference asked in k*pi form with r from 2-10",
+      "Equation with h = k = 0 (x^2 + y^2 = 49): read r = 7",
+      "Inscribed angle with a semi-circle arc (arc 180, angle 90) — the half relationship visible"
+    ],
+    "medium": [
+      "Diameter given (radius-diameter swap live): area or circumference asked",
+      "Arc length or sector area with central angle from {30, 45, 60, 90, 120} and r 6-12 keeping k integer",
+      "Equation with a nonzero center: read center and radius together (both bugs live)",
+      "Inscribed angle with a non-diameter arc: halve 80 to 40"
+    ],
+    "hard": [
+      "Write the equation from a described circle (center and radius stated): the r^2 squaring step is the trap",
+      "Two-step: find r from the equation, then compute a sector area with a given central angle",
+      "Chord/triangle-in-circle configurations where the inscribed angle must be chased through a central angle or a linear pair at the center",
+      "Arc-algebra: arcs labeled x, x + 40, 2x - 20 summing to 360, an inscribed angle asked"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose the target: measurement (area/circumference), arc/sector, inscribed angle, or equation reading/writing. 2. Fix r as an integer 2-15; if the diameter confusion is the trap, state the DIAMETER in the stem instead. 3. Choose central angles from {30, 45, 60, 90, 120, 150} so theta/360 x (2 pi r or pi r^2) has integer k. 4. Render via sat-math:circle-features: center dot, radius or diameter segment with its label, the central/inscribed angle's vertex placed at center or on the circle respectively. 5. Equation variants write the standard form with integer h, k in [-9, 9] and r^2 a perfect square.",
+    "keyConstruction": "C = 2 pi r = pi d; A = pi r^2. Arc = (theta/360) C; sector = (theta/360) A. Inscribed = arc/2; central = arc. Equation: center (h, k) from (x - h)^2 + (y - k)^2 = r^2 by solving each parenthesis to zero; radius = sqrt(right side). Verify: arc + sector answers must be LESS than the full measures; the fraction theta/360 < 1 always; center choice must actually satisfy both parentheses at zero.",
+    "distractorConstruction": "All in k*pi form or as coordinate pairs, computed from the same r and theta: (a) diameter-as-radius values (4x area, 2x circumference keys) or radius-as-diameter halves; (b) the right-hand constant as radius (36 for 36) and '= r' endings when writing equations; (c) sign-copied centers (-3, 4) for (x - 3)^2 + (y + 4)^2; (d) full-circle circumference/area for arc/sector items, plus the inverted 360/theta variant when it stays under 200; (e) the arc itself where the inscribed half is asked (and half where double is asked). Keep exactly one bug per distractor so choices isolate misconceptions.",
+    "validationChecklist": [
+      "Radii integers 2-15; arc/sector central angles from {30, 45, 60, 90, 120, 150} so k stays integer in k*pi answers",
+      "Every k*pi choice is an integer multiple of pi (no decimal coefficients); measurement items state 'in terms of pi'",
+      "Inscribed-angle figures place the vertex ON the circle; central angles at the center — the figure alone must determine which theorem applies",
+      "Equation items use integer centers in [-9, 9] and perfect-square r^2; distractor centers differ from the key by sign only",
+      "Arc/sector answers are strictly smaller than the full circumference/area; all distractors distinct",
+      "Grid-in variants avoid pi: ask for k (the coefficient), a degree measure, or a coordinate — integers only"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Convert to radius first: r = d/2 (write it on the figure). C = 2 pi r; A = pi r^2. Arc length = (theta/360) x 2 pi r; sector area = (theta/360) x pi r^2 — the fraction theta/360 is always < 1. Central angle = its arc; inscribed angle = half its arc (vertex on the circle). Equation (x - h)^2 + (y - k)^2 = r^2: set each parenthesis to zero for the center; square-root the right side for the radius. Verify by re-substituting the center into the equation and confirming r^2.",
+  "numericConstraints": "Radii integers 2-15; diameters even integers 4-30; central angles multiples of 10 from the set {30, 45, 60, 90, 120, 150}; arc/sector answers integer k with k*pi form; equation centers integer pairs in [-9, 9]; r^2 perfect squares from {4, 9, 16, 25, 36, 49, 64, 81, 100, 144, 169, 196, 225}; degree answers multiples of 5; grid-in keys integer (k coefficient, degrees, or coordinate).",
+  "questionTypeNotes": "mcq dominant: k_pi choices make the radius-diameter and full-circle bugs cleanly selectable, and equation items need coordinate-pair choices. grid_in reserved for degree measures (arc-algebra items), coefficients k, and coordinates — never a pi-carrying value, which the grid cannot express.",
+  "diagramSpec": {
+    "allowedArchetypeIds": ["sat-math:circle-features"],
+    "typicalUse": "Circle with center O and features per item type: radius or diameter segment labeled (measurement items), central angle placed at the center with the arc marked (arc/sector), or inscribed angle vertex on the circle with its intercepted arc (inscribed items). Equation-reading variants omit the figure entirely."
+  }
+}

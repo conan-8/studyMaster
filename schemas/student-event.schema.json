@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://studymaste.dev/schemas/student-event.schema.json",
+  "title": "Student Event",
+  "description": "Runtime contract for one student interaction with a question (an answered or IDK'd attempt). Stored in the student_events DB table.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "studentId",
+    "questionId",
+    "questionVersion",
+    "mode",
+    "idk",
+    "choiceId",
+    "gridInAnswer",
+    "correct",
+    "timeMs",
+    "occurredAt"
+  ],
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "studentId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "questionId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "ID of the question attempted, e.g. 'gen-sat-rw-transitions-001'"
+    },
+    "questionVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["exam", "practice", "diagnostic"]
+    },
+    "idk": {
+      "type": "boolean",
+      "description": "True when the student used the 'I don't know' option instead of answering"
+    },
+    "choiceId": {
+      "type": ["string", "null"],
+      "enum": ["A", "B", "C", "D", null],
+      "description": "Selected choice for mcq; null for grid_in answers and IDK events"
+    },
+    "gridInAnswer": {
+      "type": ["string", "null"],
+      "description": "Free-response answer string for grid_in; null for mcq answers and IDK events"
+    },
+    "correct": {
+      "type": "boolean"
+    },
+    "timeMs": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "occurredAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "choiceId": { "type": "string" } },
+        "required": ["choiceId"]
+      },
+      "then": {
+        "properties": { "gridInAnswer": { "type": "null" } }
+      }
+    },
+    {
+      "if": {
+        "properties": { "gridInAnswer": { "type": "string" } },
+        "required": ["gridInAnswer"]
+      },
+      "then": {
+        "properties": { "choiceId": { "type": "null" } }
+      }
+    }
+  ]
+}

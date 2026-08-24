@@ -1,0 +1,54 @@
+{
+  "id": "gen-sat-rw-transitions-001",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:transitions",
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "passage",
+    "text": "The repair manuals published by the Alvarez guitar workshop in the 1960s have become standard references for luthiers restoring vintage instruments. ______, the workshop's original design notes are still consulted by makers building entirely new guitars.",
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "Which choice completes the text with the most logical transition?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "Moreover,",
+      "misconceptionId": null
+    },
+    {
+      "id": "B",
+      "text": "Conversely,",
+      "misconceptionId": "SAT_RW:transitions-polarity-reversal"
+    },
+    {
+      "id": "C",
+      "text": "For example,",
+      "misconceptionId": "SAT_RW:transitions-false-exemplification"
+    },
+    {
+      "id": "D",
+      "text": "Therefore,",
+      "misconceptionId": "SAT_RW:transitions-wrong-relation"
+    }
+  ],
+  "correctAnswer": "A",
+  "rationale": "The second sentence extends the first: not only are the workshop's repair manuals used to restore old instruments, its design notes also guide the building of new ones. That is a relationship of addition, which 'Moreover' names. 'Conversely' reverses the direction of a continuation claim, treating sentence 2 as opposed to sentence 1 when it actually extends it. 'For example' fails because sentence 2 is not an instance of sentence 1's claim — it concerns design notes and new guitars, not repair manuals and vintage ones. 'Therefore' asserts a cause-effect link, but the continued use of the design notes is not a result of the manuals' status; the two facts sit side by side.",
+  "difficultyTarget": 3,
+  "provenance": {
+    "archetypeSlug": "transitions",
+    "promptVersion": "n/a-v0",
+    "model": "hand-authored",
+    "generatedAt": "2026-08-24T12:30:00Z",
+    "contentHash": "6ac29048eb190af078f0d475f5354d24fd48ac9f48b05971a50ef045b1777dad"
+  },
+  "review": {
+    "status": "approved",
+    "reviewer": "w8-integration",
+    "notes": "hand-authored integration fixture"
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

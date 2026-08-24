@@ -1,0 +1,74 @@
+{
+  "archetypeId": "sat-math:triangle-labeled",
+  "title": "Labeled Triangle",
+  "description": "A triangle drawn from vertex coordinates, with author-selected side labels, angle labels, and an optional right-angle mark. Serves Geometry and Trigonometry (lines-angles-triangles, right-triangles-trig, area-volume): Pythagorean, trig-ratio, similarity, and area questions.",
+  "subjectsApplicable": ["SAT_MATH"],
+  "paramsSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["vertices", "sideLabels", "angleLabels", "rightAngleAt"],
+    "properties": {
+      "vertices": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["A", "B", "C"],
+        "description": "Vertices in a coordinate frame; renderer rejects collinear or near-coincident triples (min pairwise distance 1 unit, min angle 10°).",
+        "properties": {
+          "A": { "$ref": "#/definitions/point" },
+          "B": { "$ref": "#/definitions/point" },
+          "C": { "$ref": "#/definitions/point" }
+        }
+      },
+      "sideLabels": {
+        "type": "array",
+        "minItems": 0,
+        "maxItems": 3,
+        "description": "Text placed beside sides (lengths or expressions like 'x', '2x+3').",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["side", "text"],
+          "properties": {
+            "side": { "type": "string", "enum": ["AB", "BC", "CA"] },
+            "text": { "type": "string", "minLength": 1, "maxLength": 10 }
+          }
+        }
+      },
+      "angleLabels": {
+        "type": "array",
+        "minItems": 0,
+        "maxItems": 3,
+        "description": "Text placed inside angles (measures or expressions like 'x°').",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["vertex", "text"],
+          "properties": {
+            "vertex": { "type": "string", "enum": ["A", "B", "C"] },
+            "text": { "type": "string", "minLength": 1, "maxLength": 10 }
+          }
+        }
+      },
+      "rightAngleAt": {
+        "type": ["string", "null"],
+        "enum": ["A", "B", "C", null],
+        "description": "Vertex receiving the right-angle square mark; null for a general triangle. Renderer validates the geometry actually forms a 90° angle there (±0.5°)."
+      },
+      "showVertexNames": { "type": "boolean", "default": true }
+    },
+    "definitions": {
+      "point": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["x", "y"],
+        "properties": {
+          "x": { "type": "number", "minimum": 0, "maximum": 12, "multipleOf": 0.5 },
+          "y": { "type": "number", "minimum": 0, "maximum": 12, "multipleOf": 0.5 }
+        }
+      }
+    }
+  },
+  "rendererRef": "TriangleLabeled",
+  "notes": "Renderer guarantees: the triangle is drawn from the vertex coordinates only — side labels are placed at side midpoints, offset outward so they never overlap edges or each other; angle labels sit on the angle bisector at a fixed radius; no grid or axes are drawn; degenerate (collinear/tiny) triangles are rejected at parse time."
+}

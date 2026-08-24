@@ -1,0 +1,81 @@
+{
+  "archetypeId": "sat-math:graph-function",
+  "title": "Nonlinear Function Graph",
+  "description": "One nonlinear curve in the xy-plane — quadratic, exponential, or absolute value — selected by functionType with typed coefficients. Serves the Advanced Math domain (nonlinear-functions, nonlinear-equations-systems): vertex, intercept, growth/decay, and transformation questions.",
+  "subjectsApplicable": ["SAT_MATH"],
+  "paramsSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["functionType", "xRange", "markedPoints"],
+    "properties": {
+      "functionType": {
+        "type": "string",
+        "enum": ["quadratic", "exponential", "absolute_value"]
+      },
+      "quadratic": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["a", "b", "c"],
+        "description": "y = ax^2 + bx + c. Required iff functionType = quadratic.",
+        "properties": {
+          "a": { "type": "number", "minimum": -3, "maximum": 3, "description": "Nonzero." },
+          "b": { "type": "number", "minimum": -12, "maximum": 12 },
+          "c": { "type": "number", "minimum": -10, "maximum": 10 }
+        }
+      },
+      "exponential": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["a", "b"],
+        "description": "y = a * b^x. Required iff functionType = exponential.",
+        "properties": {
+          "a": { "type": "number", "minimum": 0.5, "maximum": 16, "description": "Initial value at x=0." },
+          "b": { "type": "number", "minimum": 0.2, "maximum": 4, "exclusiveMinimum": 0, "description": "Growth (b>1) or decay (b<1) factor; never 1." }
+        }
+      },
+      "absoluteValue": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["a", "h", "k"],
+        "description": "y = a|x - h| + k. Required iff functionType = absolute_value.",
+        "properties": {
+          "a": { "type": "number", "minimum": -4, "maximum": 4, "description": "Nonzero; sign flips the V." },
+          "h": { "type": "number", "minimum": -8, "maximum": 8 },
+          "k": { "type": "number", "minimum": -8, "maximum": 8 }
+        }
+      },
+      "xRange": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["min", "max"],
+        "properties": {
+          "min": { "type": "integer", "minimum": -10, "maximum": -1 },
+          "max": { "type": "integer", "minimum": 1, "maximum": 10 }
+        }
+      },
+      "markedPoints": {
+        "type": "array",
+        "minItems": 0,
+        "maxItems": 3,
+        "description": "Points dotted on the curve (e.g. vertex, intercept); renderer validates each lies on the function.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["x", "y"],
+          "properties": {
+            "x": { "type": "number", "minimum": -10, "maximum": 10 },
+            "y": { "type": "number", "minimum": -12, "maximum": 12 }
+          }
+        }
+      }
+    },
+    "allOf": [
+      { "if": { "properties": { "functionType": { "const": "quadratic" } } }, "then": { "required": ["quadratic"] } },
+      { "if": { "properties": { "functionType": { "const": "exponential" } } }, "then": { "required": ["exponential"] } },
+      { "if": { "properties": { "functionType": { "const": "absolute_value" } } }, "then": { "required": ["absoluteValue"] } }
+    ]
+  },
+  "rendererRef": "GraphFunction",
+  "notes": "Renderer guarantees: exactly one coefficient block per functionType (enforced by allOf); curve sampled from the coefficients only; y-extent auto-fitted so the vertex/intercept region is always visible; quadratic with a=0 or exponential with b=1 is rejected at parse time."
+}

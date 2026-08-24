@@ -17,3 +17,13 @@ research/sat/question-bank/
 research/sat/assets/
 research/sat/index.jsonl
 research/sat/.harvest-progress.json
+# infra
+node_modules/
+pgdata/
+*.log
+
+# derived artifacts (regenerate with npm run gallery)
+rendered-gallery/
+
+# eval run artifacts (regenerate with npm run eval:generator)
+src/generator/eval/report-last-run.json

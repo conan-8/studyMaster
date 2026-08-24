@@ -1,0 +1,677 @@
+{
+  "subject": { "code": "SAT_MATH", "name": "SAT Math" },
+  "misconceptions": [
+    {
+      "id": "SAT_MATH:linear-equations-one-var-sign-error-when-moving-terms",
+      "taxonomyCode": "SAT_MATH:linear-equations-one-var",
+      "name": "Sign error when moving terms across the equals sign",
+      "description": "The student moves a term from one side of the equation to the other without changing its sign (e.g., solves 3x - 7 = 11 as 3x = 11 - 7 instead of 3x = 11 + 7), treating transposition as a copy operation rather than adding the opposite to both sides.",
+      "detectionSignal": "Produces the answer computed with the constant term's sign flipped on the moved term; for 3x - 7 = 11 the bug yields x = 4/3 instead of x = 6.",
+      "remediationNote": "Frame the step as 'add the opposite to BOTH sides', never 'move the term'. Have the student write the added term under both sides explicitly before simplifying."
+    },
+    {
+      "id": "SAT_MATH:linear-equations-one-var-partial-distribution",
+      "taxonomyCode": "SAT_MATH:linear-equations-one-var",
+      "name": "Distributing to only the first term inside parentheses",
+      "description": "The student multiplies the outside factor by the first term inside parentheses only (e.g., 4(x + 3) becomes 4x + 3, or 2(x - 5) becomes 2x - 5), leaving the second term undistributed.",
+      "detectionSignal": "Produces the answer of the equation solved with only the leading term scaled; for 4(x + 3) = 20 the bug yields 4x + 3 = 20, x = 17/4 instead of x = 2.",
+      "remediationNote": "Drill distribution as arrows to EVERY term. A quick self-check: substitute the answer back — an undistributed equation almost never satisfies the original."
+    },
+    {
+      "id": "SAT_MATH:linear-equations-one-var-multiplying-by-reciprocal-incorrectly",
+      "taxonomyCode": "SAT_MATH:linear-equations-one-var",
+      "name": "Multiplying by the coefficient's reciprocal on the wrong side",
+      "description": "When clearing a fractional coefficient like (2/3)x = 10, the student multiplies by the fraction itself instead of its reciprocal, or divides by the reciprocal — effectively multiplying by 2/3 or dividing by 3/2 instead of multiplying by 3/2.",
+      "detectionSignal": "Produces a smaller value where a larger one is required; for (2/3)x = 10 the bug yields x = 20/3 instead of x = 15.",
+      "remediationNote": "Teach 'multiply both sides by the flipped fraction'. Verify: the result, times the original fraction, must return the right-hand side."
+    },
+    {
+      "id": "SAT_MATH:linear-equations-one-var-no-solution-infinite-solution-swap",
+      "taxonomyCode": "SAT_MATH:linear-equations-one-var",
+      "name": "Confusing 'no solution' with 'infinitely many solutions'",
+      "description": "When simplification eliminates the variable, the student reads a false statement like 5 = 8 as 'infinitely many solutions' (or a true one like 7 = 7 as 'no solution'), or solves 0x = 5 as x = 0.",
+      "detectionSignal": "On 'how many solutions' items, selects the opposite count; on grid-ins, answers 0 to an equation like 0x = 5.",
+      "remediationNote": "After the variable cancels, just read the remaining sentence: TRUE (7 = 7) means every x works; FALSE (5 = 8) means none do. x = 0 is never the answer to 0x = 5."
+    },
+    {
+      "id": "SAT_MATH:linear-functions-slope-intercept-swap",
+      "taxonomyCode": "SAT_MATH:linear-functions",
+      "name": "Reading slope as intercept and intercept as slope",
+      "description": "In f(x) = mx + b the student treats b as the rate of change and m as the starting value, swapping the roles when interpreting or building the function from a context.",
+      "detectionSignal": "For a context with rate 3 and initial value 12, writes or selects f(x) = 12x + 3 instead of f(x) = 3x + 12; answers interpretation questions with the roles exchanged.",
+      "remediationNote": "Anchor the pattern: the number TOUCHING x multiplies per-unit change (slope); the bare number is where you start (intercept). Units check — slope carries 'per x' units, intercept carries y-units."
+    },
+    {
+      "id": "SAT_MATH:linear-functions-slope-rise-run-inversion",
+      "taxonomyCode": "SAT_MATH:linear-functions",
+      "name": "Computing slope as run over rise",
+      "description": "The student computes slope as Δx/Δy (horizontal change over vertical change) instead of Δy/Δx, inverting the ratio when given two points or a graph.",
+      "detectionSignal": "Produces the reciprocal of the true slope; through (2, 3) and (6, 11) yields 1/2 instead of 2.",
+      "remediationNote": "Mnemonic: slope is 'y over x', always vertical on top. On a graph, count UP-DOWN first (numerator), then LEFT-RIGHT (denominator)."
+    },
+    {
+      "id": "SAT_MATH:linear-functions-slope-sign-from-inconsistent-point-order",
+      "taxonomyCode": "SAT_MATH:linear-functions",
+      "name": "Slope sign error from inconsistent point ordering",
+      "description": "The student subtracts coordinates in opposite orders for the two points (e.g., (y2 - y1)/(x1 - x2)), flipping the sign of the slope.",
+      "detectionSignal": "Produces the negative of the true slope; through (1, 5) and (3, 9) yields -2 instead of 2.",
+      "remediationNote": "Label the points (x1, y1) and (x2, y2) before computing and keep the SAME point first in both subtractions. Sanity check against the graph: rising line, positive slope."
+    },
+    {
+      "id": "SAT_MATH:linear-functions-function-notation-as-multiplication",
+      "taxonomyCode": "SAT_MATH:linear-functions",
+      "name": "Treating f(a) as multiplication f × a",
+      "description": "The student reads function notation as a product: f(4) for f(x) = 2x + 1 is computed as distributing or multiplying unrelated quantities, or f(x + h) is expanded as f(x) + f(h).",
+      "detectionSignal": "For f(x) = 2x + 1, answers f(4) = 9 correctly but evaluates f(x + 3) as 2x + 4 instead of 2x + 7, or splits f(2 + 3) into f(2) + f(3) = 5 + 7 = 12 instead of f(5) = 11.",
+      "remediationNote": "f(input) means 'replace every x with the whole input'. Write the substitution with parentheses: f(x + 3) = 2(x + 3) + 1, then distribute."
+    },
+    {
+      "id": "SAT_MATH:linear-equations-two-vars-x-y-intercept-swap",
+      "taxonomyCode": "SAT_MATH:linear-equations-two-vars",
+      "name": "Swapping the x-intercept and y-intercept",
+      "description": "The student sets y = 0 when the x-intercept is asked but reports the resulting value as the y-intercept, or reads the graph's horizontal crossing as the vertical one — systematically exchanging the two intercepts.",
+      "detectionSignal": "For 2x + 3y = 12 (true intercepts: x = 6, y = 4), reports x-intercept 4 and y-intercept 6 — the two correct values attached to the wrong axes.",
+      "remediationNote": "The intercept is named for the axis it sits ON. x-intercept: set y = 0 and solve for x. Always write intercepts as points (6, 0) and (0, 4) to keep them straight."
+    },
+    {
+      "id": "SAT_MATH:linear-equations-two-vars-standard-form-slope-sign-error",
+      "taxonomyCode": "SAT_MATH:linear-equations-two-vars",
+      "name": "Reading slope of Ax + By = C as A/B instead of -A/B",
+      "description": "The student extracts the slope from standard form by taking the ratio of the x-coefficient to the y-coefficient without negating, losing the minus sign that comes from solving for y.",
+      "detectionSignal": "For 3x + 4y = 12, reports slope 3/4 instead of -3/4; selects a line rising left-to-right where the graph must fall.",
+      "remediationNote": "Memorize slope = -A/B for Ax + By = C, or actually solve for y once to see where the minus comes from. Quick check: positive A and B with positive C must give a negative slope."
+    },
+    {
+      "id": "SAT_MATH:linear-equations-two-vars-point-slope-sign-error",
+      "taxonomyCode": "SAT_MATH:linear-equations-two-vars",
+      "name": "Sign error substituting a negative coordinate into point-slope form",
+      "description": "Writing y - y1 = m(x - x1) with a negative y1 or x1, the student drops the double negative — e.g., through (2, -5) writes y - 5 = m(x - 2) instead of y + 5 = m(x - 2).",
+      "detectionSignal": "Produces a line shifted by 2|y1| or 2|x1|; through (2, -5) with slope 3 the bug writes y - 5 = 3(x - 2) and gets y = 3x - 1 instead of the correct y = 3x - 11.",
+      "remediationNote": "Substitute with parentheses: y - (-5) = 3(x - 2), and simplify the double negative as the next explicit step. Verify by plugging the given point into the final equation."
+    },
+    {
+      "id": "SAT_MATH:linear-equations-two-vars-perpendicular-slope-not-reciprocated",
+      "taxonomyCode": "SAT_MATH:linear-equations-two-vars",
+      "name": "Negating but not reciprocating for a perpendicular slope",
+      "description": "The student knows perpendicular slopes involve a sign change but forgets the reciprocal, using -m instead of -1/m (or uses 1/m keeping the sign).",
+      "detectionSignal": "Perpendicular to a line of slope 2, uses slope -2 instead of -1/2; the resulting line through the required point has a y-intercept off by the difference the wrong slope creates.",
+      "remediationNote": "Perpendicular = flip AND negate: 2 → -1/2. Parallel = copy exactly. Say 'same' for parallel, 'flip-flop' for perpendicular."
+    },
+    {
+      "id": "SAT_MATH:systems-linear-equations-solving-for-x-when-asked-for-y",
+      "taxonomyCode": "SAT_MATH:systems-linear-equations",
+      "name": "Solving for x when the question asks for y (or x + y)",
+      "description": "The student correctly solves the system for the first variable found and stops, reporting x when the question asks for y, for x + y, or for the value of an expression like 2x - y. The classic grid-in trap.",
+      "detectionSignal": "Produces the value of the other variable or the un-combined values; for a system with solution (4, 6) asking x + y, grids in 4 instead of 10.",
+      "remediationNote": "Circle exactly what the question asks for before solving, and after finding one variable, write 'now get the OTHER one' as a mandatory step. Re-read the ask before bubbling."
+    },
+    {
+      "id": "SAT_MATH:systems-linear-equations-elimination-scales-one-side-only",
+      "taxonomyCode": "SAT_MATH:systems-linear-equations",
+      "name": "Multiplying only the left side when scaling an equation for elimination",
+      "description": "To align coefficients the student multiplies an equation by a factor but applies it only to the variable terms (or only the left side), leaving the constant unscaled — e.g., turning x + 2y = 7 into 3x + 6y = 7.",
+      "detectionSignal": "Produces the solution of a system where one constant was never scaled; for x + 2y = 7 and 3x + y = 11, the bug system 3x + 6y = 7 with 3x + y = 11 yields y = -26/5 instead of the true y = 2.",
+      "remediationNote": "Distribute the multiplier across the ENTIRE equation, constant included — draw arrows to all three terms. Check: any solution must satisfy both ORIGINAL equations."
+    },
+    {
+      "id": "SAT_MATH:systems-linear-equations-substitution-into-same-equation",
+      "taxonomyCode": "SAT_MATH:systems-linear-equations",
+      "name": "Substituting the expression back into the equation it came from",
+      "description": "After solving one equation for a variable (y = 2x + 1), the student substitutes it into the SAME equation instead of the other one, producing an identity like 0 = 0 and concluding 'infinitely many solutions'.",
+      "detectionSignal": "Reports 'infinitely many solutions' for a system with a unique intersection, because substitution collapsed to a tautology.",
+      "remediationNote": "Rule: an expression solved from equation 1 must go into equation 2. If everything cancels to 0 = 0, you substituted into the wrong equation — try the other one."
+    },
+    {
+      "id": "SAT_MATH:systems-linear-equations-parallel-treated-as-one-solution",
+      "taxonomyCode": "SAT_MATH:systems-linear-equations",
+      "name": "Forcing a numeric solution out of a no-solution system",
+      "description": "For systems with parallel lines (same slope, different intercepts), the student proceeds mechanically through elimination, hits a contradiction like 0 = 6, and either reports x = 0 or invents a solution rather than recognizing 'no solution'.",
+      "detectionSignal": "Answers 0 or a computed coordinate pair for a system whose elimination yields a false statement; or selects 'one solution' on a how-many-solutions item.",
+      "remediationNote": "Compare slopes first: equal slopes + different intercepts = no solution. A contradiction (0 = 6) is an ANSWER — it means the lines never meet."
+    },
+    {
+      "id": "SAT_MATH:systems-linear-equations-adding-when-subtracting-needed",
+      "taxonomyCode": "SAT_MATH:systems-linear-equations",
+      "name": "Adding equations when subtraction is required (sign slip in elimination)",
+      "description": "When eliminating by combining equations, the student adds equations whose matching coefficients have the SAME sign (doubling the variable instead of canceling it) or subtracts only the left sides while adding the right sides.",
+      "detectionSignal": "For 2x + 3y = 12 and 2x + y = 8, adds to get 4x + 4y = 20 instead of subtracting to get 2y = 4, producing x + y = 5 and a wrong solved pair.",
+      "remediationNote": "Same sign → subtract the equations; opposite signs → add. If the target variable didn't vanish, undo and flip the operation."
+    },
+    {
+      "id": "SAT_MATH:linear-inequalities-forgetting-to-flip-when-dividing-by-negative",
+      "taxonomyCode": "SAT_MATH:linear-inequalities",
+      "name": "Forgetting to flip the inequality when multiplying or dividing by a negative",
+      "description": "The student solves -2x > 8 by dividing by -2 but keeps the inequality direction, getting x > -4 instead of x < -4.",
+      "detectionSignal": "Produces the solution set with the boundary correct but the direction reversed: x > -4 instead of x < -4; picks the ray pointing the wrong way on a number line.",
+      "remediationNote": "The moment you multiply or divide by a negative, flip the symbol BEFORE writing the result. Test a value: does x = 0 satisfy -2x > 8? No — so 0 must be outside the answer set."
+    },
+    {
+      "id": "SAT_MATH:linear-inequalities-strict-vs-inclusive-boundary-swap",
+      "taxonomyCode": "SAT_MATH:linear-inequalities",
+      "name": "Swapping strict and inclusive boundaries",
+      "description": "The student treats < as ≤ (or > as ≥), including the boundary value in a strict inequality's solution set or excluding it from an inclusive one — visible as wrong open/closed circle or wrong endpoint membership.",
+      "detectionSignal": "Selects the value equal to the boundary as a valid solution of a strict inequality (e.g., says x = 3 satisfies 2x < 6), or rejects the boundary of a ≤ constraint in a feasibility question.",
+      "remediationNote": "Read the symbol aloud: 'less than' excludes, 'less than or equal to' includes. When asked 'which value satisfies...', always test the boundary value deliberately."
+    },
+    {
+      "id": "SAT_MATH:linear-inequalities-shading-wrong-half-plane",
+      "taxonomyCode": "SAT_MATH:linear-inequalities",
+      "name": "Shading the wrong half-plane",
+      "description": "For a two-variable inequality like y > 2x + 1, the student shades below the line instead of above (or reverses when the equation is in standard form with a negative y-coefficient and never re-examines direction).",
+      "detectionSignal": "Picks the graph with the correct boundary line and line style but shading on the wrong side; or identifies a point in the wrong region as a solution.",
+      "remediationNote": "Never guess direction from the symbol alone — test (0, 0): if it satisfies the inequality, shade the side containing the origin; otherwise shade away."
+    },
+    {
+      "id": "SAT_MATH:linear-inequalities-compound-and-or-confusion",
+      "taxonomyCode": "SAT_MATH:linear-inequalities",
+      "name": "Treating a compound AND inequality as an OR (or vice versa)",
+      "description": "The student unions intervals that should intersect (reading -2 < x < 5 as x < -2 or x > 5) or intersects conditions joined by 'or', producing the empty set or a single interval where two rays are correct.",
+      "detectionSignal": "For |x - 1| > 3 type or two-condition items, selects the outside rays when the between-interval is correct, or vice versa; solution sets are complements of the correct one.",
+      "remediationNote": "AND means BOTH conditions hold — solutions overlap (intersection). OR means EITHER holds — solutions pile up (union). Sketch both conditions on one number line before combining."
+    },
+    {
+      "id": "SAT_MATH:equivalent-expressions-distributing-exponent-across-addition",
+      "taxonomyCode": "SAT_MATH:equivalent-expressions",
+      "name": "Distributing an exponent across addition",
+      "description": "The student believes (a + b)² = a² + b² and (x + 3)² = x² + 9, erasing the middle term; similarly applies (a - b)² = a² - b². The single most common algebra bug.",
+      "detectionSignal": "Expands (x + 3)² as x² + 9 instead of x² + 6x + 9; when asked for the coefficient of x, answers 0 instead of 6; evaluates (2 + 3)² as 13 instead of 25.",
+      "remediationNote": "Exponents never distribute over + or -. Write the binomial twice, (x + 3)(x + 3), and FOIL. Numeric proof: (2 + 3)² = 25, but 2² + 3² = 13."
+    },
+    {
+      "id": "SAT_MATH:equivalent-expressions-negative-distribution-sign-error",
+      "taxonomyCode": "SAT_MATH:equivalent-expressions",
+      "name": "Dropping the negative sign on the second term when distributing",
+      "description": "The student distributes a leading negative only to the first term: -(a - b) becomes -a - b instead of -a + b, and 3x - (x - 4) becomes 2x - 4 instead of 2x + 4.",
+      "detectionSignal": "Simplifies 3x - (x - 4) to 2x - 4; expressions evaluated at a specific x are off by twice the protected term.",
+      "remediationNote": "Rewrite the minus-parentheses as multiplying by -1 and distribute the -1 to EVERY term. Bracket the whole parenthesized group before touching it."
+    },
+    {
+      "id": "SAT_MATH:equivalent-expressions-combining-unlike-terms",
+      "taxonomyCode": "SAT_MATH:equivalent-expressions",
+      "name": "Combining terms with different powers",
+      "description": "The student adds coefficients of unlike terms, treating 3x² + 2x as 5x³ or 5x², and x² + x as x³ or 2x², believing like-coefficient terms merge regardless of exponent.",
+      "detectionSignal": "Produces 5x² or 5x³ for 3x² + 2x; on 'which expression is equivalent' items selects the merged single-term choice.",
+      "remediationNote": "Terms combine only when the variable part is IDENTICAL (same variable, same exponent). Sort terms by exponent first; 3x² + 2x is already fully simplified."
+    },
+    {
+      "id": "SAT_MATH:equivalent-expressions-exponent-product-rule-misapplied",
+      "taxonomyCode": "SAT_MATH:equivalent-expressions",
+      "name": "Multiplying exponents when they should be added (and vice versa)",
+      "description": "The student computes x² · x³ as x⁶ (multiplying exponents instead of adding) or (x²)³ as x⁵ (adding instead of multiplying), swapping the product rule and the power rule.",
+      "detectionSignal": "Produces x⁶ for x² · x³ instead of x⁵; produces x⁵ for (x²)³ instead of x⁶.",
+      "remediationNote": "Same base MULTIPLIED → add exponents (x²·x³ = x·x·x·x·x = x⁵). A power RAISED to a power → multiply exponents. Expand into repeated factors when unsure."
+    },
+    {
+      "id": "SAT_MATH:equivalent-expressions-factor-by-grouping-sign-slip",
+      "taxonomyCode": "SAT_MATH:equivalent-expressions",
+      "name": "Dropping the constant product's cross terms when factoring",
+      "description": "Factoring x² + bx + c, the student picks numbers whose PRODUCT is c but never checks their SUM, writing (x + 2)(x + 6) for x² + 8x + 12 correctly but (x + 3)(x + 4) for x² + 8x + 12 — sum 7, not 8.",
+      "detectionSignal": "Produces a factorization that expands back with the wrong linear coefficient; for x² + 8x + 12 gives (x + 3)(x + 4), and root answers -3, -4 instead of -2, -6.",
+      "remediationNote": "After choosing the factor pair, ALWAYS re-expand (FOIL) and match all three coefficients. The pair must multiply to c AND add to b — check both conditions, not one."
+    },
+    {
+      "id": "SAT_MATH:nonlinear-functions-vertex-form-sign-error",
+      "taxonomyCode": "SAT_MATH:nonlinear-functions",
+      "name": "Reading the vertex of y = a(x - h)² + k as (-h, k) or (h, -k)",
+      "description": "The student forgets that vertex form hides a subtraction, reading the vertex of y = (x - 3)² + 2 as (-3, 2) instead of (3, 2), or of y = (x + 4)² - 1 as (4, -1) instead of (-4, -1).",
+      "detectionSignal": "Reports the x-coordinate of the vertex with flipped sign: vertex (-3, 2) for y = (x - 3)² + 2; selects the parabola mirrored across the y-axis.",
+      "remediationNote": "The vertex is the point that makes the squared part ZERO: x - 3 = 0 gives x = 3. Whatever makes the parenthesis vanish is the x-coordinate; k copies straight down."
+    },
+    {
+      "id": "SAT_MATH:nonlinear-functions-exponential-treated-as-linear",
+      "taxonomyCode": "SAT_MATH:nonlinear-functions",
+      "name": "Treating exponential growth as linear (adding instead of multiplying)",
+      "description": "For 'increases by 20% each year' or doubling-type contexts, the student adds a fixed amount per step instead of multiplying by the growth factor — e.g., computes three years of 20% growth as initial + 3·(20% of initial) = 1.6·P instead of P·(1.2)³.",
+      "detectionSignal": "Produces P(1 + rt) style linear answers for compound contexts: after 3 years of 20% growth from 1000, answers 1600 instead of 1728.",
+      "remediationNote": "Each period multiplies by the SAME factor. Build the chain: after each year the value is 1.2× the previous, so after t years it's P·(1.2)^t. Compare: does your answer repeat the percent OF THE NEW AMOUNT each year?"
+    },
+    {
+      "id": "SAT_MATH:nonlinear-functions-max-min-direction-swap",
+      "taxonomyCode": "SAT_MATH:nonlinear-functions",
+      "name": "Confusing maximum with minimum from the leading coefficient's sign",
+      "description": "The student reports a maximum for an upward-opening parabola (a > 0) or a minimum for a downward one (a < 0), or answers with the vertex's x-coordinate when the extreme VALUE (the y-coordinate) is asked.",
+      "detectionSignal": "For y = -2(x - 1)² + 5, answers 'minimum of 5' instead of 'maximum of 5', or answers 1 (the x-position) when the maximum value 5 is asked.",
+      "remediationNote": "Negative leading coefficient = frown = the vertex is the TOP (maximum). The extreme VALUE is a y-coordinate; the ASK 'where it occurs' wants the x. Read which one is requested."
+    },
+    {
+      "id": "SAT_MATH:nonlinear-functions-root-vs-y-intercept-confusion",
+      "taxonomyCode": "SAT_MATH:nonlinear-functions",
+      "name": "Answering with a root when the y-intercept is asked",
+      "description": "Given a factored quadratic y = (x - 2)(x - 6), the student reports an x-intercept (2 or 6) when asked for the y-intercept (12), or uses the factored-form zeros for any 'starting value' context question.",
+      "detectionSignal": "Answers 2, 6, or -6 for the y-intercept of y = (x - 2)(x - 6) instead of 12.",
+      "remediationNote": "y-intercept means x = 0 — plug 0 into whatever form you have: (0 - 2)(0 - 6) = 12. Factored form shows x-intercepts for free; the y-intercept always requires substituting x = 0."
+    },
+    {
+      "id": "SAT_MATH:nonlinear-equations-systems-dividing-by-variable-loses-root",
+      "taxonomyCode": "SAT_MATH:nonlinear-equations-systems",
+      "name": "Dividing both sides by the variable and losing the zero solution",
+      "description": "Solving x² = 5x, the student divides by x to get x = 5, discarding x = 0; generally cancels a variable factor that could be zero, collapsing a two-solution equation to one solution.",
+      "detectionSignal": "Reports only x = 5 for x² = 5x; on 'sum of all solutions' items answers 5 instead of 5; on how-many-solutions items answers 1 instead of 2.",
+      "remediationNote": "Never divide by something that might be zero. Move everything to one side and FACTOR: x² - 5x = 0 → x(x - 5) = 0 → x = 0 or x = 5. Factor, don't cancel."
+    },
+    {
+      "id": "SAT_MATH:nonlinear-equations-systems-zero-product-partial-solve",
+      "taxonomyCode": "SAT_MATH:nonlinear-equations-systems",
+      "name": "Solving only one factor of a factored equation",
+      "description": "Given (x - 2)(x + 7) = 0 the student sets only the first (most salient) factor to zero, reporting x = 2 and missing x = -7; or in an MCQ recognizes one valid solution and stops checking.",
+      "detectionSignal": "Answers 2 only; on 'which of the following is a solution' may be fine, but on 'sum of solutions' answers 2 instead of -5, and grid-ins asking for 'a positive solution' work while 'all solutions' items fail.",
+      "remediationNote": "A product of zero means EACH factor gets its own equation. Write 'x - 2 = 0 OR x + 7 = 0' explicitly and box both answers before choosing."
+    },
+    {
+      "id": "SAT_MATH:nonlinear-equations-systems-quadratic-formula-sign-error",
+      "taxonomyCode": "SAT_MATH:nonlinear-equations-systems",
+      "name": "Sign error on -b or inside the discriminant in the quadratic formula",
+      "description": "With a negative b, the student computes -b as negative (double-negative slip), or computes b² - 4ac with a negative c as subtraction: gets 4 - 24 instead of 4 + 24 for a=2, b=-2, c=-3 style coefficients.",
+      "detectionSignal": "For x² - 2x - 3 = 0 via formula, produces ( -2 ± √(4 - 12) ) / 2 and concludes no real solutions, or computes roots -1 and 3 with flipped signs as 1 and -3.",
+      "remediationNote": "Write a, b, c with their signs FIRST (b = -2), then substitute with parentheses: -(-2) and (-2)² - 4(1)(-3). Check the final roots by substituting back into the original equation."
+    },
+    {
+      "id": "SAT_MATH:nonlinear-equations-systems-extraneous-root-accepted",
+      "taxonomyCode": "SAT_MATH:nonlinear-equations-systems",
+      "name": "Accepting an extraneous solution after squaring or clearing denominators",
+      "description": "After squaring both sides of √(x + 3) = x - 3 or multiplying a rational equation by a denominator, the student reports all algebraic candidates without checking them in the ORIGINAL equation, including the value that fails (or makes a denominator zero).",
+      "detectionSignal": "Reports two solutions where only one checks: for √(x + 3) = x - 3 gives x = 6 and x = 1, when only x = 6 satisfies the original; or counts a denominator-zeroing value as a solution.",
+      "remediationNote": "Squaring and cross-multiplying can CREATE false solutions. Every candidate must be plugged back into the original equation — reject any that fail or zero a denominator."
+    },
+    {
+      "id": "SAT_MATH:nonlinear-equations-systems-discriminant-sign-misread",
+      "taxonomyCode": "SAT_MATH:nonlinear-equations-systems",
+      "name": "Misreading the discriminant's sign for the number of real solutions",
+      "description": "The student reverses the test: believes b² - 4ac < 0 means two solutions, or counts a zero discriminant as two solutions, or computes the discriminant with the 4ac term's sign wrong and then misreads the count.",
+      "detectionSignal": "For a tangent-line system (discriminant 0) answers 'two solutions' instead of one; for a non-intersecting parabola-line pair answers 'two' instead of 'none'.",
+      "remediationNote": "Positive discriminant = two roots, zero = exactly one (tangent), negative = none. Memorize as 'plus is plenty, zero is one, minus is missing'."
+    },
+    {
+      "id": "SAT_MATH:ratios-rates-proportions-part-whole-confusion",
+      "taxonomyCode": "SAT_MATH:ratios-rates-proportions",
+      "name": "Using a part-to-part ratio as a part-to-whole fraction",
+      "description": "Given 'the ratio of cats to dogs is 3:5', the student treats the cat share as 3/5 of the total instead of 3/8, plugging the ratio terms directly into a fraction of the whole.",
+      "detectionSignal": "For 40 total animals with cats:dogs = 3:5, computes cats = 3/5 · 40 = 24 instead of 3/8 · 40 = 15.",
+      "remediationNote": "Ratio parts must be SUMMED to get the whole: 3 + 5 = 8 parts. Part-to-whole = part/(sum of parts). Check: the two shares must add back to the total."
+    },
+    {
+      "id": "SAT_MATH:ratios-rates-proportions-cross-multiplication-misalignment",
+      "taxonomyCode": "SAT_MATH:ratios-rates-proportions",
+      "name": "Cross-multiplying with mismatched units or positions",
+      "description": "Setting up a proportion, the student pairs quantities diagonally with inconsistent unit placement — e.g., writes miles/hours = hours/x or pairs miles with hours across the equals sign — producing the reciprocal of the correct answer.",
+      "detectionSignal": "For '3 hours → 180 miles, how many miles in 5 hours', sets up 3/180 = x/5 and solves x = 1/12, or pairs wrongly to get 10.8 hours-style answers; the result is the true answer's reciprocal scaled.",
+      "remediationNote": "Write units in the fraction: miles over hours on BOTH sides, matching positions. Then the unknown lands in the same unit slot as its known partner. Check magnitude: more hours must mean more miles."
+    },
+    {
+      "id": "SAT_MATH:ratios-rates-proportions-unit-conversion-inverted",
+      "taxonomyCode": "SAT_MATH:ratios-rates-proportions",
+      "name": "Multiplying by the conversion factor when division is needed",
+      "description": "Converting units, the student multiplies where the factor should divide (or vice versa): converts 150 minutes to hours as 150 × 60 = 9000 hours, or 2.5 hours to minutes as 2.5/60.",
+      "detectionSignal": "Produces answers off by the conversion factor squared relative to truth: 9000 instead of 2.5, or 0.0417 instead of 150.",
+      "remediationNote": "Use unit cancellation: write the conversion as a fraction that makes the unwanted unit cancel (150 min × 1 hr/60 min). Sanity check size: hours are BIGGER units, so the number must get SMALLER."
+    },
+    {
+      "id": "SAT_MATH:ratios-rates-proportions-inverse-treated-as-direct",
+      "taxonomyCode": "SAT_MATH:ratios-rates-proportions",
+      "name": "Treating an inverse proportion as a direct proportion",
+      "description": "In work-rate or 'more workers, less time' contexts, the student scales both quantities in the same direction: believes doubling the machines doubles the time, setting up 4 machines/8 days = 8 machines/x days directly.",
+      "detectionSignal": "For '4 machines finish a job in 8 days, how long for 8 machines', answers 16 days instead of 4 days.",
+      "remediationNote": "Ask: does more of A mean more or LESS of B? For inverse relations, the PRODUCT is constant: machines × days = 32, so x = 32/8 = 4. Direct → ratio constant; inverse → product constant."
+    },
+    {
+      "id": "SAT_MATH:percentages-percent-of-vs-percent-increase",
+      "taxonomyCode": "SAT_MATH:percentages",
+      "name": "Computing percent OF instead of percent INCREASE (or decrease)",
+      "description": "For 'a price increased by 15%', the student computes 15% of the original and reports that as the new price — i.e., multiplies by 0.15 instead of 1.15; for a 30% discount, reports 0.30 × P instead of 0.70 × P.",
+      "detectionSignal": "Answers the change amount instead of the final amount: $15 increase reported as new price $15 (or total $15) for a $100 item; discount item answered at 30% of price instead of 70%.",
+      "remediationNote": "Decide what the question wants: the CHANGE (multiply by the percent) or the RESULT (original ± change). Shortcut: increase → multiply by (1 + r); decrease → multiply by (1 - r)."
+    },
+    {
+      "id": "SAT_MATH:percentages-percent-change-wrong-base",
+      "taxonomyCode": "SAT_MATH:percentages",
+      "name": "Using the new value as the base of a percent change",
+      "description": "Computing percent increase from 80 to 100, the student divides by the NEW value: 20/100 = 20% instead of 20/80 = 25%. The base of a percent change is always the ORIGINAL amount.",
+      "detectionSignal": "Reports 20% for a change from 80 to 100 instead of 25%; systematically understates increases and overstates decreases.",
+      "remediationNote": "Percent change = difference ÷ ORIGINAL — the 'from' value, not the 'to' value. Underline the word 'from' in the problem and put that number in the denominator."
+    },
+    {
+      "id": "SAT_MATH:percentages-successive-percents-added",
+      "taxonomyCode": "SAT_MATH:percentages",
+      "name": "Adding successive percent changes instead of compounding them",
+      "description": "The student believes a 20% discount followed by a 10% discount equals a 30% discount, or two years of 5% growth equals 10% growth — adding percents that act on different bases.",
+      "detectionSignal": "Computes final price as 0.70 × P instead of 0.80 × 0.90 × P = 0.72 × P; answers 30% total discount instead of 28%.",
+      "remediationNote": "Each percent acts on the CURRENT value, not the original. Multiply the factors: 0.80 × 0.90 = 0.72, a 28% total discount. The combined effect is never the sum of the percents."
+    },
+    {
+      "id": "SAT_MATH:percentages-reverse-percent-subtracts-percent-of-final",
+      "taxonomyCode": "SAT_MATH:percentages",
+      "name": "Back-solving a percent change by taking the percent of the final value",
+      "description": "Given 'after a 25% increase the price is $60, find the original', the student computes 60 - 0.25(60) = 45 instead of 60/1.25 = 48 — applying the percent to the wrong (final) base.",
+      "detectionSignal": "Answers $45 instead of $48; generally reports final × (1 - r) instead of final ÷ (1 + r).",
+      "remediationNote": "The percent was taken of the ORIGINAL, so undo it by dividing: original = final ÷ (1 + r). Verify by going forward: does 48 increased by 25% give 60? Yes — 45 gives 56.25."
+    },
+    {
+      "id": "SAT_MATH:percentages-decimal-point-slip",
+      "taxonomyCode": "SAT_MATH:percentages",
+      "name": "Misplacing the decimal when converting percents",
+      "description": "The student converts 4% to 0.4 instead of 0.04, or 0.5% to 0.5 instead of 0.005 — a factor-of-10 (or 100) slip between percent and decimal forms, especially with percents under 1 or over 100.",
+      "detectionSignal": "Computes 4% of 250 as 100 instead of 10; computes 0.5% of 800 as 400 instead of 4; answers off by exactly 10× or 100×.",
+      "remediationNote": "'Percent' means 'per hundred' — divide by 100, moving the decimal two places LEFT: 4% = 0.04. Estimate first: 4% of 250 must be far less than 250."
+    },
+    {
+      "id": "SAT_MATH:one-variable-data-mean-vs-median-confusion",
+      "taxonomyCode": "SAT_MATH:one-variable-data",
+      "name": "Reporting the mean when the median is asked (or vice versa)",
+      "description": "The student computes the average when the middle value is requested — or reports the middle number when the mean is asked — especially under time pressure on items whose two statistics differ because of skew or an outlier.",
+      "detectionSignal": "For data {2, 3, 3, 4, 23}, answers 7 (the mean) when the median 3 is asked, or 3 when the mean 7 is asked.",
+      "remediationNote": "Median = physical middle of the ORDERED list; mean = sum ÷ count. Write both before choosing, and match the computed value to the exact word in the question."
+    },
+    {
+      "id": "SAT_MATH:one-variable-data-median-of-unordered-list",
+      "taxonomyCode": "SAT_MATH:one-variable-data",
+      "name": "Taking the middle of an unordered list as the median",
+      "description": "The student picks the center entry of the data as printed (or as listed in a table) without sorting first, so the 'median' is whatever happens to sit in the middle position.",
+      "detectionSignal": "For {9, 2, 7, 4, 5}, reports median 7 (the printed middle) instead of 5 (the sorted middle).",
+      "remediationNote": "Sort BEFORE locating the middle — always, even when the list looks short. Cross out values from both ends of the sorted list toward the center."
+    },
+    {
+      "id": "SAT_MATH:one-variable-data-mean-recompute-after-value-change",
+      "taxonomyCode": "SAT_MATH:one-variable-data",
+      "name": "Adding the new value to the old mean instead of the total",
+      "description": "When a value is added to a data set ('a sixth score of 90 joins five scores with mean 80'), the student averages the old mean with the new value — (80 + 90)/2 = 85 — instead of recomputing from the total: (400 + 90)/6 ≈ 81.7.",
+      "detectionSignal": "Reports 85 for the new mean instead of 81.7; equally weights a single new value against the entire existing set.",
+      "remediationNote": "Convert the mean back to a TOTAL first (mean × count), add the new value, then divide by the new count. A mean of means only works with equal group sizes."
+    },
+    {
+      "id": "SAT_MATH:one-variable-data-outlier-effect-misassigned",
+      "taxonomyCode": "SAT_MATH:one-variable-data",
+      "name": "Believing an outlier moves the median like it moves the mean",
+      "description": "The student thinks adding an extreme value substantially changes the median (or barely changes the mean), reversing the robustness of the two statistics — or believes removing an outlier always changes the median.",
+      "detectionSignal": "On 'which measure changes most when the largest value is removed' items, picks 'median' instead of 'mean'; predicts large median shifts for single extreme additions.",
+      "remediationNote": "The mean uses every VALUE; the median uses only POSITION. An extreme value drags the mean toward it but the median barely moves. Test on {1, 2, 3} vs {1, 2, 100}: mean 2 → 34.3, median stays 2."
+    },
+    {
+      "id": "SAT_MATH:one-variable-data-range-as-max",
+      "taxonomyCode": "SAT_MATH:one-variable-data",
+      "name": "Reporting the maximum as the range",
+      "description": "The student equates 'range' with the largest data value, forgetting to subtract the minimum: reports range 23 for data spanning 2 to 23 instead of 21.",
+      "detectionSignal": "Answers with the max value exactly; for {4, 7, 9, 15} reports range 15 instead of 11.",
+      "remediationNote": "Range is a DISTANCE: max minus min. It asks 'how spread out', not 'how high'. Always write both endpoints before subtracting."
+    },
+    {
+      "id": "SAT_MATH:two-variable-data-treating-correlation-as-causation",
+      "taxonomyCode": "SAT_MATH:two-variable-data",
+      "name": "Reading correlation in a scatterplot as a causal relationship",
+      "description": "From a strong association between two variables, the student concludes one CAUSES the other — selecting interpretation choices phrased with causal language ('an increase in x produces an increase in y') for observational data.",
+      "detectionSignal": "Selects the causal-worded choice ('more study time causes higher scores') over the associational one ('is associated with') when the data come from a survey or observational scatterplot.",
+      "remediationNote": "Association language only, unless the study randomly ASSIGNED the treatment. Flag verbs like 'causes', 'leads to', 'results in' in choices — they are almost always the trap."
+    },
+    {
+      "id": "SAT_MATH:two-variable-data-slope-intercept-role-swap-in-context",
+      "taxonomyCode": "SAT_MATH:two-variable-data",
+      "name": "Swapping the meanings of the line of best fit's slope and intercept",
+      "description": "Interpreting y = 1.8x + 32 style fitted lines, the student calls the slope 'the predicted y when x = 0' or the intercept 'the change in y per unit x' — exchanging the two parameters' contextual roles.",
+      "detectionSignal": "For a best-fit line of price vs. weight, selects 'the estimated price of a 0-gram item' as the meaning of the slope, or 'price increase per gram' as the meaning of the intercept.",
+      "remediationNote": "Attach units: slope = (y-units) per (x-unit) — a rate; intercept = plain y-units at x = 0 — a starting value. Match the choice's units to the parameter."
+    },
+    {
+      "id": "SAT_MATH:two-variable-data-correlation-strength-from-slope",
+      "taxonomyCode": "SAT_MATH:two-variable-data",
+      "name": "Judging correlation strength by the slope's steepness",
+      "description": "The student believes a steeper line of best fit means a STRONGER correlation, or that a shallow slope means weak association — conflating the size of the effect with the tightness of the points around the line.",
+      "detectionSignal": "Chooses the scatterplot with the steepest trend line when asked which shows the strongest relationship, even though another plot's points hug a shallower line far more tightly.",
+      "remediationNote": "Correlation strength is about SCATTER (how close points sit to the line), not slope. A flat line with points exactly on it is a perfect correlation; a steep line through a cloud is weak."
+    },
+    {
+      "id": "SAT_MATH:two-variable-data-extrapolation-beyond-data",
+      "taxonomyCode": "SAT_MATH:two-variable-data",
+      "name": "Trusting the model's prediction far outside the data range",
+      "description": "The student plugs an x-value well beyond the observed data into the line of best fit and treats the prediction as reliable — e.g., using a height-age model fit on ages 5–15 to predict height at age 40.",
+      "detectionSignal": "Selects the choice endorsing the extrapolated prediction as reasonable, or computes the plugged-in value when the correct answer is that the prediction is unreliable/outside the data scope.",
+      "remediationNote": "A best-fit model is only trustworthy WITHIN the x-range of the data it was fit on. Check the asked x against the data's range before computing anything."
+    },
+    {
+      "id": "SAT_MATH:probability-conditional-conditional-denominator-error",
+      "taxonomyCode": "SAT_MATH:probability-conditional",
+      "name": "Using the grand total instead of the subgroup total for a conditional probability",
+      "description": "For P(A | B) from a two-way table, the student divides by the table's grand total instead of the total of the given condition B — computing P(A and B) when a conditional is asked.",
+      "detectionSignal": "For 'given that the student is a junior, probability they take calculus', computes (junior calculus count)/(all students) instead of (junior calculus count)/(all juniors).",
+      "remediationNote": "The word after 'given that' shrinks the universe. Circle that row or column FIRST; its total is your denominator. The grand total is only for unconditional probabilities."
+    },
+    {
+      "id": "SAT_MATH:probability-conditional-adding-dependent-probabilities",
+      "taxonomyCode": "SAT_MATH:probability-conditional",
+      "name": "Adding probabilities of events that are not mutually exclusive",
+      "description": "The student computes P(A or B) as P(A) + P(B) without subtracting the overlap, or computes P(A and B) as P(A) + P(B) — double-counting the intersection (or inventing the wrong operation entirely).",
+      "detectionSignal": "For a table where P(A) = 0.4, P(B) = 0.5, overlap 0.15, answers 0.9 for P(A or B) instead of 0.75; or gives an 'and' probability larger than one of the individual probabilities.",
+      "remediationNote": "'Or' means add then REMOVE the double-counted overlap: P(A) + P(B) - P(A and B). If an 'and' answer exceeds either single probability, the operation was wrong."
+    },
+    {
+      "id": "SAT_MATH:probability-conditional-numerator-denominator-swap",
+      "taxonomyCode": "SAT_MATH:probability-conditional",
+      "name": "Inverting the conditional probability fraction",
+      "description": "The student computes P(B | A) when P(A | B) is asked — dividing the joint count by the wrong subgroup total, i.e., conditioning on the asked-about group instead of the given group.",
+      "detectionSignal": "For 'probability a calculus-taker is a junior', computes (junior calculus)/(all juniors) instead of (junior calculus)/(all calculus students); the answer is the transpose conditional.",
+      "remediationNote": "Parse 'P of THIS given THAT': THAT (the condition) owns the denominator. Rephrase the question as 'out of [condition group], how many are [target group]?'"
+    },
+    {
+      "id": "SAT_MATH:probability-conditional-ignoring-complement",
+      "taxonomyCode": "SAT_MATH:probability-conditional",
+      "name": "Reporting the probability of the event when its complement is asked",
+      "description": "For 'probability that the selected person does NOT have feature X', the student computes P(X) and stops, or subtracts from the wrong total — especially when the direct count is the most salient table cell.",
+      "detectionSignal": "Answers 0.32 when 0.68 is correct; the response and the key sum to 1 (or to the conditional total).",
+      "remediationNote": "Underline the NOT (or 'neither', 'at least one' phrasing). Compute the direct probability, then explicitly write 1 − p as a final step before answering."
+    },
+    {
+      "id": "SAT_MATH:sample-statistics-margin-error-larger-sample-larger-margin",
+      "taxonomyCode": "SAT_MATH:sample-statistics-margin-error",
+      "name": "Believing a larger sample produces a larger margin of error",
+      "description": "The student thinks more data means more uncertainty — or simply has no directional model — concluding that increasing the sample size increases (or leaves unchanged) the margin of error.",
+      "detectionSignal": "On 'what happens to the margin of error if the sample size is increased' items, selects 'it increases' or 'it stays the same' instead of 'it decreases'.",
+      "remediationNote": "More data = tighter estimate. Margin of error shrinks as the sample grows (roughly like 1/√n). Anchor: a census (sample = population) has zero margin of error."
+    },
+    {
+      "id": "SAT_MATH:sample-statistics-margin-error-interval-misapplied",
+      "taxonomyCode": "SAT_MATH:sample-statistics-margin-error",
+      "name": "Applying the margin of error to the wrong quantity",
+      "description": "The student adds/subtracts the margin of error from the wrong number — attaching it to the sample size, to a count instead of a percent, or applying it once instead of on both sides — e.g., reading '52% ± 3%' as 'between 52% and 55%' or as 49 to 55 people.",
+      "detectionSignal": "Reports the plausible interval as [52, 55] instead of [49, 55]; or converts a percent margin into a raw-count interval without applying it to the population proportion.",
+      "remediationNote": "Margin of error goes BOTH ways around the estimate: estimate − ME to estimate + ME. Keep units matched — a 3% margin applies to the 52%, giving 49% to 55%."
+    },
+    {
+      "id": "SAT_MATH:sample-statistics-margin-error-biased-sample-generalization",
+      "taxonomyCode": "SAT_MATH:sample-statistics-margin-error",
+      "name": "Generalizing results from a non-random or unrepresentative sample",
+      "description": "The student accepts a conclusion about a whole population drawn from a convenience or self-selected sample (surveying only gym members about citywide exercise habits), treating sample size or the margin of error as sufficient for validity.",
+      "detectionSignal": "Selects the choice asserting the result 'applies to all residents' when the sample was drawn from a subpopulation; or rejects the correct 'the sample was not representative' critique.",
+      "remediationNote": "Ask WHO was sampled before believing any number. A huge, precise margin of error on a biased sample is precisely wrong. Generalization is only as wide as the group randomly sampled."
+    },
+    {
+      "id": "SAT_MATH:sample-statistics-margin-error-estimate-treated-as-exact",
+      "taxonomyCode": "SAT_MATH:sample-statistics-margin-error",
+      "name": "Treating the sample estimate as the exact population value",
+      "description": "The student reads 'the sample mean was 42 with margin of error 5' as proof the population mean IS 42 — rejecting the possibility that values inside the interval (like 38 or 46) are plausible.",
+      "detectionSignal": "Selects 'the population mean must equal 42' or rules out 46 as a plausible population value; picks choices claiming certainty where the design only supports an interval.",
+      "remediationNote": "A sample gives a RANGE of plausible values, not a point. Any value inside estimate ± margin of error is consistent with the data; claims of exact equality overreach."
+    },
+    {
+      "id": "SAT_MATH:evaluating-claims-causal-claim-from-observational-study",
+      "taxonomyCode": "SAT_MATH:evaluating-claims",
+      "name": "Accepting a causal conclusion from an observational study",
+      "description": "The student endorses 'X causes Y' conclusions from studies that merely observed association without random assignment — e.g., people who eat breakfast earn more, so breakfast causes higher earnings.",
+      "detectionSignal": "Selects the causal-worded conclusion ('the treatment improved recovery') for a study described as a survey or observational follow-along, rejecting the correct 'association only' choice.",
+      "remediationNote": "Causation requires random ASSIGNMENT to treatment. If subjects chose their own groups (or were just observed), only association language is justified — no matter how strong the link."
+    },
+    {
+      "id": "SAT_MATH:evaluating-claims-generalizing-beyond-sampled-population",
+      "taxonomyCode": "SAT_MATH:evaluating-claims",
+      "name": "Extending a valid conclusion beyond the population that was sampled",
+      "description": "The student accepts applying a study's result to a broader or different population than the sampling frame — e.g., a random sample of one city's voters used to conclude something about the whole country's voters.",
+      "detectionSignal": "Selects the conclusion phrased about 'all voters' or 'all teenagers' when the random sample covered only one city, school, or age band.",
+      "remediationNote": "Match the conclusion's population to the sampled population exactly. Random sampling licenses generalizing to the group SAMPLED — and no wider."
+    },
+    {
+      "id": "SAT_MATH:evaluating-claims-random-sampling-vs-random-assignment-swap",
+      "taxonomyCode": "SAT_MATH:evaluating-claims",
+      "name": "Confusing random sampling with random assignment",
+      "description": "The student believes random assignment to treatment groups licenses generalizing to a broad population (it licenses causation), or that random sampling licenses causal claims (it licenses generalization) — swapping what each randomization buys.",
+      "detectionSignal": "Selects 'the result applies to all adults' for a volunteer experiment with random assignment; or selects 'the treatment caused the improvement' for a random-population-survey with no assigned treatment.",
+      "remediationNote": "Random SAMPLING → who the results apply TO (generalization). Random ASSIGNMENT → what caused the difference (causation). A study can have one, both, or neither — check each separately."
+    },
+    {
+      "id": "SAT_MATH:evaluating-claims-large-sample-cures-bias",
+      "taxonomyCode": "SAT_MATH:evaluating-claims",
+      "name": "Believing a large sample size fixes a flawed design",
+      "description": "The student treats sheer sample size as a cure-all: a voluntary online poll of 100,000 is judged more trustworthy than a random sample of 500, because 'more responses means more accurate'.",
+      "detectionSignal": "Selects the huge convenience-sample study as the better evidence, or the choice citing large n as the reason a biased study's conclusion is justified.",
+      "remediationNote": "Bias does not average out with size — it repeats. A biased method at n = 100,000 is confidently wrong. Method of SELECTION outranks sample size."
+    },
+    {
+      "id": "SAT_MATH:area-volume-computing-area-when-perimeter-asked",
+      "taxonomyCode": "SAT_MATH:area-volume",
+      "name": "Computing area when perimeter is asked (or vice versa)",
+      "description": "The student applies the wrong measure's formula: reports length × width for a perimeter question or 2(l + w) for an area question — often under time pressure when both formulas are primed by the figure.",
+      "detectionSignal": "For a 5 by 8 rectangle, answers 40 when perimeter 26 is asked, or 26 when area 40 is asked; answer matches the other measure's value exactly.",
+      "remediationNote": "Perimeter = fence around the edge (add all sides); area = carpet inside (multiply). Say the context word aloud — 'border' vs 'cover' — before choosing a formula."
+    },
+    {
+      "id": "SAT_MATH:area-volume-linear-scaling-applied-to-area",
+      "taxonomyCode": "SAT_MATH:area-volume",
+      "name": "Applying linear scaling to area or volume",
+      "description": "The student believes doubling a figure's dimensions doubles its area (or volume): a 2× scale factor is applied directly instead of squared (area) or cubed (volume).",
+      "detectionSignal": "For 'a square's side is doubled', reports the area doubles instead of quadruples; for a scaled cube, reports volume ×2 or ×4 instead of ×8.",
+      "remediationNote": "Scale factor k multiplies lengths by k, areas by k², volumes by k³. Test with the unit square: side 1 → area 1; side 2 → area 4. The exponent matches the dimension."
+    },
+    {
+      "id": "SAT_MATH:area-volume-triangle-area-missing-half",
+      "taxonomyCode": "SAT_MATH:area-volume",
+      "name": "Omitting the 1/2 in the triangle area formula",
+      "description": "The student computes triangle area as base × height, doubling the correct answer — the rectangle formula applied to a triangle.",
+      "detectionSignal": "For base 10 and height 6, answers 60 instead of 30; every triangle-area distractor value is exactly 2× the key.",
+      "remediationNote": "A triangle is half of the rectangle that frames it — draw the bounding box if unsure. Formula: A = (1/2)bh, and the half is not optional."
+    },
+    {
+      "id": "SAT_MATH:area-volume-slant-height-used-as-height",
+      "taxonomyCode": "SAT_MATH:area-volume",
+      "name": "Using a slant side where perpendicular height is required",
+      "description": "For triangles, parallelograms, or cones/pyramids, the student plugs a slanted edge length into the formula where the PERPENDICULAR height belongs — e.g., parallelogram area as base × slant side, cone volume with slant height ℓ instead of h.",
+      "detectionSignal": "For a parallelogram with base 10, slant side 6, and height 5, answers 60 instead of 50; cone volume computed with ℓ yields a value inflated by the ℓ/h ratio.",
+      "remediationNote": "Height always means the PERPENDICULAR distance — look for the right-angle marker or compute it (Pythagorean theorem) from the slant before using any area/volume formula."
+    },
+    {
+      "id": "SAT_MATH:lines-angles-triangles-complementary-supplementary-swap",
+      "taxonomyCode": "SAT_MATH:lines-angles-triangles",
+      "name": "Using 90° where 180° is needed (complement/supplement swap)",
+      "description": "The student subtracts a known angle from 90° when the angles are supplementary (linear pair), or from 180° when they are complementary — swapping the two angle-pair totals.",
+      "detectionSignal": "For an angle of 65° in a linear pair, answers 25° (90 − 65) instead of 115°; for a complement question answers 115° instead of 25°.",
+      "remediationNote": "Complementary = Corner (90°), Supplementary = Straight line (180°). Look at the figure: a straight line means the pair totals 180."
+    },
+    {
+      "id": "SAT_MATH:lines-angles-triangles-assuming-equal-angles-without-parallel",
+      "taxonomyCode": "SAT_MATH:lines-angles-triangles",
+      "name": "Applying parallel-line angle relationships to non-parallel lines",
+      "description": "The student treats corresponding or alternate angles as equal (or co-interior as supplementary) even though the problem never states the lines are parallel — importing the parallel-line theorems without their hypothesis.",
+      "detectionSignal": "Sets two angles equal that would only be equal under parallelism, solving for a wrong value; on items asking 'what must be true', selects a claim requiring unstated parallelism.",
+      "remediationNote": "Angle-equality theorems need the parallel hypothesis — check the problem statement or figure marks for parallel indicators before using them. No arrows, no theorem."
+    },
+    {
+      "id": "SAT_MATH:lines-angles-triangles-triangle-sum-360-error",
+      "taxonomyCode": "SAT_MATH:lines-angles-triangles",
+      "name": "Using 360° as the interior angle sum of a triangle",
+      "description": "The student applies the quadrilateral sum (360°) to a triangle, computing the third angle as 360° minus the other two instead of 180° minus them.",
+      "detectionSignal": "For angles 50° and 60°, reports the third as 360 − 110 = 250°; in any variant, the reported angle is exactly 180° more than the correct one.",
+      "remediationNote": "Triangle sum is 180°; each added side adds another 180° (quadrilateral 360°). If a computed triangle angle exceeds 180°, the wrong total was used."
+    },
+    {
+      "id": "SAT_MATH:lines-angles-triangles-exterior-angle-single-remote",
+      "taxonomyCode": "SAT_MATH:lines-angles-triangles",
+      "name": "Equating an exterior angle with ONE remote interior angle",
+      "description": "The student sets an exterior angle equal to one of the non-adjacent interior angles instead of their SUM — e.g., exterior = 50° when the remote angles are 50° and 70°, instead of 120°.",
+      "detectionSignal": "Reports the exterior angle equal to the larger (or given) remote interior angle; answer short of the truth by exactly the other remote angle.",
+      "remediationNote": "Exterior angle = SUM of the two remote (non-adjacent) interior angles — equivalently 180° minus its linear-pair neighbor. Compute the adjacent interior first if stuck."
+    },
+    {
+      "id": "SAT_MATH:lines-angles-triangles-similarity-ratio-misapplied-to-sides",
+      "taxonomyCode": "SAT_MATH:lines-angles-triangles",
+      "name": "Pairing non-corresponding sides in a similarity ratio",
+      "description": "In similar triangles, the student matches sides that are not corresponding (wrong relative position or opposite unequal angles), building a proportion from mismatched pairs — e.g., pairing the small triangle's long side with the big triangle's short side.",
+      "detectionSignal": "Produces the reciprocal-scaled answer: for scale factor 2, computes the unknown as half the correct value; or solves x = ab/c with the wrong pairing, off by the ratio of the swapped sides.",
+      "remediationNote": "Corresponding sides sit OPPOSITE EQUAL ANGLES. Mark equal angles first, then pair sides by position. Verify the finished ratio: big/big should equal big/big, never big/small."
+    },
+    {
+      "id": "SAT_MATH:right-triangles-trig-sin-cos-swap",
+      "taxonomyCode": "SAT_MATH:right-triangles-trig",
+      "name": "Swapping sine and cosine (SOH-CAH mix-up)",
+      "description": "The student computes sin θ as adjacent/hypotenuse and cos θ as opposite/hypotenuse, exchanging the two ratios — the classic trig distractor seed, including the cofunction identity sin A = cos B being misapplied.",
+      "detectionSignal": "For a triangle with opposite 3, adjacent 4, hypotenuse 5, reports sin θ = 4/5 and cos θ = 3/5; every computed side using the swapped ratio carries the reciprocal error.",
+      "remediationNote": "SOH-CAH-TOA in order: Sine = Opposite/Hypotenuse, Cosine = Adjacent/Hypotenuse. Label the two legs from the TARGET angle's perspective before writing any ratio."
+    },
+    {
+      "id": "SAT_MATH:right-triangles-trig-pythagorean-adds-when-hypotenuse-known",
+      "taxonomyCode": "SAT_MATH:right-triangles-trig",
+      "name": "Adding squares when a leg is unknown and the hypotenuse is given",
+      "description": "Given the hypotenuse and one leg, the student computes the missing leg as √(a² + c²) or a² = b² + c² — applying the 'add the squares' pattern even when the hypotenuse is one of the knowns, instead of subtracting.",
+      "detectionSignal": "For hypotenuse 13 and leg 5, reports the other leg as √(25 + 169) ≈ 13.9 instead of √(169 − 25) = 12; the bogus leg exceeds the hypotenuse — an impossible result the student doesn't catch.",
+      "remediationNote": "The hypotenuse is always the LONGEST side and always alone on one side of c² = a² + b². If a computed leg comes out longer than the hypotenuse, subtract instead of add."
+    },
+    {
+      "id": "SAT_MATH:right-triangles-trig-tan-as-opposite-over-hypotenuse",
+      "taxonomyCode": "SAT_MATH:right-triangles-trig",
+      "name": "Computing tangent with the hypotenuse in the denominator",
+      "description": "The student writes tan θ = opposite/hypotenuse (a second sine) instead of opposite/adjacent, dragging the hypotenuse into the tangent ratio.",
+      "detectionSignal": "For opposite 3, adjacent 4, hypotenuse 5, reports tan θ = 3/5 instead of 3/4.",
+      "remediationNote": "TOA: Tangent = Opposite/ADJACENT — the two LEGS only; the hypotenuse never appears in tangent. Cross-check: tan θ should equal sin θ / cos θ."
+    },
+    {
+      "id": "SAT_MATH:right-triangles-trig-complement-cofunction-error",
+      "taxonomyCode": "SAT_MATH:right-triangles-trig",
+      "name": "Believing sin A = cos A or misusing the cofunction relationship",
+      "description": "The student treats sin of one acute angle as equal to the cosine of the SAME angle, or fails to use sin A = cos B for the two acute angles of a right triangle — e.g., given sin A = 5/13, cannot conclude cos B = 5/13 or concludes cos A = 5/13.",
+      "detectionSignal": "Reports cos A = 5/13 when sin A = 5/13 (should be 12/13), or answers that cos B cannot be determined when it equals sin A.",
+      "remediationNote": "In a right triangle the acute angles are complementary, so sin of one = cos of the OTHER. Same-angle sin and cos are different numbers (unless 45°); find the third side with Pythagoras."
+    },
+    {
+      "id": "SAT_MATH:right-triangles-trig-inverse-trig-as-division",
+      "taxonomyCode": "SAT_MATH:right-triangles-trig",
+      "name": "Solving for an angle by dividing instead of applying inverse trig",
+      "description": "Asked for an angle measure given two sides, the student computes the ratio and reports it (or a linear rescaling like ratio × 90°) as the angle, instead of applying sin⁻¹/cos⁻¹/tan⁻¹; or uses the wrong trig ratio for the given side pair.",
+      "detectionSignal": "Reports the angle as 0.75 (the ratio tan θ = 0.75) instead of about 36.9°; or computes sin⁻¹ of the opposite/adjacent pair.",
+      "remediationNote": "Sides give a RATIO; inverse trig turns the ratio back into an angle. Match the ratio to the sides you have (O/A → tan⁻¹), and check the calculator's degree mode."
+    },
+    {
+      "id": "SAT_MATH:circles-radius-diameter-swap",
+      "taxonomyCode": "SAT_MATH:circles",
+      "name": "Using the diameter where the radius belongs (or vice versa)",
+      "description": "The student plugs the diameter into formulas requiring the radius (area πd², circumference πr with r = d) or halves/doubles at the wrong moment — the single most common circle computation bug.",
+      "detectionSignal": "For diameter 10, reports area 100π instead of 25π (factor of 4), or circumference 5π instead of 10π (factor of 2).",
+      "remediationNote": "Convert to radius IMMEDIATELY upon reading: r = d/2, written on the figure before any formula. Area errors quadruple, circumference errors double — the check is to redo with the labeled r."
+    },
+    {
+      "id": "SAT_MATH:circles-equation-radius-not-squared",
+      "taxonomyCode": "SAT_MATH:circles",
+      "name": "Reading r² in the circle equation as the radius",
+      "description": "For (x - 1)² + (y + 2)² = 36, the student reports radius 36 instead of 6 — forgetting the standard form contains the SQUARE of the radius; conversely writes = 5 instead of = 25 when building the equation for r = 5.",
+      "detectionSignal": "Reports radius 36 (or diameter 72) for an equation with 36 on the right; generates an equation ending in '= 5' for a circle of radius 5.",
+      "remediationNote": "Standard form is (x − h)² + (y − k)² = r² — the right side is r SQUARED. Take the square root for the radius; square the radius when writing the equation."
+    },
+    {
+      "id": "SAT_MATH:circles-center-sign-error",
+      "taxonomyCode": "SAT_MATH:circles",
+      "name": "Reading the center's coordinates with flipped signs",
+      "description": "From (x - 3)² + (y + 4)² = 25 the student reads the center as (-3, 4) instead of (3, -4), mishandling the subtraction built into the standard form — the same double-negative trap as vertex form.",
+      "detectionSignal": "Reports center (-3, 4) or (3, 4); selects the graph shifted to the mirror-image quadrant.",
+      "remediationNote": "The center is whatever makes each parenthesis ZERO: x − 3 = 0 → x = 3; y + 4 = 0 → y = −4. Solve each piece; don't copy the visible signs."
+    },
+    {
+      "id": "SAT_MATH:circles-arc-sector-uses-full-circle",
+      "taxonomyCode": "SAT_MATH:circles",
+      "name": "Forgetting the central-angle fraction for arc length or sector area",
+      "description": "Asked for an arc length or sector area, the student computes the FULL circumference or area (or applies the angle fraction upside down, e.g., 360/θ instead of θ/360), ignoring that only a fraction of the circle is involved.",
+      "detectionSignal": "For r = 6 and central angle 60°, reports arc length 12π instead of 2π, or sector area 36π instead of 6π; the inverted-fraction variant (360/θ) yields values exactly 36× the correct one for a 60° angle.",
+      "remediationNote": "Arc length and sector area = (θ/360) × the whole-circle measure. Check the fraction is smaller than 1: the answer must be smaller than the full circumference or area."
+    },
+    {
+      "id": "SAT_MATH:circles-inscribed-angle-treated-as-central",
+      "taxonomyCode": "SAT_MATH:circles",
+      "name": "Treating an inscribed angle as equal to its intercepted arc",
+      "description": "The student sets an inscribed angle equal to the measure of its intercepted arc (or to the central angle), missing the half relationship; or doubles when halving is needed.",
+      "detectionSignal": "For an inscribed angle intercepting an 80° arc, reports 80° instead of 40°; or for a 30° inscribed angle reports the arc as 15° instead of 60°.",
+      "remediationNote": "Inscribed angle = HALF its intercepted arc; central angle = the arc itself. Ask where the vertex sits: on the circle → halve the arc; at the center → copy the arc."
+    }
+  ]
+}

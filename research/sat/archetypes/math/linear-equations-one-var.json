@@ -1,0 +1,72 @@
+{
+  "slug": "linear-equations-one-var",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:linear-equations-one-var",
+  "skill": "Linear Equations in One Variable",
+  "domain": "Algebra",
+  "stimulusShape": {
+    "type": "passage",
+    "lengthWords": [15, 60],
+    "structure": "A short word problem (pricing, mixing, counting, ages, distances) in which two or three stated quantities collapse to one linear equation in one unknown — ax + b = c, a(x + b) = c, or a(x + b) = d(x + e) — followed by a direct value ask. Bare-equation variant (no passage): the equation sits in the stem alone ('If 4(x + 8) = 56, what is the value of x?'). Special-form variant: after simplification the variable cancels and the ask becomes the number of solutions."
+  },
+  "stemTemplates": [
+    "What is the value of <variable>?",
+    "What value of <variable> satisfies the given equation?",
+    "How many <count noun> did <agent> <action>?",
+    "How many solutions does the given equation have?"
+  ],
+  "answerMode": "number-or-count",
+  "choicePatterns": "Four numeric choices (integers or clean fractions) or a student-produced grid-in value; on solution-count items, the choices are 'no solution', 'exactly one', and 'infinitely many' (with one numeric value filling the fourth slot). Exactly one choice is the true solution; the others are the exact outputs of the named bug computations on this equation.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:linear-equations-one-var-sign-error-when-moving-terms",
+      "trap": "Distractor = the value from moving a term across the equals sign without flipping its sign: for 3x - 7 = 11 (key x = 6), offer 4/3 — the solution of 3x = 11 - 7; computable as (c - |b|)/a when the true path is (c + |b|)/a, or as c + |b| over a when the constant enters with a plus."
+    },
+    {
+      "misconceptionId": "SAT_MATH:linear-equations-one-var-partial-distribution",
+      "trap": "Distractor = the value from distributing the outside factor to the first term only: for 4(x + 8) = 56 (key x = 6), offer 12 — the solution of 4x + 8 = 56; computable as (c - b)/a instead of c/a - b."
+    },
+    {
+      "misconceptionId": "SAT_MATH:linear-equations-one-var-multiplying-by-reciprocal-incorrectly",
+      "trap": "Distractor = the value from multiplying by the coefficient's fraction instead of its reciprocal: for (2/3)x = 10 (key x = 15), offer 20/3; computable as c·(p/q) instead of c·(q/p). With integer coefficients, instantiate as multiplying where dividing is needed (from 4x = 24, offer 96)."
+    },
+    {
+      "misconceptionId": "SAT_MATH:linear-equations-one-var-no-solution-infinite-solution-swap",
+      "trap": "On solution-count items (e.g. 5x + 4 = 5x + 9 or 3(x + 2) = 3x + 6), offer the swapped count: 'infinitely many' where the reduced statement is false (no solution), 'no solution' where it is an identity (infinitely many), and 'exactly one' after a botched combine; on grid-in variants of 0x = 5, offer 0."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "One-apply-the-op skeleton: ax + b = c with positive integer a and single-digit numbers",
+      "Word problem that translates in one sentence: a total, a difference, or per-item pricing with the unknown isolated once",
+      "Answer is a positive integer; the three distractors are far apart"
+    ],
+    "medium": [
+      "Distribution required: a(x + b) = c or a fractional coefficient (p/q)x + b = c needing the reciprocal",
+      "Two-step translation: units, a fixed fee plus a per-unit rate, before solving",
+      "Word-problem asks phrased indirectly ('how many additional...') requiring one re-label of the unknown"
+    ],
+    "hard": [
+      "Variables on both sides with distribution and collecting like terms: a(x + b) = d(x + e)",
+      "Special forms where the x-terms cancel, forcing a no-solution / infinitely-many judgment",
+      "Ask is for an expression in the root ('what is 3x - 2?') rather than x itself, or a grid-in with a clean fractional answer"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose the skeleton by difficulty: ax + b = c (easy), a(x + b) = c or (p/q)x + b = c (medium), a(x + b) = d(x + e) or a1x + b1 = a1x + b2 (hard). 2. Pick SAT-clean parameters: integer a, d in [2, 9], constants at most 100, chosen so the key is an integer or a fraction with denominator at most 12. 3. For word problems, dress the skeleton in a 15-60 word pricing/counting context where every stated number maps to exactly one symbol and vice versa.",
+    "keyConstruction": "Solve by the canonical path: distribute fully, add the opposite of the constant to BOTH sides, multiply both sides by the reciprocal of the coefficient. Verify by substituting the key into the ORIGINAL equation — both sides must match exactly. For count asks, reduce to a1x = c1 versus a2x = c2 and read the residual statement: true identity means infinitely many, false statement means none.",
+    "distractorConstruction": "Compute each bug answer mechanically on the SAME equation: transposition bug = solve with the moved term's sign unchanged; partial distribution = solve ax + b = c; reciprocal bug = multiply c by p/q instead of q/p. Check all four values are distinct — if a bug value collides with the key or another distractor, perturb b so the bug outputs separate. Keep distractors positive where the context demands positive amounts.",
+    "validationChecklist": [
+      "The key satisfies the original equation exactly (substitute and check both sides)",
+      "All four choices are distinct and SAT-clean: integers or fractions with denominators at most 12, no unrounded decimals",
+      "Every distractor is traceable to exactly one named bug computation, not a random near-miss",
+      "Word-problem contexts are original, 15-60 words, and every stated number is used exactly once",
+      "Solution-count items include all three options (no solution, exactly one, infinitely many) among the choices",
+      "Grid-in compatibility: student-produced keys are non-negative rationals that fit the 4-column grid (no minus sign, no repeating decimal)"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Isolate x: expand all parentheses, add the opposite of the constant term to both sides, then multiply both sides by the reciprocal of the x-coefficient. Verify by substitution into the original equation. For count asks, strip to a1x + b1 = a2x + b2 and compare: coefficients equal and constants equal gives infinitely many; coefficients equal and constants different gives none; otherwise exactly one.",
+  "numericConstraints": "Integer keys wherever possible; fractional keys have denominators at most 12 and fit the 4-column grid. Coefficients 1-9, constants at most 100. Word-problem quantities stay whole (no fractional people or items).",
+  "questionTypeNotes": "Leans MCQ at easy/medium (numeric choices) and grid-in at hard (value and expression-in-root asks). 'How many solutions' items are always MCQ."
+}

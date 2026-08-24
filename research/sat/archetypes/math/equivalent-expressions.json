@@ -1,0 +1,76 @@
+{
+  "slug": "equivalent-expressions",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:equivalent-expressions",
+  "skill": "Equivalent Expressions",
+  "domain": "Advanced Math",
+  "stimulusShape": {
+    "type": "none",
+    "lengthWords": null,
+    "structure": "No stimulus: an expression sits in the stem, occasionally prefaced by a one-line context naming what the variable represents ('The expression ... gives the area...'). The ask is a rewrite — expand, factor, combine like terms, or apply exponent laws — or a coefficient of a named term in the rewritten form. Operands: binomials with small integer constants, monomial powers, or a factorable quadratic."
+  },
+  "stemTemplates": [
+    "Which expression is equivalent to <expression>?",
+    "Which of the following is an equivalent form of the expression <expression>?",
+    "When the expression <expression> is fully expanded and like terms are combined, what is the coefficient of <term>?",
+    "What is the expression <expression> written in completely factored form?"
+  ],
+  "answerMode": "expression",
+  "choicePatterns": "Four algebraic expressions assembled from the same variables and constants as the key: the correct rewrite plus the middle-term-erased expansion, the sign-slipped distribution, the merged unlike terms, the misapplied exponent-law twin, or the right-product-wrong-sum factorization. Choices are sorted in a consistent format (descending powers) so surface form is not a cue; exactly one is equivalent to the stem expression for all values.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:equivalent-expressions-distributing-exponent-across-addition",
+      "trap": "For (x + a)² or (2x - 3)², offer the term-by-term square x² + a² (or 4x² - 9), erasing the middle term; on coefficient asks, offer 0 for the x-term instead of 2a (or -12 for (2x - 3)²); computable by squaring each term separately."
+    },
+    {
+      "misconceptionId": "SAT_MATH:equivalent-expressions-negative-distribution-sign-error",
+      "trap": "For 3x - (x - 4), offer 2x - 4 instead of 2x + 4 — the minus distributed to the first term only; computable by copying the second term's sign unchanged. In multi-op items, apply the drop after a correct expansion."
+    },
+    {
+      "misconceptionId": "SAT_MATH:equivalent-expressions-combining-unlike-terms",
+      "trap": "For 3x² + 2x, offer 5x² or 5x³ — coefficients merged despite unlike powers; computable by adding the coefficients and keeping (or multiplying) one exponent. In rewrite items this yields a single-term choice."
+    },
+    {
+      "misconceptionId": "SAT_MATH:equivalent-expressions-exponent-product-rule-misapplied",
+      "trap": "For x² · x³, offer x⁶ (exponents multiplied instead of added); for (x²)³, offer x⁵ (added instead of multiplied); computable by swapping the add/multiply operation on the exponents."
+    },
+    {
+      "misconceptionId": "SAT_MATH:equivalent-expressions-factor-by-grouping-sign-slip",
+      "trap": "For x² + 8x + 12, offer (x + 3)(x + 4) — the factor pair of 12 whose product is right but whose sum is 7, not 8; computable by picking the adjacent factor pair of c without checking the sum against b."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "One operation: a single distribution or a single exponent law",
+      "All coefficients positive; no minus-sign parentheses",
+      "Binomial × monomial or monomial powers with small exponents"
+    ],
+    "medium": [
+      "Two chained operations: distribute then combine like terms; a subtraction in front of parentheses",
+      "Factoring x² + bx + c where c has competing factor pairs",
+      "Mixed exponent laws in one expression (a power of a product)"
+    ],
+    "hard": [
+      "Three-term expansions: (x + a)², (x + a)(x - b) with a coefficient ask on the middle term",
+      "Factor by grouping or a common factor pulled out first",
+      "Choice sets where every distractor shares the key's leading and constant terms, differing only in the middle-term coefficient"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose the target rewrite operation by difficulty (distribute, exponent law, factor). 2. Build the CORRECT final form first with SAT-clean constants (|constants| ≤ 12, exponents ≤ 6), then construct the initial form it rewrites from. 3. Ensure the initial form has exactly one canonical simplification path — no alternative route to a different-looking equivalent.",
+    "keyConstruction": "Produce the rewrite by the canonical operation: FOIL/expand with every term, factor via the pair whose product is c AND whose sum is b, apply exponent laws (multiply powers → add exponents; power of a power → multiply exponents). Verify numerically: substitute three values of the variable (0, 1, and a negative integer) — key and original must agree at all three.",
+    "distractorConstruction": "Apply each bug to the SAME initial expression: square term-by-term, distribute the minus to the first term only, merge unlike terms, swap add/multiply on exponents, factor with the wrong-sum pair. Test each distractor numerically at the same three values — discard any that is accidentally still equivalent to the original.",
+    "validationChecklist": [
+      "Numeric equivalence test at three values (including a negative) distinguishes the key from every distractor",
+      "The key is in canonical form for the ask (fully expanded and combined, or fully factored) and matches the form the stem requests",
+      "Coefficients and constants are SAT-clean integers ≤ 12 in absolute value; exponents ≤ 6",
+      "No distractor is equivalent to the original expression (each fails the numeric test)",
+      "All choices are written in a consistent term order so surface format is not a cue",
+      "Any context line (meaning of the variable) is consistent with all choices, not just the key"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Perform the canonical rewrite: expand every product (FOIL), distribute the leading sign to EVERY term, combine only like terms, apply exponent laws (product of powers adds exponents; power of a power multiplies them), factor by finding the pair with product c AND sum b. Verify equivalence numerically at three values including a negative one.",
+  "numericConstraints": "Integer coefficients and constants ≤ 12 in absolute value; exponents between 0 and 6; at most two variables; factor pairs of c distinct in sum (so the wrong-sum pair is a clean distractor).",
+  "questionTypeNotes": "MCQ with expression choices (dominant); rare grid-in form asks for a coefficient of a named term in the expanded form — key a small integer."
+}

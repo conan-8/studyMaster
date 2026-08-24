@@ -1,0 +1,76 @@
+{
+  "slug": "nonlinear-functions",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:nonlinear-functions",
+  "skill": "Nonlinear Functions",
+  "domain": "Advanced Math",
+  "stimulusShape": {
+    "type": "passage",
+    "lengthWords": [15, 80],
+    "structure": "Either a context with a quadratic or exponential model (projectile height, revenue, population growth, depreciation) or a function definition in the stem — vertex form a(x - h)² + k, factored form, or a·b^t. Variants carrying the same coefficients: a table of values or the graph rendered via diagram archetype sat-math:graph-function (quadratic or exponential) with the vertex/intercept marked. The ask: vertex or extreme value, intercepts, growth-model selection, or parameter evaluation and interpretation."
+  },
+  "stemTemplates": [
+    "What is the <maximum or minimum> value of the function f?",
+    "What is the vertex of the graph of y = <equation>?",
+    "What is the y-intercept of the graph of y = <equation>?",
+    "Which function models <quantity> t years after <event>, given it <increases or decreases> by <r>% each year?"
+  ],
+  "answerMode": "number-point-or-function",
+  "choicePatterns": "Four numbers, ordered pairs, or functions sharing the key's parameters: the sign-flipped vertex coordinate, the root offered where the intercept is asked, the additive-linear model where compounding is required, and the max/min labels swapped. For model-selection asks, four functions of the same family built from the context numbers in wrong roles; exactly one matches every stated data point.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:nonlinear-functions-vertex-form-sign-error",
+      "trap": "For y = (x - 3)² + 2, offer vertex (-3, 2) instead of (3, 2) — the h-coordinate's sign flipped; computable by negating the number inside the parentheses (and, in a second choice, negating k for y = (x + 4)² - 1 → (4, 1) instead of (-4, -1))."
+    },
+    {
+      "misconceptionId": "SAT_MATH:nonlinear-functions-exponential-treated-as-linear",
+      "trap": "For a quantity P growing r% per period for t periods (key P(1 + r)^t), offer the additive model P(1 + rt): after 3 years of 20% growth from 1000, offer 1600 instead of 1728; computable by adding the per-period gain t times to the ORIGINAL principal."
+    },
+    {
+      "misconceptionId": "SAT_MATH:nonlinear-functions-max-min-direction-swap",
+      "trap": "For y = -2(x - 1)² + 5, offer 'minimum value of 5' (or the label 'minimum' on a downward parabola's extreme); on value asks, offer 1 (the x-position of the vertex) when the extreme VALUE is requested; computable by swapping the max/min label or reporting the vertex's x for a y-ask."
+    },
+    {
+      "misconceptionId": "SAT_MATH:nonlinear-functions-root-vs-y-intercept-confusion",
+      "trap": "For y = (x - 2)(x - 6) with the y-intercept asked, offer 2, 6, or -6 — a zero from the factored form used as the starting value; computable by reading a factor's root instead of substituting x = 0 (true y-intercept 12)."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Vertex or intercept read directly from vertex/factored form with positive parameters",
+ "Growth asks over one period only ('what is the value after 1 year'), where the multiplier 1 + r is applied once",
+      "Clear max/min: leading coefficient sign and the ask's noun (value vs position) both unambiguous"
+    ],
+    "medium": [
+      "Vertex form with a negative h or negative a",
+      "Two or more compounding periods; converting 'grows 15%' to the multiplier 1.15",
+      "Decay contexts requiring the multiplier 1 - r"
+    ],
+    "hard": [
+      "Value asks where reporting the vertex's x-position is the live trap, in a context (maximum height reached)",
+      "Exponential items with multi-step context: solve b^t past a threshold, or depreciation over several periods",
+      "Table/graph variants where the vertex falls between lattice points and choices share the coordinates in swapped roles"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Fix the model family and parameters: quadratic vertex form a(x - h)² + k with integer h, k, |a| ≤ 3, h ≠ 0, k ≠ 0 (so sign flips are visible); exponential a·b^t with integer a and a SAT-clean decimal b (growth 1.05-1.60, decay 0.40-0.95). 2. Write the context so each parameter has units and one sentence (initial amount, rate per period, periods elapsed). 3. Graph variant: render sat-math:graph-function with the same coefficients, marking the vertex and intercepts when they are lattice points.",
+    "keyConstruction": "Read the vertex as (h, k) where h is the value that zeroes the parenthesis; the extreme VALUE is k, with max when a < 0, min when a > 0. Compute the y-intercept by substituting x = 0 in whatever form is given. For exponentials, the value after t periods is a·b^t; verify one period by hand: a·b must equal a + (r/100)·a. Verify the vertex by substituting h back in: f(h) = k exactly.",
+    "distractorConstruction": "Generate the mechanical twins: vertex (-h, k) and (h, -k); a factored-form root offered as the y-intercept; the additive total a(1 + rt) instead of a·b^t; the x-position offered for a value ask, or the max/min label swapped. Choose t ≥ 2 so compounding visibly differs from adding, and h ≠ 0 so the sign flip is visible.",
+    "validationChecklist": [
+      "f(h) = k exactly (substitute the vertex back in)",
+      "The y-intercept is computed from x = 0, never read off the factored form's zeros",
+      "Growth contexts state the percent per period and the number of periods unambiguously, and the key uses the compounding form",
+      "Answers are integers or SAT-clean decimals (money to the cent; populations integral where natural)",
+      "Graph variants' marked points are lattice points consistent with the coefficients",
+      "Max/min asks name the requested object (value vs where it occurs) unambiguously, and one distractor targets exactly that distinction"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Vertex form y = a(x - h)² + k: vertex (h, k), extreme value k (max if a < 0, min if a > 0). y-intercept: substitute x = 0 in whatever form is given and evaluate. Exponential: value after t periods = a·b^t where b = 1 + r (growth) or 1 - r (decay); verify one period by hand (a·b = a + r% of a).",
+  "numericConstraints": "Integer h, k with |a| ≤ 3, h ≠ 0, k ≠ 0; exponential bases as two-decimal-clean factors (1.05-1.60 or 0.40-0.95) with integer initial values; answers integers or money to the cent; t ≥ 2 when the additive-compounding trap is live.",
+  "questionTypeNotes": "MCQ dominant (numbers, ordered pairs, function choices, or graph identification); vertex-coordinate and intercept asks also appear as grid-ins with numeric keys.",
+  "diagramSpec": {
+    "allowedArchetypeIds": ["sat-math:graph-function"],
+    "typicalUse": "Graph variant: the parabola or exponential curve is drawn with the vertex/intercept lattice points marked; the stem asks for the vertex, an intercept, the maximum or minimum, or the growth behavior. Coefficients passed to the diagram are the same values the choices are built from."
+  }
+}

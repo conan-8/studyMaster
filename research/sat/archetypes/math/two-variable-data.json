@@ -1,0 +1,77 @@
+{
+  "slug": "two-variable-data",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:two-variable-data",
+  "skill": "Two-Variable Data",
+  "domain": "Problem-Solving and Data Analysis",
+  "stimulusShape": {
+    "type": "figure",
+    "lengthWords": null,
+    "structure": "A scatterplot of 5-12 first-quadrant points with axis labels (e.g., 'hours studied' vs. 'quiz score'), usually accompanied by a drawn line of best fit; a one-sentence caption frames the data source — critically, an OBSERVATIONAL source (survey, collected records) rather than an experiment. Variants: no line shown (estimate the trend), two panels to compare association strength, or a best-fit line given as an equation y = mx + b in the caption for prediction/interpretation items."
+  },
+  "stemTemplates": [
+    "Which of the following best describes the relationship between <x> and <y>?",
+    "For every increase of 1 <x-unit>, the line of best fit predicts a <change> of how many <y-units>?",
+    "Based on the line of best fit, what is the predicted <y> when <x> = <value>?",
+    "Which scatterplot shows the stronger linear relationship?"
+  ],
+  "answerMode": "computed-number-or-statement",
+  "choicePatterns": "Numeric items: four values from the fitted line (correct prediction; prediction at a swapped/inverted slope; intercept reported; value read off a single dot instead of the line). Statement items: four claims about association — direction/strength phrased causally vs associatively, slope described as a starting value, tightness described as steepness — exactly one of which the plot supports.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:two-variable-data-treating-correlation-as-causation",
+      "trap": "Statement distractor phrased causally for observational data: 'increasing study time causes higher quiz scores' sits beside the key 'quiz score is associated with study time'. Built by copying the key claim and swapping only the verb phrase to causal language ('causes', 'leads to', 'results in')."
+    },
+    {
+      "misconceptionId": "SAT_MATH:two-variable-data-slope-intercept-role-swap-in-context",
+      "trap": "Offers the intercept's meaning as the slope's (or vice versa): for price = 1.8(weight) + 32, lists 'the estimated price of a 0-gram item' as the meaning of the slope beside the key 'the price increase per gram'. Built by exchanging the two parameters' contextual sentences."
+    },
+    {
+      "misconceptionId": "SAT_MATH:two-variable-data-correlation-strength-from-slope",
+      "trap": "In strength-comparison items, the wrong panel shows the STEEPER trend through a loose cloud while the key panel hugs a shallower line tightly; the distractor choice points at the steep one. Built from the scatterplot archetype: trend slope and residual spread are independent parameters, so a steep-loose panel vs shallow-tight panel isolates the bug."
+    },
+    {
+      "misconceptionId": "SAT_MATH:two-variable-data-extrapolation-beyond-data",
+      "trap": "Endorses a prediction at an x far outside the observed range: for ages 5-15 data, offers the plugged-in value at age 40 as 'the predicted height' beside the key 'the model cannot reliably predict outside 5-15'. Built by asking for an x beyond the plotted x-extent."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Clear direction call: obviously increasing (or decreasing) cloud, statement choices differ in direction only",
+      "Prediction at an x-value inside the data range using a given line of best fit (integer arithmetic)",
+      "Slope read directly as 'predicted change in y per 1 unit of x' with friendly m (2, 3, 0.5)"
+    ],
+    "medium": [
+      "Slope vs intercept interpretation with both parameters numerically prominent (1.8x + 32 style)",
+      "Prediction requiring decimal slope arithmetic, still inside the data range",
+      "Association statement where one choice is causal and the rest are direction/none claims"
+    ],
+    "hard": [
+      "Two-panel strength comparison: steep-loose vs shallow-tight — steepness pitted against scatter",
+      "Extrapolation items where the correct answer is the meta-claim that the prediction is unreliable",
+      "Residual reasoning: which point has the largest residual / does the line under- or over-predict a given point",
+      "Reverse prediction (predict x from y) on the same fitted line, or intercept interpretation at an x = 0 outside the data range"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose an observational context (survey or records: hours studied vs score, car weight vs fuel efficiency, house size vs price). 2. Fix the fitted line y = mx + b with m a friendly decimal in [-4, 4] (magnitude 0.5-3) and b in [0, 20]. 3. Emit 5-12 points clustered around the line: residual offsets chosen so the cloud's tightness (strength) is set INDEPENDENTLY of the slope — tight (residual <= 1) or loose (residual 3-5). 4. Keep x-values inside a stated domain like 2-14 and caption the data source as observational. 5. For two-panel items, build one steep-loose and one shallow-tight panel.",
+    "keyConstruction": "Prediction: substitute the target x into the SAME m and b the plot's line uses (the scatterplot archetype pins the line's parameters — the stem's arithmetic must reuse them exactly). Slope meaning: 'for each 1 <x-unit> increase, the predicted <y> changes by m <y-units>' (sign included). Strength: the panel with the smaller residual spread, regardless of slope. Extrapolation: the correct answer names the data's x-range as the reliability boundary. Verify predictions by re-reading them off the drawn line's endpoints.",
+    "distractorConstruction": "Numeric: (a) prediction with slope sign flipped or decimal shifted; (b) the intercept b offered when a prediction is asked; (c) the actual y of a nearby plotted dot instead of the line's value; (d) value computed at the wrong x (off by one gridline). Statements: build each wrong claim by ONE mutation of the true claim — swap verb to causal (correlation-as-causation), swap slope and intercept roles, describe strength by steepness, or extend reliability beyond the data range. The mutation-per-choice rule keeps every distractor diagnosable.",
+    "validationChecklist": [
+      "Data source is described as a survey or observational records whenever causal distractors are used — never an experiment",
+      "Predictions asked only at x-values inside the plotted range unless the extrapolation bug is the target",
+      "Slope m in [-4, 4] with one decimal max; predictions exact integers or terminating decimals; grid-in keys <= 4 characters",
+      "Realistic values: scores 40-100, prices $20-$500, ages 5-18, distances 1-20 miles — axis labels carry units",
+      "In strength-comparison panels, the steep-loose panel's trend is visibly steeper AND visibly looser than the shallow-tight panel",
+      "Every statement choice is checkable from the plot alone; exactly one survives"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Prediction from the line of best fit: y = m x + b at the asked x, using the exact m and b pinned in the diagram spec. Slope interpretation: change in y-units per 1 x-unit increase (with sign). Strength comparison: compare residual spread (vertical scatter around each line), never slope magnitude. Residual: actual y minus predicted y at the point's x. Verify by locating the asked x on the drawn line and reading to the y-axis.",
+  "numericConstraints": "m in [-4, 4] as one-decimal values (prefer 0.5, 1.8, 2.5 style), b in [0, 20]; 5-12 points on a 0-20 grid; predictions integers or terminating decimals <= 4 grid characters; contexts use realistic ranges (study hours 0-12, scores 40-100).",
+  "questionTypeNotes": "Lean mcq: interpretation and strength items are statement-choice, and even prediction items are usually mcq so the distractor arithmetic (swapped slope, intercept, nearby dot) can be offered. Reserve grid_in for clean in-range predictions (integer y from the fitted line). Note for the generator: the sat-math:scatterplot archetype controls trend slope (lineOfBestFit.slope) and residual spread (point offsets) INDEPENDENTLY — slope-vs-tightness items are built by making the two disagree, which is the heart of the correlation-strength misconception.",
+  "diagramSpec": {
+    "allowedArchetypeIds": ["sat-math:scatterplot"],
+    "typicalUse": "5-12 observational data points with an optional drawn line of best fit; the same m/b drive the stem's predictions. Two-panel strength comparisons render two scatterplot instances with slope and residual spread deliberately crossed (steep-loose vs shallow-tight)."
+  }
+}

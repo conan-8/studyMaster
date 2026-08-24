@@ -1,0 +1,47 @@
+{
+  "archetypeId": "sat-math:histogram",
+  "title": "Histogram",
+  "description": "Equal-width adjacent bins of continuous data with frequency on the y-axis. Serves Problem-Solving and Data Analysis (one-variable-data): shape/center/spread comparisons and questions about which bin contains the median.",
+  "subjectsApplicable": ["SAT_MATH"],
+  "paramsSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["binStart", "binWidth", "frequencies", "xAxisLabel"],
+    "properties": {
+      "binStart": {
+        "type": "number",
+        "minimum": -100,
+        "maximum": 100,
+        "description": "Left edge of the first bin."
+      },
+      "binWidth": {
+        "type": "number",
+        "exclusiveMinimum": 0,
+        "maximum": 50,
+        "description": "Common width of every bin — equal width is structural, so only one width is parameterized."
+      },
+      "frequencies": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 8,
+        "description": "Frequency per bin, left to right; determines the bar count and heights.",
+        "items": { "type": "integer", "minimum": 0, "maximum": 100 }
+      },
+      "xAxisLabel": { "type": "string", "minLength": 1, "maxLength": 24 },
+      "yAxisLabel": { "type": "string", "maxLength": 24, "default": "Frequency" },
+      "binEdgesAreIntegers": {
+        "type": "boolean",
+        "default": true,
+        "description": "If true, renderer validates that binStart and binWidth are integers so boundary labels stay SAT-clean."
+      },
+      "showFrequencyLabels": {
+        "type": "boolean",
+        "default": false,
+        "description": "Print each frequency above its bar."
+      }
+    }
+  },
+  "rendererRef": "Histogram",
+  "notes": "Renderer guarantees: bins are contiguous (no gaps) and share binWidth — adjacent bars touch; bin boundary labels are computed as binStart + i*binWidth, never authored; an all-zero frequency list is rejected at parse time; y-axis top is snapped to a clean multiple above the maximum frequency."
+}

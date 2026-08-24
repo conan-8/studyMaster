@@ -2,6 +2,8 @@
   "slug": "rhetorical-synthesis",
   "skill": "Rhetorical Synthesis",
   "domain": "Expression of Ideas",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:rhetorical-synthesis",
   "stimulusShape": {
     "type": "notes",
     "lengthWords": [60, 150],
@@ -14,11 +16,26 @@
   "answerMode": "which-statement",
   "choicePatterns": "Four complete sentences, each drawing on the notes. Exactly one both selects the notes relevant to the stated goal and uses them accurately to accomplish it; distractors use irrelevant notes, pursue a different goal, distort a fact, or present relevant facts without accomplishing the rhetorical move the goal requires.",
   "distractorLogic": [
-    "Relevance failure: the sentence uses accurate notes that do not serve the stated goal (right facts, wrong job)",
-    "Goal substitution: the sentence accomplishes a nearby but different goal (defines the term when the goal was to emphasize its influence; narrates when the goal was to compare)",
-    "Fact distortion: the sentence subtly misstates a note (wrong date, swapped attribution, inflated figure)",
-    "Structure mismatch: the goal asks for a comparison or contrast but the sentence merely lists facts side by side without making the comparative move",
-    "Omission of the key note: the sentence addresses the goal but leaves out the single most decisive note, making it less effective than the key"
+    {
+      "misconceptionId": "SAT_RW:rhetorical-synthesis-relevance-failure",
+      "trap": "Relevance failure: the sentence uses accurate notes that do not serve the stated goal (right facts, wrong job)"
+    },
+    {
+      "misconceptionId": "SAT_RW:rhetorical-synthesis-goal-substitution",
+      "trap": "Goal substitution: the sentence accomplishes a nearby but different goal (defines the term when the goal was to emphasize its influence; narrates when the goal was to compare)"
+    },
+    {
+      "misconceptionId": "SAT_RW:rhetorical-synthesis-fact-distortion",
+      "trap": "Fact distortion: the sentence subtly misstates a note (wrong date, swapped attribution, inflated figure)"
+    },
+    {
+      "misconceptionId": "SAT_RW:rhetorical-synthesis-structure-mismatch",
+      "trap": "Structure mismatch: the goal asks for a comparison or contrast but the sentence merely lists facts side by side without making the comparative move"
+    },
+    {
+      "misconceptionId": "SAT_RW:rhetorical-synthesis-key-note-omission",
+      "trap": "Omission of the key note: the sentence addresses the goal but leaves out the single most decisive note, making it less effective than the key"
+    }
   ],
   "difficultyLevers": {
     "easy": [

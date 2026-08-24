@@ -1,0 +1,78 @@
+{
+  "slug": "ratios-rates-proportions",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:ratios-rates-proportions",
+  "skill": "Ratios, Rates, and Proportional Relationships",
+  "domain": "Problem-Solving and Data Analysis",
+  "stimulusShape": {
+    "type": "passage_table",
+    "lengthWords": [20, 80],
+    "structure": "A short real-world scenario (recipe mixing, unit pricing at a store, map scale, machine work rates, or speed/distance/time) stating either a part-to-part ratio with a total or a rate pairing two quantities. About half of items include a small 2-4 row data table (e.g., ounces vs. price, days vs. miles) whose columns feed the proportion; the rest carry all quantities in prose. The stem fixes a target quantity; exactly one proportion relates the given values to it."
+  },
+  "stemTemplates": [
+    "At this rate, how many <target-units> will <agent> <action> in <given-amount>?",
+    "If the ratio of <A> to <B> is a:b and there are <N> total, how many <A> are there?",
+    "What is the unit rate of <y-units> per <x-unit> shown in the table?",
+    "How many <target-units> are equivalent to <given quantity>?"
+  ],
+  "answerMode": "computed-number",
+  "choicePatterns": "Four numeric values carrying the same units as the key, each produced by a specific miscalculation of the same given numbers (wrong part-to-whole share, reciprocated proportion, inverted conversion factor, direct scaling of an inverse relation). Numeric values only — never phrases — and distractors preserve SAT-clean magnitudes so units sense-checks matter.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:ratios-rates-proportions-part-whole-confusion",
+      "trap": "Uses the ratio term as the fraction of the total: for cats:dogs = 3:5 with 40 total animals, offers 24 (3/5 of 40) alongside the key 15 (3/8 of 40). Computable as (partA / partB) x total instead of (partA / (partA + partB)) x total."
+    },
+    {
+      "misconceptionId": "SAT_MATH:ratios-rates-proportions-cross-multiplication-misalignment",
+      "trap": "Reciprocates one side of the proportion: for '3 hours -> 180 miles, miles in 5 hours', offers 1/12-style or wrong-magnitude values built by pairing miles with hours across the equals sign (3/180 = x/5). Computable by swapping the numerator/denominator of exactly one side of the correct proportion."
+    },
+    {
+      "misconceptionId": "SAT_MATH:ratios-rates-proportions-unit-conversion-inverted",
+      "trap": "Multiplies where the conversion factor should divide: for converting 150 minutes to hours, offers 9,000 (150 x 60); for cents/dollars or ounces/pounds variants, the value off by the conversion factor squared. Computable as given x factor^2 / correct."
+    },
+    {
+      "misconceptionId": "SAT_MATH:ratios-rates-proportions-inverse-treated-as-direct",
+      "trap": "Scales an inverse relation in the same direction: for '4 machines finish in 8 days; how long do 8 machines take', offers 16 days (direct doubling) instead of 4 days. Computable as direct-proportion answer where the key comes from the constant product (machines x days)."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Single direct proportion with whole-number unit rate (60 miles in 2 hours; miles in 5 hours)",
+      "Two-term part-to-part ratio where parts sum to a friendly total (3:5 with 40 total)",
+      "One-step unit conversion with factor 10, 60, or 100"
+    ],
+    "medium": [
+      "Unit rate is a clean fraction (7 pages in 4 minutes), so scaling requires cross-multiplication rather than mental multiplication",
+      "Ratio question asks for the SECOND part or for 'how many more A than B', requiring an extra subtraction after the share",
+      "Two-step chain: convert units, then scale (minutes to hours, then miles per hour)",
+      "Table variant where the needed values sit in different rows and one row is a distractor"
+    ],
+    "hard": [
+      "Inverse proportion (work rates, speed-time, pipes filling tanks) where direct scaling yields a plausible distractor",
+      "Combined rates: two agents working together, requiring rate addition before scaling",
+      "Ratio with three parts (a:b:c) where the target share needs both sum and difference steps",
+      "Change-analysis framing: 'by how much does the share change when 5 items are added to the total'"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Pick a context from {cooking, unit pricing, map scale, travel speed, work rate, currency/measurement conversion}. 2. Decide the relation type (direct, inverse, or part-to-whole) and fix the constant (rate k, product k, or parts sum). 3. Choose SAT-clean givens: totals 20-500 divisible by the parts sum, rates with denominator 2-12, conversion factors from {10, 12, 16, 60, 100, 1000}. 4. For table stimuli, emit 2-4 rows with one row beyond the two needed. 5. Write the stem naming the target quantity and its units explicitly.",
+    "keyConstruction": "Build the proportion with units written into both fraction positions (miles/hours = miles/hours), solve, and attach the stem's units. Verify by the arrow-check method: recompute the key from the constant (k x input, constant product, or share x total) using a DIFFERENT path than generation, and sanity-check direction (more hours must mean more miles; more machines must mean fewer days).",
+    "distractorConstruction": "Generate exactly four numbers from the same givens: (a) part/other-part x total when the key uses part/sum x total; (b) the correct proportion with one side reciprocated; (c) the conversion applied in the wrong direction (key x factor^2 for conversions; direct-scaled answer for inverse contexts); (d) a near-miss arithmetic slip (off by one grouping). Round nothing — each distractor must be exactly computable so the wrong path is reproducible for analytics. Keep all five values distinct and positive.",
+    "validationChecklist": [
+      "Every given number is SAT-clean: integer quantities, totals divisible by parts sums, rates with denominators <= 12",
+      "Realistic data ranges: totals 20-500, prices $2-$90, speeds 30-70 mph, times 10 minutes-8 hours",
+      "The key is positive, exact (integer or terminating decimal), and grid-in compatible when numeric (at most 4 characters including the decimal point)",
+      "Each distractor matches its misconception's formula exactly and differs from the key and from every other distractor",
+      "Units in the stem name exactly what the answer counts (miles, dollars, days, items) — no naked numbers",
+      "For inverse-relation items, the direct-scaling distractor is included and its magnitude is plausible"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Direct: unit rate k = y1/x1, key = k x2 (or cross-multiply x1/y1 = x2/key with matching unit positions). Part-to-whole: parts sum s = a + b; share of A = (a/s) x total. Inverse: constant product k = m1 x d1; key = k/m2. Conversion: multiply by the fraction that cancels the unwanted unit. Verify every key by substituting back into the original sentence and checking the direction of change.",
+  "numericConstraints": "Keys are positive integers or terminating decimals fitting the 4-column grid (<= 4 characters); fractional keys have denominators <= 12; totals 20-500; prices $2-$90 in whole dollars or to the cent; conversion factors restricted to {10, 12, 16, 60, 100, 1000}; rates use denominators 2-12.",
+  "questionTypeNotes": "Lean grid_in for computed quantities (scaled amounts, totals, converted measures) — roughly 60% of items; the SAT loves student-produced responses here because guessing a computation is hard. Use mcq when the choices are unit rates (fractions like $0.38/ounce) or when testing proportion SETUP recognition, since the wrong-setup paths then map cleanly onto choices.",
+  "diagramSpec": {
+    "allowedArchetypeIds": ["sat-math:table-data"],
+    "typicalUse": "A 2-4 row two-column table (quantity vs. price, time vs. distance, weight vs. servings) replaces the prose givens; the stem quotes the same headers and asks for a missing entry, so the student must build the proportion from the table cells rather than from a sentence."
+  }
+}

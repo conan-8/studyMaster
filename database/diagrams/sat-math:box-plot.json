@@ -1,0 +1,42 @@
+{
+  "archetypeId": "sat-math:box-plot",
+  "title": "Box-and-Whisker Plot",
+  "description": "A five-number-summary plot above a number line: box from Q1 to Q3, median line, whiskers to min and max. Serves Problem-Solving and Data Analysis (one-variable-data): comparing distributions, range/IQR, and median questions.",
+  "subjectsApplicable": ["SAT_MATH"],
+  "paramsSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["fiveNumberSummary", "axisMin", "axisMax", "axisLabel"],
+    "properties": {
+      "fiveNumberSummary": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["min", "q1", "median", "q3", "max"],
+        "description": "Must satisfy min <= q1 <= median <= q3 <= max (renderer validates, rejects otherwise).",
+        "properties": {
+          "min": { "type": "number", "minimum": -50, "maximum": 50, "multipleOf": 0.5 },
+          "q1": { "type": "number", "minimum": -50, "maximum": 50, "multipleOf": 0.5 },
+          "median": { "type": "number", "minimum": -50, "maximum": 50, "multipleOf": 0.5 },
+          "q3": { "type": "number", "minimum": -50, "maximum": 50, "multipleOf": 0.5 },
+          "max": { "type": "number", "minimum": -50, "maximum": 50, "multipleOf": 0.5 }
+        }
+      },
+      "axisMin": { "type": "number", "minimum": -50, "maximum": 50, "description": "Number-line start; must be <= fiveNumberSummary.min (renderer validates)." },
+      "axisMax": { "type": "number", "minimum": -50, "maximum": 50, "description": "Number-line end; must be >= fiveNumberSummary.max (renderer validates)." },
+      "axisLabel": { "type": "string", "minLength": 1, "maxLength": 24 },
+      "tickStep": {
+        "type": ["number", "null"],
+        "enum": [null, 1, 2, 5, 10],
+        "description": "Tick spacing; null lets the renderer choose a clean step."
+      },
+      "showValues": {
+        "type": "boolean",
+        "default": false,
+        "description": "Label min, Q1, median, Q3, max numerically above the plot."
+      }
+    }
+  },
+  "rendererRef": "BoxPlot",
+  "notes": "Renderer guarantees: the ordering invariant min<=q1<=median<=q3<=max is enforced at parse time, so a geometrically impossible box plot cannot be drawn; whisker endpoints and quartile edges land exactly on the parameterized values; axis extent always covers the whiskers with at least half a tick of padding."
+}

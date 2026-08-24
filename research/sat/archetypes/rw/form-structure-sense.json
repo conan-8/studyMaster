@@ -2,6 +2,8 @@
   "slug": "form-structure-sense",
   "skill": "Form, Structure, and Sense",
   "domain": "Standard English Conventions",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:form-structure-sense",
   "stimulusShape": {
     "type": "passage",
     "lengthWords": [25, 90],
@@ -14,11 +16,26 @@
   "answerMode": "best-phrase",
   "choicePatterns": "Four variants of the same word or phrase in different grammatical forms (e.g. 'has yielded' / 'yielded' / 'yields' / 'had yielded'; 'its' / 'it's' / 'their' / 'they're'). Exactly one matches every grammatical signal in the sentence; the others each violate one.",
   "distractorLogic": [
-    "Tense/aspect mismatch: a form inconsistent with the sentence's time markers or the sequence of events",
-    "Agreement trap: a verb or pronoun agreeing with a nearby noun that is not its true subject/antecedent (intervening prepositional phrase, inverted order, 'each/everyone' singulars)",
-    "Non-finite error: a participle or infinitive where a finite verb is required (or vice versa), producing a fragment or dangling modifier",
-    "Case/number error: pronoun in the wrong case or number; possessive vs contraction ('its/it's', 'their/they're')",
-    "Parallelism or comparison fault: a form that breaks a parallel series or renders a comparison illogical ('more than any' vs 'more than any other')"
+    {
+      "misconceptionId": "SAT_RW:form-structure-sense-tense-aspect-mismatch",
+      "trap": "Tense/aspect mismatch: a form inconsistent with the sentence's time markers or the sequence of events"
+    },
+    {
+      "misconceptionId": "SAT_RW:form-structure-sense-agreement-trap",
+      "trap": "Agreement trap: a verb or pronoun agreeing with a nearby noun that is not its true subject/antecedent (intervening prepositional phrase, inverted order, 'each/everyone' singulars)"
+    },
+    {
+      "misconceptionId": "SAT_RW:form-structure-sense-nonfinite-error",
+      "trap": "Non-finite error: a participle or infinitive where a finite verb is required (or vice versa), producing a fragment or dangling modifier"
+    },
+    {
+      "misconceptionId": "SAT_RW:form-structure-sense-case-number-error",
+      "trap": "Case/number error: pronoun in the wrong case or number; possessive vs contraction ('its/it's', 'their/they're')"
+    },
+    {
+      "misconceptionId": "SAT_RW:form-structure-sense-parallelism-comparison-fault",
+      "trap": "Parallelism or comparison fault: a form that breaks a parallel series or renders a comparison illogical ('more than any' vs 'more than any other')"
+    }
   ],
   "difficultyLevers": {
     "easy": [

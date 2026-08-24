@@ -19,29 +19,37 @@ research/sat/
 `question-bank/`, `assets/`, `index.jsonl`, and `.harvest-progress.json` are
 gitignored — see the licensing rule below.
 
-## Harvest workflow
+## Harvest workflow (PLANNED — harvester not yet built)
+
+The harvester script `scripts/harvest-sat-bank.mjs` is **planned but has not
+been built yet — it was deliberately deferred**. The workflow below is the
+intended design and is recorded here as the design record; the commands it
+refers to do not currently exist and must not be run. The `SATQB_COOKIE`
+mechanism and output layout below are spec, not current behavior.
 
 1. Export your SSQB session cookie:
    ```bash
    export SATQB_COOKIE="..."
    ```
-   (`scripts/harvest-sat-bank.mjs` refuses to run without `SATQB_COOKIE`.)
+   (The future harvester is intended to refuse to run without `SATQB_COOKIE`.)
 2. Run the harvester:
    ```bash
    node scripts/harvest-sat-bank.mjs
    ```
-   It writes normalized JSON files into `question-bank/` (one file per
-   question), figure assets into `assets/`, and a line-per-question index to
-   `index.jsonl`. Progress is checkpointed in `.harvest-progress.json` so the
-   run is resumable.
+   It is designed to write normalized JSON files into `question-bank/` (one
+   file per question), figure assets into `assets/`, and a line-per-question
+   index to `index.jsonl`. Progress is designed to be checkpointed in
+   `.harvest-progress.json` so a future run can resume.
 3. Validate the result (see below).
 
 ## Validating the bank
 
+The validator has two modes (a custom-directory mode is not supported):
+
 ```bash
-npm run validate:sat-bank                                   # validates research/sat/question-bank
-npx tsx scripts/validate-sat-bank.ts <dir>                  # validates a custom directory
-npx tsx scripts/validate-sat-bank.ts --fixtures             # validates research/sat/test-fixtures
+npm run validate:sat-bank                                   # question-bank + test-fixtures (runs --fixtures)
+npx tsx scripts/validate-sat-bank.ts                        # validates research/sat/question-bank only
+npx tsx scripts/validate-sat-bank.ts --fixtures             # validates question-bank + research/sat/test-fixtures
 ```
 
 The validator checks every `*.json` in the directory (recursively) against

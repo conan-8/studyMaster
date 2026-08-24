@@ -1,0 +1,448 @@
+{
+  "subject": {
+    "code": "SAT_RW",
+    "name": "SAT Reading & Writing"
+  },
+  "misconceptions": [
+    {
+      "id": "SAT_RW:transitions-wrong-relation",
+      "taxonomyCode": "SAT_RW:transitions",
+      "name": "Wrong logical relation",
+      "description": "The student misdiagnoses the logical relationship between the two sentences and selects a transition from the wrong family — for example contrast ('however') where the link is cause-effect ('therefore'), or addition ('moreover') where it is contrast.",
+      "detectionSignal": "Chose a transition naming a different logical family than the one actually connecting the two sentences (e.g. a contrast transition for a cause-effect pair).",
+      "remediationNote": "Have the student name the relationship in one word (contrast, cause, example, addition, concession, sequence) before looking at the choices, then pick the transition that names exactly that relation."
+    },
+    {
+      "id": "SAT_RW:transitions-polarity-reversal",
+      "taxonomyCode": "SAT_RW:transitions",
+      "name": "Right family, wrong polarity",
+      "description": "The student picks a transition from the correct logical family but with reversed direction, treating a parallel case as opposed (or vice versa) — e.g. 'conversely' for a case that is actually parallel.",
+      "detectionSignal": "Chose a same-family transition with inverted polarity relative to the true relationship (e.g. 'conversely' where the sentences are parallel, not opposed).",
+      "remediationNote": "Drill minimal pairs within a family (similarly/conversely, indeed/even so) and train the habit of asking whether sentence 2 continues or reverses sentence 1's direction."
+    },
+    {
+      "id": "SAT_RW:transitions-sentence-local-fit",
+      "taxonomyCode": "SAT_RW:transitions",
+      "name": "Connector fits sentence 2 alone, not the pair",
+      "description": "The student evaluates the transition against the second sentence's internal logic rather than the link between the sentences, choosing a connector that coheres within sentence 2 but misdescribes the sentence-to-sentence relationship.",
+      "detectionSignal": "Chose a connector that coheres with sentence 2's internal content while misdescribing the link between sentence 1 and sentence 2.",
+      "remediationNote": "Teach students to read the pair as a unit: ask 'what does sentence 2 do to sentence 1?' before judging any connector, since a transition's job is to bridge the sentences, not to decorate the second one."
+    },
+    {
+      "id": "SAT_RW:transitions-false-exemplification",
+      "taxonomyCode": "SAT_RW:transitions",
+      "name": "False exemplification",
+      "description": "The student assumes sentence 2 illustrates sentence 1 and selects 'for example' even when sentence 2 is not an instance of a general claim — or rejects exemplification when sentence 2 genuinely is such an instance.",
+      "detectionSignal": "Chose an exemplification/illustration transition ('for example', 'for instance') where sentence 2 is not an instance of sentence 1's general claim.",
+      "remediationNote": "Test exemplification explicitly: can sentence 2 be rewritten as 'an instance of <sentence 1's claim>'? If not, 'for example' is wrong no matter how related the topics feel."
+    },
+    {
+      "id": "SAT_RW:transitions-redundancy-register",
+      "taxonomyCode": "SAT_RW:transitions",
+      "name": "Redundant or off-register connector",
+      "description": "The student overlooks that a connector duplicates meaning already expressed in the sentences or clashes tonally with the passage's register.",
+      "detectionSignal": "Chose a connector that duplicates meaning already present in the sentences or is tonally wrong for the passage.",
+      "remediationNote": "After inserting a candidate, read the pair aloud and check for doubled logic (a cause already signaled in the wording) and for register consistency with the surrounding prose."
+    },
+    {
+      "id": "SAT_RW:boundaries-comma-splice",
+      "taxonomyCode": "SAT_RW:boundaries",
+      "name": "Comma splice",
+      "description": "The student believes a comma alone can join two independent clauses, producing a comma splice.",
+      "detectionSignal": "Chose the option joining two independent clauses with a comma alone.",
+      "remediationNote": "Teach the independent-clause test: if both sides of the boundary can stand alone as sentences, a comma needs a coordinating conjunction, or the boundary must be a semicolon or period."
+    },
+    {
+      "id": "SAT_RW:boundaries-semicolon-misuse",
+      "taxonomyCode": "SAT_RW:boundaries",
+      "name": "Semicolon before an incomplete element",
+      "description": "The student treats the semicolon as a generic strong pause, placing it before a dependent clause, a phrase, or an otherwise incomplete second element.",
+      "detectionSignal": "Chose a semicolon where the element before or after it is not an independent clause.",
+      "remediationNote": "Semicolons join equals: both sides must be independent clauses. If either side is fragmentary, the boundary needs a comma, colon, or no punctuation as the governing rule dictates."
+    },
+    {
+      "id": "SAT_RW:boundaries-missing-boundary",
+      "taxonomyCode": "SAT_RW:boundaries",
+      "name": "Missing required punctuation",
+      "description": "The student fails to set off a parenthetical, appositive, or introductory element, or leaves a paired comma or dash unclosed.",
+      "detectionSignal": "Chose the option with no punctuation (or only one mark of a required pair) where a supplement or introductory element must be set off.",
+      "remediationNote": "Teach the deletion test: if an element can be removed without breaking the core sentence, it must be enclosed by a matched pair of punctuation marks — two commas, two dashes, or parentheses."
+    },
+    {
+      "id": "SAT_RW:boundaries-false-boundary",
+      "taxonomyCode": "SAT_RW:boundaries",
+      "name": "Punctuation splitting inseparable elements",
+      "description": "The student inserts a boundary where none belongs — between subject and verb, inside a restrictive clause, or before 'because'.",
+      "detectionSignal": "Chose punctuation that splits elements that must stay together (subject from verb, within a restrictive clause, before 'because').",
+      "remediationNote": "Drill the rule that a single comma never separates a subject from its verb or opens a restrictive modifier; punctuation follows syntactic structure, not pauses in speech."
+    },
+    {
+      "id": "SAT_RW:boundaries-wrong-connector",
+      "taxonomyCode": "SAT_RW:boundaries",
+      "name": "Connector punctuation violation",
+      "description": "The student picks a connector whose punctuation requirements the choice violates — e.g. using the conjunctive adverb 'however' with the punctuation licensed for the coordinating conjunction 'but'.",
+      "detectionSignal": "Chose a conjunctive adverb punctuated like a coordinating conjunction (or vice versa), e.g. 'however' used like 'but'.",
+      "remediationNote": "Contrast the two connector classes explicitly: 'but' takes a comma before it and nothing after; 'however' between independent clauses takes a semicolon before and a comma after."
+    },
+    {
+      "id": "SAT_RW:central-ideas-details-detail-as-main",
+      "taxonomyCode": "SAT_RW:central-ideas-details",
+      "name": "Supporting detail inflated to main idea",
+      "description": "The student mistakes a true subordinate point or example for the passage's central claim.",
+      "detectionSignal": "Chose an option presenting a true supporting detail as the main idea.",
+      "remediationNote": "Ask: 'would the other sentences support this one, or does this one support them?' The main idea is the statement everything else in the passage serves."
+    },
+    {
+      "id": "SAT_RW:central-ideas-details-overgeneralization",
+      "taxonomyCode": "SAT_RW:central-ideas-details",
+      "name": "Claim extended beyond its stated scope",
+      "description": "The student accepts a broader version of the passage's claim — a wider population, stronger certainty, or larger scope than the text states.",
+      "detectionSignal": "Chose an option that extends the passage's claim beyond its stated scope or population.",
+      "remediationNote": "Underline the passage's qualifiers (some, often, in this study) and require every word of the chosen option to be licensed by the text."
+    },
+    {
+      "id": "SAT_RW:central-ideas-details-relationship-reversal",
+      "taxonomyCode": "SAT_RW:central-ideas-details",
+      "name": "Stated relationship reversed",
+      "description": "The student inverts a relationship the passage asserts — cause and effect swapped, or a comparison flipped ('more' read as 'fewer').",
+      "detectionSignal": "Chose an option that swaps cause and effect or flips a comparison stated in the passage.",
+      "remediationNote": "Sketch the passage's key relationship as an arrow (A -> B) before reading the options, and eliminate any option whose arrow points the other way."
+    },
+    {
+      "id": "SAT_RW:central-ideas-details-outside-knowledge",
+      "taxonomyCode": "SAT_RW:central-ideas-details",
+      "name": "Plausible but unsupported by the text",
+      "description": "The student picks a statement that is true or plausible in the real world but that the passage never asserts.",
+      "detectionSignal": "Chose an option relying on outside knowledge that the passage never states.",
+      "remediationNote": "Enforce a text-only rule: for each option, point to the exact lines that support it. If no lines exist, it cannot be the answer no matter how true it sounds."
+    },
+    {
+      "id": "SAT_RW:central-ideas-details-misattribution",
+      "taxonomyCode": "SAT_RW:central-ideas-details",
+      "name": "Belief or finding assigned to the wrong source",
+      "description": "The student attributes a belief, finding, or position to the wrong person, group, or time period named in the passage.",
+      "detectionSignal": "Chose an option assigning a belief or finding to the wrong person, group, or time period named in the passage.",
+      "remediationNote": "Build a quick cast list while reading — who believes or found what — and check every attribution in the options against it."
+    },
+    {
+      "id": "SAT_RW:command-evidence-quantitative-table-misread",
+      "taxonomyCode": "SAT_RW:command-evidence-quantitative",
+      "name": "Wrong cell of the table",
+      "description": "The student reads the wrong row, column, or category when extracting data from the table or graph.",
+      "detectionSignal": "Chose an option citing data from the wrong row or column, or with categories swapped.",
+      "remediationNote": "Trace the axes and labels physically before reading any values, and restate in words what the cited cell actually measures before matching it to the claim."
+    },
+    {
+      "id": "SAT_RW:command-evidence-quantitative-irrelevant-data",
+      "taxonomyCode": "SAT_RW:command-evidence-quantitative",
+      "name": "Accurate data, wrong job",
+      "description": "The student selects a factually accurate statement about the data that does not bear on the claim it is supposed to support.",
+      "detectionSignal": "Chose an option whose numbers are accurate but irrelevant to the claim being supported.",
+      "remediationNote": "Paraphrase the claim first, then ask of each option: 'if this is true, does the claim get more believable?' Accuracy is necessary but never sufficient."
+    },
+    {
+      "id": "SAT_RW:command-evidence-quantitative-trend-reversal",
+      "taxonomyCode": "SAT_RW:command-evidence-quantitative",
+      "name": "Trend or comparison reported backwards",
+      "description": "The student reports an increase as a decrease, or the higher value as the lower, reversing the direction of what the data show.",
+      "detectionSignal": "Chose an option reporting an increase as a decrease or the higher value as the lower.",
+      "remediationNote": "Convert chart language into plain comparisons ('X rose, Y fell') and check each option against that plain statement before choosing."
+    },
+    {
+      "id": "SAT_RW:command-evidence-quantitative-unit-scale-error",
+      "taxonomyCode": "SAT_RW:command-evidence-quantitative",
+      "name": "Unit or scale confusion",
+      "description": "The student ignores whether figures are percentages or counts, per-capita or totals, or otherwise misreads the scale of the data.",
+      "detectionSignal": "Chose an option that confuses percentages with counts, or per-capita figures with totals.",
+      "remediationNote": "Always read the units in the axis, legend, or title first, and translate every cited figure into 'units of what, out of what' before comparing."
+    },
+    {
+      "id": "SAT_RW:command-evidence-quantitative-aggregation-error",
+      "taxonomyCode": "SAT_RW:command-evidence-quantitative",
+      "name": "Whole-group figure applied to a subgroup",
+      "description": "The student cites an overall figure when the claim concerns a subgroup, or a subgroup figure when the claim concerns the whole.",
+      "detectionSignal": "Chose an option citing an aggregate figure where the claim concerns a subgroup (or vice versa).",
+      "remediationNote": "Match the scope of the data to the scope of the claim word by word — if the claim says 'among urban respondents', the evidence must be about urban respondents."
+    },
+    {
+      "id": "SAT_RW:command-evidence-textual-nearby-claim",
+      "taxonomyCode": "SAT_RW:command-evidence-textual",
+      "name": "Evidence supports a nearby but different claim",
+      "description": "The student selects a finding on the right topic that actually supports a different mechanism or conclusion than the claim stated in the stem.",
+      "detectionSignal": "Chose a finding on the right topic that supports an adjacent claim, not the one the stem states.",
+      "remediationNote": "Restate the exact claim — its mechanism, not just its topic — and require the evidence to make that specific mechanism more likely."
+    },
+    {
+      "id": "SAT_RW:command-evidence-textual-non-discriminating",
+      "taxonomyCode": "SAT_RW:command-evidence-textual",
+      "name": "Evidence too weak to discriminate",
+      "description": "The student accepts a finding that is consistent with the claim but equally consistent with rival explanations, so it does not count as support.",
+      "detectionSignal": "Chose a finding that is consistent with the claim but does not discriminate between it and rival explanations.",
+      "remediationNote": "Ask: 'would this finding also be true if the rival explanation were correct?' If yes, it is not supporting evidence for this claim."
+    },
+    {
+      "id": "SAT_RW:command-evidence-textual-undermining-evidence",
+      "taxonomyCode": "SAT_RW:command-evidence-textual",
+      "name": "Weakening evidence dressed as support",
+      "description": "The student is swayed by supportive wording and misses that the finding actually weakens or complicates the claim.",
+      "detectionSignal": "Chose a finding that actually weakens or complicates the claim, dressed in supportive wording.",
+      "remediationNote": "Strip the rhetoric: state what the finding shows in neutral terms, then check its direction against the claim before trusting supportive phrasing."
+    },
+    {
+      "id": "SAT_RW:command-evidence-textual-restatement-as-evidence",
+      "taxonomyCode": "SAT_RW:command-evidence-textual",
+      "name": "Claim restated as its own evidence",
+      "description": "The student accepts a paraphrase of the claim itself as if it were independent evidence for it.",
+      "detectionSignal": "Chose an option that restates the claim rather than providing independent evidence for it.",
+      "remediationNote": "Evidence must add something the claim doesn't already say — an observation, result, or quotation that could exist even if the claim were false."
+    },
+    {
+      "id": "SAT_RW:command-evidence-textual-scope-mismatch",
+      "taxonomyCode": "SAT_RW:command-evidence-textual",
+      "name": "Evidence about the wrong population or variable",
+      "description": "The student picks a finding about a different population, time period, or variable than the one the claim names.",
+      "detectionSignal": "Chose a finding about the wrong population, time period, or variable relative to the claim.",
+      "remediationNote": "Circle the claim's scope terms (who, when, what is measured) and eliminate any finding whose scope terms differ."
+    },
+    {
+      "id": "SAT_RW:cross-text-connections-stance-swap",
+      "taxonomyCode": "SAT_RW:cross-text-connections",
+      "name": "Positions attributed to the wrong text",
+      "description": "The student attributes Text 1's position to Text 2, or vice versa.",
+      "detectionSignal": "Chose an option assigning one text's stance to the other text.",
+      "remediationNote": "Summarize each text's position in a single labeled sentence ('Text 1: ...', 'Text 2: ...') before reading any options."
+    },
+    {
+      "id": "SAT_RW:cross-text-connections-relationship-mislabel",
+      "taxonomyCode": "SAT_RW:cross-text-connections",
+      "name": "Relationship between the texts mislabeled",
+      "description": "The student mislabels how the texts relate — claiming direct refutation where Text 2 merely complicates, or agreement where the texts address different questions.",
+      "detectionSignal": "Chose an option mislabeling the inter-text relationship (refutation vs complication, or agreement across different questions).",
+      "remediationNote": "First decide whether the texts answer the same question, then whether Text 2 agrees, complicates, or contradicts — use graduated labels rather than an agree/disagree binary."
+    },
+    {
+      "id": "SAT_RW:cross-text-connections-wrong-target",
+      "taxonomyCode": "SAT_RW:cross-text-connections",
+      "name": "Response engages the wrong detail",
+      "description": "The student selects a response that engages a detail of Text 1 other than the one the stem asks about.",
+      "detectionSignal": "Chose an option whose response engages a detail of Text 1 other than the one the stem targets.",
+      "remediationNote": "Underline the specific claim or detail named in the stem and check that the chosen response engages exactly that element."
+    },
+    {
+      "id": "SAT_RW:cross-text-connections-fabricated-position",
+      "taxonomyCode": "SAT_RW:cross-text-connections",
+      "name": "Position neither text supports",
+      "description": "The student invents a stance for an author that neither text gives any basis to hold.",
+      "detectionSignal": "Chose an option attributing a position to an author with no basis in either text.",
+      "remediationNote": "Every attributed view must be traceable to a specific line; if the author never commits to it, the option is fabrication."
+    },
+    {
+      "id": "SAT_RW:cross-text-connections-overstated-disagreement",
+      "taxonomyCode": "SAT_RW:cross-text-connections",
+      "name": "Partial difference read as wholesale rejection",
+      "description": "The student inflates a partial or conditional disagreement between the texts into total rejection.",
+      "detectionSignal": "Chose an option portraying a partial or conditional difference as wholesale rejection.",
+      "remediationNote": "Calibrate strength words — 'challenges entirely' vs 'qualifies' — and match the option's strength to the text's actual strength."
+    },
+    {
+      "id": "SAT_RW:form-structure-sense-tense-aspect-mismatch",
+      "taxonomyCode": "SAT_RW:form-structure-sense",
+      "name": "Verb form inconsistent with time frame",
+      "description": "The student picks a tense or aspect inconsistent with the sentence's time markers or the sequence of events.",
+      "detectionSignal": "Chose a verb form inconsistent with the sentence's time markers or sequence of events.",
+      "remediationNote": "Locate every time marker (by then, since 2010, next year) and sequence the events on a mental timeline before choosing the verb form."
+    },
+    {
+      "id": "SAT_RW:form-structure-sense-agreement-trap",
+      "taxonomyCode": "SAT_RW:form-structure-sense",
+      "name": "Agreement with a decoy noun",
+      "description": "The student makes a verb or pronoun agree with a nearby noun that is not its true subject or antecedent — misled by an intervening prepositional phrase, inverted order, or 'each/everyone' singulars.",
+      "detectionSignal": "Chose a form agreeing with a nearby decoy noun rather than the true subject or antecedent.",
+      "remediationNote": "Strip intervening phrases and locate the grammatical subject; remember that 'each', 'everyone', and inverted word order hide singular subjects."
+    },
+    {
+      "id": "SAT_RW:form-structure-sense-nonfinite-error",
+      "taxonomyCode": "SAT_RW:form-structure-sense",
+      "name": "Non-finite form where a finite verb is required",
+      "description": "The student uses a participle or infinitive where a finite verb is required (or vice versa), producing a fragment or a dangling modifier.",
+      "detectionSignal": "Chose a participle or infinitive where the sentence requires a finite verb (or vice versa), creating a fragment or dangling modifier.",
+      "remediationNote": "Check that every clause contains a conjugated verb, and that any introductory participle logically attaches to the subject that follows it."
+    },
+    {
+      "id": "SAT_RW:form-structure-sense-case-number-error",
+      "taxonomyCode": "SAT_RW:form-structure-sense",
+      "name": "Pronoun case or number error",
+      "description": "The student picks a pronoun in the wrong case or number, or confuses a possessive with a contraction ('its/it's', 'their/they're').",
+      "detectionSignal": "Chose a pronoun in the wrong case or number, or a possessive/contraction mix-up ('its/it's', 'their/they're').",
+      "remediationNote": "Substitute the pronoun with the noun it replaces to hear the case, and expand contractions ('it's' = 'it is') to test them in the sentence."
+    },
+    {
+      "id": "SAT_RW:form-structure-sense-parallelism-comparison-fault",
+      "taxonomyCode": "SAT_RW:form-structure-sense",
+      "name": "Broken parallelism or illogical comparison",
+      "description": "The student picks a form that breaks a parallel series or renders a comparison illogical ('more than any' vs 'more than any other').",
+      "detectionSignal": "Chose a form that breaks a parallel series or makes a comparison illogical.",
+      "remediationNote": "Line up the items in a series and confirm each has the same grammatical form; in comparisons, check that like is compared with like."
+    },
+    {
+      "id": "SAT_RW:inferences-restatement-trap",
+      "taxonomyCode": "SAT_RW:inferences",
+      "name": "Premise paraphrased instead of conclusion drawn",
+      "description": "The student selects a choice that paraphrases a single premise instead of drawing a conclusion from the premises taken together.",
+      "detectionSignal": "Chose an option that paraphrases one premise rather than drawing a conclusion from the premises together.",
+      "remediationNote": "The answer to an inference question must say something the passage doesn't state outright — ask 'is this new, or just repeated?'"
+    },
+    {
+      "id": "SAT_RW:inferences-overreach",
+      "taxonomyCode": "SAT_RW:inferences",
+      "name": "Conclusion stronger than the premises license",
+      "description": "The student accepts a conclusion that is stronger, broader, or more certain than the premises warrant ('always', 'proves', 'the only').",
+      "detectionSignal": "Chose a conclusion worded more strongly or broadly than the premises license.",
+      "remediationNote": "Prefer the weakest defensible option, and flag absolute words — check whether the premises truly rule out every alternative."
+    },
+    {
+      "id": "SAT_RW:inferences-contradiction",
+      "taxonomyCode": "SAT_RW:inferences",
+      "name": "Conclusion incompatible with a premise",
+      "description": "The student overlooks that the chosen option is quietly incompatible with one stated premise.",
+      "detectionSignal": "Chose an option that contradicts a stated premise.",
+      "remediationNote": "Test each option against every premise, not just the overall gist — one contradiction disqualifies it."
+    },
+    {
+      "id": "SAT_RW:inferences-plausibility-trap",
+      "taxonomyCode": "SAT_RW:inferences",
+      "name": "Real-world plausible but ungrounded",
+      "description": "The student chooses a conclusion that sounds true in the real world but is not grounded in the passage.",
+      "detectionSignal": "Chose a conclusion that is real-world plausible but not grounded in the passage.",
+      "remediationNote": "Reason only from the given premises — pretend you know nothing about the topic outside the passage."
+    },
+    {
+      "id": "SAT_RW:inferences-wrong-direction",
+      "taxonomyCode": "SAT_RW:inferences",
+      "name": "Conditional or correlation reversed",
+      "description": "The student reverses the direction of a conditional or correlation the premises establish (treating 'if A then B' as 'if B then A').",
+      "detectionSignal": "Chose a conclusion that reverses the conditional or correlation the premises establish.",
+      "remediationNote": "Restate the premise as an arrow and verify the conclusion's arrow points the same way; a correlation never licenses a reversed causal claim."
+    },
+    {
+      "id": "SAT_RW:rhetorical-synthesis-relevance-failure",
+      "taxonomyCode": "SAT_RW:rhetorical-synthesis",
+      "name": "Accurate notes, wrong goal",
+      "description": "The student picks a sentence that uses accurate notes but does not serve the stated rhetorical goal.",
+      "detectionSignal": "Chose a sentence whose notes are accurate but which does not serve the stated goal.",
+      "remediationNote": "Read the goal first and treat it as the question; a sentence can be factually perfect and still wrong if it doesn't do the requested job."
+    },
+    {
+      "id": "SAT_RW:rhetorical-synthesis-goal-substitution",
+      "taxonomyCode": "SAT_RW:rhetorical-synthesis",
+      "name": "Nearby goal accomplished instead",
+      "description": "The student picks a sentence that accomplishes a nearby but different goal — defining a term when the goal was to emphasize its influence, or narrating when the goal was to compare.",
+      "detectionSignal": "Chose a sentence accomplishing a nearby but different goal than the stated one.",
+      "remediationNote": "Classify the goal by its verb — emphasize, compare, introduce, illustrate — and check that the chosen sentence performs that exact rhetorical act."
+    },
+    {
+      "id": "SAT_RW:rhetorical-synthesis-fact-distortion",
+      "taxonomyCode": "SAT_RW:rhetorical-synthesis",
+      "name": "Note subtly misstated",
+      "description": "The student overlooks a small factual corruption in the sentence — a wrong date, a swapped attribution, or an inflated figure.",
+      "detectionSignal": "Chose a sentence that subtly misstates a note (wrong date, swapped attribution, inflated figure).",
+      "remediationNote": "Verify every fact in the chosen sentence against the notes one by one; a single corrupted detail disqualifies it."
+    },
+    {
+      "id": "SAT_RW:rhetorical-synthesis-structure-mismatch",
+      "taxonomyCode": "SAT_RW:rhetorical-synthesis",
+      "name": "Comparative goal, non-comparative sentence",
+      "description": "When the goal asks for a comparison or contrast, the student accepts a sentence that merely lists facts side by side without making the comparative move.",
+      "detectionSignal": "Chose a sentence that lists facts side by side where the goal requires a comparison or contrast.",
+      "remediationNote": "A comparison needs comparative language ('whereas', 'unlike', 'more than') — a list of facts about both subjects is not a comparison."
+    },
+    {
+      "id": "SAT_RW:rhetorical-synthesis-key-note-omission",
+      "taxonomyCode": "SAT_RW:rhetorical-synthesis",
+      "name": "Decisive note left out",
+      "description": "The student accepts a sentence that addresses the goal but leaves out the single most decisive note, making it less effective than the key.",
+      "detectionSignal": "Chose a sentence that addresses the goal but omits the most decisive note.",
+      "remediationNote": "Rank the notes by relevance to the goal before reading the choices; the best sentence will use the top-ranked note."
+    },
+    {
+      "id": "SAT_RW:text-structure-purpose-content-not-role",
+      "taxonomyCode": "SAT_RW:text-structure-purpose",
+      "name": "What it says mistaken for what it does",
+      "description": "The student accurately summarizes what a sentence says but misdescribes its rhetorical function in the passage.",
+      "detectionSignal": "Chose an option that accurately summarizes content but misdescribes the sentence's role.",
+      "remediationNote": "Answer function questions with a verb, not a summary — ask 'what job does this sentence do for the argument?' (introduce, qualify, exemplify, concede)."
+    },
+    {
+      "id": "SAT_RW:text-structure-purpose-role-reversal",
+      "taxonomyCode": "SAT_RW:text-structure-purpose",
+      "name": "Rhetorical roles swapped",
+      "description": "The student describes evidence as the claim it supports, or a concession as the main assertion.",
+      "detectionSignal": "Chose an option describing evidence as the claim it supports, or a concession as the main assertion.",
+      "remediationNote": "Map the passage's roles — which sentence asserts, which supports, which concedes — and assign each a label before reading the options."
+    },
+    {
+      "id": "SAT_RW:text-structure-purpose-overstatement",
+      "taxonomyCode": "SAT_RW:text-structure-purpose",
+      "name": "Stronger move than the text makes",
+      "description": "The student names a stronger rhetorical move than the text performs ('refutes' where the text merely 'qualifies'; 'proves' where it 'suggests').",
+      "detectionSignal": "Chose an option naming a stronger rhetorical move than the text performs ('refutes' vs 'qualifies', 'proves' vs 'suggests').",
+      "remediationNote": "Keep a graduated scale of strength verbs (suggests < argues < demonstrates < proves) and match the verb to the text's actual force."
+    },
+    {
+      "id": "SAT_RW:text-structure-purpose-wrong-object",
+      "taxonomyCode": "SAT_RW:text-structure-purpose",
+      "name": "Function of a different sentence",
+      "description": "The student selects an accurate description of the function of a different sentence in the passage.",
+      "detectionSignal": "Chose an option describing the function of a different sentence than the one the stem asks about.",
+      "remediationNote": "Locate the exact sentence named in the stem and test each option's description against that sentence alone."
+    },
+    {
+      "id": "SAT_RW:text-structure-purpose-structure-swap",
+      "taxonomyCode": "SAT_RW:text-structure-purpose",
+      "name": "Wrong architecture named",
+      "description": "The student names a recognizable structure (chronology, problem-solution, compare-contrast) that fits a different passage shape than the actual one.",
+      "detectionSignal": "Chose an option naming a structure (chronology, problem-solution, compare-contrast) that does not match the passage's organization.",
+      "remediationNote": "Outline the passage in two or three beats (e.g. claim -> objection -> reply) and match the option's architecture to that outline."
+    },
+    {
+      "id": "SAT_RW:words-in-context-register-meaning-mismatch",
+      "taxonomyCode": "SAT_RW:words-in-context",
+      "name": "Right register, wrong meaning",
+      "description": "The student is swayed by a word's matching formality and misses that its sense does not fit the context.",
+      "detectionSignal": "Chose a word of matching formality whose sense does not fit the context.",
+      "remediationNote": "Ignore tone first: paraphrase what the blank must mean in plain words, then find the choice that means exactly that."
+    },
+    {
+      "id": "SAT_RW:words-in-context-wrong-sense",
+      "taxonomyCode": "SAT_RW:words-in-context",
+      "name": "Wrong sense of a polysemous word",
+      "description": "The student selects a polysemous word whose tempting secondary meaning fails in context — or rejects the correct word because only its commonest sense comes to mind.",
+      "detectionSignal": "Chose a polysemous word whose required sense fails in context (a secondary meaning tempts but does not fit).",
+      "remediationNote": "Test each candidate's relevant dictionary sense in the sentence, not just its most familiar one — the SAT frequently tests secondary senses."
+    },
+    {
+      "id": "SAT_RW:words-in-context-collocation-error",
+      "taxonomyCode": "SAT_RW:words-in-context",
+      "name": "Near-synonym that doesn't collocate",
+      "description": "The student picks a word close in meaning that does not combine naturally with the surrounding words (e.g. 'performed a mistake').",
+      "detectionSignal": "Chose a near-synonym that does not collocate naturally with the surrounding words.",
+      "remediationNote": "Read the phrase aloud with each candidate; idiomatic English constrains which near-synonyms combine ('made a mistake', not 'performed a mistake')."
+    },
+    {
+      "id": "SAT_RW:words-in-context-partial-fit",
+      "taxonomyCode": "SAT_RW:words-in-context",
+      "name": "Fits one clue, contradicts another",
+      "description": "The student anchors on one clause's clue and misses that the chosen word contradicts another part of the sentence.",
+      "detectionSignal": "Chose a word that satisfies one clause's clue while contradicting another.",
+      "remediationNote": "Collect all the clues in the sentence — the blank must satisfy every one of them simultaneously."
+    },
+    {
+      "id": "SAT_RW:words-in-context-thematic-lure",
+      "taxonomyCode": "SAT_RW:words-in-context",
+      "name": "Topic-associated but wrong for the slot",
+      "description": "The student picks a word associated with the passage's topic even though it does not fit the blank's specific role in the sentence.",
+      "detectionSignal": "Chose a word associated with the passage's topic but not with the blank's specific slot.",
+      "remediationNote": "Topic relevance is a trap: the blank needs a word that fits the sentence's logic, not one that merely belongs to the subject area."
+    }
+  ]
+}

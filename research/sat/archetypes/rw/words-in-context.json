@@ -2,6 +2,8 @@
   "slug": "words-in-context",
   "skill": "Words in Context",
   "domain": "Craft and Structure",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:words-in-context",
   "stimulusShape": {
     "type": "passage",
     "lengthWords": [25, 80],
@@ -14,11 +16,26 @@
   "answerMode": "best-word",
   "choicePatterns": "Four single words (occasionally short phrases) of similar register and the same part of speech. Exactly one fits both the meaning demanded by the context and the sentence's collocations; the other three are plausible-sounding near-misses.",
   "distractorLogic": [
-    "Right register, wrong meaning: a word of matching formality whose sense does not fit the context",
-    "Correct word, wrong sense: a polysemous word whose secondary meaning tempts but whose required sense fails (or vice versa)",
-    "Near-synonym, wrong collocation: a word close in meaning that does not combine naturally with the surrounding words (e.g. 'performed a mistake')",
-    "Partial fit: a word that satisfies one clause's clue but contradicts another",
-    "Thematic lure: a word associated with the passage's topic but not with the blank's specific slot"
+    {
+      "misconceptionId": "SAT_RW:words-in-context-register-meaning-mismatch",
+      "trap": "Right register, wrong meaning: a word of matching formality whose sense does not fit the context"
+    },
+    {
+      "misconceptionId": "SAT_RW:words-in-context-wrong-sense",
+      "trap": "Correct word, wrong sense: a polysemous word whose secondary meaning tempts but whose required sense fails (or vice versa)"
+    },
+    {
+      "misconceptionId": "SAT_RW:words-in-context-collocation-error",
+      "trap": "Near-synonym, wrong collocation: a word close in meaning that does not combine naturally with the surrounding words (e.g. 'performed a mistake')"
+    },
+    {
+      "misconceptionId": "SAT_RW:words-in-context-partial-fit",
+      "trap": "Partial fit: a word that satisfies one clause's clue but contradicts another"
+    },
+    {
+      "misconceptionId": "SAT_RW:words-in-context-thematic-lure",
+      "trap": "Thematic lure: a word associated with the passage's topic but not with the blank's specific slot"
+    }
   ],
   "difficultyLevers": {
     "easy": [

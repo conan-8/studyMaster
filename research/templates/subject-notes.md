@@ -1,8 +1,10 @@
 # <SUBJECT_NAME> (<SUBJECT_CODE>)
 
-> Scouting scratchpad for one subject. Copy to `research/notes/<SUBJECT_CODE>.md`
-> and fill in as you collect. Promote trustworthy findings into structured files
-> under `research/taxonomy/`, `research/calibration/`, `research/stimulus/`.
+> Scouting scratchpad for one AP subject (future work — SAT subjects already
+> exist under `database/`). Copy to `research/notes/<SUBJECT_CODE>.md` and fill
+> in as you collect. Promote trustworthy findings into the subject's
+> `database/<SUBJECT_CODE>/` folder (`exam_format.json`, `taxonomy.json`,
+> `misconceptions.json`), then run `npm run validate:all` and `npm run seed`.
 
 ## Sources found
 
@@ -46,7 +48,8 @@
 
 ## Data flow
 
-- [ ] CED PDF → `content/ced/` (parser) OR taxonomy JSON → `research/taxonomy/`
-- [ ] Calibration JSON(s) → `research/calibration/<CODE>/`
-- [ ] Link maps → `research/stimulus/<CODE>.json`
-- [ ] Update `PROGRESS.csv`
+- [ ] Exam format JSON → `database/<SUBJECT_CODE>/exam_format.json` (validate against `database/exam_format.schema.json`)
+- [ ] Taxonomy JSON (units → topics → LOs → skills) → `database/<SUBJECT_CODE>/taxonomy.json`
+- [ ] Misconception library → `database/<SUBJECT_CODE>/misconceptions.json`
+- [ ] `npm run validate:all` green → `npm run seed`
+- [ ] Calibration/stimulus material: hold in notes until those tracks are built (planned — see `research/README.md#future-work`)

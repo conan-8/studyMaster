@@ -1,0 +1,155 @@
+{
+  "subject": { "code": "SAT_RW", "name": "SAT Reading & Writing" },
+  "nodes": [
+    {
+      "code": "SAT_RW:information-and-ideas",
+      "kind": "domain",
+      "title": "Information and Ideas",
+      "slug": "information-and-ideas",
+      "description": "Tests comprehension of short passages: recalling stated details, identifying main ideas, using textual or quantitative evidence, and drawing supported inferences. On the fully digital SAT, each item pairs a single short passage (roughly 25-150 words) with exactly one question.",
+      "parentCode": null,
+      "examWeightPercent": 26,
+      "sortOrder": 1
+    },
+    {
+      "code": "SAT_RW:central-ideas-details",
+      "kind": "skill",
+      "title": "Central Ideas and Details",
+      "slug": "central-ideas-details",
+      "description": "Identify the main point of a short passage or locate a specific stated fact within it. These are the foundational comprehension items, with stems such as 'Which choice best states the main idea of the text?'",
+      "parentCode": "SAT_RW:information-and-ideas",
+      "examWeightPercent": null,
+      "sortOrder": 1
+    },
+    {
+      "code": "SAT_RW:command-evidence-textual",
+      "kind": "skill",
+      "title": "Command of Evidence: Textual",
+      "slug": "command-evidence-textual",
+      "description": "Judge which finding or quotation would most directly support (or weaken) a claim stated in a short research-oriented passage, matching evidence to the claim's variables, direction, population, and conditions.",
+      "parentCode": "SAT_RW:information-and-ideas",
+      "examWeightPercent": null,
+      "sortOrder": 2
+    },
+    {
+      "code": "SAT_RW:command-evidence-quantitative",
+      "kind": "skill",
+      "title": "Command of Evidence: Quantitative",
+      "slug": "command-evidence-quantitative",
+      "description": "Read a compact table or graph and select the statement that most accurately uses the data to support (or weaken) a claim; the numbers must be faithful to the data and the comparison must be the one the claim actually needs.",
+      "parentCode": "SAT_RW:information-and-ideas",
+      "examWeightPercent": null,
+      "sortOrder": 3
+    },
+    {
+      "code": "SAT_RW:inferences",
+      "kind": "skill",
+      "title": "Inferences",
+      "slug": "inferences",
+      "description": "Draw the single logical conclusion that a set of stated premises most strongly supports. The correct choice follows from the premises with the least added assumption, calibrated to the evidence in scope, certainty, and direction.",
+      "parentCode": "SAT_RW:information-and-ideas",
+      "examWeightPercent": null,
+      "sortOrder": 4
+    },
+    {
+      "code": "SAT_RW:craft-and-structure",
+      "kind": "domain",
+      "title": "Craft and Structure",
+      "slug": "craft-and-structure",
+      "description": "Tests how text is built and how language is used: selecting precise words in context, identifying the rhetorical function or overall structure of a passage, and relating the stances of two paired texts. Items focus on language and organization rather than pure comprehension.",
+      "parentCode": null,
+      "examWeightPercent": 28,
+      "sortOrder": 2
+    },
+    {
+      "code": "SAT_RW:words-in-context",
+      "kind": "skill",
+      "title": "Words in Context",
+      "slug": "words-in-context",
+      "description": "Select the most logical and precise word or phrase for a blank using the semantic clues in the surrounding text rather than raw vocabulary knowledge; the context alone must determine the single best sense.",
+      "parentCode": "SAT_RW:craft-and-structure",
+      "examWeightPercent": null,
+      "sortOrder": 1
+    },
+    {
+      "code": "SAT_RW:text-structure-purpose",
+      "kind": "skill",
+      "title": "Text Structure and Purpose",
+      "slug": "text-structure-purpose",
+      "description": "Describe what a sentence does rhetorically, what a whole text is for, or how it is organized overall — stepping back from content to name the rhetorical move and its role in the passage.",
+      "parentCode": "SAT_RW:craft-and-structure",
+      "examWeightPercent": null,
+      "sortOrder": 2
+    },
+    {
+      "code": "SAT_RW:cross-text-connections",
+      "kind": "skill",
+      "title": "Cross-Text Connections",
+      "slug": "cross-text-connections",
+      "description": "Hold two short texts' stances in mind at once and characterize how they relate: how one author would respond to the other's claim, where they would agree, or what the relationship between the texts is. Precision in tracking which author holds which position is the discriminator.",
+      "parentCode": "SAT_RW:craft-and-structure",
+      "examWeightPercent": null,
+      "sortOrder": 3
+    },
+    {
+      "code": "SAT_RW:standard-english-conventions",
+      "kind": "domain",
+      "title": "Standard English Conventions",
+      "slug": "standard-english-conventions",
+      "description": "Tests correctness of Standard English grammar, punctuation, and syntax within short expository sentences. On the digital SAT these are sentence-level items with a fixed stem asking for the choice that conforms to the conventions of Standard English.",
+      "parentCode": null,
+      "examWeightPercent": 26,
+      "sortOrder": 3
+    },
+    {
+      "code": "SAT_RW:boundaries",
+      "kind": "skill",
+      "title": "Boundaries",
+      "slug": "boundaries",
+      "description": "Punctuate a sentence correctly at its structural boundaries — between independent clauses, around parentheticals and appositives, after introductory elements, and within lists. Exactly one punctuated variant yields a complete, conventionally punctuated sentence.",
+      "parentCode": "SAT_RW:standard-english-conventions",
+      "examWeightPercent": null,
+      "sortOrder": 1
+    },
+    {
+      "code": "SAT_RW:form-structure-sense",
+      "kind": "skill",
+      "title": "Form, Structure, and Sense",
+      "slug": "form-structure-sense",
+      "description": "Supply the grammatically correct grammatical form of a word at a blank — verb tense and agreement, pronoun case and number, plurals and possessives, parallel structure, and logical comparisons — as determined by the sentence's internal signals.",
+      "parentCode": "SAT_RW:standard-english-conventions",
+      "examWeightPercent": null,
+      "sortOrder": 2
+    },
+    {
+      "code": "SAT_RW:expression-of-ideas",
+      "kind": "domain",
+      "title": "Expression of Ideas",
+      "slug": "expression-of-ideas",
+      "description": "Tests effective and purposeful writing choices: identifying the most logical transition between sentences and synthesizing relevant information from notes to accomplish a rhetorical goal. Items emphasize rhetorical effect and organization rather than correctness alone.",
+      "parentCode": null,
+      "examWeightPercent": 20,
+      "sortOrder": 4
+    },
+    {
+      "code": "SAT_RW:transitions",
+      "kind": "skill",
+      "title": "Transitions",
+      "slug": "transitions",
+      "description": "Identify the logical relationship between two sentences and choose the connector that names it (contrast, cause-effect, addition, exemplification, concession, or sequence). Grammar is never the cue, since every choice fits the blank grammatically.",
+      "parentCode": "SAT_RW:expression-of-ideas",
+      "examWeightPercent": null,
+      "sortOrder": 1
+    },
+    {
+      "code": "SAT_RW:rhetorical-synthesis",
+      "kind": "skill",
+      "title": "Rhetorical Synthesis",
+      "slug": "rhetorical-synthesis",
+      "description": "Select and deploy relevant information from a set of student notes to accomplish a stated rhetorical goal (e.g., emphasize, compare, introduce). The correct answer passes three filters: relevance, accuracy, and genuine execution of the requested move.",
+      "parentCode": "SAT_RW:expression-of-ideas",
+      "examWeightPercent": null,
+      "sortOrder": 2
+    }
+  ]
+}

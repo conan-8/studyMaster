@@ -2,6 +2,8 @@
   "slug": "boundaries",
   "skill": "Boundaries",
   "domain": "Standard English Conventions",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:boundaries",
   "stimulusShape": {
     "type": "passage",
     "lengthWords": [25, 80],
@@ -13,11 +15,26 @@
   "answerMode": "best-phrase",
   "choicePatterns": "Four variants of the text at the blank, differing only in punctuation and/or connector (e.g. 'study, however,' / 'study; however,' / 'study however,' / 'study. However,'). Exactly one produces a grammatically complete, conventionally punctuated sentence; the others create comma splices, fragments, run-ons, or mis-punctuated supplements.",
   "distractorLogic": [
-    "Comma splice: joining two independent clauses with a comma alone",
-    "Semicolon misuse: semicolon before a dependent clause, a phrase, or an incomplete second element",
-    "Missing boundary: no punctuation where a parenthetical, appositive, or introductory element requires it (or an unclosed paired comma/dash)",
-    "False boundary: punctuation splitting elements that must stay together (between subject and verb, within a restrictive clause, before 'because')",
-    "Wrong connector: a subordinating conjunction or conjunctive adverb whose punctuation requirements the choice violates (e.g. 'however' used like 'but')"
+    {
+      "misconceptionId": "SAT_RW:boundaries-comma-splice",
+      "trap": "Comma splice: joining two independent clauses with a comma alone"
+    },
+    {
+      "misconceptionId": "SAT_RW:boundaries-semicolon-misuse",
+      "trap": "Semicolon misuse: semicolon before a dependent clause, a phrase, or an incomplete second element"
+    },
+    {
+      "misconceptionId": "SAT_RW:boundaries-missing-boundary",
+      "trap": "Missing boundary: no punctuation where a parenthetical, appositive, or introductory element requires it (or an unclosed paired comma/dash)"
+    },
+    {
+      "misconceptionId": "SAT_RW:boundaries-false-boundary",
+      "trap": "False boundary: punctuation splitting elements that must stay together (between subject and verb, within a restrictive clause, before 'because')"
+    },
+    {
+      "misconceptionId": "SAT_RW:boundaries-wrong-connector",
+      "trap": "Wrong connector: a subordinating conjunction or conjunctive adverb whose punctuation requirements the choice violates (e.g. 'however' used like 'but')"
+    }
   ],
   "difficultyLevers": {
     "easy": [

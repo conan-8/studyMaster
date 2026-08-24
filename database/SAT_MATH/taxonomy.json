@@ -1,0 +1,235 @@
+{
+  "subject": { "code": "SAT_MATH", "name": "SAT Math" },
+  "nodes": [
+    {
+      "code": "SAT_MATH:algebra",
+      "kind": "domain",
+      "title": "Algebra",
+      "slug": "algebra",
+      "description": "Tests fluency with linear equations, inequalities, functions, and systems, including their graphs and real-world interpretations. Alongside Advanced Math it makes up the largest share of the Math section, appearing as both multiple-choice and grid-in items across all modules.",
+      "parentCode": null,
+      "examWeightPercent": 35,
+      "sortOrder": 1
+    },
+    {
+      "code": "SAT_MATH:linear-equations-one-var",
+      "kind": "skill",
+      "title": "Linear Equations in One Variable",
+      "slug": "linear-equations-one-var",
+      "description": "Solve and create linear equations in one variable, including equations with fractional or decimal coefficients, and interpret their solutions and graphs. Items often embed the equation in a real-world word problem.",
+      "parentCode": "SAT_MATH:algebra",
+      "examWeightPercent": null,
+      "sortOrder": 1
+    },
+    {
+      "code": "SAT_MATH:linear-functions",
+      "kind": "skill",
+      "title": "Linear Functions",
+      "slug": "linear-functions",
+      "description": "Evaluate, define, and interpret linear functions: read slope and intercept in context, build an f(x) = mx + b model from a scenario or table, and compare two linear functions to answer a question.",
+      "parentCode": "SAT_MATH:algebra",
+      "examWeightPercent": null,
+      "sortOrder": 2
+    },
+    {
+      "code": "SAT_MATH:linear-equations-two-vars",
+      "kind": "skill",
+      "title": "Linear Equations in Two Variables",
+      "slug": "linear-equations-two-vars",
+      "description": "Solve and create linear equations in two variables, interpret their graphs — slope, x- and y-intercepts — and connect an equation to the line and to the real-world quantities it describes.",
+      "parentCode": "SAT_MATH:algebra",
+      "examWeightPercent": null,
+      "sortOrder": 3
+    },
+    {
+      "code": "SAT_MATH:systems-linear-equations",
+      "kind": "skill",
+      "title": "Systems of Linear Equations",
+      "slug": "systems-linear-equations",
+      "description": "Solve systems of two linear equations in two variables and interpret the number of solutions (one, none, or infinitely many) in terms of the graphs and the real-world situation they model.",
+      "parentCode": "SAT_MATH:algebra",
+      "examWeightPercent": null,
+      "sortOrder": 4
+    },
+    {
+      "code": "SAT_MATH:linear-inequalities",
+      "kind": "skill",
+      "title": "Linear Inequalities",
+      "slug": "linear-inequalities",
+      "description": "Solve and graph linear inequalities in one or two variables, interpret inequality notation and constraint regions, and solve systems of inequalities to find feasible solutions.",
+      "parentCode": "SAT_MATH:algebra",
+      "examWeightPercent": null,
+      "sortOrder": 5
+    },
+    {
+      "code": "SAT_MATH:advanced-math",
+      "kind": "domain",
+      "title": "Advanced Math",
+      "slug": "advanced-math",
+      "description": "Tests nonlinear mathematics — quadratic and higher-degree functions, equivalent expressions, and systems of nonlinear equations — and the ability to build, manipulate, and interpret them. Alongside Algebra it makes up the largest share of the Math section.",
+      "parentCode": null,
+      "examWeightPercent": 35,
+      "sortOrder": 2
+    },
+    {
+      "code": "SAT_MATH:equivalent-expressions",
+      "kind": "skill",
+      "title": "Equivalent Expressions",
+      "slug": "equivalent-expressions",
+      "description": "Recognize and produce equivalent forms of algebraic expressions — through expansion, factoring, and rewriting — and use the structure of these forms to reason about coefficients, values, and solutions.",
+      "parentCode": "SAT_MATH:advanced-math",
+      "examWeightPercent": null,
+      "sortOrder": 1
+    },
+    {
+      "code": "SAT_MATH:nonlinear-functions",
+      "kind": "skill",
+      "title": "Nonlinear Functions",
+      "slug": "nonlinear-functions",
+      "description": "Evaluate, interpret, and graph nonlinear functions such as quadratics and other polynomials, including maximums, minimums, roots, and end behavior, and build or transform these functions from given conditions.",
+      "parentCode": "SAT_MATH:advanced-math",
+      "examWeightPercent": null,
+      "sortOrder": 2
+    },
+    {
+      "code": "SAT_MATH:nonlinear-equations-systems",
+      "kind": "skill",
+      "title": "Nonlinear Equations and Systems",
+      "slug": "nonlinear-equations-systems",
+      "description": "Solve equations and systems involving nonlinear (e.g., quadratic or rational) equations — by factoring, the quadratic formula, or graphing — and interpret the solutions and their real-world context.",
+      "parentCode": "SAT_MATH:advanced-math",
+      "examWeightPercent": null,
+      "sortOrder": 3
+    },
+    {
+      "code": "SAT_MATH:problem-solving-and-data-analysis",
+      "kind": "domain",
+      "title": "Problem-Solving and Data Analysis",
+      "slug": "problem-solving-and-data-analysis",
+      "description": "Tests quantitative reasoning about ratios, percentages, proportional relationships, and data shown in tables, graphs, and statistics. Questions emphasize interpreting quantities and evaluating claims in real-world contexts rather than mechanical computation.",
+      "parentCode": null,
+      "examWeightPercent": 15,
+      "sortOrder": 3
+    },
+    {
+      "code": "SAT_MATH:ratios-rates-proportions",
+      "kind": "skill",
+      "title": "Ratios, Rates, and Proportional Relationships",
+      "slug": "ratios-rates-proportions",
+      "description": "Set up and solve problems involving ratios, unit rates, and direct proportions, including converting units and scaling quantities, and interpret proportional relationships in real-world context.",
+      "parentCode": "SAT_MATH:problem-solving-and-data-analysis",
+      "examWeightPercent": null,
+      "sortOrder": 1
+    },
+    {
+      "code": "SAT_MATH:percentages",
+      "kind": "skill",
+      "title": "Percentages",
+      "slug": "percentages",
+      "description": "Solve percentage problems including percent increase and decrease, percent of a quantity, repeated or compound percent changes, and reverse-percent (back-solving) applications.",
+      "parentCode": "SAT_MATH:problem-solving-and-data-analysis",
+      "examWeightPercent": null,
+      "sortOrder": 2
+    },
+    {
+      "code": "SAT_MATH:one-variable-data",
+      "kind": "skill",
+      "title": "One-Variable Data",
+      "slug": "one-variable-data",
+      "description": "Represent and analyze distributions of a single variable — measures of center (mean, median, mode) and spread (range, standard deviation) — and interpret how changes to the data values affect them.",
+      "parentCode": "SAT_MATH:problem-solving-and-data-analysis",
+      "examWeightPercent": null,
+      "sortOrder": 3
+    },
+    {
+      "code": "SAT_MATH:two-variable-data",
+      "kind": "skill",
+      "title": "Two-Variable Data",
+      "slug": "two-variable-data",
+      "description": "Analyze relationships between two variables in tables and scatterplots, including association and correlation, and model trends with lines of best fit, interpreting the meaning of the fit's slope and intercept.",
+      "parentCode": "SAT_MATH:problem-solving-and-data-analysis",
+      "examWeightPercent": null,
+      "sortOrder": 4
+    },
+    {
+      "code": "SAT_MATH:probability-conditional",
+      "kind": "skill",
+      "title": "Probability and Conditional Probability",
+      "slug": "probability-conditional",
+      "description": "Compute and interpret probabilities and conditional probabilities from two-way tables and other representations, expressing the likelihood of events and outcomes in a clear numeric or percent form.",
+      "parentCode": "SAT_MATH:problem-solving-and-data-analysis",
+      "examWeightPercent": null,
+      "sortOrder": 5
+    },
+    {
+      "code": "SAT_MATH:sample-statistics-margin-error",
+      "kind": "skill",
+      "title": "Sample Statistics and Margin of Error",
+      "slug": "sample-statistics-margin-error",
+      "description": "Reason about samples and margin of error: use a random sample's statistic to estimate a population characteristic, interpret the margin of error in terms of precision, and connect sample size to reliability.",
+      "parentCode": "SAT_MATH:problem-solving-and-data-analysis",
+      "examWeightPercent": null,
+      "sortOrder": 6
+    },
+    {
+      "code": "SAT_MATH:evaluating-claims",
+      "kind": "skill",
+      "title": "Evaluating Claims",
+      "slug": "evaluating-claims",
+      "description": "Assess whether a conclusion about a population is justified by the data — distinguishing correlation from causation, evaluating experimental versus observational designs, and checking whether a conclusion follows from the given survey or study.",
+      "parentCode": "SAT_MATH:problem-solving-and-data-analysis",
+      "examWeightPercent": null,
+      "sortOrder": 7
+    },
+    {
+      "code": "SAT_MATH:geometry-and-trigonometry",
+      "kind": "domain",
+      "title": "Geometry and Trigonometry",
+      "slug": "geometry-and-trigonometry",
+      "description": "Tests measurement and spatial reasoning: area, volume, lines and angles, triangle relationships, right-triangle trigonometry, and circle properties. A smaller but consistent share of the Math section, delivered partly as figure-based multiple-choice items.",
+      "parentCode": null,
+      "examWeightPercent": 15,
+      "sortOrder": 4
+    },
+    {
+      "code": "SAT_MATH:area-volume",
+      "kind": "skill",
+      "title": "Area and Volume",
+      "slug": "area-volume",
+      "description": "Compute areas and volumes of geometric figures, including composite shapes, apply scaling principles when dimensions change, and connect these measures to real-world objects and contexts.",
+      "parentCode": "SAT_MATH:geometry-and-trigonometry",
+      "examWeightPercent": null,
+      "sortOrder": 1
+    },
+    {
+      "code": "SAT_MATH:lines-angles-triangles",
+      "kind": "skill",
+      "title": "Lines, Angles, and Triangles",
+      "slug": "lines-angles-triangles",
+      "description": "Use properties of lines, angles, parallel lines and transversals, and triangle relationships — including congruence and similarity — to find missing angle measures and side relationships.",
+      "parentCode": "SAT_MATH:geometry-and-trigonometry",
+      "examWeightPercent": null,
+      "sortOrder": 2
+    },
+    {
+      "code": "SAT_MATH:right-triangles-trig",
+      "kind": "skill",
+      "title": "Right Triangles and Trigonometry",
+      "slug": "right-triangles-trig",
+      "description": "Apply the Pythagorean theorem and right-triangle trigonometry (sine, cosine, tangent) to solve for missing sides and angles, including in applied contexts and coordinate-plane problems.",
+      "parentCode": "SAT_MATH:geometry-and-trigonometry",
+      "examWeightPercent": null,
+      "sortOrder": 3
+    },
+    {
+      "code": "SAT_MATH:circles",
+      "kind": "skill",
+      "title": "Circles",
+      "slug": "circles",
+      "description": "Solve for measures related to circles — radius, diameter, circumference, area, arcs, sectors, and central and inscribed angle relationships — and interpret equations of circles in the coordinate plane.",
+      "parentCode": "SAT_MATH:geometry-and-trigonometry",
+      "examWeightPercent": null,
+      "sortOrder": 4
+    }
+  ]
+}

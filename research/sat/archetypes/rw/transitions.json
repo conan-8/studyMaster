@@ -2,6 +2,8 @@
   "slug": "transitions",
   "skill": "Transitions",
   "domain": "Expression of Ideas",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:transitions",
   "stimulusShape": {
     "type": "passage",
     "lengthWords": [30, 90],
@@ -13,11 +15,26 @@
   "answerMode": "best-phrase",
   "choicePatterns": "Four transitional words or phrases (e.g. 'However,' / 'Similarly,' / 'For example,' / 'Accordingly,'). Exactly one names the true logical relationship between the two sentences; the others name plausible but wrong relationships — contrast, addition, exemplification, cause-effect, concession, sequence.",
   "distractorLogic": [
-    "Wrong logical relation: the most common trap — offering contrast ('however') where the logic is cause ('therefore'), addition ('moreover') where it is contrast, etc.",
-    "Direction reversal within a relation: a transition of the right family but wrong polarity ('conversely' for a parallel, not opposed, case)",
-    "Relation that fits sentence 2 alone but not the pair: the connector coheres with the second sentence's internal logic while misdescribing the link between sentences",
-    "Exemplification/illustration trap: 'for example' when sentence 2 is not an instance of sentence 1's general claim (or omitting it when it is)",
-    "Redundancy/register misfit: a connector that duplicates meaning already in the sentences or is tonally wrong for the passage"
+    {
+      "misconceptionId": "SAT_RW:transitions-wrong-relation",
+      "trap": "Wrong logical relation: the most common trap — offering contrast ('however') where the logic is cause ('therefore'), addition ('moreover') where it is contrast, etc."
+    },
+    {
+      "misconceptionId": "SAT_RW:transitions-polarity-reversal",
+      "trap": "Direction reversal within a relation: a transition of the right family but wrong polarity ('conversely' for a parallel, not opposed, case)"
+    },
+    {
+      "misconceptionId": "SAT_RW:transitions-sentence-local-fit",
+      "trap": "Relation that fits sentence 2 alone but not the pair: the connector coheres with the second sentence's internal logic while misdescribing the link between sentences"
+    },
+    {
+      "misconceptionId": "SAT_RW:transitions-false-exemplification",
+      "trap": "Exemplification/illustration trap: 'for example' when sentence 2 is not an instance of sentence 1's general claim (or omitting it when it is)"
+    },
+    {
+      "misconceptionId": "SAT_RW:transitions-redundancy-register",
+      "trap": "Redundancy/register misfit: a connector that duplicates meaning already in the sentences or is tonally wrong for the passage"
+    }
   ],
   "difficultyLevers": {
     "easy": [

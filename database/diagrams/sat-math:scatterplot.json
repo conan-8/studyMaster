@@ -1,0 +1,54 @@
+{
+  "archetypeId": "sat-math:scatterplot",
+  "title": "Scatterplot with Optional Line of Best Fit",
+  "description": "A cloud of data points in the xy-plane with an optional line of best fit. Serves Problem-Solving and Data Analysis (two-variable-data): association strength/direction, predicting from the line of best fit, and interpreting slope in context.",
+  "subjectsApplicable": ["SAT_MATH"],
+  "paramsSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["points", "gridExtent", "lineOfBestFit"],
+    "properties": {
+      "points": {
+        "type": "array",
+        "minItems": 5,
+        "maxItems": 12,
+        "description": "Data points. Renderer jitters coincident pairs apart by one half-cell so no two dots fully overlap.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["x", "y"],
+          "properties": {
+            "x": { "type": "number", "minimum": 0, "maximum": 20, "multipleOf": 0.5 },
+            "y": { "type": "number", "minimum": 0, "maximum": 20, "multipleOf": 0.5 }
+          }
+        }
+      },
+      "gridExtent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["xMax", "yMax"],
+        "description": "Axis maxima; must cover all points with at least one cell of headroom (renderer validates).",
+        "properties": {
+          "xMax": { "type": "integer", "minimum": 4, "maximum": 24 },
+          "yMax": { "type": "integer", "minimum": 4, "maximum": 24 }
+        }
+      },
+      "lineOfBestFit": {
+        "type": ["object", "null"],
+        "additionalProperties": false,
+        "required": ["slope", "yIntercept", "show"],
+        "description": "Null for association-only questions; otherwise the line the stem references (same m, b).",
+        "properties": {
+          "slope": { "type": "number", "minimum": -4, "maximum": 4 },
+          "yIntercept": { "type": "number", "minimum": 0, "maximum": 20 },
+          "show": { "type": "boolean", "description": "Draw the line; false lets the stem ask students to sketch/estimate it." }
+        }
+      },
+      "xAxisLabel": { "type": "string", "maxLength": 24 },
+      "yAxisLabel": { "type": "string", "maxLength": 24 }
+    }
+  },
+  "rendererRef": "Scatterplot",
+  "notes": "Renderer guarantees: first-quadrant axes with equal unit spacing; every point validated inside gridExtent; if lineOfBestFit.show is true the line is clipped to the axes and its slope/intercept match the spec exactly — the stem's predicted values are computed from the same m and b."
+}

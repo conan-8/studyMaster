@@ -1,0 +1,33 @@
+{
+  "id": "gen-sat-math-percentages-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:percentages",
+  "questionType": "grid_in",
+  "stimulus": {
+    "type": "passage",
+    "text": "A community garden had 120 members in 2023. From 2023 to 2025, the number of members increased by 35%.",
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "How many members did the community garden have in 2025?",
+  "choices": [],
+  "correctAnswer": "162",
+  "rationale": "A 35% increase on the 2023 membership means the 2025 membership is 120 × 1.35. Compute the increase first if preferred: 0.35 × 120 = 42 additional members, then 120 + 42 = 162. The base of the percent is the original (2023) value, since the increase is measured from 2023.",
+  "difficultyTarget": 2,
+  "provenance": {
+    "archetypeSlug": "percentages",
+    "promptVersion": "n/a-v0",
+    "model": "hand-authored",
+    "generatedAt": "2026-08-24T12:30:00Z",
+    "contentHash": "06c3dfa90b70748769dfe04bbb67d2bf4d43087f054a29dc8f9a2c8511fb5aea"
+  },
+  "review": {
+    "status": "approved",
+    "reviewer": "w8-integration",
+    "notes": "hand-authored integration fixture"
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

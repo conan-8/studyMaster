@@ -1,0 +1,52 @@
+{
+  "archetypeId": "sat-math:graph-system-two-lines",
+  "title": "System of Two Linear Equations — Graph",
+  "description": "Two lines in the xy-plane with their intersection marked, for systems-of-equations questions in the Algebra domain (systems-linear-equations). Stems can ask for the solution, number of solutions, or meaning of the intersection; both lines and the answer derive from the same parameters.",
+  "subjectsApplicable": ["SAT_MATH"],
+  "paramsSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["line1", "line2", "intersectionIsInteger", "markIntersection", "xRange"],
+    "properties": {
+      "line1": { "$ref": "#/definitions/line" },
+      "line2": { "$ref": "#/definitions/line" },
+      "intersectionIsInteger": {
+        "type": "boolean",
+        "description": "If true, renderer validates that the intersection has integer coordinates within the grid (SAT-clean solution); if false the intersection is left unlabeled."
+      },
+      "markIntersection": {
+        "type": "boolean",
+        "description": "Draw a dot at the intersection. Set false for parallel/coincident-line 'no/infinitely many solutions' items."
+      },
+      "xRange": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["min", "max"],
+        "properties": {
+          "min": { "type": "integer", "minimum": -10, "maximum": -1 },
+          "max": { "type": "integer", "minimum": 1, "maximum": 10 }
+        }
+      },
+      "labelLines": {
+        "type": "boolean",
+        "default": false,
+        "description": "Tag lines near their right ends with line1.label / line2.label."
+      }
+    },
+    "definitions": {
+      "line": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["slope", "yIntercept", "label"],
+        "properties": {
+          "slope": { "type": "number", "minimum": -6, "maximum": 6 },
+          "yIntercept": { "type": "number", "minimum": -10, "maximum": 10 },
+          "label": { "type": "string", "maxLength": 8 }
+        }
+      }
+    }
+  },
+  "rendererRef": "GraphSystemTwoLines",
+  "notes": "Renderer guarantees: unit grid and axis arrows; when markIntersection is true the intersection is computed from the two (slope, yIntercept) pairs — never authored separately — so figure and answer key cannot disagree; line labels are placed at opposite ends of the two lines to avoid collision; distinct slopes required when intersectionIsInteger is true."
+}

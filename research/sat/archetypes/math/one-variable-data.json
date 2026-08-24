@@ -1,0 +1,82 @@
+{
+  "slug": "one-variable-data",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:one-variable-data",
+  "skill": "One-Variable Data",
+  "domain": "Problem-Solving and Data Analysis",
+  "stimulusShape": {
+    "type": "figure",
+    "lengthWords": null,
+    "structure": "A single-variable distribution displayed as a histogram (binned counts), a dot plot (one dot per value), or a box plot (five-number summary), preceded by a one-sentence caption naming the variable and its units (e.g., 'test scores', 'daily high temperatures in °F'). Dot plots expose every value so exact mean/median computation is possible; histograms expose only bins so questions ask which bin holds the median or compare distributions; box plots ask range, IQR, and center/spread comparisons across two plots."
+  },
+  "stemTemplates": [
+    "What is the median of the data shown in the graph?",
+    "Which of the following is closest to the mean of the data?",
+    "Which of the following statements about the <n> data values is true?",
+    "A value of <v> is added to the data set. Which statistic changes by the greater amount, the mean or the median?"
+  ],
+  "answerMode": "computed-number-or-statement",
+  "choicePatterns": "Either four numbers (a mean, median, or range computed from the displayed data — one correct, three from misapplied statistics) or four statements about center, spread, and shape where exactly one is true. Numeric distractors are exactly the other statistics of the same data set (mean where median asked, unordered middle, maximum where range asked), so each maps to a diagnosis.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:one-variable-data-mean-vs-median-confusion",
+      "trap": "Offers the data set's mean as a choice when the median is asked (or vice versa): for {2, 3, 3, 4, 23}, lists 7 (mean) beside the key 3 (median). Computable for every generated data set — the two statistics must genuinely differ, which the skew/outlier design guarantees."
+    },
+    {
+      "misconceptionId": "SAT_MATH:one-variable-data-median-of-unordered-list",
+      "trap": "Offers the middle entry of the data AS DISPLAYED: for a dot plot or table rendered in non-sorted order, the printed-middle value instead of the sorted middle. Computable by taking position (n+1)/2 of the raw generation sequence before sorting."
+    },
+    {
+      "misconceptionId": "SAT_MATH:one-variable-data-mean-recompute-after-value-change",
+      "trap": "For 'a new value joins the set' items, offers the average of the old mean and the new value: (old mean + v)/2 instead of (old mean x n + v)/(n + 1). Computable directly; e.g., five scores with mean 80 plus a 90 yields a distractor of 85 vs key 81.7."
+    },
+    {
+      "misconceptionId": "SAT_MATH:one-variable-data-outlier-effect-misassigned",
+      "trap": "Statement distractors that reverse the robustness facts: 'the median changes more than the mean' when an outlier is added, or 'removing the maximum does not change the mean'. Built by negating exactly one true robustness claim."
+    },
+    {
+      "misconceptionId": "SAT_MATH:one-variable-data-range-as-max",
+      "trap": "Offers the maximum value when the range is asked: for data spanning 4 to 15, lists 15 beside the key 11. Computable as max where range = max - min."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Dot plot with 5-9 integer values, median asked; mean and median differ but the set is small",
+      "Range from a dot plot with clearly separated min and max",
+      "Symmetric histogram where 'typical value' statements are uncontroversial"
+    ],
+    "medium": [
+      "Mean of 8-15 dot-plot values where the sum requires care; median asked on an even count (average of middle pair)",
+      "Box plot items: read the five-number summary, compute range or IQR, or compare two displays",
+      "Data presented in scrambled order so the unordered-middle distractor is live",
+      "Which-statistic questions ('which measure of center best describes...') with mild skew"
+    ],
+    "hard": [
+      "Outlier added or removed: predict the effect on mean vs median (statement items wiring the robustness reversal)",
+      "Histogram median-bin items requiring cumulative counting to the (n+1)/2-th value",
+      "Two distributions compared: same mean, different spread (or vice versa) with statements mixing both",
+      "Effect-of-change chains: 'the lowest value is removed and one new value added — what happens to the mean and the median?'"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose display by question type: dot plot for exact computation, histogram for bin reasoning, box plot for spread/comparison. 2. Generate 6-20 integer values on a friendly scale (scores 40-100, ages 8-20, temperatures 55-95). 3. For computation items, design the set so mean and median genuinely differ (plant one outlier or skew) and the mean is exact to one decimal at most. 4. For dot plots, shuffle the value list before display so the unordered-middle trap is constructible. 5. Caption the variable and units in one sentence.",
+    "keyConstruction": "Median: sort, take position (n+1)/2 (average the middle pair for even n; for histograms, cumulative-count to the bin containing that position). Mean: sum values / n — from dot plot entries (value x frequency), never from bin centers unless the histogram item explicitly says 'estimated'. Range: max - min; IQR: Q3 - Q1 read from the box plot. Verify each key two ways (e.g., median by crossing off from both ends).",
+    "distractorConstruction": "Numeric items: emit (a) the companion statistic (mean if median asked), (b) the printed-middle value when the display order is scrambled, (c) the max where range asked, (d) the two-mean shortcut (old mean + new value)/2 for value-added items — each computed from the same data. Statement items: build four claims about center/spread/shape where each wrong claim is the negation or swap of one robustness/definition fact (median moves like the mean; range is the max; adding a value leaves the mean unchanged). Exactly one claim survives a data check.",
+    "validationChecklist": [
+      "Data counts are 6-20 values (dot plots), 15-40 (histograms), five-number summaries (box plots) — all integers on the stated scale",
+      "Realistic ranges: scores 40-100, ages 8-20, temperatures 55-95 °F, distances 1-20 miles",
+      "Mean keys are integers or terminating decimals (one decimal place max); median keys integers or .5 (middle-pair averages)",
+      "Mean and median differ whenever the confusion distractor is used; the display order is scrambled whenever the unordered-middle distractor is used",
+      "Every statement choice is checkable against the displayed data alone — no outside knowledge",
+      "Histogram stems ask for the median BIN or 'estimated' statistics, never an exact value the bins cannot support"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Mean = sum of (value x frequency) / n. Median = ((n+1)/2)-th ordered value (average of middle pair when n is even; for histograms, cumulative counts locate the bin). Mode = most frequent value (dot plots). Range = max - min; IQR = Q3 - Q1 from box plots. Effect rules: an extreme value drags the mean, barely moves the median; removing a central value changes little, removing an outlier changes the mean most.",
+  "numericConstraints": "Integer data values on 40-100 style scales; means exact to one decimal; medians integers or .5; n between 6 and 40; histogram bins 4-8 of width 5 or 10; box-plot five-number summaries all integers; grid-in answers <= 4 characters (e.g., 81.5).",
+  "questionTypeNotes": "Balanced mcq/grid_in: grid_in for exact mean/median/range from dot plots (a single computable number), mcq for box-plot comparisons, median-bin questions, and all statement/robustness items where the choices are claims rather than numbers.",
+  "diagramSpec": {
+    "allowedArchetypeIds": ["sat-math:histogram", "sat-math:dot-plot", "sat-math:box-plot"],
+    "typicalUse": "dot-plot for exact mean/median/range computation (entries expose every value); histogram for shape and median-bin reasoning (binStart/binWidth/frequencies); box-plot for five-number-summary reading and two-display center/spread comparisons."
+  }
+}

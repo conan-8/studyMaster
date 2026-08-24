@@ -1,0 +1,388 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://studymaste.dev/schemas/generated-question.schema.json",
+  "title": "Generated Question",
+  "description": "Contract for ORIGINAL displayable questions produced from archetypes (distinct from the harvested contract in research/sat/question.schema.json, which stays internal_eval). Generated questions always carry a rationale and are display-only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "subjectCode",
+    "taxonomyCode",
+    "questionType",
+    "stimulus",
+    "stem",
+    "choices",
+    "correctAnswer",
+    "rationale",
+    "difficultyTarget",
+    "provenance",
+    "review",
+    "allowedUses"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^gen-[a-z0-9-]+-[0-9]{3,}$",
+      "description": "Generated question ID, e.g. 'gen-sat-rw-transitions-001'"
+    },
+    "subjectCode": {
+      "type": "string",
+      "pattern": "^(AP|SAT)_[A-Z0-9_]+$",
+      "description": "Subject code, e.g. 'SAT_RW', 'SAT_MATH'"
+    },
+    "taxonomyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]+[A-Z0-9_]*:[a-z0-9-]+$",
+      "description": "Skill node code, e.g. 'SAT_RW:transitions'"
+    },
+    "questionType": {
+      "type": "string",
+      "enum": ["mcq", "grid_in"]
+    },
+    "stimulus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "text", "tableJson", "diagram"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["passage", "table", "figure", "notes", "none"]
+        },
+        "text": {
+          "type": ["string", "null"]
+        },
+        "tableJson": {
+          "type": ["object", "null"]
+        },
+        "diagram": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["archetypeId", "parameters"],
+              "properties": {
+                "archetypeId": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9-]+:[a-z0-9-]+$",
+                  "description": "Diagram archetype ID from database/diagrams/<id>.json, e.g. 'sat-math:graph-line'"
+                },
+                "parameters": {
+                  "type": "object",
+                  "description": "Parameter values; must validate against the referenced archetype's paramsSchema"
+                }
+              }
+            },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+    "stem": {
+      "type": "string",
+      "minLength": 1
+    },
+    "choices": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "text", "misconceptionId"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": ["A", "B", "C", "D"]
+          },
+          "text": {
+            "type": "string"
+          },
+          "misconceptionId": {
+            "type": ["string", "null"],
+            "pattern": "^[A-Z]+[A-Z0-9_]*:[a-z0-9-]+$",
+            "description": "Misconception this distractor is wired to; null ONLY for the correct choice"
+          }
+        }
+      }
+    },
+    "correctAnswer": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A-D for mcq; numeric string for grid_in (e.g. '12', '3.5', '3/4')"
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Required: generated questions always explain the answer"
+    },
+    "difficultyTarget": {
+      "type": "integer",
+      "enum": [2, 3, 4],
+      "description": "Matches the harvested difficultyInternal scale: easy->2, medium->3, hard->4"
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["archetypeSlug", "promptVersion", "model", "generatedAt", "contentHash"],
+      "properties": {
+        "archetypeSlug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Slug of the archetype this was generated from, e.g. 'transitions'"
+        },
+        "promptVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp"
+        },
+        "contentHash": {
+          "type": "string",
+          "minLength": 8,
+          "description": "Content hash for dedup/change detection"
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reviewer", "notes"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["pending", "approved", "rejected"]
+        },
+        "reviewer": {
+          "type": ["string", "null"]
+        },
+        "notes": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "allowedUses": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": ["display"]
+      },
+      "description": "Generated questions are display-only"
+    },
+    "variantOf": {
+      "type": ["string", "null"],
+      "description": "OPTIONAL: id of the question this is a variant of, or null"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "questionType": { "const": "mcq" } },
+        "required": ["questionType"]
+      },
+      "then": {
+        "properties": {
+          "choices": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4
+          },
+          "correctAnswer": {
+            "type": "string",
+            "enum": ["A", "B", "C", "D"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "questionType": { "const": "grid_in" } },
+        "required": ["questionType"]
+      },
+      "then": {
+        "properties": {
+          "choices": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 0
+          },
+          "correctAnswer": {
+            "type": "string",
+            "pattern": "^-?\\d+(\\.\\d+)?(\\.\\d+)?$|^-\\d+/\\d+$|^\\d+/\\d+$",
+            "description": "Numeric string like '12', '3.5', '3/4'"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "correctAnswer": { "const": "A" } },
+        "required": ["correctAnswer"]
+      },
+      "then": {
+        "properties": {
+          "choices": {
+            "allOf": [
+              {
+                "contains": {
+                  "type": "object",
+                  "required": ["id", "misconceptionId"],
+                  "properties": {
+                    "id": { "const": "A" },
+                    "misconceptionId": { "type": "null" }
+                  }
+                }
+              },
+              {
+                "not": {
+                  "contains": {
+                    "type": "object",
+                    "required": ["id", "misconceptionId"],
+                    "properties": {
+                      "id": { "enum": ["B", "C", "D"] },
+                      "misconceptionId": { "type": "null" }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "correctAnswer": { "const": "B" } },
+        "required": ["correctAnswer"]
+      },
+      "then": {
+        "properties": {
+          "choices": {
+            "allOf": [
+              {
+                "contains": {
+                  "type": "object",
+                  "required": ["id", "misconceptionId"],
+                  "properties": {
+                    "id": { "const": "B" },
+                    "misconceptionId": { "type": "null" }
+                  }
+                }
+              },
+              {
+                "not": {
+                  "contains": {
+                    "type": "object",
+                    "required": ["id", "misconceptionId"],
+                    "properties": {
+                      "id": { "enum": ["A", "C", "D"] },
+                      "misconceptionId": { "type": "null" }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "correctAnswer": { "const": "C" } },
+        "required": ["correctAnswer"]
+      },
+      "then": {
+        "properties": {
+          "choices": {
+            "allOf": [
+              {
+                "contains": {
+                  "type": "object",
+                  "required": ["id", "misconceptionId"],
+                  "properties": {
+                    "id": { "const": "C" },
+                    "misconceptionId": { "type": "null" }
+                  }
+                }
+              },
+              {
+                "not": {
+                  "contains": {
+                    "type": "object",
+                    "required": ["id", "misconceptionId"],
+                    "properties": {
+                      "id": { "enum": ["A", "B", "D"] },
+                      "misconceptionId": { "type": "null" }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "correctAnswer": { "const": "D" } },
+        "required": ["correctAnswer"]
+      },
+      "then": {
+        "properties": {
+          "choices": {
+            "allOf": [
+              {
+                "contains": {
+                  "type": "object",
+                  "required": ["id", "misconceptionId"],
+                  "properties": {
+                    "id": { "const": "D" },
+                    "misconceptionId": { "type": "null" }
+                  }
+                }
+              },
+              {
+                "not": {
+                  "contains": {
+                    "type": "object",
+                    "required": ["id", "misconceptionId"],
+                    "properties": {
+                      "id": { "enum": ["A", "B", "C"] },
+                      "misconceptionId": { "type": "null" }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "review": {
+            "properties": { "status": { "const": "approved" } },
+            "required": ["status"]
+          }
+        },
+        "required": ["review"]
+      },
+      "then": {
+        "properties": {
+          "review": {
+            "properties": {
+              "reviewer": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

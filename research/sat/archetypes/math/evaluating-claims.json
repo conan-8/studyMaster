@@ -1,0 +1,73 @@
+{
+  "slug": "evaluating-claims",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:evaluating-claims",
+  "skill": "Evaluating Claims",
+  "domain": "Problem-Solving and Data Analysis",
+  "stimulusShape": {
+    "type": "passage",
+    "lengthWords": [45, 110],
+    "structure": "A study-summary paragraph reporting: (a) WHO was studied and how they were chosen (random sample, volunteers, one school, an entire clinic), (b) whether groups were assigned by researchers (random assignment, self-chosen, or merely observed), (c) sizes (kept realistic: 50-500 or an explicitly 'large' online poll), and (d) the conclusion the researchers or a headline drew. The design details are always stated — the item turns on matching the conclusion's STRENGTH and SCOPE to what the design licenses (causation needs assignment; generalization needs random sampling of that population)."
+  },
+  "stemTemplates": [
+    "Which of the following conclusions is best supported by the results of the study?",
+    "Based on the study, which statement is a valid conclusion?",
+    "Which of the following additional findings would most clearly support the claim that <treatment> causes <outcome>?",
+    "Which of the following best explains why the researchers' conclusion is not justified?"
+  ],
+  "answerMode": "which-statement",
+  "choicePatterns": "Four full-sentence conclusions or critiques of matched length and grammatical shape, each a study-design claim: causal vs associational wording, narrow vs widened population, one randomization confused for the other, or sample size cited as a cure for bias. Exactly one choice matches the design's licensing rule; distractors are near-copies of the key with the claim type, scope, or justification swapped.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:evaluating-claims-causal-claim-from-observational-study",
+      "trap": "Conclusion distractor using causal verbs for an observational design: '<Treatment> improved <outcome>' when subjects chose their own groups. Built by copying the key's associational sentence and swapping only the verb to 'caused/improved/reduced'."
+    },
+    {
+      "misconceptionId": "SAT_MATH:evaluating-claims-generalizing-beyond-sampled-population",
+      "trap": "Conclusion distractor widening the scope: 'all teenagers', 'adults nationwide' when only one school's or one city's population was randomly sampled. Built by replacing the key's population phrase with a strictly larger group."
+    },
+    {
+      "misconceptionId": "SAT_MATH:evaluating-claims-random-sampling-vs-random-assignment-swap",
+      "trap": "Justification or conclusion distractor that swaps what each randomization licenses: 'the results apply to all adults because participants were randomly assigned' or 'the treatment caused the change because the sample was random'. Built by pairing the correct claim with the wrong randomization as its stated reason."
+    },
+    {
+      "misconceptionId": "SAT_MATH:evaluating-claims-large-sample-cures-bias",
+      "trap": "Critique-selection distractor citing size as validity: chooses the 100,000-response voluntary poll as stronger evidence than the random sample of 500, or defends a biased study 'because the sample was large'. Built by making n the salient difference between two studies."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "Clean designs: random assignment + random sample makes both a causal and scoped conclusion available; distractors only overreach scope or strength in one dimension",
+      "Causal-vs-associational wording contrast is stark ('causes' vs 'is associated with') with no other difference between the sentences",
+      "The headline's flaw is a single obvious overreach (survey of one town generalized to the nation)"
+    ],
+    "medium": [
+      "Design has exactly one of the two randomizations, so only one claim type is licensed and choices test which",
+      "'Which additional finding would support causation?' items with a third-variable or assignment-based answer among choices",
+      "Two studies compared (random sample of 500 vs voluntary poll of 100,000) where the better evidence must be picked"
+    ],
+    "hard": [
+      "Longitudinal or group-matching language mimicking experiments (matched cohorts, before/after measurement) without any assignment — causal distractors closely copy the key's sentence",
+      "Conclusions that are valid in strength AND scope but wrong population, or right population but wrong strength — two-dimensional discrimination",
+      "Confounds named in choices: only one confound actually explains the observed association; others are irrelevant correlates",
+      "Nested-scope traps: sampled 'high school students in one district' with choices about 'students in that district' (key) vs 'all students in the state' vs 'residents of the district'"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Decide the licensing test: causation (needs random assignment), generalization (needs random sampling of the target population), or evidence-quality comparison (random vs voluntary). 2. Build the design around it: name the subjects, HOW they were selected, HOW groups formed, sizes (50-500 for random samples; 10,000+ for voluntary polls), and the measured outcome. 3. Append the flawed or correct headline conclusion the item evaluates. 4. Keep every design detail explicit — the passage must fully determine which claims are licensed; no outside statistics knowledge.",
+    "keyConstruction": "The valid conclusion uses exactly the strength the design supports: 'is associated with' for observational designs, causal verbs only under random assignment, and a population no wider than the randomly sampled frame. For support-the-claim items, the key is the finding that would supply the missing license (a randomized version, an assignment rule, an eliminated confound). Verify by walking the two-question check: 'were treatments assigned?' fixes strength; 'who was randomly sampled?' fixes scope — the key must survive both.",
+    "distractorConstruction": "STATEMENT-DISTRUCTOR PATTERN (judgment-based, not computed): every wrong choice is a named misconception expressed as a study-design claim in the key's own sentence shape. Templates: (a) causal verb substituted into the associational key (keep scope identical); (b) the key's population phrase widened one level (school -> state -> nation); (c) the correct claim retained but justified by the WRONG randomization ('...because participants were randomly assigned' under a generalization stem, and vice versa); (d) sample size presented as the validity criterion ('with 100,000 responses, the poll is more trustworthy'). Each distractor is ONE mutation from the key so the choice set reads as four equally plausible sentences, and each maps to exactly one misconception id for analytics.",
+    "validationChecklist": [
+      "The passage explicitly states how subjects were selected and how groups formed — both licensing questions are answerable from the text alone",
+      "Sample sizes realistic: random samples 50-500; voluntary/online polls 10,000+; no absurd figures",
+      "Every choice is a complete sentence of similar length and register; no naked numbers or obvious filler",
+      "Each distractor is exactly one mutation of the key and maps to one misconception id",
+      "The key matches BOTH dimensions (claim strength AND population scope) or names the specific missing license in support-the-claim items",
+      "No choice is defensible under a second reading; the design description admits no ambiguity between sampling and assignment"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "No numeric computation: the verification procedure is the two-question licensing check. (1) Causation test: were participants randomly ASSIGNED to treatment and control? Yes -> causal claims licensed; no -> association language only. (2) Generalization test: was the target population randomly SAMPLED? Yes -> conclusions extend to exactly that population; no -> conclusions stay with the studied group. (3) Evidence-quality test: method of selection (random > voluntary) outranks sample size. Re-run the check against every choice before locking the key.",
+  "numericConstraints": "Sample sizes realistic and bounded: randomized experiments 50-500 participants; random samples 50-500; voluntary or online polls cited as 'more than 10,000 responses'. No percentages or statistics requiring computation; numbers in the passage serve scope and design contrast only.",
+  "questionTypeNotes": "mcq exclusively — answers are judgment statements, never computed numbers, so this archetype contributes no grid_in items. The generator builds four claim sentences per item: duplicate the key's syntactic shape and mutate exactly one element (verb class, population scope, cited justification, or size-based criterion). Reading load and sentence structure must be matched across choices so only design reasoning discriminates."
+}

@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://studymaste.dev/schemas/exam_format.json",
-  "title": "AP Exam Format",
-  "description": "Structured exam format data for an AP subject",
+  "title": "Exam Format",
+  "description": "Structured exam format data for an AP or SAT subject",
   "type": "object",
   "required": ["subject", "totalDurationMinutes", "sections", "unitWeights", "scoringNotes", "specialPolicies"],
   "properties": {

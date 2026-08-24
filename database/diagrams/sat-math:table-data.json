@@ -1,0 +1,46 @@
+{
+  "archetypeId": "sat-math:table-data",
+  "title": "Labeled Data Table",
+  "description": "A rectangular table of labeled columns and numeric rows — the workhorse stimulus for linear/exponential models, ratios, and unit conversion across Algebra and Problem-Solving and Data Analysis. Stems quote the same headers and cell values the table renders.",
+  "subjectsApplicable": ["SAT_MATH"],
+  "paramsSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["headers", "rows", "title"],
+    "properties": {
+      "title": {
+        "type": ["string", "null"],
+        "maxLength": 60,
+        "description": "Caption above the table; null for an uncaptioned table."
+      },
+      "headers": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 4,
+        "description": "Column headers; may include units, e.g. 'Time (minutes)'.",
+        "items": { "type": "string", "minLength": 1, "maxLength": 24 }
+      },
+      "rows": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 8,
+        "description": "Each inner array is one row of cell values; every row must have exactly headers.length cells (renderer rejects otherwise).",
+        "items": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "items": { "type": ["number", "string"], "description": "Numbers for data cells; short strings allowed for categorical first columns." }
+        }
+      },
+      "highlightColumn": {
+        "type": ["integer", "null"],
+        "minimum": 0,
+        "description": "0-based column index to shade (e.g. the column the question asks about); null for none."
+      },
+      "showRowNumbers": { "type": "boolean", "default": false }
+    }
+  },
+  "rendererRef": "DataTable",
+  "notes": "Renderer guarantees: equal column widths, header row bolded with a rule beneath; row-length mismatch with headers is a parse-time error, never a silently truncated figure; numeric cells are rendered exactly as provided (no reformatting), so stem arithmetic always matches the visible table."
+}

@@ -1,0 +1,48 @@
+{
+  "archetypeId": "sat-math:bar-chart",
+  "title": "Categorical Bar Chart",
+  "description": "Vertical bars for 2–6 categories with labeled axes and optional value labels. Serves Problem-Solving and Data Analysis (one-variable-data, ratios-rates-proportions, percentages): reading values, comparing categories, and computing percent change from the figure.",
+  "subjectsApplicable": ["SAT_MATH"],
+  "paramsSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["categories", "yAxisLabel", "yAxisMax", "showValues"],
+    "properties": {
+      "categories": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 6,
+        "description": "One bar per category, drawn left to right in array order.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["label", "value"],
+          "properties": {
+            "label": { "type": "string", "minLength": 1, "maxLength": 14 },
+            "value": { "type": "number", "exclusiveMinimum": 0, "maximum": 1000, "description": "Bar height; strictly positive so no zero-height bar can appear." }
+          }
+        }
+      },
+      "yAxisMax": {
+        "type": "number",
+        "exclusiveMinimum": 0,
+        "maximum": 1000,
+        "description": "Top of the y-axis; must be >= the largest value (renderer validates) and is snapped up to a clean tick multiple."
+      },
+      "yTickStep": {
+        "type": ["number", "null"],
+        "exclusiveMinimum": 0,
+        "description": "Gridline step; null lets the renderer choose a clean step (1/2/5 × 10^n)."
+      },
+      "yAxisLabel": { "type": "string", "minLength": 1, "maxLength": 24 },
+      "xAxisLabel": { "type": ["string", "null"], "maxLength": 24 },
+      "showValues": {
+        "type": "boolean",
+        "description": "Print each value above its bar. Set false when the question asks students to read values off the axis."
+      }
+    }
+  },
+  "rendererRef": "BarChart",
+  "notes": "Renderer guarantees: bars never overlap (width auto-computed from category count), duplicate category labels are rejected at parse time, y-axis starts at 0 (no misleading truncation), and bar heights are exactly proportional to value / yAxisMax."
+}

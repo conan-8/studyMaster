@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://studymaste.dev/schemas/diagram-archetype.schema.json",
+  "title": "Diagram Archetype Registry Entry",
+  "description": "Validates one diagram archetype registry entry (database/diagrams/<id>.json): a named, parameterized diagram type with a deterministic SVG renderer. Generated questions reference these by archetypeId and supply typed parameters.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "archetypeId",
+    "title",
+    "description",
+    "subjectsApplicable",
+    "paramsSchema",
+    "rendererRef",
+    "notes"
+  ],
+  "properties": {
+    "archetypeId": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+:[a-z0-9-]+$",
+      "description": "Registry ID, e.g. 'sat-math:graph-line'"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subjectsApplicable": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^(AP|SAT)_[A-Z0-9_]+$"
+      },
+      "description": "Subject codes whose questions may use this diagram, e.g. ['SAT_MATH']"
+    },
+    "paramsSchema": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "const": "object" }
+      },
+      "description": "An EMBEDDED draft-07 JSON Schema (itself with type: 'object') describing the typed parameters a question supplies for this diagram. Draft-07 cannot express 'this value is itself a valid schema', so full validity of paramsSchema is enforced by a dedicated validator script, not by this file."
+    },
+    "rendererRef": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z0-9]*$",
+      "description": "Name of the deterministic SVG renderer component, PascalCase, e.g. 'GraphLine'"
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Free-form implementation notes, or null"
+    }
+  }
+}

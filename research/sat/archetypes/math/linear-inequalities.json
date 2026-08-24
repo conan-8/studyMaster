@@ -1,0 +1,72 @@
+{
+  "slug": "linear-inequalities",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:linear-inequalities",
+  "skill": "Linear Inequalities",
+  "domain": "Algebra",
+  "stimulusShape": {
+    "type": "passage",
+    "lengthWords": [10, 60],
+    "structure": "A constraint scenario (budgets, capacities, 'at least / no more than' thresholds) or a bare inequality in the stem. One-variable items ask for the solution set as an inequality, a satisfying value, or the greatest/least feasible whole number; two-variable items ask which graph (boundary line plus shading) represents the constraint. Compound variants chain two conditions on one quantity."
+  },
+  "stemTemplates": [
+    "Which of the following is the solution to the given inequality?",
+    "Which of the following values satisfies the given inequality?",
+    "What is the greatest number of <items> that can be <action>?",
+    "Which graph represents the solution set of the given inequality?"
+  ],
+  "answerMode": "inequality-or-graph-or-number",
+  "choicePatterns": "Four inequalities sharing the correct boundary value but varying direction and strictness; or four graphs sharing the correct boundary line but varying shading side and dotted/solid style; or four context numbers with the boundary value itself among them. Exactly one choice has both the right boundary and the right direction/strictness.",
+  "distractorLogic": [
+    {
+      "misconceptionId": "SAT_MATH:linear-inequalities-forgetting-to-flip-when-dividing-by-negative",
+      "trap": "For -2x > 8 (key x < -4), offer x > -4 — boundary correct, direction un-flipped after dividing by the negative coefficient; computable by performing the division and keeping the symbol."
+    },
+    {
+      "misconceptionId": "SAT_MATH:linear-inequalities-strict-vs-inclusive-boundary-swap",
+      "trap": "Offer the boundary value itself as a satisfying value for strict asks (x = 3 as a solution of 2x < 6), or a ≤-graph where a strict < is required; in feasibility asks, offer the rounded-up integer above a strict boundary (11 for n < 11.x); computable by solving the boundary equality and keeping the endpoint in."
+    },
+    {
+      "misconceptionId": "SAT_MATH:linear-inequalities-shading-wrong-half-plane",
+      "trap": "For y > 2x + 1, offer the graph with the correct boundary line and line style but shading below the line; computable by mirroring the correct region across the boundary line. Engages most when the boundary is in standard form and (0, 0) requires actual testing."
+    },
+    {
+      "misconceptionId": "SAT_MATH:linear-inequalities-compound-and-or-confusion",
+      "trap": "For a two-condition (AND) constraint like -2 < x + 1 ≤ 5, offer the complementary outside rays x < -3 or x > 4 instead of the between-interval -3 < x ≤ 4 (and vice versa for OR constraints); computable as the solution set of the negated connective."
+    }
+  ],
+  "difficultyLevers": {
+    "easy": [
+      "One- or two-step inequality with a positive coefficient, so no flip is ever needed",
+      "Direction survives all operations; boundary is an integer",
+      "Choices differ in direction only, with strictness matching the stem's symbol"
+    ],
+    "medium": [
+      "Negative coefficient on the variable forces the flip",
+      "Strictness is the discriminator: choices share direction but split on < vs ≤",
+      "Context constraint with 'at least / no more than' language to translate"
+    ],
+    "hard": [
+      "Compound constraints (AND of two conditions, or |expression| < k form) requiring intersection reasoning",
+      "Two-variable shading asks with the boundary in standard form",
+      "Feasibility asks ('greatest number of...') where a strict boundary excludes the integer just above the trap"
+    ]
+  },
+  "generationRecipe": {
+    "stimulusConstruction": "1. Choose the boundary solution s (integer) and the direction, then write the inequality backwards so it solves to them. 2. For flip items, put the negative coefficient on the variable from the start (-ax + b > c). 3. For compound items, chain two constraints on one quantity; for two-variable items, write the constraint in standard form (Ax + By ≤ C) so the shading test is non-trivial. 4. Context variant: name a quantity with a budget sentence using 'at most', 'no more than', 'at least'.",
+    "keyConstruction": "Isolate the variable, flipping the symbol exactly when multiplying or dividing by a negative; for compounds, solve each condition and intersect on a number line. Verify with two tests: an interior point must satisfy the original inequality AND the boundary point must fail it (strict) or satisfy it (inclusive).",
+    "distractorConstruction": "Generate the twin set from the key: same boundary with the direction un-flipped; correct direction with strictness swapped; the boundary value itself offered as a solution; the complementary outside-rays region for compound items; the mirrored shading for graph items. All inequality choices must share the correct boundary so only direction and membership discriminate.",
+    "validationChecklist": [
+      "The boundary computed by the associated equality is the intended integer and is shared by all choices",
+      "Exactly one choice has both the correct direction and the correct strictness",
+      "Interior-point and boundary-point substitution tests were run on the key",
+      "Context language maps to symbols unambiguously ('at least' = ≥, 'no more than' = ≤, 'more than' = >)",
+      "Feasibility answers are whole numbers the scenario can realize (no fractional items)",
+      "Graph choices share the correct boundary line and style; only shading side varies (and style varies only when strictness is the target lever)"
+    ]
+  },
+  "exemplarSlots": { "easy": [], "medium": [], "hard": [] },
+  "answerComputation": "Isolate the variable, flipping the inequality symbol exactly when multiplying or dividing both sides by a negative number; for compounds solve each piece and intersect (AND) or union (OR). Verify by testing one interior point (must satisfy) and the boundary point (must fail strict, satisfy inclusive) in the original inequality.",
+  "numericConstraints": "Integer boundaries; coefficients within |10|; feasibility answers are non-negative integers; compound endpoints integers; two-variable boundaries pass through at least two lattice points.",
+  "questionTypeNotes": "MCQ dominant (inequality choices, graph choices, or value choices). Grid-in appears in the feasibility form ('greatest number of...') with a non-negative integer key."
+}

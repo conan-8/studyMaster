@@ -1,0 +1,33 @@
+{
+  "name": "studymaste",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "studyMaste data layer: contracts validation, Postgres schema, and seed tooling",
+  "scripts": {
+    "validate:exam-formats": "tsx scripts/validate-exam-formats.ts",
+    "validate:taxonomy": "tsx scripts/validate-taxonomy.ts",
+    "validate:misconceptions": "tsx scripts/validate-misconceptions.ts",
+    "validate:diagrams": "tsx scripts/validate-diagrams.ts",
+    "validate:archetypes": "tsx scripts/validate-archetypes.ts",
+    "validate:questions": "tsx scripts/validate-questions.ts",
+    "validate:sat-bank": "tsx scripts/validate-sat-bank.ts --fixtures",
+    "validate:all": "npm run validate:exam-formats && npm run validate:taxonomy && npm run validate:misconceptions && npm run validate:diagrams && npm run validate:archetypes && npm run validate:questions && npm run validate:sat-bank",
+    "test": "tsx --test src/llm/*.test.ts src/generator/*.test.ts src/generator/eval/*.test.ts src/renderers/tests/*.test.ts",
+    "eval:generator": "tsx src/generator/eval/run.ts",
+    "generate": "tsx scripts/generate-question.ts",
+    "gallery": "tsx scripts/render-gallery.ts",
+    "db:up": "docker compose up -d",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "seed": "tsx scripts/seed.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/pg": "^8.11.10",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "pg": "^8.13.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

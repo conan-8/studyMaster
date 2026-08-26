@@ -58,9 +58,37 @@ Generated-question IDs match `^gen-[a-z0-9-]+-[0-9]{3,}$`.
 | `npm run generate` | Generate question drafts from an archetype (mock replay or live via OpenRouter) into `research/sat/generated/` — see [Generating questions](#generating-questions) |
 | `npm test` | Diagram renderer suite (registry, determinism, param coverage, E2E) — see `src/renderers/README.md` |
 | `npm run gallery` | Render every diagram archetype (golden params + E2E fixture) to `rendered-gallery/` |
-| `npm run db:up` | Start Postgres via `docker compose up -d` |
-| `npm run db:migrate` | Apply `migrations/*.sql` (clean PENDING-DEPLOY exit 0 if DB unreachable) |
-| `npm run seed` | Seed subjects, taxonomy, misconceptions, diagrams, archetypes, approved questions (same PENDING-DEPLOY fallback) |
+| `npm run db:check` | Verify connectivity to the Supabase Postgres (DATABASE_URL); prints server version — real exit code |
+| `npm run db:migrate` | Apply `migrations/*.sql` to the Supabase Postgres (clean PENDING-DEPLOY exit 0 if the DB is unreachable) |
+| `npm run seed` | Seed subjects, taxonomy, misconceptions, diagrams, archetypes, approved questions into Supabase Postgres (same PENDING-DEPLOY exit-0 fallback when unreachable) |
+
+### Databases & deployment (target)
+
+Target infrastructure is **Supabase + Vercel + Cloudflare** — no Docker, no
+Redis, no Temporal:
+
+- **Supabase** (managed Postgres) hosts every table created by
+  `migrations/*.sql`, reached via `DATABASE_URL` (see `.env.example`). Future
+  phases add Supabase **Auth** (student/teacher accounts) and Supabase
+  **Storage**: a private bucket with short-lived signed URLs for
+  scan-and-grade image uploads, and a public bucket for generated diagram
+  SVGs / rendered assets.
+- **Vercel** will host the future Next.js app and its serverless API routes.
+  Serverless functions connect through the Supabase **transaction pooler**
+  with a small `pool_size`; the `SUPABASE_SERVICE_ROLE_KEY` is used
+  server-side only — never shipped to the client.
+- **Cloudflare** owns the domain/DNS: point the apex (CNAME/ALIAS flattening)
+  and `www` at Vercel; Vercel issues the TLS certificate. Cloudflare may
+  optionally sit in front as proxy/CDN/WAF.
+- **Local dev without Docker:** point `DATABASE_URL` at a cloud Supabase dev
+  project (or a second workspace for isolation). The Supabase CLI's local
+  mode requires Docker, so the recommended path is cloud workspaces.
+
+First-time setup: copy the URI from Supabase Dashboard → Project → Connect
+(Session pooler or Direct connection, port 5432) into `.env` as
+`DATABASE_URL`, then run `npm run db:check` → `npm run db:migrate` →
+`npm run seed`. If the database is unreachable, migrate/seed print a
+PENDING-DEPLOY message with the exact commands and exit 0.
 
 ---
 

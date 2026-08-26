@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "studyMaste data layer: contracts validation, Postgres schema, and seed tooling",
+  "description": "studyMaste data layer: contracts validation, Supabase (Postgres) schema, and seed tooling",
   "scripts": {
     "validate:exam-formats": "tsx scripts/validate-exam-formats.ts",
     "validate:taxonomy": "tsx scripts/validate-taxonomy.ts",
@@ -17,7 +17,7 @@
     "eval:generator": "tsx src/generator/eval/run.ts",
     "generate": "tsx scripts/generate-question.ts",
     "gallery": "tsx scripts/render-gallery.ts",
-    "db:up": "docker compose up -d",
+    "db:check": "tsx scripts/db-check.ts",
     "db:migrate": "tsx scripts/migrate.ts",
     "seed": "tsx scripts/seed.ts"
   },

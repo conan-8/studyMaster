@@ -41,24 +41,51 @@ Current counts: 2 subjects, 38 taxonomy nodes, 139 misconceptions,
 ## Data flow
 
 ```
-database/ + research/sat/  →  npm run validate:all  →  npm run db:up
-                           →  npm run db:migrate    →  npm run seed  →  Postgres
+database/ + research/sat/  →  npm run validate:all  →  npm run db:check
+                            →  npm run db:migrate     →  npm run seed  →  Supabase Postgres
 ```
+
+The target database is **Supabase (managed Postgres)**; there is no local
+database to start. Set `DATABASE_URL` in `.env` to the URI from Supabase
+Dashboard → Project → Connect (Session pooler or Direct connection, port
+5432 — see `.env.example`).
 
 1. **Validators** (`scripts/validate-*.ts`) check every file against its
    schema plus cross-references (misconceptions → taxonomy codes, generated
    questions → taxonomy / misconceptions / diagram `paramsSchema`).
-2. **Migrate** (`npm run db:migrate`) applies `migrations/*.sql`
+2. **Check** (`npm run db:check`) verifies connectivity to the Supabase
+   Postgres and prints the server version — a real non-zero exit code when
+   it can't connect, with setup guidance.
+3. **Migrate** (`npm run db:migrate`) applies `migrations/*.sql`
    (tables: subjects, taxonomy_nodes, misconceptions, diagram_archetypes,
    archetypes, questions, question_versions, student_events, mastery,
    misconception_stats).
-3. **Seed** (`npm run seed`) upserts all of it — subjects from
+4. **Seed** (`npm run seed`) upserts all of it — subjects from
    `exam_format.json`, taxonomy nodes, misconceptions, diagram archetypes,
    archetypes (whole file as spec JSONB), and approved generated questions
    from `research/sat/test-fixtures/generated-*.json`. Seeding is idempotent
    (`ON CONFLICT DO UPDATE`).
-4. If Postgres is unreachable, `db:migrate` and `seed` print a PENDING-DEPLOY
-   message with the exact commands and exit 0 — safe for CI without Docker.
+5. If the database is unreachable (`DATABASE_URL` unset or the Supabase
+   project not responding), `db:migrate` and `seed` print a PENDING-DEPLOY
+   message with the exact commands and exit 0 — the pipeline never hard-fails
+   on a not-yet-provisioned database. This fallback depends only on
+   `DATABASE_URL` reachability, not on any local service.
+
+### Supabase notes
+
+- The tables in `migrations/001_init.sql` map 1:1 onto a Supabase project's
+  Postgres — no schema changes needed; migrations run as plain SQL.
+- Scripts (`db:check`, `db:migrate`, `seed`) connect with plain `pg` over the
+  session/direct connection — no Supabase client library required for the
+  data layer.
+- When the app ships, runtime reads go through `supabase-js` with Row Level
+  Security: public-read for display content (questions, diagrams) and
+  owner-only for student data (`student_events`, `mastery`,
+  `misconception_stats`). RLS policies are a future concern — noted here so
+  the table design keeps it in mind, not designed in depth yet.
+- Supabase Storage buckets (future): a private bucket with short-lived
+  signed URLs for scan-and-grade image uploads; a public bucket for
+  generated diagram SVGs / rendered assets.
 
 ## Adding a subject (AP expansion)
 

@@ -19,7 +19,6 @@ research/sat/index.jsonl
 research/sat/.harvest-progress.json
 # infra
 node_modules/
-pgdata/
 *.log
 
 # derived artifacts (regenerate with npm run gallery)

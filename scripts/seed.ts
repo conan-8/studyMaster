@@ -10,7 +10,7 @@
  * Only review.status === 'approved' is seeded; pending/rejected drafts are
  * reported as skipped counts.
  *
- * Reads DATABASE_URL (default postgres://studymaste:studymaste@localhost:5432/studymaste).
+ * Reads DATABASE_URL (a Supabase-compatible Postgres URI; see .env.example).
  * Unreachable DB -> PENDING-DEPLOY message with exact commands, exit 0.
  */
 import fs from 'node:fs';

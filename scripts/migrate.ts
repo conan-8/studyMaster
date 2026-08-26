@@ -2,7 +2,7 @@
  * migrate.ts — apply migrations/*.sql in filename order via pg, recording each
  * applied filename in the _migrations table. Idempotent.
  *
- * Reads DATABASE_URL (default postgres://studymaste:studymaste@localhost:5432/studymaste).
+ * Reads DATABASE_URL (a Supabase-compatible Postgres URI; see .env.example).
  * Unreachable DB -> PENDING-DEPLOY message with exact commands, exit 0.
  */
 import fs from 'node:fs';

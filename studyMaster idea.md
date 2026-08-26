@@ -101,7 +101,7 @@ Students can photograph **any completed work** and have it graded — modern vis
 - **Native hybrid FRQs:** handwritten answers to our own FRQs → photo → vision grading against our rubric (the default hybrid flow).
 - **Bring-your-own test:** photos of a completed paper practice test from anywhere — a prep book, a teacher-given mock, released materials the student printed. The pipeline extracts the questions and the student's responses, grades MCQs (against a supplied key when available, otherwise solves them), evaluates FRQ work against the appropriate rubric type, and **imports the results into the same mastery map** — so outside practice feeds the weak-topic engine instead of vanishing.
 - **Pipeline (extends R2, Section 7.4):** capture UX (multi-page, deskew, glare warnings) → page segmentation → transcription of typed/handwritten/mathematical content → question-type classification → grading → mastery import.
-- **Data handling:** the student's *responses* and derived skill tags are stored; third-party *question content* from uploads is processed transiently for grading and not retained, republished, or added to our bank (grading a student's own work is their use; we don't harvest others' content — consistent with Section 10).
+- **Data handling:** captured images are stored in **Supabase Storage** (private bucket, short-lived signed URLs — consistent with the infrastructure section, §11). The student's *responses* and derived skill tags are stored; third-party *question content* from uploads is processed transiently for grading and not retained, republished, or added to our bank (grading a student's own work is their use; we don't harvest others' content — consistent with Section 10).
 - **Confidence gating:** low-confidence extractions ask the student to confirm ("did you answer B on #14?") rather than silently mis-import.
 
 ### 5.7 Projected AP score methodology
@@ -185,7 +185,7 @@ Data is the moat, and the moat is built by a fleet of narrow, specialized agents
 **R4: Item Analyst (classical statistics + narrative agent).** Discrimination indices, distractor pick-rates, time distributions, difficulty recalibration (feeds 5.8); the agent writes plain-language weekly reports for the content team.
 
 ### 7.5 Orchestration
-- Queue-based pipeline (job queue or workflow engine like Temporal): ingestion → generation → QA → review queue; runtime grading on its own async queue with SLA monitoring.
+- Queue-based pipeline, serverless-first: queues live on **Supabase pgmq** (Postgres-native) or **Vercel Queues** — no Redis, no Temporal. Flow: ingestion → generation → QA → review queue; scheduled ingestion runs on **Supabase scheduled functions / Vercel Cron**; agents stay stateless and are invoked as serverless functions enqueued onto the queue; runtime grading runs on its own queue with SLA monitoring.
 - Agents are stateless; state lives in the databases. Every invocation logs `{agent, prompt_version, model, inputs_hash, output, cost, latency}`.
 - Prompt registry: prompts versioned like code, changelogs, required eval runs before promotion.
 
@@ -284,10 +284,19 @@ Kinematics graphs + inclined planes → FBDs, projectiles, pulleys → circuits 
 - **Accessibility:** WCAG-conscious rendering, screen-reader/TTS-friendly question markup.
 
 ### Backend
-- **Node (NestJS) or Python (FastAPI)**; **PostgreSQL**; **Redis** (sessions/timers).
-- **Agent pipeline** per Section 7: prompt registry, job queues/workflow engine, sandboxed solver execution, model-provider abstraction layer, eval harness as CI for prompts.
-- **Scoring service:** MCQ inline; FRQ/vision grading async (queue → grader agents → rubric JSON → stored + benchmarked); projection service with per-subject curve constants (5.7).
+- **Vercel** hosts a **Next.js app + serverless API routes** (web-first; webworker/Cron for scheduled jobs). **Supabase** provides **Postgres + Auth + Storage (+ pgmq queues)**. Sessions/exam timers live in Postgres (epoch-based) — no Redis dependency.
+- **Agent pipeline** per Section 7: prompt registry, serverless functions + queue workers, sandboxed solver execution, model-provider abstraction layer, eval harness as CI for prompts.
+- **Scoring service:** MCQ inline; FRQ/vision grading async on the grading queue (queue → grader agents → rubric JSON → stored + benchmarked); projection service with per-subject curve constants (5.7).
 - **Analytics:** event stream (answers, IDKs, timings) → mastery model per (student, skill, misconception). Recency-weighted accuracy first; BKT/Elo later.
+
+### Infrastructure: Supabase + Vercel + Cloudflare
+
+- **Connection modes:** scripts (`db:check`, `db:migrate`, `seed`) use the session/direct connection at port 5432 via `DATABASE_URL` (see `.env.example`). Vercel serverless functions use the **transaction pooler** with a small max-connections setting and SSL required.
+- **RLS posture:** public read for display content (questions, diagrams); owner-scoped access for student data (events, mastery, misconception stats). The service-role key is reserved for the golden dataset and internal jobs — server-side only, never shipped to the client.
+- **Storage:** a private uploads bucket with short-lived signed URLs for Scan-and-Grade images; a public bucket for generated diagram SVGs and rendered assets.
+- **Domain/DNS via Cloudflare:** apex (via CNAME/ALIAS flattening) and `www` point at Vercel; TLS is Vercel-managed. Cloudflare can optionally proxy in front for CDN/DDoS/WAF — note the apex requires flattening since CNAMEs aren't legal at a zone apex.
+- **Local dev without Docker:** develop against a cloud Supabase dev workspace with `.env` `DATABASE_URL`. The Supabase CLI's local mode requires Docker, so it is not used.
+- **Deploy gating:** `db:migrate` and `seed` print PENDING-DEPLOY and exit 0 when the database is unreachable, so CI/docs pipelines never hard-fail before the Supabase project is provisioned.
 
 ### Cross-platform later
 Web-first responsive → Capacitor wrapper or React Native if native feel is demanded. A desktop/tablet-optimized PWA likely covers 90% first; the phone's main job early is the Scan-and-Grade camera flow, which works fine as a responsive web capture.

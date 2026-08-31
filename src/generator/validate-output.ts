@@ -186,8 +186,13 @@ function withPlaceholderPipelineFields(
  * \( ... \). This check removes the \( ... \) spans and flags leftover math
  * patterns in what remains. Plain prose, plain numbers, and percent values are
  * fine; the patterns below are the shapes the model actually emits unwrapped.
+ *
+ * Subject scoping: the coordinate-pair and equation/function-notation patterns
+ * are SAT_MATH-only — in SAT_RW passages they false-positive on quoted or
+ * citation prose (e.g. '(2010, p. 4)'). All other patterns apply to both
+ * subjects.
  */
-const UNWRAPPED_MATH_PATTERNS: Array<{ re: RegExp; message: string }> = [
+const UNWRAPPED_MATH_PATTERNS: Array<{ re: RegExp; message: string; mathOnly?: boolean }> = [
   {
     re: /\d*\s?[a-z]\s*[+\-−]\s*\d*\s?[a-z]\s*=/i,
     message: "linear-equation shape (e.g. '2x - y = 5') must be wrapped as inline LaTeX \\( ... \\)",
@@ -195,6 +200,7 @@ const UNWRAPPED_MATH_PATTERNS: Array<{ re: RegExp; message: string }> = [
   {
     re: /\b[fgxy]\s*(?:\([a-z0-9]+\))?\s*=\s*[-\d(a-z]/i,
     message: "equation/function notation (e.g. 'y = 2x + 1') must be wrapped as inline LaTeX \\( ... \\)",
+    mathOnly: true,
   },
   { re: /[a-z0-9)]\s*\^\s*[a-z0-9(]/, message: "ASCII caret exponent must be LaTeX (e.g. \\(x^2\\))" },
   { re: /\bpi\b/, message: "the word 'pi' must be LaTeX \\(\\pi\\)" },
@@ -206,14 +212,25 @@ const UNWRAPPED_MATH_PATTERNS: Array<{ re: RegExp; message: string }> = [
   {
     re: /\([-\d.]+\s*,\s*[-\d.]+\)/,
     message: "coordinate pairs (e.g. '(4, -1)') must be wrapped as inline LaTeX \\( ... \\)",
+    mathOnly: true,
   },
 ];
 
-/** Returns one error message per unwrapped-math pattern found in the field. */
-export function unwrappedMathErrors(text: string, jsonPath: string): string[] {
+/**
+ * Returns one error message per unwrapped-math pattern found in the field.
+ * SAT_MATH runs every pattern; SAT_RW skips the math-only patterns
+ * (coordinate pairs, equation/function notation) that false-positive on
+ * quoted/citation prose.
+ */
+export function unwrappedMathErrors(
+  text: string,
+  jsonPath: string,
+  subjectCode: 'SAT_RW' | 'SAT_MATH',
+): string[] {
   const outsideMath = text.replace(/\\\([\s\S]*?\\\)/g, '');
   const errors: string[] = [];
-  for (const { re, message } of UNWRAPPED_MATH_PATTERNS) {
+  for (const { re, message, mathOnly } of UNWRAPPED_MATH_PATTERNS) {
+    if (mathOnly === true && subjectCode === 'SAT_RW') continue;
     const match = outsideMath.match(re);
     if (match !== null) {
       errors.push(`${jsonPath}: unwrapped math ${JSON.stringify(match[0])} — ${message}`);
@@ -234,23 +251,23 @@ function crossCheck(draft: Record<string, unknown>, inputs: GenerationInputs): s
       ? (stimulus as Record<string, unknown>).text
       : undefined;
   if (typeof stimulusText === 'string') {
-    errors.push(...unwrappedMathErrors(stimulusText, '/stimulus/text'));
+    errors.push(...unwrappedMathErrors(stimulusText, '/stimulus/text', inputs.subjectCode));
   }
   if (typeof draft.stem === 'string') {
-    errors.push(...unwrappedMathErrors(draft.stem, '/stem'));
+    errors.push(...unwrappedMathErrors(draft.stem, '/stem', inputs.subjectCode));
   }
   if (Array.isArray(draft.choices)) {
     draft.choices.forEach((choice, i) => {
       if (choice !== null && typeof choice === 'object' && !Array.isArray(choice)) {
         const text = (choice as Record<string, unknown>).text;
         if (typeof text === 'string') {
-          errors.push(...unwrappedMathErrors(text, `/choices/${i}/text`));
+          errors.push(...unwrappedMathErrors(text, `/choices/${i}/text`, inputs.subjectCode));
         }
       }
     });
   }
   if (typeof draft.rationale === 'string') {
-    errors.push(...unwrappedMathErrors(draft.rationale, '/rationale'));
+    errors.push(...unwrappedMathErrors(draft.rationale, '/rationale', inputs.subjectCode));
   }
 
   // difficulty echo: the model must return the requested target verbatim

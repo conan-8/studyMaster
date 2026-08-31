@@ -10,27 +10,27 @@
   "choices": [
     {
       "id": "A",
-      "text": "\\(\\frac{44}{5}\\)",
-      "misconceptionId": "SAT_MATH:linear-equations-one-var-partial-distribution"
-    },
-    {
-      "id": "B",
       "text": "4",
       "misconceptionId": null
     },
     {
+      "id": "B",
+      "text": "100",
+      "misconceptionId": "SAT_MATH:linear-equations-one-var-multiplying-by-reciprocal-incorrectly"
+    },
+    {
       "id": "C",
-      "text": "16",
-      "misconceptionId": "SAT_MATH:linear-equations-one-var-sign-error-when-moving-terms"
+      "text": "\\(\\frac{44}{5}\\)",
+      "misconceptionId": "SAT_MATH:linear-equations-one-var-partial-distribution"
     },
     {
       "id": "D",
-      "text": "100",
-      "misconceptionId": "SAT_MATH:linear-equations-one-var-multiplying-by-reciprocal-incorrectly"
+      "text": "16",
+      "misconceptionId": "SAT_MATH:linear-equations-one-var-sign-error-when-moving-terms"
     }
   ],
-  "correctAnswer": "B",
-  "rationale": "Let \\(x\\) be the number of student tickets. The group sold \\(x + 6\\) tickets in all, at $5 each, for $50 total, so \\(5(x + 6) = 50\\). Dividing both sides by 5 gives \\(x + 6 = 10\\), and subtracting 6 gives \\(x = 4\\). Check: \\(5(4 + 6) = 5(10) = 50\\). ✓ Choice A, \\(\\frac{44}{5}\\), comes from partial distribution — expanding \\(5(x + 6)\\) as \\(5x + 6\\) and solving \\(5x = 44\\) instead of \\(5x + 30 = 50\\). Choice C, 16, comes from a sign error when moving terms — rewriting \\(5x + 30 = 50\\) as \\(5x = 50 + 30 = 80\\) rather than subtracting 30. Choice D, 100, comes from multiplying where dividing is needed — from \\(5x = 20\\), computing \\(5 \\times 20\\) instead of \\(\\frac{20}{5}\\).",
+  "correctAnswer": "A",
+  "rationale": "Let \\(x\\) be the number of student tickets. The group sold \\(x + 6\\) tickets in all, at $5 each, for $50 total, so \\(5(x + 6) = 50\\). Dividing both sides by 5 gives \\(x + 6 = 10\\), and subtracting 6 gives \\(x = 4\\). Check: \\(5(4 + 6) = 5(10) = 50\\). ✓ Choice C, \\(\\frac{44}{5}\\), comes from partial distribution — expanding \\(5(x + 6)\\) as \\(5x + 6\\) and solving \\(5x = 44\\) instead of \\(5x + 30 = 50\\). Choice D, 16, comes from a sign error when moving terms — rewriting \\(5x + 30 = 50\\) as \\(5x = 50 + 30 = 80\\) rather than subtracting 30. Choice B, 100, comes from multiplying where dividing is needed — from \\(5x = 20\\), computing \\(5 \\times 20\\) instead of \\(\\frac{20}{5}\\).",
   "difficultyTarget": 3,
   "id": "gen-sat-math-linear-equations-one-var-001",
   "subjectCode": "SAT_MATH",
@@ -40,7 +40,7 @@
     "promptVersion": "1.1.0",
     "model": "k3",
     "generatedAt": "2026-08-31T20:31:34.253Z",
-    "contentHash": "0e0e01e14fe2f3601bb97dacfd107fceec20b55e1f04a680768e609fc3ea12a3"
+    "contentHash": "4dae5203a595b9c7ede1e9f6baea56fc398c6d8770165348e335b0136aacbbf1"
   },
   "review": {
     "status": "pending",

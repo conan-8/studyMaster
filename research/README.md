@@ -55,7 +55,7 @@ Generated-question IDs match `^gen-[a-z0-9-]+-[0-9]{3,}$`.
 | `npm run validate:archetypes` | `research/sat/archetypes/*/*.json` vs `schemas/archetype.schema.json` (+ cross-refs) |
 | `npm run validate:questions` | `research/sat/test-fixtures/generated-*.json` AND `research/sat/generated/*.json` vs `schemas/generated-question.schema.json` (+ taxonomy, misconception, and diagram-parameter cross-checks; neutral to `review.status`) |
 | `npm run validate:sat-bank` | Harvested bank + dry-run fixtures vs `research/sat/question.schema.json` |
-| `npm run generate` | Generate question drafts from an archetype (mock replay or live via OpenRouter) into `research/sat/generated/` — see [Generating questions](#generating-questions) |
+| `npm run generate` | Generate question drafts from an archetype (mock replay or live via OpenRouter/Kimi) into `research/sat/generated/` — see [Generating questions](#generating-questions) |
 | `npm test` | Diagram renderer suite (registry, determinism, param coverage, E2E) — see `src/renderers/README.md` |
 | `npm run gallery` | Render every diagram archetype (golden params + E2E fixture) to `rendered-gallery/` |
 | `npm run db:check` | Verify connectivity to the Supabase Postgres (DATABASE_URL); prints server version — real exit code |
@@ -107,9 +107,15 @@ PENDING-DEPLOY message with the exact commands and exit 0.
 `npm run generate` drives the propose-validate-repair loop in
 `src/generator/generate.ts`: the model proposes a draft, deterministic code
 validates it against `schemas/generated-question.schema.json` plus cross-checks,
-and a repair retry (up to 4 attempts) feeds back every violation. Accepted
-drafts land in `research/sat/generated/<id>.json` — **drafts are committed**
-(original content, license-safe) with `review.status: "pending"`.
+and a repair retry (up to 4 attempts) feeds back every violation. For live
+providers the loop additionally runs two post-validation quality gates — a
+near-duplicate check against the already-generated corpus and an
+independent-solver verification (`question-verifier` prompt, fail-open) —
+plus a deterministic choice shuffle with rationale "Choice X" remap
+(`question-generator@1.2.0`; see the safeguards table in
+`src/generator/README.md`). Accepted drafts land in
+`research/sat/generated/<id>.json` — **drafts are committed** (original
+content, license-safe) with `review.status: "pending"`.
 
 Keyless dry-run with the mock provider (one `--mock-script` file per assistant
 response, consumed in order across ALL questions — a repair retry consumes the
@@ -121,16 +127,23 @@ npm run generate -- --subject SAT_RW --skill transitions --difficulty 3 \
 ```
 
 Live generation via OpenRouter (set `OPENROUTER_MODEL` to override the default
-`minimax/minimax-m3`):
+`minimax/minimax-m3`) or Kimi (`KIMI_MODEL` overrides the default `k3`, a
+reasoning model — a single question can take 60–180s):
 
 ```sh
 export OPENROUTER_API_KEY=<key from https://openrouter.ai/keys>
 npm run generate -- --subject SAT_RW --skill transitions --difficulty 3 \
   --provider openrouter --count 2
+
+export KIMI_API_KEY=<key from https://kimi.com>
+npm run generate -- --subject SAT_MATH --skill one-variable-data --difficulty 3 \
+  --provider kimi --diagram
 ```
 
 Flags: `--diagram` (figure item; only SAT_MATH skills with a `diagramSpec`),
-`--count N`, `--out-dir` (default `research/sat/generated/`). One failing
+`--count N`, `--out-dir` (default `research/sat/generated/`), `--no-verify`
+/ `--no-dedup` (disable the live-provider quality gates; both default ON for
+live providers and are forced OFF for the mock provider). One failing
 question fails the batch exit code but not the other questions.
 
 **Review lifecycle:** drafts arrive `pending` → a human reviews the file and

@@ -26,18 +26,18 @@
   "choices": [
     {
       "id": "A",
+      "text": "More than half of the days had a high temperature below \\(75^\\circ\\text{F}\\).",
+      "misconceptionId": null
+    },
+    {
+      "id": "B",
       "text": "The mean of the daily high temperatures is equal to the median of the daily high temperatures.",
       "misconceptionId": "SAT_MATH:one-variable-data-mean-vs-median-confusion"
     },
     {
-      "id": "B",
+      "id": "C",
       "text": "The range of the daily high temperatures is \\(95^\\circ\\text{F}\\).",
       "misconceptionId": "SAT_MATH:one-variable-data-range-as-max"
-    },
-    {
-      "id": "C",
-      "text": "More than half of the days had a high temperature below \\(75^\\circ\\text{F}\\).",
-      "misconceptionId": null
     },
     {
       "id": "D",
@@ -45,8 +45,8 @@
       "misconceptionId": "SAT_MATH:one-variable-data-outlier-effect-misassigned"
     }
   ],
-  "correctAnswer": "C",
-  "rationale": "Add the frequencies of the bins left of \\(75^\\circ\\text{F}\\): \\(12 + 8 = 20\\) of the 28 days, and \\(20/28\\) is more than half, so statement C is true. Choice A fails on the shape of the distribution: the tail stretching into the upper bins drags the mean above the median. Using bin centers, the estimated mean is \\((60 \\times 12 + 70 \\times 8 + 80 \\times 5 + 90 \\times 3)/28 = 1950/28 \\approx 69.6\\), while the median — the average of the 14th and 15th ordered values, both of which fall in the 65–75 bin after cumulating \\(12\\) values in the first bin — sits lower; asserting the two are equal is mean–median confusion on skewed data. Choice B reports the maximum as the range: the temperatures span at most from 55 to just under 95, so the range is less than \\(40^\\circ\\text{F}\\), not \\(95^\\circ\\text{F}\\); the range is the maximum minus the minimum, not the maximum itself. Choice D reverses the robustness of the two statistics: an extreme value pulls hard on the mean, but removing the single greatest value leaves the median essentially unmoved, since the middle position just shifts from the average of the 14th and 15th values to the 14th value, still inside the same bin.",
+  "correctAnswer": "A",
+  "rationale": "Add the frequencies of the bins left of \\(75^\\circ\\text{F}\\): \\(12 + 8 = 20\\) of the 28 days, and \\(20/28\\) is more than half, so statement C is true. Choice B fails on the shape of the distribution: the tail stretching into the upper bins drags the mean above the median. Using bin centers, the estimated mean is \\((60 \\times 12 + 70 \\times 8 + 80 \\times 5 + 90 \\times 3)/28 = 1950/28 \\approx 69.6\\), while the median — the average of the 14th and 15th ordered values, both of which fall in the 65–75 bin after cumulating \\(12\\) values in the first bin — sits lower; asserting the two are equal is mean–median confusion on skewed data. Choice C reports the maximum as the range: the temperatures span at most from 55 to just under 95, so the range is less than \\(40^\\circ\\text{F}\\), not \\(95^\\circ\\text{F}\\); the range is the maximum minus the minimum, not the maximum itself. Choice D reverses the robustness of the two statistics: an extreme value pulls hard on the mean, but removing the single greatest value leaves the median essentially unmoved, since the middle position just shifts from the average of the 14th and 15th values to the 14th value, still inside the same bin.",
   "difficultyTarget": 3,
   "id": "gen-sat-math-one-variable-data-001",
   "subjectCode": "SAT_MATH",
@@ -56,7 +56,7 @@
     "promptVersion": "1.1.1",
     "model": "k3",
     "generatedAt": "2026-08-31T21:57:59.972Z",
-    "contentHash": "c7d0be51394b68ea9909c1aa4fbe8a61a83773eb1b09cb5e75ed171df2f50d02"
+    "contentHash": "5379d7352770d8b1b219b5ce1f9cdd96b2eed2e5a5f3361592a85aceca3af79e"
   },
   "review": {
     "status": "pending",

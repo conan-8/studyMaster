@@ -32,8 +32,8 @@
   "choices": [
     {
       "id": "A",
-      "text": "\\(\\frac{12}{13}\\)",
-      "misconceptionId": "SAT_MATH:right-triangles-trig-sin-cos-swap"
+      "text": "It cannot be determined from the information given.",
+      "misconceptionId": "SAT_MATH:right-triangles-trig-complement-cofunction-error"
     },
     {
       "id": "B",
@@ -42,17 +42,17 @@
     },
     {
       "id": "C",
-      "text": "\\(\\frac{5}{12}\\)",
-      "misconceptionId": "SAT_MATH:right-triangles-trig-tan-as-opposite-over-hypotenuse"
+      "text": "\\(\\frac{12}{13}\\)",
+      "misconceptionId": "SAT_MATH:right-triangles-trig-sin-cos-swap"
     },
     {
       "id": "D",
-      "text": "It cannot be determined from the information given.",
-      "misconceptionId": "SAT_MATH:right-triangles-trig-complement-cofunction-error"
+      "text": "\\(\\frac{5}{12}\\)",
+      "misconceptionId": "SAT_MATH:right-triangles-trig-tan-as-opposite-over-hypotenuse"
     }
   ],
   "correctAnswer": "B",
-  "rationale": "The right angle is at \\(C\\), so the two acute angles are complementary: \\(A + B = 90^\\circ\\). For complementary angles, the cofunction identity gives \\(\\cos B = \\sin A\\). You can see this directly from the triangle: \\(\\sin A = \\frac{5}{13}\\) means the side opposite \\(A\\) is 5 and the hypotenuse is 13, so the remaining leg is \\(\\sqrt{13^2 - 5^2} = 12\\). The side opposite \\(A\\) is the side adjacent to \\(B\\), hence \\(\\cos B = \\frac{\\text{adjacent to } B}{\\text{hypotenuse}} = \\frac{5}{13}\\). Choice A, \\(\\frac{12}{13}\\), results from swapping sine and cosine — that is \\(\\sin B\\) (equivalently \\(\\cos A\\)), not \\(\\cos B\\). Choice C, \\(\\frac{5}{12}\\), forms the ratio from the two legs instead of a leg and the hypotenuse, confusing the cosine ratio with a tangent-style leg-over-leg ratio (that value is \\(\\tan A\\)). Choice D fails because the cofunction relationship determines \\(\\cos B\\) completely: in any right triangle, \\(\\cos B\\) must equal \\(\\sin A\\).",
+  "rationale": "The right angle is at \\(C\\), so the two acute angles are complementary: \\(A + B = 90^\\circ\\). For complementary angles, the cofunction identity gives \\(\\cos B = \\sin A\\). You can see this directly from the triangle: \\(\\sin A = \\frac{5}{13}\\) means the side opposite \\(A\\) is 5 and the hypotenuse is 13, so the remaining leg is \\(\\sqrt{13^2 - 5^2} = 12\\). The side opposite \\(A\\) is the side adjacent to \\(B\\), hence \\(\\cos B = \\frac{\\text{adjacent to } B}{\\text{hypotenuse}} = \\frac{5}{13}\\). Choice C, \\(\\frac{12}{13}\\), results from swapping sine and cosine — that is \\(\\sin B\\) (equivalently \\(\\cos A\\)), not \\(\\cos B\\). Choice D, \\(\\frac{5}{12}\\), forms the ratio from the two legs instead of a leg and the hypotenuse, confusing the cosine ratio with a tangent-style leg-over-leg ratio (that value is \\(\\tan A\\)). Choice A fails because the cofunction relationship determines \\(\\cos B\\) completely: in any right triangle, \\(\\cos B\\) must equal \\(\\sin A\\).",
   "difficultyTarget": 3,
   "id": "gen-sat-math-right-triangles-trig-001",
   "subjectCode": "SAT_MATH",
@@ -62,7 +62,7 @@
     "promptVersion": "1.1.1",
     "model": "k3",
     "generatedAt": "2026-08-31T22:01:51.500Z",
-    "contentHash": "3c86d311f85c559f182238d22e692f1289375d1054df564d4a332c7acd31b9b7"
+    "contentHash": "90e99bb57c6834a6bf5f8082b7aaf47d187d349e2ca7dd7b09fa75b59b1a0b6a"
   },
   "review": {
     "status": "pending",

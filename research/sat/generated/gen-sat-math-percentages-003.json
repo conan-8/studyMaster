@@ -1,0 +1,33 @@
+{
+  "questionType": "grid_in",
+  "stimulus": {
+    "type": "passage",
+    "text": "A community garden club tracked its membership over two years. At the start of 2022, the club had 200 members. By the start of 2023, the club's membership had grown to 250 members.",
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "By what percent did the number of club members increase from 200 to 250?",
+  "choices": [],
+  "correctAnswer": "25",
+  "rationale": "Percent change is always measured against the original (the 'from') value. The increase is 250 - 200 = 50 members, and the original membership is 200, so the percent increase is (50/200) x 100 = 25%. Checking forward: 25% of 200 is 50, and 200 + 50 = 250, the stated final membership. The most common error here is dividing by the NEW value instead of the original: 50/250 = 20%, which understates the increase — the base of a percent change is always the starting amount, never the ending one. Gridding 20 instead of 25 is exactly that wrong-base mistake.",
+  "difficultyTarget": 2,
+  "id": "gen-sat-math-percentages-003",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:percentages",
+  "provenance": {
+    "archetypeSlug": "percentages",
+    "promptVersion": "1.2.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T23:25:03.256Z",
+    "contentHash": "3e6a25b2577fc9721b39f41ebd81737e6c07936706c6741cf7a2cad6dfef160a"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

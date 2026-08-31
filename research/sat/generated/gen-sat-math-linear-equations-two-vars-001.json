@@ -10,13 +10,13 @@
   "choices": [
     {
       "id": "A",
-      "text": "\\(y = \\frac{1}{2}x + 4\\)",
-      "misconceptionId": "SAT_MATH:linear-equations-two-vars-perpendicular-slope-not-reciprocated"
+      "text": "\\(y = -2x - 1\\)",
+      "misconceptionId": "SAT_MATH:linear-equations-two-vars-standard-form-slope-sign-error"
     },
     {
       "id": "B",
-      "text": "\\(y = -2x - 1\\)",
-      "misconceptionId": "SAT_MATH:linear-equations-two-vars-standard-form-slope-sign-error"
+      "text": "\\(y = \\frac{1}{2}x + 4\\)",
+      "misconceptionId": "SAT_MATH:linear-equations-two-vars-perpendicular-slope-not-reciprocated"
     },
     {
       "id": "C",
@@ -30,7 +30,7 @@
     }
   ],
   "correctAnswer": "C",
-  "rationale": "First find the slope of the given line by solving for \\(y\\): \\(4y = -2x + 8\\), so \\(y = -\\frac{1}{2}x + 2\\) and the slope is \\(-\\frac{1}{2}\\). A perpendicular line has the negative reciprocal slope, \\(2\\). Using point-slope form through \\((-2, 3)\\): \\(y - 3 = 2(x - (-2))\\), so \\(y - 3 = 2(x + 2)\\), which expands to \\(y = 2x + 7\\). Check: substituting \\((-2, 3)\\) gives \\(3 = 2(-2) + 7 = 3\\). Choice A keeps the correct y-intercept logic but uses slope \\(\\frac{1}{2}\\) — the student negated \\(-\\frac{1}{2}\\) but never took the reciprocal. Choice B reads the given line's slope as \\(\\frac{A}{B} = \\frac{2}{4} = \\frac{1}{2}\\) instead of \\(-\\frac{A}{B}\\), then takes the negative reciprocal of that wrong slope to get \\(-2\\). Choice D uses the right slope \\(2\\) but writes \\(y - 3 = 2(x - 2)\\), dropping the double negative on the \\(x\\)-coordinate \\(-2\\), which shifts the line down by \\(8\\) to \\(y = 2x - 1\\).",
+  "rationale": "First find the slope of the given line by solving for \\(y\\): \\(4y = -2x + 8\\), so \\(y = -\\frac{1}{2}x + 2\\) and the slope is \\(-\\frac{1}{2}\\). A perpendicular line has the negative reciprocal slope, \\(2\\). Using point-slope form through \\((-2, 3)\\): \\(y - 3 = 2(x - (-2))\\), so \\(y - 3 = 2(x + 2)\\), which expands to \\(y = 2x + 7\\). Check: substituting \\((-2, 3)\\) gives \\(3 = 2(-2) + 7 = 3\\). Choice B keeps the correct y-intercept logic but uses slope \\(\\frac{1}{2}\\) — the student negated \\(-\\frac{1}{2}\\) but never took the reciprocal. Choice A reads the given line's slope as \\(\\frac{A}{B} = \\frac{2}{4} = \\frac{1}{2}\\) instead of \\(-\\frac{A}{B}\\), then takes the negative reciprocal of that wrong slope to get \\(-2\\). Choice D uses the right slope \\(2\\) but writes \\(y - 3 = 2(x - 2)\\), dropping the double negative on the \\(x\\)-coordinate \\(-2\\), which shifts the line down by \\(8\\) to \\(y = 2x - 1\\).",
   "difficultyTarget": 3,
   "id": "gen-sat-math-linear-equations-two-vars-001",
   "subjectCode": "SAT_MATH",
@@ -40,7 +40,7 @@
     "promptVersion": "1.1.0",
     "model": "k3",
     "generatedAt": "2026-08-31T20:33:17.610Z",
-    "contentHash": "c9ede27eeb6210b468c0a3e26462c055cac67e8667d1257a3575c060f134760d"
+    "contentHash": "7f3e94e7cc2c01e97f2eb1ae54ade180177d98c43614be963e8f59743798e219"
   },
   "review": {
     "status": "pending",

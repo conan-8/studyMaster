@@ -10,18 +10,18 @@
   "choices": [
     {
       "id": "A",
-      "text": "Sensors installed on the cliffs at Port Mercy recorded weather and rock-loss data continuously over the course of four consecutive winters.",
-      "misconceptionId": "SAT_RW:central-ideas-details-detail-as-main"
-    },
-    {
-      "id": "B",
       "text": "Okafor's team's findings challenge the long-standing assumption that storm waves are the main cause of the cliff erosion at Port Mercy.",
       "misconceptionId": null
     },
     {
-      "id": "C",
+      "id": "B",
       "text": "Freeze-thaw cycles loosen cliff rock primarily by clearing away debris that storm waves have already detached from the rock face.",
       "misconceptionId": "SAT_RW:central-ideas-details-relationship-reversal"
+    },
+    {
+      "id": "C",
+      "text": "Sensors installed on the cliffs at Port Mercy recorded weather and rock-loss data continuously over the course of four consecutive winters.",
+      "misconceptionId": "SAT_RW:central-ideas-details-detail-as-main"
     },
     {
       "id": "D",
@@ -29,8 +29,8 @@
       "misconceptionId": "SAT_RW:central-ideas-details-overgeneralization"
     }
   ],
-  "correctAnswer": "B",
-  "rationale": "The passage's central point is a correction of a prior belief: engineers long assumed storm waves caused the cliff erosion, but Okafor's team found that freeze-thaw cycles actually detach the rock, with waves merely removing the loosened debris. Choice B captures this dominant point at the right scope — the study overturns the long-held view about Port Mercy. Choice A presents a true supporting detail (the four winters of sensor data) as if it were the thesis, the detail-as-main trap. Choice C reverses the stated relationship: the text says waves remove debris that freeze-thaw cycles detached, not that freeze-thaw clears debris loosened by waves. Choice D overgeneralizes, extending a finding about one cliff system at Port Mercy to coastal erosion in most regions of the world, a claim the passage never makes.",
+  "correctAnswer": "A",
+  "rationale": "The passage's central point is a correction of a prior belief: engineers long assumed storm waves caused the cliff erosion, but Okafor's team found that freeze-thaw cycles actually detach the rock, with waves merely removing the loosened debris. Choice A captures this dominant point at the right scope — the study overturns the long-held view about Port Mercy. Choice C presents a true supporting detail (the four winters of sensor data) as if it were the thesis, the detail-as-main trap. Choice B reverses the stated relationship: the text says waves remove debris that freeze-thaw cycles detached, not that freeze-thaw clears debris loosened by waves. Choice D overgeneralizes, extending a finding about one cliff system at Port Mercy to coastal erosion in most regions of the world, a claim the passage never makes.",
   "difficultyTarget": 3,
   "id": "gen-sat-rw-central-ideas-details-001",
   "subjectCode": "SAT_RW",
@@ -40,7 +40,7 @@
     "promptVersion": "1.1.0",
     "model": "k3",
     "generatedAt": "2026-08-31T20:21:03.764Z",
-    "contentHash": "40f4ec75a58c71142352bbd097fad7dd05b154c4cc960f579f20f1aa611f1067"
+    "contentHash": "820e754bc176a4b6a37713d811ee7c6c750f34518c908992bc6bf6c558cbf00d"
   },
   "review": {
     "status": "pending",

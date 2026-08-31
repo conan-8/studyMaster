@@ -10,13 +10,13 @@
   "choices": [
     {
       "id": "A",
-      "text": "Community gardens that replaced turf with native plants, whether connected or isolated, had higher wild bee species richness than gardens that kept turf.",
-      "misconceptionId": "SAT_RW:command-evidence-textual-nearby-claim"
+      "text": "Across gardens with native beds, wild bee species richness tended to rise during warm midsummer weeks regardless of whether the beds were connected.",
+      "misconceptionId": "SAT_RW:command-evidence-textual-non-discriminating"
     },
     {
       "id": "B",
-      "text": "Across gardens with native beds, wild bee species richness tended to rise during warm midsummer weeks regardless of whether the beds were connected.",
-      "misconceptionId": "SAT_RW:command-evidence-textual-non-discriminating"
+      "text": "Community gardens that replaced turf with native plants, whether connected or isolated, had higher wild bee species richness than gardens that kept turf.",
+      "misconceptionId": "SAT_RW:command-evidence-textual-nearby-claim"
     },
     {
       "id": "C",
@@ -40,7 +40,7 @@
     "promptVersion": "1.1.0",
     "model": "k3",
     "generatedAt": "2026-08-31T20:22:44.601Z",
-    "contentHash": "2003fdc11e39d33bfe51249fcc39c54272a91330968e961051803212006bcdc4"
+    "contentHash": "5762f887961c3942cb321b689ae19fe25fa32c8e7915eee3921b1978642441e8"
   },
   "review": {
     "status": "pending",

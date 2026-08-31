@@ -10,8 +10,8 @@
   "choices": [
     {
       "id": "A",
-      "text": "sea urchins in tide pools feed on the seaweed that forms the base of the pool ecosystem",
-      "misconceptionId": "SAT_RW:inferences-restatement-trap"
+      "text": "sparse seaweed in some tide pools caused sea otters to abandon those pools",
+      "misconceptionId": "SAT_RW:inferences-wrong-direction"
     },
     {
       "id": "B",
@@ -20,17 +20,17 @@
     },
     {
       "id": "C",
-      "text": "sea otters help sustain seaweed in these pools by keeping sea urchin populations low",
-      "misconceptionId": null
+      "text": "sea urchins in tide pools feed on the seaweed that forms the base of the pool ecosystem",
+      "misconceptionId": "SAT_RW:inferences-restatement-trap"
     },
     {
       "id": "D",
-      "text": "sparse seaweed in some tide pools caused sea otters to abandon those pools",
-      "misconceptionId": "SAT_RW:inferences-wrong-direction"
+      "text": "sea otters help sustain seaweed in these pools by keeping sea urchin populations low",
+      "misconceptionId": null
     }
   ],
-  "correctAnswer": "C",
-  "rationale": "The inference requires combining the premises: otters present → urchins scarce; otters absent → urchins abundant and seaweed sparse; and urchins eat seaweed. The conclusion the premises jointly support is that otters, by suppressing urchins, help sustain the seaweed — a claim matched to the evidence in both scope and certainty (C). Choice A merely restates the premise that urchins eat seaweed rather than drawing a conclusion from all three premises together (restatement trap). Choice B inflates the supported claim into an absolute: the observations link otter presence to low urchin numbers, but nothing rules out other influences, so 'sole factor' overreaches. Choice D reverses the direction the premises establish: the pattern links otter absence to the subsequent abundance of urchins and sparse seaweed; it does not show seaweed scarcity driving otters away, and nothing in the passage addresses why otters leave a pool.",
+  "correctAnswer": "D",
+  "rationale": "The inference requires combining the premises: otters present → urchins scarce; otters absent → urchins abundant and seaweed sparse; and urchins eat seaweed. The conclusion the premises jointly support is that otters, by suppressing urchins, help sustain the seaweed — a claim matched to the evidence in both scope and certainty (C). Choice C merely restates the premise that urchins eat seaweed rather than drawing a conclusion from all three premises together (restatement trap). Choice B inflates the supported claim into an absolute: the observations link otter presence to low urchin numbers, but nothing rules out other influences, so 'sole factor' overreaches. Choice A reverses the direction the premises establish: the pattern links otter absence to the subsequent abundance of urchins and sparse seaweed; it does not show seaweed scarcity driving otters away, and nothing in the passage addresses why otters leave a pool.",
   "difficultyTarget": 3,
   "id": "gen-sat-rw-inferences-001",
   "subjectCode": "SAT_RW",
@@ -40,7 +40,7 @@
     "promptVersion": "1.1.0",
     "model": "k3",
     "generatedAt": "2026-08-31T20:24:23.624Z",
-    "contentHash": "86452d9dae4735e327ec6be0aff50ab5a816bffe3cd46a9a3065a2bbf6edfef8"
+    "contentHash": "ac53df92107cd21ef1b6053ecb30e1efe0bff66ff13b37991f768eed56054b5b"
   },
   "review": {
     "status": "pending",

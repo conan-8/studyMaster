@@ -10,13 +10,13 @@
   "choices": [
     {
       "id": "A",
-      "text": "are",
-      "misconceptionId": "SAT_RW:form-structure-sense-agreement-trap"
+      "text": "were",
+      "misconceptionId": "SAT_RW:form-structure-sense-tense-aspect-mismatch"
     },
     {
       "id": "B",
-      "text": "is",
-      "misconceptionId": null
+      "text": "are",
+      "misconceptionId": "SAT_RW:form-structure-sense-agreement-trap"
     },
     {
       "id": "C",
@@ -25,12 +25,12 @@
     },
     {
       "id": "D",
-      "text": "were",
-      "misconceptionId": "SAT_RW:form-structure-sense-tense-aspect-mismatch"
+      "text": "is",
+      "misconceptionId": null
     }
   ],
-  "correctAnswer": "B",
-  "rationale": "The blank needs a finite verb for the relative clause beginning with \"that.\" The subject of that clause is \"collection\" (via the relative pronoun \"that\"), which is singular; the phrase \"along with several handwritten journals from the same estate\" interrupts but does not change the number of the subject. The time frame — an exhibition running \"through the end of the month\" — calls for the present tense. The singular present form \"is\" satisfies both signals. Choice A, \"are,\" agrees with the nearer plural noun \"journals,\" but that noun is the object of a prepositional phrase, not the subject — the classic decoy-noun misparse. Choice C, \"being,\" is a participle, so the relative clause would contain no finite verb, leaving the sentence a fragment. Choice D, \"were,\" is both plural and past tense; even read as a tense choice alone, it clashes with the ongoing present time frame established by \"through the end of the month.\"",
+  "correctAnswer": "D",
+  "rationale": "The blank needs a finite verb for the relative clause beginning with \"that.\" The subject of that clause is \"collection\" (via the relative pronoun \"that\"), which is singular; the phrase \"along with several handwritten journals from the same estate\" interrupts but does not change the number of the subject. The time frame — an exhibition running \"through the end of the month\" — calls for the present tense. The singular present form \"is\" satisfies both signals. Choice B, \"are,\" agrees with the nearer plural noun \"journals,\" but that noun is the object of a prepositional phrase, not the subject — the classic decoy-noun misparse. Choice C, \"being,\" is a participle, so the relative clause would contain no finite verb, leaving the sentence a fragment. Choice A, \"were,\" is both plural and past tense; even read as a tense choice alone, it clashes with the ongoing present time frame established by \"through the end of the month.\"",
   "difficultyTarget": 3,
   "id": "gen-sat-rw-form-structure-sense-001",
   "subjectCode": "SAT_RW",
@@ -40,7 +40,7 @@
     "promptVersion": "1.1.0",
     "model": "k3",
     "generatedAt": "2026-08-31T20:23:55.544Z",
-    "contentHash": "f9aa9a8b20a2e374174d4b6bf4ca3c3c6a8fa7f420ae551438d17f6ef3d262fb"
+    "contentHash": "d110c4d17c4d8e6b31c60c70e4a2c79b5604612683ff59e0098adef77d720a76"
   },
   "review": {
     "status": "pending",

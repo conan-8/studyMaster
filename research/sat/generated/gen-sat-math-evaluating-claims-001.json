@@ -10,13 +10,13 @@
   "choices": [
     {
       "id": "A",
-      "text": "Among adults in Millbrook, drinking more than two cups of coffee per day caused poorer reported sleep quality.",
-      "misconceptionId": "SAT_MATH:evaluating-claims-causal-claim-from-observational-study"
+      "text": "Among adults in Millbrook, drinking more than two cups of coffee per day is associated with poorer reported sleep quality.",
+      "misconceptionId": null
     },
     {
       "id": "B",
-      "text": "Among adults in Millbrook, drinking more than two cups of coffee per day is associated with poorer reported sleep quality.",
-      "misconceptionId": null
+      "text": "Because the participants were randomly selected, drinking more than two cups of coffee per day caused poorer reported sleep quality among adults in Millbrook.",
+      "misconceptionId": "SAT_MATH:evaluating-claims-random-sampling-vs-random-assignment-swap"
     },
     {
       "id": "C",
@@ -25,12 +25,12 @@
     },
     {
       "id": "D",
-      "text": "Because the participants were randomly selected, drinking more than two cups of coffee per day caused poorer reported sleep quality among adults in Millbrook.",
-      "misconceptionId": "SAT_MATH:evaluating-claims-random-sampling-vs-random-assignment-swap"
+      "text": "Among adults in Millbrook, drinking more than two cups of coffee per day caused poorer reported sleep quality.",
+      "misconceptionId": "SAT_MATH:evaluating-claims-causal-claim-from-observational-study"
     }
   ],
-  "correctAnswer": "B",
-  "rationale": "Apply the two-question licensing check. (1) Were participants randomly assigned to coffee-drinking conditions? No — groups formed by self-reported habits, so only association language is licensed, not causal language. (2) Who was randomly sampled? Adults from Millbrook's registered residents, so conclusions extend to Millbrook adults, not beyond. Choice B matches both dimensions: associational strength, Millbrook scope. Choice A commits the observational-to-causal error: without random assignment, an unmeasured confound (stress, work schedules) could explain both coffee intake and poor sleep, so 'caused' is not licensed. Choice C keeps the correct strength but widens the population one level beyond the sampling frame — random selection from Millbrook licenses conclusions about Millbrook adults only, not adults nationwide. Choice D swaps what randomization buys: random selection of participants supports generalization to the sampled population, but it does nothing to license a causal claim, which requires random assignment to treatment.",
+  "correctAnswer": "A",
+  "rationale": "Apply the two-question licensing check. (1) Were participants randomly assigned to coffee-drinking conditions? No — groups formed by self-reported habits, so only association language is licensed, not causal language. (2) Who was randomly sampled? Adults from Millbrook's registered residents, so conclusions extend to Millbrook adults, not beyond. Choice A matches both dimensions: associational strength, Millbrook scope. Choice D commits the observational-to-causal error: without random assignment, an unmeasured confound (stress, work schedules) could explain both coffee intake and poor sleep, so 'caused' is not licensed. Choice C keeps the correct strength but widens the population one level beyond the sampling frame — random selection from Millbrook licenses conclusions about Millbrook adults only, not adults nationwide. Choice B swaps what randomization buys: random selection of participants supports generalization to the sampled population, but it does nothing to license a causal claim, which requires random assignment to treatment.",
   "difficultyTarget": 3,
   "id": "gen-sat-math-evaluating-claims-001",
   "subjectCode": "SAT_MATH",
@@ -40,7 +40,7 @@
     "promptVersion": "1.1.0",
     "model": "k3",
     "generatedAt": "2026-08-31T20:31:04.852Z",
-    "contentHash": "6993238fc1d65b3506f621110fc839e6b4418abe389d6f2fc8e620639811e80e"
+    "contentHash": "5e24998e780e3148932110e78435d3c25dbf6d8ef1ee2728100d9c4d543acd85"
   },
   "review": {
     "status": "pending",

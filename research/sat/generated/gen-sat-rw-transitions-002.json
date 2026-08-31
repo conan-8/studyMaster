@@ -10,13 +10,13 @@
   "choices": [
     {
       "id": "A",
-      "text": "Conversely,",
-      "misconceptionId": "SAT_RW:transitions-polarity-reversal"
+      "text": "For instance,",
+      "misconceptionId": "SAT_RW:transitions-false-exemplification"
     },
     {
       "id": "B",
-      "text": "For instance,",
-      "misconceptionId": "SAT_RW:transitions-false-exemplification"
+      "text": "Conversely,",
+      "misconceptionId": "SAT_RW:transitions-polarity-reversal"
     },
     {
       "id": "C",
@@ -40,7 +40,7 @@
     "promptVersion": "1.1.0",
     "model": "k3",
     "generatedAt": "2026-08-31T20:26:46.010Z",
-    "contentHash": "77364de09539333990ea2741cc0c817211d6add4eb7b020e055fa8d9e9607809"
+    "contentHash": "e77ab207ce44ac8572fc9428269933870fa795ea240a49324fe6410e92916b6a"
   },
   "review": {
     "status": "pending",

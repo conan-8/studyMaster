@@ -18,7 +18,15 @@ test('listPrompts returns the manifest entries', () => {
 test('loadPrompt resolves latest version when omitted and returns text', () => {
   const prompt = loadPrompt('question-generator');
   assert.equal(prompt.id, 'question-generator');
-  assert.equal(prompt.version, '1.1.1');
+  assert.equal(prompt.version, '1.2.0');
+  assert.ok(prompt.text.length > 0);
+  assert.ok(prompt.text.includes('OUTPUT CONTRACT'), 'prompt must contain the OUTPUT CONTRACT marker');
+});
+
+test('loadPrompt resolves the question-verifier prompt', () => {
+  const prompt = loadPrompt('question-verifier');
+  assert.equal(prompt.id, 'question-verifier');
+  assert.equal(prompt.version, '1.0.0');
   assert.ok(prompt.text.length > 0);
   assert.ok(prompt.text.includes('OUTPUT CONTRACT'), 'prompt must contain the OUTPUT CONTRACT marker');
 });

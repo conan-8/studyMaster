@@ -10,27 +10,27 @@
   "choices": [
     {
       "id": "A",
-      "text": "\\(x \\gt 3\\)",
+      "text": "\\(x \\ge 3\\)",
       "misconceptionId": "SAT_MATH:linear-inequalities-forgetting-to-flip-when-dividing-by-negative"
     },
     {
       "id": "B",
-      "text": "\\(x \\lt 3\\)",
-      "misconceptionId": null
-    },
-    {
-      "id": "C",
       "text": "\\(x \\le 3\\)",
       "misconceptionId": "SAT_MATH:linear-inequalities-strict-vs-inclusive-boundary-swap"
     },
     {
-      "id": "D",
-      "text": "\\(x \\ge 3\\)",
+      "id": "C",
+      "text": "\\(x \\gt 3\\)",
       "misconceptionId": "SAT_MATH:linear-inequalities-forgetting-to-flip-when-dividing-by-negative"
+    },
+    {
+      "id": "D",
+      "text": "\\(x \\lt 3\\)",
+      "misconceptionId": null
     }
   ],
-  "correctAnswer": "B",
-  "rationale": "Isolate \\(x\\): subtracting 20 from both sides of \\(20 - 2x \\gt 14\\) gives \\(-2x \\gt -6\\). Dividing both sides by \\(-2\\) reverses the inequality symbol, yielding \\(x \\lt 3\\). Two checks confirm this: the interior point \\(x = 0\\) gives \\(20 \\gt 14\\), which is true, and the boundary point \\(x = 3\\) gives \\(14 \\gt 14\\), which is false — so the boundary must be excluded and the strict symbol is correct. Choice A results from dividing \\(-6\\) by \\(-2\\) to get the correct boundary \\(3\\) but forgetting to reverse the inequality symbol when dividing by a negative. Choice C keeps the correct direction but swaps the strict symbol for an inclusive one, wrongly admitting the boundary value \\(x = 3\\), which leaves exactly 14 liters rather than more than 14. Choice D compounds both errors: it reverses neither the direction nor excludes the boundary, giving the inclusive ray pointing the wrong way.",
+  "correctAnswer": "D",
+  "rationale": "Isolate \\(x\\): subtracting 20 from both sides of \\(20 - 2x \\gt 14\\) gives \\(-2x \\gt -6\\). Dividing both sides by \\(-2\\) reverses the inequality symbol, yielding \\(x \\lt 3\\). Two checks confirm this: the interior point \\(x = 0\\) gives \\(20 \\gt 14\\), which is true, and the boundary point \\(x = 3\\) gives \\(14 \\gt 14\\), which is false — so the boundary must be excluded and the strict symbol is correct. Choice C results from dividing \\(-6\\) by \\(-2\\) to get the correct boundary \\(3\\) but forgetting to reverse the inequality symbol when dividing by a negative. Choice B keeps the correct direction but swaps the strict symbol for an inclusive one, wrongly admitting the boundary value \\(x = 3\\), which leaves exactly 14 liters rather than more than 14. Choice A compounds both errors: it reverses neither the direction nor excludes the boundary, giving the inclusive ray pointing the wrong way.",
   "difficultyTarget": 3,
   "id": "gen-sat-math-linear-inequalities-001",
   "subjectCode": "SAT_MATH",
@@ -40,7 +40,7 @@
     "promptVersion": "1.1.0",
     "model": "k3",
     "generatedAt": "2026-08-31T20:37:20.325Z",
-    "contentHash": "fd62fa273f5113dc3341c2f2044c1391a6e1acebc79ead4145995aea92874bae"
+    "contentHash": "46e55d3f025ff7f888c557e527f137b2dadf6b34a10f5d3b058d7661d5cd92a9"
   },
   "review": {
     "status": "pending",

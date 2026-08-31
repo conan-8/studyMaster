@@ -35,27 +35,27 @@
   "choices": [
     {
       "id": "A",
-      "text": "\\(2.5\\%\\)",
-      "misconceptionId": "SAT_MATH:percentages-decimal-point-slip"
-    },
-    {
-      "id": "B",
-      "text": "\\(20\\%\\)",
-      "misconceptionId": "SAT_MATH:percentages-percent-change-wrong-base"
-    },
-    {
-      "id": "C",
       "text": "\\(25\\%\\)",
       "misconceptionId": null
     },
     {
-      "id": "D",
+      "id": "B",
       "text": "\\(125\\%\\)",
       "misconceptionId": "SAT_MATH:percentages-percent-of-vs-percent-increase"
+    },
+    {
+      "id": "C",
+      "text": "\\(2.5\\%\\)",
+      "misconceptionId": "SAT_MATH:percentages-decimal-point-slip"
+    },
+    {
+      "id": "D",
+      "text": "\\(20\\%\\)",
+      "misconceptionId": "SAT_MATH:percentages-percent-change-wrong-base"
     }
   ],
-  "correctAnswer": "C",
-  "rationale": "A percent increase is always measured against the original (the \"from\") value. The increase is \\(300 - 240 = 60\\) subscribers, and the original value is 240, so the percent increase is \\(\\frac{60}{240} \\times 100 = 0.25 \\times 100 = 25\\%\\). Choice B uses the wrong base: it divides the increase by the new value, \\(\\frac{60}{300} = 20\\%\\), which systematically understates an increase. Choice D computes the new value as a percent of the old — \\(\\frac{300}{240} = 125\\%\\) — which answers \"300 is what percent of 240?\" rather than the percent increase; the increase is only the part above 100%. Choice A results from a decimal slip: \\(\\frac{60}{240} = 0.25\\), and mishandling the conversion to a percent gives \\(2.5\\%\\) instead of \\(25\\%\\).",
+  "correctAnswer": "A",
+  "rationale": "A percent increase is always measured against the original (the \"from\") value. The increase is \\(300 - 240 = 60\\) subscribers, and the original value is 240, so the percent increase is \\(\\frac{60}{240} \\times 100 = 0.25 \\times 100 = 25\\%\\). Choice D uses the wrong base: it divides the increase by the new value, \\(\\frac{60}{300} = 20\\%\\), which systematically understates an increase. Choice B computes the new value as a percent of the old — \\(\\frac{300}{240} = 125\\%\\) — which answers \"300 is what percent of 240?\" rather than the percent increase; the increase is only the part above 100%. Choice C results from a decimal slip: \\(\\frac{60}{240} = 0.25\\), and mishandling the conversion to a percent gives \\(2.5\\%\\) instead of \\(25\\%\\).",
   "difficultyTarget": 3,
   "id": "gen-sat-math-percentages-002",
   "subjectCode": "SAT_MATH",
@@ -65,7 +65,7 @@
     "promptVersion": "1.1.1",
     "model": "k3",
     "generatedAt": "2026-08-31T21:59:36.067Z",
-    "contentHash": "2af092c3fe1a2a582a3230911a083a43174fdab632738dddd254caaf3573a078"
+    "contentHash": "fdde65834dc40c95bef85fab8cfac59b7290125132054ff59a7d1fff0bef7a6a"
   },
   "review": {
     "status": "pending",

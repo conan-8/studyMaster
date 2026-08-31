@@ -67,13 +67,13 @@
   "choices": [
     {
       "id": "A",
-      "text": "Increasing weekly study time causes an increase in quiz score.",
-      "misconceptionId": "SAT_MATH:two-variable-data-treating-correlation-as-causation"
+      "text": "The line of best fit can be used to reliably predict quiz scores for students who study up to 20 hours per week.",
+      "misconceptionId": "SAT_MATH:two-variable-data-extrapolation-beyond-data"
     },
     {
       "id": "B",
-      "text": "There is a positive linear association between weekly study time and quiz score.",
-      "misconceptionId": null
+      "text": "Increasing weekly study time causes an increase in quiz score.",
+      "misconceptionId": "SAT_MATH:two-variable-data-treating-correlation-as-causation"
     },
     {
       "id": "C",
@@ -82,12 +82,12 @@
     },
     {
       "id": "D",
-      "text": "The line of best fit can be used to reliably predict quiz scores for students who study up to 20 hours per week.",
-      "misconceptionId": "SAT_MATH:two-variable-data-extrapolation-beyond-data"
+      "text": "There is a positive linear association between weekly study time and quiz score.",
+      "misconceptionId": null
     }
   ],
-  "correctAnswer": "B",
-  "rationale": "The points rise from lower left to upper right and cluster tightly around the line of best fit, so the scatterplot shows a clear positive linear association between weekly study time and quiz score. Choice A fails because the data come from a survey, not an experiment: an observational study can establish association, but it cannot establish that more studying causes higher scores — confounding factors (such as prior preparation) could explain the pattern. Choice C misjudges strength by steepness: the strength of a linear relationship is measured by how closely the points hug the line, not by the slope, and here the points lie very close to the line, so the association is strong regardless of how steep the line looks. Choice D overreaches the data: the observed study times run from 1 to 10 hours per week, so predictions near 20 hours per week are extrapolations outside the data range and cannot be treated as reliable.",
+  "correctAnswer": "D",
+  "rationale": "The points rise from lower left to upper right and cluster tightly around the line of best fit, so the scatterplot shows a clear positive linear association between weekly study time and quiz score. Choice B fails because the data come from a survey, not an experiment: an observational study can establish association, but it cannot establish that more studying causes higher scores — confounding factors (such as prior preparation) could explain the pattern. Choice C misjudges strength by steepness: the strength of a linear relationship is measured by how closely the points hug the line, not by the slope, and here the points lie very close to the line, so the association is strong regardless of how steep the line looks. Choice A overreaches the data: the observed study times run from 1 to 10 hours per week, so predictions near 20 hours per week are extrapolations outside the data range and cannot be treated as reliable.",
   "difficultyTarget": 3,
   "id": "gen-sat-math-two-variable-data-001",
   "subjectCode": "SAT_MATH",
@@ -97,7 +97,7 @@
     "promptVersion": "1.1.1",
     "model": "k3",
     "generatedAt": "2026-08-31T22:05:03.160Z",
-    "contentHash": "ce56eb6f0b82b7e3cb94963f7d4bc27f1fe89f9e27d99a2ccbc54140cdbe9586"
+    "contentHash": "d37c3e2c62f4de9d75b1e55f6978c054ea9fae857f09444ce8736592577e91e2"
   },
   "review": {
     "status": "pending",

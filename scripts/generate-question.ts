@@ -7,7 +7,16 @@
  * Usage:
  *   npm run generate -- --subject SAT_RW --skill transitions --difficulty 3 \
  *     [--diagram] [--count 2] [--provider mock|openrouter|kimi] \
- *     [--mock-script <file> ...] [--out-dir <dir>]
+ *     [--mock-script <file> ...] [--out-dir <dir>] [--no-verify] [--no-dedup]
+ *
+ * Quality gates (live providers only — the mock provider replays canned
+ * output, so verification and dedup are forced OFF for it):
+ *   verify      a second provider call runs the question-verifier prompt
+ *               (independent solver); answer/difficulty/verdict mismatches
+ *               feed the repair loop. Disable with --no-verify.
+ *   dedup       near-duplicate check against research/sat fixtures +
+ *               generated questions; a Jaccard >= 0.85 stem match feeds the
+ *               repair loop. Disable with --no-dedup.
  *
  * Providers:
  *   mock        deterministic replay of --mock-script files. Scripts are
@@ -48,7 +57,8 @@ const DIFFICULTIES = ['2', '3', '4'] as const;
 const MAX_ATTEMPTS = 4; // generateQuestion default repair budget
 
 const USAGE = `Usage: npm run generate -- --subject SAT_RW|SAT_MATH --skill <slug> --difficulty 2|3|4 \\
-  [--diagram] [--count N] [--provider mock|openrouter|kimi] [--mock-script <file> ...] [--out-dir <dir>]`;
+  [--diagram] [--count N] [--provider mock|openrouter|kimi] [--mock-script <file> ...] \\
+  [--out-dir <dir>] [--no-verify] [--no-dedup]`;
 
 interface CliArgs {
   subject: Subject;
@@ -59,6 +69,8 @@ interface CliArgs {
   provider?: string;
   mockScripts: string[];
   outDir: string;
+  noVerify: boolean;
+  noDedup: boolean;
 }
 
 function fail(message: string): never {
@@ -101,6 +113,8 @@ function parseCli(argv: string[]): CliArgs {
         provider: { type: 'string' },
         'mock-script': { type: 'string', multiple: true, default: [] },
         'out-dir': { type: 'string' },
+        'no-verify': { type: 'boolean', default: false },
+        'no-dedup': { type: 'boolean', default: false },
         help: { type: 'boolean', default: false },
       },
     });
@@ -117,6 +131,8 @@ function parseCli(argv: string[]): CliArgs {
     provider?: string;
     'mock-script'?: string[];
     'out-dir'?: string;
+    'no-verify'?: boolean;
+    'no-dedup'?: boolean;
     help?: boolean;
   };
   if (v.help === true) {
@@ -153,10 +169,13 @@ function parseCli(argv: string[]): CliArgs {
     provider: v.provider,
     mockScripts: v['mock-script'] ?? [],
     outDir: v['out-dir'] ?? path.join(REPO_ROOT, 'research', 'sat', 'generated'),
+    noVerify: v['no-verify'] === true,
+    noDedup: v['no-dedup'] === true,
   };
 }
 
-function resolveCli(args: CliArgs): LLMProvider {
+/** Resolve the provider AND report its name (mock cannot verify or dedup). */
+function resolveCli(args: CliArgs): { provider: LLMProvider; providerName: string } {
   const providerName = args.provider ?? process.env.GENERATOR_PROVIDER ?? 'mock';
   if (providerName === 'mock') {
     if (args.mockScripts.length === 0) {
@@ -169,10 +188,10 @@ function resolveCli(args: CliArgs): LLMProvider {
     for (const p of args.mockScripts) {
       if (!fs.existsSync(p)) fail(`mock script not found: ${p}`);
     }
-    return resolveProvider('mock', { scripts: mockFromFiles(args.mockScripts) });
+    return { provider: resolveProvider('mock', { scripts: mockFromFiles(args.mockScripts) }), providerName };
   }
   try {
-    return resolveProvider(providerName);
+    return { provider: resolveProvider(providerName), providerName };
   } catch (err) {
     // missing OPENROUTER_API_KEY (LLMError) or unknown env GENERATOR_PROVIDER
     fail(err instanceof Error ? err.message : String(err));
@@ -198,12 +217,16 @@ function usageSummary(attempts: AttemptLog[]): string {
 
 async function main(): Promise<void> {
   const args = parseCli(process.argv.slice(2));
-  const provider = resolveCli(args);
+  const { provider, providerName } = resolveCli(args);
+  // The mock replays canned output: verifying or deduping it is meaningless.
+  const verify = !args.noVerify && providerName !== 'mock';
+  const dedup = !args.noDedup && providerName !== 'mock';
   fs.mkdirSync(args.outDir, { recursive: true });
 
   console.log(
     `generate: ${args.count} question(s) — ${args.subject}:${args.skill} difficulty ${args.difficulty}` +
-      `${args.withDiagram ? ' +diagram' : ''} via ${provider.name}`,
+      `${args.withDiagram ? ' +diagram' : ''} via ${provider.name}` +
+      `${verify ? ' +verify' : ''}${dedup ? ' +dedup' : ''}`,
   );
 
   const generatedIds: string[] = [];
@@ -217,13 +240,18 @@ async function main(): Promise<void> {
         difficulty: args.difficulty,
         withDiagram: args.withDiagram,
         provider,
+        verify,
+        dedup,
       });
       const question = result.question as { id?: string };
       const id = typeof question.id === 'string' ? question.id : '(no id)';
       const last = result.attempts[result.attempts.length - 1];
+      const verifyNote = verify ? `; ${last?.verify?.status ?? 'unverified'}` : '';
+      const dedupNote = dedup ? '; dedup on' : '';
       console.log(
         `${tag} ${id} — ${last?.outcome ?? 'accepted'} (${attemptsSummary(result.attempts)}; ` +
-          `${usageSummary(result.attempts)}; model ${result.model}, prompt ${result.promptVersion})`,
+          `${usageSummary(result.attempts)}; model ${result.model}, prompt ${result.promptVersion}` +
+          `${verifyNote}${dedupNote})`,
       );
       const outFile = path.join(args.outDir, `${id}.json`);
       fs.writeFileSync(outFile, `${JSON.stringify(question, null, 2)}\n`);

@@ -10,8 +10,8 @@
   "choices": [
     {
       "id": "A",
-      "text": "tenuous",
-      "misconceptionId": null
+      "text": "elaborate",
+      "misconceptionId": "SAT_RW:words-in-context-register-meaning-mismatch"
     },
     {
       "id": "B",
@@ -20,16 +20,16 @@
     },
     {
       "id": "C",
-      "text": "elaborate",
-      "misconceptionId": "SAT_RW:words-in-context-register-meaning-mismatch"
+      "text": "robust",
+      "misconceptionId": "SAT_RW:words-in-context-partial-fit"
     },
     {
       "id": "D",
-      "text": "robust",
-      "misconceptionId": "SAT_RW:words-in-context-partial-fit"
+      "text": "tenuous",
+      "misconceptionId": null
     }
   ],
-  "correctAnswer": "A",
+  "correctAnswer": "D",
   "rationale": "The context pins the required meaning: the fossil record is \"fragmentary,\" and even supporters concede the link could be overturned by one specimen. The blank must therefore mean weak or insubstantial — exactly what \"tenuous\" means when applied to a claim or connection. (B) \"Ancient\" is a thematic lure: it fits the fossil topic but says nothing about the strength of the proposed link, which is the blank's actual job. (C) \"Elaborate\" matches the formal register but has the wrong meaning — an elaborate connection would be complex, not weakly supported, and the passage never suggests complexity. (D) \"Robust\" satisfies only the clause noting that a specimen \"could confirm the link,\" but it directly contradicts the \"fragmentary\" record and the proponents' own concession that the link might be overturned — a word cannot fit one clue while defying the other.",
   "difficultyTarget": 3,
   "id": "gen-sat-rw-words-in-context-001",
@@ -40,7 +40,7 @@
     "promptVersion": "1.1.0",
     "model": "k3",
     "generatedAt": "2026-08-31T20:27:09.408Z",
-    "contentHash": "5265914ec2eae6fae002e2e1b78602233e9ea45b5e301d57aafed44732cfd646"
+    "contentHash": "0f95c636fe8c9827452d927119b83b094802a4c9fdb5400930a3e3dcdb91704c"
   },
   "review": {
     "status": "pending",

@@ -1,0 +1,104 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "figure",
+    "text": "The dot plot shows the distance, in miles, from home to school for each of 11 students at a school.",
+    "tableJson": null,
+    "diagram": {
+      "archetypeId": "sat-math:dot-plot",
+      "parameters": {
+        "entries": [
+          {
+            "value": 10,
+            "count": 1
+          },
+          {
+            "value": 2,
+            "count": 1
+          },
+          {
+            "value": 5,
+            "count": 2
+          },
+          {
+            "value": 15,
+            "count": 1
+          },
+          {
+            "value": 4,
+            "count": 1
+          },
+          {
+            "value": 8,
+            "count": 1
+          },
+          {
+            "value": 1,
+            "count": 1
+          },
+          {
+            "value": 6,
+            "count": 1
+          },
+          {
+            "value": 3,
+            "count": 1
+          },
+          {
+            "value": 7,
+            "count": 1
+          }
+        ],
+        "axisLabel": "Distance (miles)",
+        "tickStep": 1,
+        "markMean": false,
+        "markMedian": false
+      }
+    }
+  },
+  "stem": "Which of the following statements about the 11 data values is true?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "The mean of the distances is greater than the median of the distances.",
+      "misconceptionId": null
+    },
+    {
+      "id": "B",
+      "text": "Removing the greatest distance from the data set would not change the mean of the distances.",
+      "misconceptionId": "SAT_MATH:one-variable-data-outlier-effect-misassigned"
+    },
+    {
+      "id": "C",
+      "text": "The median of the distances is 6 miles.",
+      "misconceptionId": "SAT_MATH:one-variable-data-mean-vs-median-confusion"
+    },
+    {
+      "id": "D",
+      "text": "The range of the distances is 15 miles.",
+      "misconceptionId": "SAT_MATH:one-variable-data-range-as-max"
+    }
+  ],
+  "correctAnswer": "A",
+  "rationale": "Read off the 11 values from the dot plot: 1, 2, 3, 4, 5, 5, 6, 7, 8, 10, 15. The median is the 6th of the 11 ordered values, which is 5. The mean is the sum divided by the count: \\(1 + 2 + 3 + 4 + 5 + 5 + 6 + 7 + 8 + 10 + 15 = 66\\), and \\(66 \\div 11 = 6\\). Since 6 is greater than 5, the mean exceeds the median — Choice A is true (the single large value of 15 pulls the mean above the median, exactly the behavior expected for a right-skewed set). Choice D fails because the range is the maximum minus the minimum, \\(15 - 1 = 14\\) miles, not the maximum itself; reporting 15 is the range-as-maximum error. Choice C reports 6 as the median, but 6 is the mean — the classic swap of the two measures of center. Choice B claims the mean survives removal of the outlier, but deleting 15 leaves a sum of 51 over 10 values, a mean of 5.1; the mean is precisely the statistic an extreme value moves, while the median would barely budge (from 5 to 5).",
+  "difficultyTarget": 3,
+  "id": "gen-sat-math-one-variable-data-002",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:one-variable-data",
+  "provenance": {
+    "archetypeSlug": "one-variable-data",
+    "promptVersion": "1.2.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T23:24:18.247Z",
+    "contentHash": "8e9693edec25176a1215ff1073923867aacd2ccff773d9b80f91fb15cf50517e"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

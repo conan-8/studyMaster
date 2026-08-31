@@ -264,15 +264,17 @@ function renderUserMessage(ctx: MessageContext): string {
   );
 
   if (ctx.withDiagram) {
-    const archetypeId = ctx.diagramArchetypeIds[0]!;
-    const { paramsSchema } = loadDiagramArchetype(archetypeId);
+    const allowed = ctx.diagramArchetypeIds.map((id) => {
+      const { paramsSchema } = loadDiagramArchetype(id);
+      return { archetypeId: id, paramsSchema };
+    });
     parts.push(
       '## Diagram (this item requires a figure)',
       '',
-      'Use this archetypeId verbatim as stimulus.diagram.archetypeId; stimulus.diagram.parameters must satisfy the paramsSchema below, and stimulus.type must be "figure".',
+      'Every archetype below is allowed for this skill. Choose the single most natural archetype for your item, then use that archetypeId verbatim as stimulus.diagram.archetypeId; stimulus.diagram.parameters must satisfy that archetype\'s paramsSchema, and stimulus.type must be "figure".',
       '',
       '```json',
-      JSON.stringify({ archetypeId, paramsSchema }, null, 2),
+      JSON.stringify(allowed, null, 2),
       '```',
       '',
     );

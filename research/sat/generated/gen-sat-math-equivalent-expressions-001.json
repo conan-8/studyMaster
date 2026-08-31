@@ -10,27 +10,27 @@
   "choices": [
     {
       "id": "A",
-      "text": "\\(x^6 + 2x^5 - 2x^2\\)",
-      "misconceptionId": "SAT_MATH:equivalent-expressions-exponent-product-rule-misapplied"
-    },
-    {
-      "id": "B",
       "text": "\\(-x^5 - 2x^2\\)",
       "misconceptionId": "SAT_MATH:equivalent-expressions-negative-distribution-sign-error"
     },
     {
-      "id": "C",
+      "id": "B",
       "text": "\\(3x^5 - 2x^2\\)",
       "misconceptionId": null
     },
     {
-      "id": "D",
+      "id": "C",
       "text": "\\(x^5\\)",
       "misconceptionId": "SAT_MATH:equivalent-expressions-combining-unlike-terms"
+    },
+    {
+      "id": "D",
+      "text": "\\(x^6 + 2x^5 - 2x^2\\)",
+      "misconceptionId": "SAT_MATH:equivalent-expressions-exponent-product-rule-misapplied"
     }
   ],
-  "correctAnswer": "C",
-  "rationale": "Work through the two operations in order. First apply the product rule for exponents: \\(x^3 \\cdot x^2 = x^{3+2} = x^5\\). Next distribute the \\(-2\\) to BOTH terms inside the parentheses: \\(-2\\left(x^2 - x^5\\right) = -2x^2 + 2x^5\\). Now combine like terms: \\(x^5 + 2x^5 - 2x^2 = 3x^5 - 2x^2\\), which is choice C. A numerical check confirms it: at \\(x = 2\\), the original expression is \\(32 - 2(4 - 32) = 32 + 56 = 88\\), and \\(3(2^5) - 2(2^2) = 96 - 8 = 88\\); at \\(x = -1\\), both give \\(-5\\).\n\nChoice A distributes correctly but computes \\(x^3 \\cdot x^2\\) as \\(x^6\\) by multiplying the exponents — the product rule ADDS exponents. Choice B comes from distributing the \\(-2\\) only to the first term, leaving \\(-2x^2 - 2x^5\\) and ending with \\(-x^5 - 2x^2\\) — a leading minus must reverse the sign of every term in the parentheses. Choice D merges \\(3x^5\\) and \\(-2x^2\\) into one term, but terms with different powers of \\(x\\) are not like terms and cannot be combined.",
+  "correctAnswer": "B",
+  "rationale": "Work through the two operations in order. First apply the product rule for exponents: \\(x^3 \\cdot x^2 = x^{3+2} = x^5\\). Next distribute the \\(-2\\) to BOTH terms inside the parentheses: \\(-2\\left(x^2 - x^5\\right) = -2x^2 + 2x^5\\). Now combine like terms: \\(x^5 + 2x^5 - 2x^2 = 3x^5 - 2x^2\\), which is choice B. A numerical check confirms it: at \\(x = 2\\), the original expression is \\(32 - 2(4 - 32) = 32 + 56 = 88\\), and \\(3(2^5) - 2(2^2) = 96 - 8 = 88\\); at \\(x = -1\\), both give \\(-5\\).\n\nChoice D distributes correctly but computes \\(x^3 \\cdot x^2\\) as \\(x^6\\) by multiplying the exponents — the product rule ADDS exponents. Choice A comes from distributing the \\(-2\\) only to the first term, leaving \\(-2x^2 - 2x^5\\) and ending with \\(-x^5 - 2x^2\\) — a leading minus must reverse the sign of every term in the parentheses. Choice C merges \\(3x^5\\) and \\(-2x^2\\) into one term, but terms with different powers of \\(x\\) are not like terms and cannot be combined.",
   "difficultyTarget": 3,
   "id": "gen-sat-math-equivalent-expressions-001",
   "subjectCode": "SAT_MATH",
@@ -40,7 +40,7 @@
     "promptVersion": "1.1.0",
     "model": "k3",
     "generatedAt": "2026-08-31T20:56:27.753Z",
-    "contentHash": "fe6915cb52d3c5581e601e2b235132275e3af0c1021fb3a28b58be9f61b7e4ab"
+    "contentHash": "e1e87f151f2fdf2cca8916f40a41cf9c64069c2d4f0829bd410ac6f3504957af"
   },
   "review": {
     "status": "pending",

@@ -10,27 +10,27 @@
   "choices": [
     {
       "id": "A",
+      "text": "If the surveys were repeated with random samples of 600 registered voters each, the associated margins of error would be greater than 4%.",
+      "misconceptionId": "SAT_MATH:sample-statistics-margin-error-larger-sample-larger-margin"
+    },
+    {
+      "id": "B",
       "text": "Because 54% is greater than 48%, the survey results establish that the percent of all registered voters in the city who approve of Proposal B is greater than the percent who approve of Proposal A.",
       "misconceptionId": "SAT_MATH:sample-statistics-margin-error-estimate-treated-as-exact"
     },
     {
-      "id": "B",
+      "id": "C",
       "text": "The plausible values for the percent of all registered voters in the city who approve of Proposal A lie between 48% and 52%, inclusive.",
       "misconceptionId": "SAT_MATH:sample-statistics-margin-error-interval-misapplied"
     },
     {
-      "id": "C",
+      "id": "D",
       "text": "Because the intervals of plausible values for the two approval percentages overlap, the survey results do not establish that the proposals have different approval percentages among all registered voters in the city.",
       "misconceptionId": null
-    },
-    {
-      "id": "D",
-      "text": "If the surveys were repeated with random samples of 600 registered voters each, the associated margins of error would be greater than 4%.",
-      "misconceptionId": "SAT_MATH:sample-statistics-margin-error-larger-sample-larger-margin"
     }
   ],
-  "correctAnswer": "C",
-  "rationale": "Apply each margin of error on both sides of its estimate. Proposal A: 48% ± 4% gives plausible values from 44% to 52%. Proposal B: 54% ± 4% gives 50% to 58%. The intervals overlap from 50% to 52%, so the same population percentages (for example, 51% approving of each) could have produced both sample results — the surveys do not establish a difference, which is exactly what choice C says. Choice A treats the point estimates as exact population values: 54% > 48% in the samples does not guarantee B leads A in the population, since the overlap means the true order could be tied or even reversed. Choice B applies the margin of error to only one side, reading 48% ± 4% as the band 48% to 52% instead of 44% to 52%. Choice D gets the sample-size effect backward: increasing the sample size from 300 to 600 would shrink the margin of error, not grow it beyond 4%.",
+  "correctAnswer": "D",
+  "rationale": "Apply each margin of error on both sides of its estimate. Proposal A: 48% ± 4% gives plausible values from 44% to 52%. Proposal B: 54% ± 4% gives 50% to 58%. The intervals overlap from 50% to 52%, so the same population percentages (for example, 51% approving of each) could have produced both sample results — the surveys do not establish a difference, which is exactly what choice D says. Choice B treats the point estimates as exact population values: 54% > 48% in the samples does not guarantee B leads A in the population, since the overlap means the true order could be tied or even reversed. Choice C applies the margin of error to only one side, reading 48% ± 4% as the band 48% to 52% instead of 44% to 52%. Choice A gets the sample-size effect backward: increasing the sample size from 300 to 600 would shrink the margin of error, not grow it beyond 4%.",
   "difficultyTarget": 3,
   "id": "gen-sat-math-sample-statistics-margin-error-001",
   "subjectCode": "SAT_MATH",
@@ -40,7 +40,7 @@
     "promptVersion": "1.1.0",
     "model": "k3",
     "generatedAt": "2026-08-31T20:49:14.618Z",
-    "contentHash": "4cdd4a206de4297cfafaefc6204b45f26d331196f151a53881d5df5a78a295b2"
+    "contentHash": "189527cf520a7e068c87708c7a9633f3232664dca54df0b65d6cb7dc219e3170"
   },
   "review": {
     "status": "pending",

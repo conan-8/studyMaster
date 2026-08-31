@@ -23,6 +23,22 @@
       "agent": "G1",
       "description": "Generates one original SAT question from an archetype spec + misconception library slice",
       "changelog": "strengthens LaTeX wrapping for equations embedded in prose (with examples); codifies <u>...</u> markup for underlined R&W passage portions"
+    },
+    {
+      "id": "question-generator",
+      "version": "1.2.0",
+      "file": "question-generator/v1.2.0.md",
+      "agent": "G1",
+      "description": "Generates one original SAT question from an archetype spec + misconception library slice",
+      "changelog": "diagram jobs inject all allowed archetypes (model picks one); canonical tableJson shape (caption/columns/rows); choice order pipeline-shuffled — rationale uses 'Choice X' phrasing; dedup + independent verification are pipeline-side"
+    },
+    {
+      "id": "question-verifier",
+      "version": "1.0.0",
+      "file": "question-verifier/v1.0.0.md",
+      "agent": "Q1",
+      "description": "Independent solver: re-solves a generated question and reports answer/difficulty/verdict for pipeline cross-check",
+      "changelog": "initial version"
     }
   ]
 }

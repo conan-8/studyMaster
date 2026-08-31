@@ -1,0 +1,111 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "figure",
+    "text": "A teacher surveyed 10 students about how many hours per week they spend studying and recorded each student's score on a 20-point quiz. The scatterplot shows the survey results, along with the line of best fit for the data.",
+    "tableJson": null,
+    "diagram": {
+      "archetypeId": "sat-math:scatterplot",
+      "parameters": {
+        "points": [
+          {
+            "x": 1,
+            "y": 5.5
+          },
+          {
+            "x": 2,
+            "y": 8
+          },
+          {
+            "x": 3,
+            "y": 9
+          },
+          {
+            "x": 4,
+            "y": 9.5
+          },
+          {
+            "x": 5,
+            "y": 12
+          },
+          {
+            "x": 6,
+            "y": 12.5
+          },
+          {
+            "x": 7,
+            "y": 15.5
+          },
+          {
+            "x": 8,
+            "y": 16
+          },
+          {
+            "x": 9,
+            "y": 17
+          },
+          {
+            "x": 10,
+            "y": 19.5
+          }
+        ],
+        "gridExtent": {
+          "xMax": 12,
+          "yMax": 22
+        },
+        "lineOfBestFit": {
+          "slope": 1.5,
+          "yIntercept": 4,
+          "show": true
+        },
+        "xAxisLabel": "Study time (hours/week)",
+        "yAxisLabel": "Quiz score (points)"
+      }
+    }
+  },
+  "stem": "Which of the following best describes the relationship between weekly study time and quiz score?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "Increasing weekly study time causes an increase in quiz score.",
+      "misconceptionId": "SAT_MATH:two-variable-data-treating-correlation-as-causation"
+    },
+    {
+      "id": "B",
+      "text": "There is a positive linear association between weekly study time and quiz score.",
+      "misconceptionId": null
+    },
+    {
+      "id": "C",
+      "text": "The relationship between weekly study time and quiz score is weak because the line of best fit is not steep.",
+      "misconceptionId": "SAT_MATH:two-variable-data-correlation-strength-from-slope"
+    },
+    {
+      "id": "D",
+      "text": "The line of best fit can be used to reliably predict quiz scores for students who study up to 20 hours per week.",
+      "misconceptionId": "SAT_MATH:two-variable-data-extrapolation-beyond-data"
+    }
+  ],
+  "correctAnswer": "B",
+  "rationale": "The points rise from lower left to upper right and cluster tightly around the line of best fit, so the scatterplot shows a clear positive linear association between weekly study time and quiz score. Choice A fails because the data come from a survey, not an experiment: an observational study can establish association, but it cannot establish that more studying causes higher scores — confounding factors (such as prior preparation) could explain the pattern. Choice C misjudges strength by steepness: the strength of a linear relationship is measured by how closely the points hug the line, not by the slope, and here the points lie very close to the line, so the association is strong regardless of how steep the line looks. Choice D overreaches the data: the observed study times run from 1 to 10 hours per week, so predictions near 20 hours per week are extrapolations outside the data range and cannot be treated as reliable.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-math-two-variable-data-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:two-variable-data",
+  "provenance": {
+    "archetypeSlug": "two-variable-data",
+    "promptVersion": "1.1.1",
+    "model": "k3",
+    "generatedAt": "2026-08-31T22:05:03.160Z",
+    "contentHash": "ce56eb6f0b82b7e3cb94963f7d4bc27f1fe89f9e27d99a2ccbc54140cdbe9586"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

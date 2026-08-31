@@ -10,9 +10,10 @@
 import { MockProvider } from './mock.js';
 import type { MockScript } from './mock.js';
 import { OpenRouterProvider } from './openrouter.js';
+import { KimiProvider } from './kimi.js';
 import type { LLMProvider } from './types.js';
 
-export const SUPPORTED_PROVIDERS = ['mock', 'openrouter'] as const;
+export const SUPPORTED_PROVIDERS = ['mock', 'openrouter', 'kimi'] as const;
 export type SupportedProvider = (typeof SUPPORTED_PROVIDERS)[number];
 
 export interface ResolveOptions {
@@ -31,6 +32,8 @@ export function resolveProvider(name?: string, opts?: ResolveOptions): LLMProvid
       return new MockProvider('mock-1', opts?.scripts ?? []);
     case 'openrouter':
       return new OpenRouterProvider();
+    case 'kimi':
+      return new KimiProvider();
     default:
       throw new Error(
         `Unknown LLM provider '${resolved}'. Supported providers: ${SUPPORTED_PROVIDERS.join(', ')}`,

@@ -27,6 +27,7 @@ import {
   angleAtVertex,
   bisectorDir,
   len,
+  lineIntersect,
   mid,
   normals,
   offsetPoint,
@@ -110,6 +111,27 @@ function labelBox(cx: number, cy: number, text: string, size: number): Box {
   const w = approxTextWidth(text, size);
   const h = size + 2;
   return { x0: cx - w / 2, y0: cy - h / 2, x1: cx + w / 2, y1: cy + h / 2 };
+}
+
+/** True when segment p1-p2 crosses the box (or enters it), catching cases corner distances miss. */
+function segCrossesBox(p1: Pt, p2: Pt, box: Box): boolean {
+  const inside = (q: Pt): boolean => q.x >= box.x0 && q.x <= box.x1 && q.y >= box.y0 && q.y <= box.y1;
+  if (inside(p1) || inside(p2)) return true;
+  const edges: Array<[Pt, Pt]> = [
+    [{ x: box.x0, y: box.y0 }, { x: box.x1, y: box.y0 }],
+    [{ x: box.x1, y: box.y0 }, { x: box.x1, y: box.y1 }],
+    [{ x: box.x1, y: box.y1 }, { x: box.x0, y: box.y1 }],
+    [{ x: box.x0, y: box.y1 }, { x: box.x0, y: box.y0 }],
+  ];
+  return edges.some(([a, b]) => lineIntersect(a, b, p1, p2) !== null && segmentsTouch(a, b, p1, p2));
+}
+
+/** Both intersection parameters within the finite segments (for edge tests). */
+function segmentsTouch(a: Pt, b: Pt, p1: Pt, p2: Pt): boolean {
+  const hit = lineIntersect(a, b, p1, p2);
+  if (hit === null) return false;
+  const on = (lo: number, hi: number, v: number): boolean => v >= Math.min(lo, hi) - 1e-9 && v <= Math.max(lo, hi) + 1e-9;
+  return on(a.x, b.x, hit.x) && on(a.y, b.y, hit.y) && on(p1.x, p2.x, hit.x) && on(p1.y, p2.y, hit.y);
 }
 
 export const renderer: Renderer = {
@@ -257,19 +279,24 @@ export const renderer: Renderer = {
       );
     }
 
-    // --- Angle labels (interior bisector, fixed radius + tie-breaks) ------
+    // --- Angle labels (interior bisector; radius grows for wide labels, ----
+    // --- side labels, and any adjacent side the box would clip) -----------
     for (const al of p.angleLabels) {
       const n = al.vertex;
       const [o1, o2] = OTHERS[n];
       const v = W[n];
       const bis = bisectorDir(v, W[o1], W[o2]);
-      // Start at the fixed radius, grow in fixed steps past any side label
-      // of a short side (deterministic tie-break), capped ...
-      let r = ANGLE_LABEL_RADIUS;
+      const halfW = approxTextWidth(al.text, FONT.size) / 2;
+      // Start at the fixed radius or beyond the label's own half-width —
+      // a wide label ("(2x + 15)°") centered too close to the vertex
+      // necessarily spills over the adjacent sides.
+      let r = Math.max(ANGLE_LABEL_RADIUS, halfW + 8);
       while (r < ANGLE_RADIUS_MAX) {
         const probe = offsetPoint(v, bis, r);
         const box = labelBox(probe.x, probe.y, al.text, FONT.size);
-        if (!sideBoxes.some((sb) => boxesOverlap(box, sb))) break;
+        const clipsSide =
+          segCrossesBox(v, W[o1], box) || segCrossesBox(v, W[o2], box);
+        if (!sideBoxes.some((sb) => boxesOverlap(box, sb)) && !clipsSide) break;
         r += ANGLE_RADIUS_STEP;
       }
       // ... then keep the label inside the triangle: the bisector meets the

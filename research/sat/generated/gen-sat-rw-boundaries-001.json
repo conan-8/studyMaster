@@ -1,0 +1,54 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "passage",
+    "text": "After months of public hearings, the city council approved the new transit plan. Many residents, citing long commute times and overcrowded buses, welcomed the decision ______ critics warned that the budget had failed to account for rising maintenance costs.",
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "decision, however,",
+      "misconceptionId": "SAT_RW:boundaries-comma-splice"
+    },
+    {
+      "id": "B",
+      "text": "decision; however,",
+      "misconceptionId": null
+    },
+    {
+      "id": "C",
+      "text": "decision however,",
+      "misconceptionId": "SAT_RW:boundaries-missing-boundary"
+    },
+    {
+      "id": "D",
+      "text": "decision; but",
+      "misconceptionId": "SAT_RW:boundaries-wrong-connector"
+    }
+  ],
+  "correctAnswer": "B",
+  "rationale": "The blank falls between two independent clauses: 'Many residents... welcomed the decision' and 'critics warned that the budget had failed to account for rising maintenance costs.' Two independent clauses can be joined by a semicolon, and the conjunctive adverb 'however' that opens the second clause must be followed by a comma, so 'decision; however,' is correct. Choice A joins the two independent clauses with a comma alone, a comma splice — 'however' is not a coordinating conjunction and cannot repair the splice. Choice C removes the boundary between the clauses entirely, fusing them into a run-on; the comma after 'however' cannot mark the clause boundary that is missing before it. Choice D pairs the coordinating conjunction 'but' with a semicolon: 'but' joins independent clauses with a comma (or no punctuation in short compounds), while a semicolon is the punctuation licensed for conjunctive adverbs like 'however,' so this choice mismatches the connector to its required punctuation.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-rw-boundaries-001",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:boundaries",
+  "provenance": {
+    "archetypeSlug": "boundaries",
+    "promptVersion": "1.1.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T20:19:08.744Z",
+    "contentHash": "8ea6b6b4b04f91683e36685da70123c4487137919e1dbd8af51b58a652747eb6"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

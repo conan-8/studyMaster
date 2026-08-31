@@ -90,7 +90,7 @@ const VALID_MATH_DIAGRAM_DRAFT = {
       },
     },
   },
-  stem: 'The graph shows the lines 2x − y = 5 and x + 2y = 10 in the xy-plane. The two lines intersect at point P. What is the y-coordinate of P?',
+  stem: 'The graph shows the lines \\(2x - y = 5\\) and \\(x + 2y = 10\\) in the \\(xy\\)-plane. The two lines intersect at point \\(P\\). What is the \\(y\\)-coordinate of \\(P\\)?',
   choices: [
     { id: 'A', text: '1', misconceptionId: 'SAT_MATH:systems-linear-equations-elimination-scales-one-side-only' },
     { id: 'B', text: '3', misconceptionId: null },
@@ -99,7 +99,7 @@ const VALID_MATH_DIAGRAM_DRAFT = {
   ],
   correctAnswer: 'B',
   rationale:
-    'Line l is y = 2x − 5 and line m is y = −0.5x + 5. Setting them equal gives 2.5x = 10, so x = 4 and y = 3 — the marked intersection P = (4, 3), confirmed by substitution into either equation. Choice C reports the x-coordinate: the correct solution with the wrong component. Choice A comes from scaling only the variable terms when aligning coefficients (2x + 4y = 10), which yields y = 1. Choice D comes from subtracting the left sides while adding the right sides (5y = 25), which yields y = 5.',
+    'Line \\(l\\) is \\(y = 2x - 5\\) and line \\(m\\) is \\(y = -0.5x + 5\\). Setting them equal gives \\(2.5x = 10\\), so \\(x = 4\\) and \\(y = 3\\) — the marked intersection \\(P = (4, 3)\\), confirmed by substitution into either equation. Choice C reports the x-coordinate: the correct solution with the wrong component. Choice A comes from scaling only the variable terms when aligning coefficients (\\(2x + 4y = 10\\)), which yields \\(y = 1\\). Choice D comes from subtracting the left sides while adding the right sides (\\(5y = 25\\)), which yields \\(y = 5\\).',
   difficultyTarget: 3,
 } as const;
 

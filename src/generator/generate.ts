@@ -21,7 +21,7 @@
  */
 
 import { createHash } from 'node:crypto';
-import type { ChatMessage, LLMProvider } from '../llm/index.js';
+import type { ChatMessage, LLMProvider, LLMUsage } from '../llm/index.js';
 import { assembleInputs } from './inputs.js';
 import type { GenerationInputs } from './inputs.js';
 import { loadPrompt } from './prompts.js';
@@ -47,6 +47,8 @@ export interface AttemptLog {
   attempt: number;
   outcome: 'accepted' | 'repaired' | 'rejected';
   errors?: string[];
+  /** Token usage reported by the provider for this attempt, when available. */
+  usage?: LLMUsage;
 }
 
 export interface GenerateResult {
@@ -185,6 +187,11 @@ function aggregateFailure(attempts: AttemptLog[], ctx: { subject: string; skill:
 
 // --- the loop ---------------------------------------------------------------------------
 
+/** Usage attaches to attempt logs only when the provider reports it (mocks don't). */
+function usageField(usage: LLMUsage | undefined): { usage?: LLMUsage } {
+  return usage === undefined ? {} : { usage };
+}
+
 export async function generateQuestion(opts: GenerateOptions): Promise<GenerateResult> {
   const inputs = assembleInputs(opts.subjectCode, opts.skill, opts.difficulty, opts.withDiagram === true);
   const prompt = loadPrompt('question-generator');
@@ -210,13 +217,13 @@ export async function generateQuestion(opts: GenerateOptions): Promise<GenerateR
 
     const terminal = detectTerminalError(response.content);
     if (terminal !== null) {
-      attempts.push({ attempt, outcome: 'rejected', errors: [terminal] });
+      attempts.push({ attempt, outcome: 'rejected', errors: [terminal], ...usageField(response.usage) });
       break; // terminal refusal: retrying a spec complaint is pointless
     }
 
     const outcome = validateDraft(response.content, inputs);
     if (outcome.ok) {
-      attempts.push({ attempt, outcome: attempt === 1 ? 'accepted' : 'repaired' });
+      attempts.push({ attempt, outcome: attempt === 1 ? 'accepted' : 'repaired', ...usageField(response.usage) });
       const question = finalizeQuestion(outcome.draft, {
         inputs,
         id: allocateId(opts.subjectCode, opts.skill),
@@ -227,7 +234,7 @@ export async function generateQuestion(opts: GenerateOptions): Promise<GenerateR
       return { question, attempts, promptVersion: prompt.version, model: response.model };
     }
 
-    attempts.push({ attempt, outcome: 'rejected', errors: outcome.errors });
+    attempts.push({ attempt, outcome: 'rejected', errors: outcome.errors, ...usageField(response.usage) });
     previousRaw = response.content;
     previousErrors = outcome.errors;
   }

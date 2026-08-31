@@ -1,0 +1,58 @@
+{
+  "questionType": "grid_in",
+  "stimulus": {
+    "type": "figure",
+    "text": "A printer prints pages at a constant rate. The table shows the total number of pages the printer has printed after various amounts of time.",
+    "tableJson": null,
+    "diagram": {
+      "archetypeId": "sat-math:table-data",
+      "parameters": {
+        "title": "Printer Output",
+        "headers": [
+          "Time (minutes)",
+          "Pages printed"
+        ],
+        "rows": [
+          [
+            4,
+            7
+          ],
+          [
+            8,
+            14
+          ],
+          [
+            12,
+            21
+          ]
+        ],
+        "highlightColumn": null,
+        "showRowNumbers": false
+      }
+    }
+  },
+  "stem": "At this rate, how many pages will the printer print in 20 minutes?",
+  "choices": [],
+  "correctAnswer": "35",
+  "rationale": "The rate is constant, so any row of the table gives the unit rate: \\(7\\) pages in \\(4\\) minutes is \\(\\frac{7}{4}\\) pages per minute (the other rows confirm it: \\(14/8 = 21/12 = 7/4\\)). Set up the proportion with matching unit positions: \\(\\frac{7 \\text{ pages}}{4 \\text{ minutes}} = \\frac{x \\text{ pages}}{20 \\text{ minutes}}\\). Cross-multiplying gives \\(4x = 140\\), so \\(x = 35\\) pages. Check by the alternate path: \\(\\frac{7}{4} \\times 20 = 35\\), and the direction makes sense — more minutes must mean more pages. A student with the cross-multiplication-misalignment bug would write \\(\\frac{4}{7} = \\frac{x}{20}\\), pairing minutes with pages across the equals sign, and get \\(\\frac{80}{7} \\approx 11.4\\) — the reciprocated setup. A part-whole confusion might lead a student to treat 20 minutes as an extension of the 12-minute row and just add 7 to 21, getting 28, but that wrongly assumes 8 more minutes produces only one more 4-minute batch's worth of pages without scaling. Because the unit rate \\(\\frac{7}{4}\\) is not a whole number, mental multiplication fails; the proportion must be solved exactly, which is why the correct answer is 35.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-math-ratios-rates-proportions-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:ratios-rates-proportions",
+  "provenance": {
+    "archetypeSlug": "ratios-rates-proportions",
+    "promptVersion": "1.1.1",
+    "model": "k3",
+    "generatedAt": "2026-08-31T22:00:57.303Z",
+    "contentHash": "8df497ab4df964433b6fe86993b28f4ec5a9238336779b1c5e4726300d0546f4"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

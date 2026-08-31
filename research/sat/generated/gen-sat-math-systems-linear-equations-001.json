@@ -1,0 +1,54 @@
+{
+  "questionType": "grid_in",
+  "stimulus": {
+    "type": "figure",
+    "text": "The graph in the \\(xy\\)-plane shows the two lines of the system consisting of \\(2x + y = 7\\) and \\(x + 2y = 8\\).",
+    "tableJson": null,
+    "diagram": {
+      "archetypeId": "sat-math:graph-system-two-lines",
+      "parameters": {
+        "line1": {
+          "slope": -2,
+          "yIntercept": 7,
+          "label": "A"
+        },
+        "line2": {
+          "slope": -0.5,
+          "yIntercept": 4,
+          "label": "B"
+        },
+        "intersectionIsInteger": true,
+        "markIntersection": true,
+        "xRange": {
+          "min": -6,
+          "max": 6
+        },
+        "labelLines": true
+      }
+    }
+  },
+  "stem": "If \\((x, y)\\) is the solution to the given system of equations, what is the value of \\(x + y\\)?",
+  "choices": [],
+  "correctAnswer": "5",
+  "rationale": "Solve by elimination: multiply the second equation by 2 to align the \\(x\\)-coefficients, giving \\(2x + 4y = 16\\), then subtract the first equation: \\((2x + 4y) - (2x + y) = 16 - 7\\), so \\(3y = 9\\) and \\(y = 3\\). Back-substitute into \\(2x + y = 7\\): \\(2x + 3 = 7\\), so \\(x = 2\\). Cross-check by substitution: from the first equation \\(y = 7 - 2x\\), and substituting into the OTHER equation gives \\(x + 2(7 - 2x) = 8\\), so \\(-3x = -6\\) and \\(x = 2\\), \\(y = 3\\) — matching the marked intersection \\((2, 3)\\) on the graph. The question asks for the combination, so \\(x + y = 2 + 3 = 5\\). The live traps: a student who solves correctly but reports the first variable found grids 2 (or 3), committing the re-read-the-ask error — the graph makes this tempting because the dot's \\(x\\)-coordinate is read first. A student who multiplies \\(x + 2y = 8\\) by 2 on the left side only gets \\(2x + 4y = 8\\), and subtracting yields \\(3y = 1\\), a corrupted value far from 3. And a student who adds the original equations instead of subtracting gets \\(3x + 3y = 15\\), which happens to give \\(x + y = 5\\) only by coincidence here — on most systems that sign slip produces a wrong total, so the reliable method is the aligned subtraction shown above.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-math-systems-linear-equations-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:systems-linear-equations",
+  "provenance": {
+    "archetypeSlug": "systems-linear-equations",
+    "promptVersion": "1.1.1",
+    "model": "k3",
+    "generatedAt": "2026-08-31T22:03:51.478Z",
+    "contentHash": "f95bc483fe15abcf19b31616301c2dca616737832277a97f325a901db7821342"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

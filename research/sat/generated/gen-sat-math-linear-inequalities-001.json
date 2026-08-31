@@ -1,0 +1,54 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "passage",
+    "text": "A tank contains 20 liters of water. The water drains from the tank at a constant rate of 2 liters per minute. After \\(x\\) minutes, the amount of water remaining in the tank, in liters, is given by the expression \\(20 - 2x\\). The situation in which more than 14 liters of water remain in the tank is modeled by the inequality \\(20 - 2x \\gt 14\\).",
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "Which of the following is the solution to the given inequality?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "\\(x \\gt 3\\)",
+      "misconceptionId": "SAT_MATH:linear-inequalities-forgetting-to-flip-when-dividing-by-negative"
+    },
+    {
+      "id": "B",
+      "text": "\\(x \\lt 3\\)",
+      "misconceptionId": null
+    },
+    {
+      "id": "C",
+      "text": "\\(x \\le 3\\)",
+      "misconceptionId": "SAT_MATH:linear-inequalities-strict-vs-inclusive-boundary-swap"
+    },
+    {
+      "id": "D",
+      "text": "\\(x \\ge 3\\)",
+      "misconceptionId": "SAT_MATH:linear-inequalities-forgetting-to-flip-when-dividing-by-negative"
+    }
+  ],
+  "correctAnswer": "B",
+  "rationale": "Isolate \\(x\\): subtracting 20 from both sides of \\(20 - 2x \\gt 14\\) gives \\(-2x \\gt -6\\). Dividing both sides by \\(-2\\) reverses the inequality symbol, yielding \\(x \\lt 3\\). Two checks confirm this: the interior point \\(x = 0\\) gives \\(20 \\gt 14\\), which is true, and the boundary point \\(x = 3\\) gives \\(14 \\gt 14\\), which is false — so the boundary must be excluded and the strict symbol is correct. Choice A results from dividing \\(-6\\) by \\(-2\\) to get the correct boundary \\(3\\) but forgetting to reverse the inequality symbol when dividing by a negative. Choice C keeps the correct direction but swaps the strict symbol for an inclusive one, wrongly admitting the boundary value \\(x = 3\\), which leaves exactly 14 liters rather than more than 14. Choice D compounds both errors: it reverses neither the direction nor excludes the boundary, giving the inclusive ray pointing the wrong way.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-math-linear-inequalities-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:linear-inequalities",
+  "provenance": {
+    "archetypeSlug": "linear-inequalities",
+    "promptVersion": "1.1.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T20:37:20.325Z",
+    "contentHash": "fd62fa273f5113dc3341c2f2044c1391a6e1acebc79ead4145995aea92874bae"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

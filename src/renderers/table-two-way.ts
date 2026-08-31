@@ -59,6 +59,30 @@ function intText(n: number): string {
   return groups.join(',');
 }
 
+/**
+ * Greedy two-line word wrap for header cells (deterministic): pack whole
+ * words into line 1 until adding another word would exceed targetWidth, the
+ * rest goes to line 2. A single over-long word stays unbroken on line 1.
+ */
+function wrapHeader(text: string): string[] {
+  const words = text.split(' ');
+  if (words.length < 2) return [text];
+  const target = approxTextWidth(text, FONT.size) / 2 + 6;
+  const lines: string[] = [words[0]!];
+  for (let i = 1; i < words.length; i++) {
+    const last = lines[lines.length - 1]!;
+    const candidate = `${last} ${words[i]}`;
+    if (lines.length < 2 && approxTextWidth(candidate, FONT.size) <= target) {
+      lines[lines.length - 1] = candidate;
+    } else if (lines.length < 2) {
+      lines.push(words[i]!);
+    } else {
+      lines[lines.length - 1] = `${lines[lines.length - 1]} ${words[i]}`;
+    }
+  }
+  return lines;
+}
+
 export const renderer: Renderer = {
   archetypeId: 'sat-math:table-two-way',
   rendererRef: 'TwoWayTable',
@@ -85,6 +109,9 @@ export const renderer: Renderer = {
     const nDataRows = 2 + (showTotals ? 1 : 0);
 
     // Column widths from content (headers + every value that column shows).
+    // Long headers wrap to two lines rather than overflowing a shrunken
+    // column: first size against the wrapped lines when the unwrapped table
+    // would exceed the canvas.
     const labelColW = Math.max(
       MIN_LABEL_COL_W,
       approxTextWidth(corner ?? '', FONT.size) + 2 * CELL_PAD_X,
@@ -92,11 +119,25 @@ export const renderer: Renderer = {
       approxTextWidth(p.rowCategories[1], FONT.size) + 2 * CELL_PAD_X,
       showTotals ? approxTextWidth('Total', FONT.size) + 2 * CELL_PAD_X : 0,
     );
+    const availW = CANVAS_W - 2 * MARGIN_X;
+    const unwrappedW =
+      labelColW +
+      [0, 1, 2].reduce((sum, ci) => {
+        if (ci >= nDataCols) return sum;
+        const head = showTotals && ci === 2 ? 'Total' : p.columnCategories[ci]!;
+        return sum + Math.max(MIN_COL_W, approxTextWidth(head, FONT.size) + 2 * CELL_PAD_X);
+      }, 0);
+    const wrapHeaders = unwrappedW > availW;
+    const headerLines: string[][] = [];
+    for (let ci = 0; ci < nDataCols; ci++) {
+      const head = showTotals && ci === 2 ? 'Total' : p.columnCategories[ci]!;
+      headerLines.push(wrapHeaders ? wrapHeader(head) : [head]);
+    }
+
     const colW: number[] = [];
     for (let ci = 0; ci < nDataCols; ci++) {
       const isTotalCol = showTotals && ci === 2;
-      const head = isTotalCol ? 'Total' : p.columnCategories[ci]!;
-      let w = approxTextWidth(head, FONT.size);
+      let w = Math.max(...headerLines[ci]!.map((line) => approxTextWidth(line, FONT.size)));
       const vals = isTotalCol
         ? [rowTotals[0], rowTotals[1], grand]
         : ci === 0
@@ -109,8 +150,9 @@ export const renderer: Renderer = {
     }
 
     let tableW = labelColW + colW.reduce((s, w) => s + w, 0);
-    const availW = CANVAS_W - 2 * MARGIN_X;
     if (tableW > availW) {
+      // Last resort (single-word headers wider than any column): scale, and
+      // the header shrinks with a smaller font rather than overflowing.
       const scale = availW / tableW;
       for (let ci = 0; ci < nDataCols; ci++) colW[ci] = colW[ci]! * scale;
       tableW = availW;
@@ -120,7 +162,8 @@ export const renderer: Renderer = {
     const hasTitle = p.tableTitle !== null && p.tableTitle !== undefined && p.tableTitle !== '';
     const tableX = MARGIN_X + (availW - tableW) / 2;
     const tableY = MARGIN_TOP + (hasTitle ? TITLE_GAP : 0);
-    const headerBottom = tableY + HEADER_H;
+    const headerH = HEADER_H + (headerLines.some((l) => l.length > 1) ? 12 : 0);
+    const headerBottom = tableY + headerH;
     const tableBottom = headerBottom + nDataRows * ROW_H;
     const canvasH = tableBottom + MARGIN_BOTTOM;
 
@@ -218,21 +261,17 @@ export const renderer: Renderer = {
 
     // --- Header row ---------------------------------------------------------
     if (corner !== null && corner !== '') {
-      bld.text(colX[0]! + CELL_PAD_X, textY(tableY, HEADER_H), corner);
+      bld.text(colX[0]! + CELL_PAD_X, textY(tableY, headerH), corner);
     }
-    bld.text(colCenter(1), textY(tableY, HEADER_H), p.columnCategories[0], {
-      anchor: 'middle',
-      weight: 'bold',
-    });
-    bld.text(colCenter(2), textY(tableY, HEADER_H), p.columnCategories[1], {
-      anchor: 'middle',
-      weight: 'bold',
-    });
-    if (showTotals) {
-      bld.text(colCenter(3), textY(tableY, HEADER_H), 'Total', {
-        anchor: 'middle',
-        weight: 'bold',
-      });
+    for (let ci = 1; ci <= nDataCols; ci++) {
+      const lines = headerLines[ci - 1]!;
+      const lineH = FONT.size + 2;
+      const blockH = lines.length * lineH;
+      let ly = tableY + (headerH - blockH) / 2 + FONT.size * 0.85;
+      for (const line of lines) {
+        bld.text(colCenter(ci), ly, line, { anchor: 'middle', weight: 'bold' });
+        ly += lineH;
+      }
     }
 
     // --- Data rows ----------------------------------------------------------

@@ -1,0 +1,93 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "table",
+    "text": "A team of horticultural researchers hypothesized that amending soil with biochar — a charcoal-like material produced from plant waste — increases the yield of tomato plants, but only in sandy soil, where nutrients otherwise leach away too quickly for roots to absorb them. To test this idea, the researchers grew tomato plants of a single variety in field plots with one of three soil types. For each soil type, they amended half the plots with biochar and left the other half untreated, then recorded the average yield per plant under each condition.",
+    "tableJson": {
+      "title": "Average tomato yield per plant by soil type and treatment",
+      "headers": [
+        "Soil type",
+        "Treatment",
+        "Average yield (kilograms per plant)"
+      ],
+      "rows": [
+        [
+          "Sandy",
+          "Biochar",
+          "4.8"
+        ],
+        [
+          "Sandy",
+          "No biochar",
+          "3.1"
+        ],
+        [
+          "Loamy",
+          "Biochar",
+          "5.2"
+        ],
+        [
+          "Loamy",
+          "No biochar",
+          "5.0"
+        ],
+        [
+          "Clay",
+          "Biochar",
+          "3.4"
+        ],
+        [
+          "Clay",
+          "No biochar",
+          "3.3"
+        ]
+      ]
+    },
+    "diagram": null
+  },
+  "stem": "Which choice most effectively uses data from the table to support the researchers' hypothesis?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "In the sandy-soil plots, plants grown without biochar averaged 4.8 kilograms per plant, while plants grown with biochar averaged only 3.1 kilograms per plant.",
+      "misconceptionId": "SAT_RW:command-evidence-quantitative-trend-reversal"
+    },
+    {
+      "id": "B",
+      "text": "In the sandy-soil plots, plants grown with biochar averaged 4.8 kilograms per plant, compared with 3.1 kilograms per plant for plants grown without it, whereas biochar made almost no difference in loamy-soil plots (5.2 versus 5.0 kilograms) or clay-soil plots (3.4 versus 3.3 kilograms).",
+      "misconceptionId": null
+    },
+    {
+      "id": "C",
+      "text": "The highest average yield recorded in the study, 5.2 kilograms per plant, came from loamy-soil plots that had been amended with biochar.",
+      "misconceptionId": "SAT_RW:command-evidence-quantitative-irrelevant-data"
+    },
+    {
+      "id": "D",
+      "text": "In the sandy-soil plots, plants grown with biochar averaged 5.2 kilograms per plant, compared with 5.0 kilograms per plant for plants grown without it, a difference of only 0.2 kilograms.",
+      "misconceptionId": "SAT_RW:command-evidence-quantitative-table-misread"
+    }
+  ],
+  "correctAnswer": "B",
+  "rationale": "The hypothesis has two parts: biochar raises yield, and it does so only in sandy soil. Supporting it therefore requires showing a large biochar effect in sandy soil and negligible effects elsewhere. Choice B does exactly this: the sandy-soil rows show a substantial gain with biochar (4.8 vs. 3.1 kilograms per plant), while the loamy (5.2 vs. 5.0) and clay (3.4 vs. 3.3) rows show essentially no effect — matching the claim's direction and its 'only in sandy soil' qualifier. Choice A reverses the comparison, swapping the two sandy-soil values so that biochar appears to lower yield; a student who reads the treatment column backwards lands here. Choice C quotes real table values, but identifying the single highest yield in the table says nothing about whether biochar helps specifically in sandy soil — accurate numbers doing the wrong job. Choice D misreads the table, attaching the loamy-soil figures (5.2 and 5.0) to sandy soil and thereby 'showing' a small effect where the table actually shows a large one.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-rw-command-evidence-quantitative-001",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:command-evidence-quantitative",
+  "provenance": {
+    "archetypeSlug": "command-evidence-quantitative",
+    "promptVersion": "1.1.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T20:21:53.242Z",
+    "contentHash": "bfc513d9183f2c9ba8f60691cb223956b4675078657671563639568bb4305498"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

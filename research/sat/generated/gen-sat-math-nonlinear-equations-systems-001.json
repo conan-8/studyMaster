@@ -1,0 +1,33 @@
+{
+  "questionType": "grid_in",
+  "stimulus": {
+    "type": "none",
+    "text": null,
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "\\(2x^2 = 7x + 4\\)\n\nWhat is the sum of the solutions to the given equation?",
+  "choices": [],
+  "correctAnswer": "7/2",
+  "rationale": "First rearrange the equation into standard form: subtracting \\(7x\\) and 4 from both sides gives \\(2x^2 - 7x - 4 = 0\\). This factors as \\((2x + 1)(x - 4) = 0\\), so the zero-product property applied to EACH factor gives \\(x = -\\frac{1}{2}\\) and \\(x = 4\\). Both check in the original equation: \\(2(4)^2 = 32 = 7(4) + 4\\) and \\(2\\left(-\\frac{1}{2}\\right)^2 = \\frac{1}{2} = 7\\left(-\\frac{1}{2}\\right) + 4\\). The sum is \\(-\\frac{1}{2} + 4 = \\frac{7}{2}\\), which agrees with Viete's formula: for \\(ax^2 + bx + c = 0\\) the sum of roots is \\(-\\frac{b}{a} = -\\frac{-7}{2} = \\frac{7}{2}\\). A student who sets only the salient factor to zero and stops (the partial-solve bug) would report just 4. A student who slips on the sign of \\(-b\\) in the quadratic formula would flip both roots, getting \\(\\frac{1}{2}\\) and \\(-4\\) and reporting \\(-\\frac{7}{2}\\) — which also fails the non-negativity sanity check since the larger-magnitude root, 4, is positive. Both roots must be found and checked before their sum is computed.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-math-nonlinear-equations-systems-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:nonlinear-equations-systems",
+  "provenance": {
+    "archetypeSlug": "nonlinear-equations-systems",
+    "promptVersion": "1.1.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T20:40:51.097Z",
+    "contentHash": "3057eb22c9d764072b88a8690909da2afcac9c7768e017a9347fd8144402e9d6"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

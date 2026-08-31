@@ -22,6 +22,11 @@ import {
   DEFAULT_MODEL,
   DEFAULT_TIMEOUT_MS,
 } from './openrouter.js';
+import {
+  KimiProvider,
+  KIMI_URL,
+  DEFAULT_MODEL as KIMI_DEFAULT_MODEL,
+} from './kimi.js';
 import { resolveProvider, SUPPORTED_PROVIDERS } from './factory.js';
 import { LLMError } from './types.js';
 import type { LLMRequest } from './types.js';
@@ -297,6 +302,114 @@ void test('openrouter: defaults — timeout 60s and global fetch when not inject
 });
 
 // ---------------------------------------------------------------------------
+// kimi
+// ---------------------------------------------------------------------------
+
+void test('kimi: constructor throws LLMError with env-var instructions when key missing', async () => {
+  await withEnv({ KIMI_API_KEY: undefined }, () => {
+    assert.throws(
+      () => new KimiProvider(),
+      (err: unknown) => {
+        assert.ok(err instanceof LLMError);
+        assert.strictEqual(err.provider, 'kimi');
+        assert.ok(err.message.includes('KIMI_API_KEY'));
+        return true;
+      },
+    );
+  });
+});
+
+void test('kimi: model fallback order opts.model > KIMI_MODEL > default', async () => {
+  await withEnv({ KIMI_API_KEY: 'k', KIMI_MODEL: 'k3' }, () => {
+    assert.strictEqual(new KimiProvider().defaultModel, 'k3');
+    assert.strictEqual(new KimiProvider({ model: 'opt' }).defaultModel, 'opt');
+  });
+  await withEnv({ KIMI_API_KEY: 'k', KIMI_MODEL: undefined }, () => {
+    assert.strictEqual(new KimiProvider().defaultModel, KIMI_DEFAULT_MODEL);
+    assert.strictEqual(KIMI_DEFAULT_MODEL, 'k3');
+  });
+});
+
+void test('kimi: request shape — URL, headers, defaults, response_format only in jsonMode', async () => {
+  const payload = {
+    choices: [{ message: { content: '{"ok":true}' }, finish_reason: 'stop' }],
+    model: 'k3',
+    usage: { prompt_tokens: 11, completion_tokens: 7 },
+  };
+  const { fetchImpl, calls } = recordingFetch(payload);
+  const provider = new KimiProvider({ apiKey: 'sk-test-key', fetchImpl });
+
+  const res = await provider.complete({ ...REQ, jsonMode: true });
+  assert.strictEqual(res.content, '{"ok":true}');
+  assert.strictEqual(res.model, 'k3');
+  assert.strictEqual(res.provider, 'kimi');
+  assert.deepStrictEqual(res.usage, { promptTokens: 11, completionTokens: 7 });
+
+  assert.strictEqual(calls.length, 1);
+  const call = calls[0]!;
+  assert.strictEqual(call.url, KIMI_URL);
+  const headers = call.init!.headers as Record<string, string>;
+  assert.strictEqual(headers['Authorization'], 'Bearer sk-test-key');
+  assert.strictEqual(headers['Content-Type'], 'application/json');
+  const body = JSON.parse(call.init!.body as string) as Record<string, unknown>;
+  assert.strictEqual(body['model'], 'k3');
+  assert.deepStrictEqual(body['messages'], REQ.messages);
+  assert.strictEqual(body['temperature'], 1);
+  assert.strictEqual(body['max_tokens'], 16384);
+  assert.deepStrictEqual(body['response_format'], { type: 'json_object' });
+
+  const res2 = await provider.complete({ ...REQ, maxTokens: 128 });
+  assert.strictEqual(res2.content, '{"ok":true}');
+  const body2 = JSON.parse(calls[1]!.init!.body as string) as Record<string, unknown>;
+  assert.ok(!('response_format' in body2), 'response_format must be absent without jsonMode');
+  assert.strictEqual(body2['max_tokens'], 128);
+});
+
+void test('kimi: non-2xx → LLMError with status + body preview, key redacted', async () => {
+  const longBody = `upstream exploded ${'x'.repeat(600)}`;
+  const fetchImpl = (async () =>
+    ({
+      ok: false,
+      status: 401,
+      text: async () => longBody,
+      json: async () => ({}),
+    }) as Response) as typeof fetch;
+  const provider = new KimiProvider({ apiKey: 'sk-secret-key', fetchImpl });
+  await assert.rejects(provider.complete(REQ), (err: unknown) => {
+    assert.ok(err instanceof LLMError);
+    assert.strictEqual(err.provider, 'kimi');
+    assert.ok(err.message.includes('401'), 'message must contain the status');
+    assert.ok(err.message.includes('upstream exploded'));
+    assert.ok(!err.message.includes('x'.repeat(500)), 'body preview must be truncated');
+    assert.ok(!err.message.includes('sk-secret-key'), 'API key must be redacted');
+    return true;
+  });
+});
+
+void test('kimi: truncated reasoning (empty content + finish_reason length) → helpful LLMError', async () => {
+  const { fetchImpl } = recordingFetch({
+    choices: [{ message: { content: '' }, finish_reason: 'length' }],
+  });
+  const provider = new KimiProvider({ apiKey: 'k', fetchImpl });
+  await assert.rejects(provider.complete(REQ), (err: unknown) => {
+    assert.ok(err instanceof LLMError);
+    assert.strictEqual(err.provider, 'kimi');
+    assert.ok(err.message.includes('max_tokens'));
+    return true;
+  });
+});
+
+void test('kimi: malformed success payload → LLMError describing what came back', async () => {
+  const { fetchImpl } = recordingFetch({ choices: [] });
+  const provider = new KimiProvider({ apiKey: 'k', fetchImpl });
+  await assert.rejects(provider.complete(REQ), (err: unknown) => {
+    assert.ok(err instanceof LLMError);
+    assert.ok(err.message.includes('choices[0].message.content'));
+    return true;
+  });
+});
+
+// ---------------------------------------------------------------------------
 // factory
 // ---------------------------------------------------------------------------
 
@@ -324,6 +437,12 @@ void test('factory: GENERATOR_PROVIDER env is honoured; explicit arg wins', asyn
       assert.ok(provider instanceof OpenRouterProvider);
     },
   );
+});
+
+void test('factory: kimi by name', async () => {
+  await withEnv({ KIMI_API_KEY: 'k' }, () => {
+    assert.ok(resolveProvider('kimi') instanceof KimiProvider);
+  });
 });
 
 void test('factory: openrouter by name; unknown name lists supported providers', async () => {

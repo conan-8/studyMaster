@@ -408,3 +408,132 @@ export function markPoint(
 export function clampCentered(px: number, lo: number, hi: number, w: number): number {
   return Math.min(Math.max(px, lo + w / 2), hi - w / 2);
 }
+
+/** A straight obstacle segment in pixel space (lines, axes, sampled curves). */
+export interface ObstacleSegment {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+}
+
+function pointSegDist(px: number, py: number, s: ObstacleSegment): number {
+  const dx = s.x2 - s.x1;
+  const dy = s.y2 - s.y1;
+  const l2 = dx * dx + dy * dy;
+  if (l2 < 1e-12) return Math.hypot(px - s.x1, py - s.y1);
+  const t = Math.min(1, Math.max(0, ((px - s.x1) * dx + (py - s.y1) * dy) / l2));
+  return Math.hypot(px - (s.x1 + t * dx), py - (s.y1 + t * dy));
+}
+
+/** True when the two segments cross (proper or endpoint touch). */
+function segmentsIntersect(s: ObstacleSegment, t: ObstacleSegment): boolean {
+  const d1x = s.x2 - s.x1;
+  const d1y = s.y2 - s.y1;
+  const d2x = t.x2 - t.x1;
+  const d2y = t.y2 - t.y1;
+  const den = d1x * d2y - d1y * d2x;
+  if (Math.abs(den) < 1e-12) return false; // parallel: overlap impossible for our thin obstacles
+  const u = ((t.x1 - s.x1) * d2y - (t.y1 - s.y1) * d2x) / den;
+  const v = ((t.x1 - s.x1) * d1y - (t.y1 - s.y1) * d1x) / den;
+  return u >= 0 && u <= 1 && v >= 0 && v <= 1;
+}
+
+/** True when the segment crosses or enters the rect (x0,y0)-(x1,y1). */
+function segmentCrossesRect(s: ObstacleSegment, x0: number, y0: number, x1: number, y1: number): boolean {
+  const inside = (px: number, py: number): boolean => px >= x0 && px <= x1 && py >= y0 && py <= y1;
+  if (inside(s.x1, s.y1) || inside(s.x2, s.y2)) return true;
+  return (
+    segmentsIntersect(s, { x1: x0, y1: y0, x2: x1, y2: y0 }) ||
+    segmentsIntersect(s, { x1: x1, y1: y0, x2: x1, y2: y1 }) ||
+    segmentsIntersect(s, { x1: x1, y1: y1, x2: x0, y2: y1 }) ||
+    segmentsIntersect(s, { x1: x0, y1: y1, x2: x0, y2: y0 })
+  );
+}
+
+/**
+ * Place a coordinate label near (px, py) in empty space: score candidate
+ * positions (8 directions x 2 distances) by the minimum distance from the
+ * label box to every obstacle segment (plot lines, axes, curves). A candidate
+ * whose box is CROSSED by an obstacle (a corner-distance check alone cannot
+ * see that) is rejected outright. Candidates whose box leaves the plot area
+ * are only used when no fully-inside candidate exists. Deterministic — tie
+ * order favors NE, then clockwise.
+ */
+export function placePointLabel(opts: {
+  px: number;
+  py: number;
+  width: number;
+  area: PlotArea;
+  obstacles: ObstacleSegment[];
+}): { x: number; y: number } {
+  const { px, py, width, area, obstacles } = opts;
+  const halfW = width / 2 + 3;
+  const halfH = 9;
+  // Screen coords are y-down; "up" is negative dy. NE first, clockwise.
+  const dirs: Array<[number, number]> = [
+    [1, -1],
+    [1, 0],
+    [1, 1],
+    [0, 1],
+    [-1, 1],
+    [-1, 0],
+    [-1, -1],
+    [0, -1],
+  ];
+  let best: { x: number; y: number; score: number } | null = null;
+  for (const dist of [18, 28, 38]) {
+    for (const [ux, uy] of dirs) {
+      const norm = Math.hypot(ux, uy);
+      const cx = px + (ux / norm) * dist;
+      const cy = py + (uy / norm) * dist;
+      const inside =
+        cx - halfW >= area.left &&
+        cx + halfW <= area.right &&
+        cy - halfH >= area.top &&
+        cy + halfH <= area.bottom;
+      const crossed = obstacles.some((seg) =>
+        segmentCrossesRect(seg, cx - halfW, cy - halfH, cx + halfW, cy + halfH),
+      );
+      let minDist = Number.POSITIVE_INFINITY;
+      for (const sx of [cx - halfW, cx + halfW]) {
+        for (const sy of [cy - halfH, cy + halfH]) {
+          for (const seg of obstacles) {
+            minDist = Math.min(minDist, pointSegDist(sx, sy, seg));
+          }
+        }
+      }
+      // Inside-area dominates; never-crossed dominates; then max clearance.
+      const score = (inside ? 2000 : 0) + (crossed ? -1000 : 0) + minDist;
+      if (best === null || score > best.score) {
+        best = { x: cx, y: cy, score };
+      }
+    }
+  }
+  const chosen = best ?? { x: px + 18, y: py - 18 };
+  return {
+    x: clampCentered(chosen.x, area.left, area.right, width),
+    y: Math.min(Math.max(chosen.y, area.top + halfH), area.bottom - halfH / 2),
+  };
+}
+
+/**
+ * Axis obstacle segments for a coordinate plane (only axes inside the
+ * domain). Each axis contributes its line PLUS a buffer segment on the
+ * tick-label side so labels also stay clear of the tick numbers: x-axis
+ * ticks sit below the axis, y-axis ticks left of it.
+ */
+export function axisObstacles(plane: Plane, area: PlotArea, xDomain: [number, number], yDomain: [number, number]): ObstacleSegment[] {
+  const out: ObstacleSegment[] = [];
+  if (xDomain[0] <= 0 && xDomain[1] >= 0) {
+    const ax = plane.xScale(0);
+    out.push({ x1: ax, y1: area.top, x2: ax, y2: area.bottom });
+    out.push({ x1: ax - 18, y1: area.top, x2: ax - 18, y2: area.bottom });
+  }
+  if (yDomain[0] <= 0 && yDomain[1] >= 0) {
+    const ay = plane.yScale(0);
+    out.push({ x1: area.left, y1: ay, x2: area.right, y2: ay });
+    out.push({ x1: area.left, y1: ay + 16, x2: area.right, y2: ay + 16 });
+  }
+  return out;
+}

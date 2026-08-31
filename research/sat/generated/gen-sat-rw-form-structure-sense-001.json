@@ -1,0 +1,54 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "passage",
+    "text": "Among the highlights of the city library's spring exhibition is a collection of botanical illustrations that, along with several handwritten journals from the same estate, ___ on display in the east wing through the end of the month.",
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "are",
+      "misconceptionId": "SAT_RW:form-structure-sense-agreement-trap"
+    },
+    {
+      "id": "B",
+      "text": "is",
+      "misconceptionId": null
+    },
+    {
+      "id": "C",
+      "text": "being",
+      "misconceptionId": "SAT_RW:form-structure-sense-nonfinite-error"
+    },
+    {
+      "id": "D",
+      "text": "were",
+      "misconceptionId": "SAT_RW:form-structure-sense-tense-aspect-mismatch"
+    }
+  ],
+  "correctAnswer": "B",
+  "rationale": "The blank needs a finite verb for the relative clause beginning with \"that.\" The subject of that clause is \"collection\" (via the relative pronoun \"that\"), which is singular; the phrase \"along with several handwritten journals from the same estate\" interrupts but does not change the number of the subject. The time frame — an exhibition running \"through the end of the month\" — calls for the present tense. The singular present form \"is\" satisfies both signals. Choice A, \"are,\" agrees with the nearer plural noun \"journals,\" but that noun is the object of a prepositional phrase, not the subject — the classic decoy-noun misparse. Choice C, \"being,\" is a participle, so the relative clause would contain no finite verb, leaving the sentence a fragment. Choice D, \"were,\" is both plural and past tense; even read as a tense choice alone, it clashes with the ongoing present time frame established by \"through the end of the month.\"",
+  "difficultyTarget": 3,
+  "id": "gen-sat-rw-form-structure-sense-001",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:form-structure-sense",
+  "provenance": {
+    "archetypeSlug": "form-structure-sense",
+    "promptVersion": "1.1.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T20:23:55.544Z",
+    "contentHash": "f9aa9a8b20a2e374174d4b6bf4ca3c3c6a8fa7f420ae551438d17f6ef3d262fb"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

@@ -1,0 +1,54 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "passage",
+    "text": "Text 1\nOrnithologist Dana Reyes argues that small songbirds migrate at night chiefly to avoid predators. Hawks and other daytime hunters pose the greatest danger during long flights, Reyes notes, so traveling under cover of darkness substantially reduces a bird's risk of being spotted and attacked mid-journey.\n\nText 2\nEcologist Marcus Lindgren acknowledges that migrating at night does reduce encounters with predators, but he contends that this benefit is incidental. His analysis of flight data shows that nighttime air is cooler and denser and that winds are typically calmer after sunset—conditions that allow birds to fly more efficiently. The true driver of nocturnal migration, he concludes, is energy conservation.",
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "Based on the texts, how would the author of Text 2 most likely respond to the claim in Text 1 that avoiding predators is the main reason small songbirds migrate at night?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "By asserting that energy conservation is the primary cause of nocturnal migration, a factor that the author of Text 1 discusses but dismisses as incidental",
+      "misconceptionId": "SAT_RW:cross-text-connections-stance-swap"
+    },
+    {
+      "id": "B",
+      "text": "By agreeing that migrating at night reduces exposure to predators but maintaining that the behavior is driven mainly by the energetic advantages of nighttime flying conditions",
+      "misconceptionId": null
+    },
+    {
+      "id": "C",
+      "text": "By rejecting the explanation in Text 1 outright, on the grounds that predator encounters play no meaningful role in determining when songbirds migrate",
+      "misconceptionId": "SAT_RW:cross-text-connections-overstated-disagreement"
+    },
+    {
+      "id": "D",
+      "text": "By disputing the suggestion that hawks are the greatest danger to migrating songbirds, since other predators pose an equally serious threat during long flights",
+      "misconceptionId": "SAT_RW:cross-text-connections-wrong-target"
+    }
+  ],
+  "correctAnswer": "B",
+  "rationale": "Track each author's stance precisely. Text 1 claims predator avoidance is the CHIEF reason for nocturnal migration. Text 2 accepts the predator benefit (\"does reduce encounters with predators\") but relabels it as incidental and assigns the primary causal role to energy conservation from cooler, denser air and calmer winds. So Text 2 partially confirms Text 1 while reassigning the main cause — exactly what choice B states. Choice A commits the stance swap: it is Lindgren (Text 2), not Reyes (Text 1), who calls a factor \"incidental,\" and Text 1 never discusses energy conservation at all; this choice would be plausible only if the texts' labels were reversed. Choice C overstates a partial disagreement as wholesale rejection: Lindgren explicitly grants that night travel reduces predator encounters, so he would not say predators play \"no meaningful role.\" Choice D responds to the wrong target: it quibbles with a supporting detail of Text 1 (hawks as the greatest danger) rather than with the claim the stem asks about — why songbirds migrate at night — and Text 2 gives no basis for ranking predators.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-rw-cross-text-connections-001",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:cross-text-connections",
+  "provenance": {
+    "archetypeSlug": "cross-text-connections",
+    "promptVersion": "1.1.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T20:23:27.359Z",
+    "contentHash": "58ab62cc2d412df86d6bd74826aa545f82045c634f1eab288a0aae8e4a19a318"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

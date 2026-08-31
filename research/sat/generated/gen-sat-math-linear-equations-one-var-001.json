@@ -1,0 +1,54 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "passage",
+    "text": "A school theater group sells tickets for a performance. Every ticket costs $5. The group sells 6 tickets to teachers and the rest to students. Total ticket sales come to $50.",
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "How many tickets did the group sell to students?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "\\(\\frac{44}{5}\\)",
+      "misconceptionId": "SAT_MATH:linear-equations-one-var-partial-distribution"
+    },
+    {
+      "id": "B",
+      "text": "4",
+      "misconceptionId": null
+    },
+    {
+      "id": "C",
+      "text": "16",
+      "misconceptionId": "SAT_MATH:linear-equations-one-var-sign-error-when-moving-terms"
+    },
+    {
+      "id": "D",
+      "text": "100",
+      "misconceptionId": "SAT_MATH:linear-equations-one-var-multiplying-by-reciprocal-incorrectly"
+    }
+  ],
+  "correctAnswer": "B",
+  "rationale": "Let \\(x\\) be the number of student tickets. The group sold \\(x + 6\\) tickets in all, at $5 each, for $50 total, so \\(5(x + 6) = 50\\). Dividing both sides by 5 gives \\(x + 6 = 10\\), and subtracting 6 gives \\(x = 4\\). Check: \\(5(4 + 6) = 5(10) = 50\\). ✓ Choice A, \\(\\frac{44}{5}\\), comes from partial distribution — expanding \\(5(x + 6)\\) as \\(5x + 6\\) and solving \\(5x = 44\\) instead of \\(5x + 30 = 50\\). Choice C, 16, comes from a sign error when moving terms — rewriting \\(5x + 30 = 50\\) as \\(5x = 50 + 30 = 80\\) rather than subtracting 30. Choice D, 100, comes from multiplying where dividing is needed — from \\(5x = 20\\), computing \\(5 \\times 20\\) instead of \\(\\frac{20}{5}\\).",
+  "difficultyTarget": 3,
+  "id": "gen-sat-math-linear-equations-one-var-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:linear-equations-one-var",
+  "provenance": {
+    "archetypeSlug": "linear-equations-one-var",
+    "promptVersion": "1.1.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T20:31:34.253Z",
+    "contentHash": "0e0e01e14fe2f3601bb97dacfd107fceec20b55e1f04a680768e609fc3ea12a3"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

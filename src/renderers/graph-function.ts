@@ -15,12 +15,14 @@
  */
 
 import { assertValidParams } from './lib/diagram.js';
+import type { ObstacleSegment } from './lib/plot.js';
 import {
   CANVAS,
   GRAPH_MARGINS,
-  clampCentered,
+  axisObstacles,
   coordinatePlane,
   markPoint,
+  placePointLabel,
   plotArea,
 } from './lib/plot.js';
 import { SvgBuilder, fmt } from './lib/svg.js';
@@ -142,13 +144,14 @@ export const renderer: Renderer = {
     bld.group({ 'font-family': FONT.family, 'font-size': FONT.size, fill: COLORS.ink });
 
     const area = plotArea(CANVAS.width, CANVAS.height, GRAPH_MARGINS);
-    const { xScale, yScale } = coordinatePlane(bld, {
+    const plane = coordinatePlane(bld, {
       xDomain: [minX, maxX],
       yDomain: [yLo, yHi],
       area,
       xLabel: 'x',
       yLabel: 'y',
     });
+    const { xScale, yScale } = plane;
 
     bld.polyline(
       xs.map((x) => [xScale(x), yScale(f(x))] as [number, number]),
@@ -161,8 +164,18 @@ export const renderer: Renderer = {
       },
     );
 
-    // Marked points: validated to lie on the curve, dotted and auto-labeled
-    // with generated coordinates (offset flips near the top edge).
+    // Marked points: validated to lie on the curve, dotted and labeled in
+    // empty space — never over the curve or the axes.
+    const curveObstacles: ObstacleSegment[] = [];
+    for (let i = 0; i < xs.length - 1; i++) {
+      curveObstacles.push({
+        x1: xScale(xs[i]!),
+        y1: yScale(f(xs[i]!)),
+        x2: xScale(xs[i + 1]!),
+        y2: yScale(f(xs[i + 1]!)),
+      });
+    }
+    const obstacles = [...curveObstacles, ...axisObstacles(plane, area, [minX, maxX], [yLo, yHi])];
     for (let i = 0; i < p.markedPoints.length; i++) {
       const mp = p.markedPoints[i]!;
       if (Math.abs(mp.y - f(mp.x)) > 0.011) {
@@ -175,8 +188,8 @@ export const renderer: Renderer = {
       markPoint(bld, px, py, { r: 3 });
       const text = `(${fmt(mp.x)}, ${fmt(mp.y)})`;
       const w = approxTextWidth(text, FONT.sizeSmall);
-      const ly = py < area.top + 22 ? py + 20 : py - 12;
-      bld.text(clampCentered(px, area.left, area.right, w), ly, text, {
+      const pos = placePointLabel({ px, py, width: w, area, obstacles });
+      bld.text(pos.x, pos.y, text, {
         anchor: 'middle',
         size: FONT.sizeSmall,
       });

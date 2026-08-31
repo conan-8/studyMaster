@@ -6,7 +6,7 @@
  *
  * Usage:
  *   npm run generate -- --subject SAT_RW --skill transitions --difficulty 3 \
- *     [--diagram] [--count 2] [--provider mock|openrouter] \
+ *     [--diagram] [--count 2] [--provider mock|openrouter|kimi] \
  *     [--mock-script <file> ...] [--out-dir <dir>]
  *
  * Providers:
@@ -19,6 +19,10 @@
  *   openrouter  live generation; requires env OPENROUTER_API_KEY
  *               (https://openrouter.ai/keys), optional env OPENROUTER_MODEL.
  *               Missing key -> clean exit-1 with setup instructions.
+ *   kimi        live generation via the Kimi Code plan; requires env
+ *               KIMI_API_KEY, optional env KIMI_MODEL (default
+ *               k3). Missing key -> clean exit-1 with setup
+ *               instructions.
  *
  * Drafts land with review.status 'pending' — they are committed (original
  * content, license-safe) and enter the review lifecycle documented in
@@ -44,7 +48,7 @@ const DIFFICULTIES = ['2', '3', '4'] as const;
 const MAX_ATTEMPTS = 4; // generateQuestion default repair budget
 
 const USAGE = `Usage: npm run generate -- --subject SAT_RW|SAT_MATH --skill <slug> --difficulty 2|3|4 \\
-  [--diagram] [--count N] [--provider mock|openrouter] [--mock-script <file> ...] [--out-dir <dir>]`;
+  [--diagram] [--count N] [--provider mock|openrouter|kimi] [--mock-script <file> ...] [--out-dir <dir>]`;
 
 interface CliArgs {
   subject: Subject;
@@ -179,6 +183,19 @@ function attemptsSummary(attempts: AttemptLog[]): string {
   return attempts.map((a) => `attempt ${a.attempt}: ${a.outcome}`).join(', ');
 }
 
+function usageSummary(attempts: AttemptLog[]): string {
+  let prompt = 0;
+  let completion = 0;
+  let known = false;
+  for (const a of attempts) {
+    if (a.usage === undefined) continue;
+    known = true;
+    prompt += a.usage.promptTokens;
+    completion += a.usage.completionTokens;
+  }
+  return known ? `${prompt} in / ${completion} out tokens` : 'usage not reported';
+}
+
 async function main(): Promise<void> {
   const args = parseCli(process.argv.slice(2));
   const provider = resolveCli(args);
@@ -206,7 +223,7 @@ async function main(): Promise<void> {
       const last = result.attempts[result.attempts.length - 1];
       console.log(
         `${tag} ${id} — ${last?.outcome ?? 'accepted'} (${attemptsSummary(result.attempts)}; ` +
-          `model ${result.model}, prompt ${result.promptVersion})`,
+          `${usageSummary(result.attempts)}; model ${result.model}, prompt ${result.promptVersion})`,
       );
       const outFile = path.join(args.outDir, `${id}.json`);
       fs.writeFileSync(outFile, `${JSON.stringify(question, null, 2)}\n`);

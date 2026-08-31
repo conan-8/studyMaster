@@ -1,0 +1,54 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "passage",
+    "text": "In a study of urban songbirds, researchers found that sparrows nesting near streetlights began singing earlier in the morning than sparrows in darker parts of the city. ______, robins nesting in illuminated parks began their dawn singing up to twenty minutes earlier than robins in unlit areas.",
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "Which choice completes the text with the most logical transition?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "Conversely,",
+      "misconceptionId": "SAT_RW:transitions-polarity-reversal"
+    },
+    {
+      "id": "B",
+      "text": "For instance,",
+      "misconceptionId": "SAT_RW:transitions-false-exemplification"
+    },
+    {
+      "id": "C",
+      "text": "Similarly,",
+      "misconceptionId": null
+    },
+    {
+      "id": "D",
+      "text": "Nevertheless,",
+      "misconceptionId": "SAT_RW:transitions-wrong-relation"
+    }
+  ],
+  "correctAnswer": "C",
+  "rationale": "The relationship between the sentences is addition: the second sentence reports a parallel finding in a different species. Sentence 1 establishes that sparrows near streetlights sang earlier; sentence 2 reports that robins in illuminated parks did the same. \"Similarly,\" correctly marks the robin result as an analogous case extending the pattern. \"Conversely,\" belongs to the comparison family but reverses its polarity — it would require the robins to behave in the opposite way (for example, singing later), and a student who treats a parallel case as an opposed one commits that reversal. \"For instance,\" fails because sentence 1 is a specific finding about sparrows, not a general claim that the robin case could illustrate; choosing it assumes exemplification where none exists. \"Nevertheless,\" misdiagnoses the relationship entirely, predicting that sentence 2 will contradict or concede against sentence 1, when in fact it confirms the same pattern in another species.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-rw-transitions-002",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:transitions",
+  "provenance": {
+    "archetypeSlug": "transitions",
+    "promptVersion": "1.1.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T20:26:46.010Z",
+    "contentHash": "77364de09539333990ea2741cc0c817211d6add4eb7b020e055fa8d9e9607809"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

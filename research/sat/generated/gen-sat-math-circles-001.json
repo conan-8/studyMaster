@@ -1,0 +1,79 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "figure",
+    "text": "The figure shows a circle with center \\(O\\) and radius 6. The central angle intercepting arc \\(ABC\\) measures \\(60^\\circ\\).",
+    "tableJson": null,
+    "diagram": {
+      "archetypeId": "sat-math:circle-features",
+      "parameters": {
+        "center": {
+          "x": 6,
+          "y": 6
+        },
+        "radius": 3,
+        "features": [
+          {
+            "type": "radius",
+            "angleDegrees": 180,
+            "sweepDegrees": null,
+            "label": "r = 6"
+          },
+          {
+            "type": "central_angle",
+            "angleDegrees": 0,
+            "sweepDegrees": 60,
+            "label": "60°"
+          }
+        ],
+        "centerLabel": "O",
+        "showCenterDot": true
+      }
+    }
+  },
+  "stem": "What is the length of arc ABC?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "\\(12\\pi\\)",
+      "misconceptionId": "SAT_MATH:circles-arc-sector-uses-full-circle"
+    },
+    {
+      "id": "B",
+      "text": "\\(4\\pi\\)",
+      "misconceptionId": "SAT_MATH:circles-radius-diameter-swap"
+    },
+    {
+      "id": "C",
+      "text": "\\(2\\pi\\)",
+      "misconceptionId": null
+    },
+    {
+      "id": "D",
+      "text": "\\(72\\pi\\)",
+      "misconceptionId": "SAT_MATH:circles-arc-sector-uses-full-circle"
+    }
+  ],
+  "correctAnswer": "C",
+  "rationale": "Arc length is the fraction of the circumference cut off by the central angle: the full circumference is \\(2\\pi r = 2\\pi(6) = 12\\pi\\), and the \\(60^\\circ\\) angle is \\(\\frac{60}{360} = \\frac{1}{6}\\) of the circle, so the arc length is \\(\\frac{1}{6} \\times 12\\pi = 2\\pi\\). Choice A, \\(12\\pi\\), is the FULL circumference — the student computed \\(2\\pi r\\) but never applied the \\(\\frac{60}{360}\\) fraction. Choice B, \\(4\\pi\\), comes from doubling the radius to 12 (treating 6 as a diameter and 'correcting' it the wrong way) before applying the fraction: \\(\\frac{1}{6} \\times 2\\pi(12) = 4\\pi\\). Choice D, \\(72\\pi\\), applies the angle fraction upside down, multiplying by \\(\\frac{360}{60} = 6\\) instead of \\(\\frac{60}{360}\\): \\(6 \\times 12\\pi = 72\\pi\\). A useful sanity check: the arc must be shorter than the full circumference \\(12\\pi\\), which only \\(2\\pi\\) and \\(4\\pi\\) satisfy, and only \\(2\\pi\\) uses the radius as drawn.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-math-circles-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:circles",
+  "provenance": {
+    "archetypeSlug": "circles",
+    "promptVersion": "1.1.1",
+    "model": "k3",
+    "generatedAt": "2026-08-31T22:07:08.494Z",
+    "contentHash": "5861d11307706c74c4c8dad8c6573c5802ebad9fad9f6a033c13c03d89fd4e19"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

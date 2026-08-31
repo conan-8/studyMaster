@@ -15,8 +15,9 @@
     "validate:all": "npm run validate:exam-formats && npm run validate:taxonomy && npm run validate:misconceptions && npm run validate:diagrams && npm run validate:archetypes && npm run validate:questions && npm run validate:sat-bank",
     "test": "tsx --test src/llm/*.test.ts src/generator/*.test.ts src/generator/eval/*.test.ts src/renderers/tests/*.test.ts",
     "eval:generator": "tsx src/generator/eval/run.ts",
-    "generate": "tsx scripts/generate-question.ts",
+    "generate": "tsx --env-file-if-exists=.env scripts/generate-question.ts",
     "gallery": "tsx scripts/render-gallery.ts",
+    "gallery:questions": "tsx scripts/question-gallery.ts",
     "db:check": "tsx scripts/db-check.ts",
     "db:migrate": "tsx scripts/migrate.ts",
     "seed": "tsx scripts/seed.ts"

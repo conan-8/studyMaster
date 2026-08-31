@@ -1,0 +1,58 @@
+{
+  "questionType": "grid_in",
+  "stimulus": {
+    "type": "figure",
+    "text": "A group of 200 students at a school were asked whether they take an art class and whether they take a music class. The results are summarized in the table.",
+    "tableJson": null,
+    "diagram": {
+      "archetypeId": "sat-math:table-two-way",
+      "parameters": {
+        "tableTitle": "Students Taking Art or Music",
+        "rowCategories": [
+          "Takes art",
+          "Does not take art"
+        ],
+        "columnCategories": [
+          "Takes music",
+          "Does not take music"
+        ],
+        "cells": [
+          [
+            24,
+            40
+          ],
+          [
+            56,
+            80
+          ]
+        ],
+        "cornerLabel": "Students",
+        "showTotals": true
+      }
+    }
+  },
+  "stem": "Given that a randomly selected student takes art, what is the probability that the student takes music?",
+  "choices": [],
+  "correctAnswer": "3/8",
+  "rationale": "The phrase 'given that the student takes art' restricts the sample space to the art row only, so the denominator is the 64 students who take art, not all 200 students. Of those 64 students, 24 take music, giving \\(P(\\text{music} \\mid \\text{art}) = \\frac{24}{64} = \\frac{3}{8}\\). Dividing 24 by the grand total 200 gives \\(\\frac{3}{25}\\), which is the joint probability \\(P(\\text{art and music})\\), not a conditional probability — that error ignores the narrowing of the universe to the given row. Dividing 24 by the music column total 80 gives \\(\\frac{3}{10}\\), which is the transposed conditional \\(P(\\text{art} \\mid \\text{music})\\) — the wrong margin was used as the denominator. As a check, the table is consistent: row totals \\(24 + 40 = 64\\) and \\(56 + 80 = 136\\) sum to 200, and column totals \\(24 + 56 = 80\\) and \\(40 + 80 = 120\\) also sum to 200. The answer can be gridded as \\(3/8\\) or as the decimal \\(0.375\\).",
+  "difficultyTarget": 3,
+  "id": "gen-sat-math-probability-conditional-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:probability-conditional",
+  "provenance": {
+    "archetypeSlug": "probability-conditional",
+    "promptVersion": "1.1.1",
+    "model": "k3",
+    "generatedAt": "2026-08-31T22:00:30.824Z",
+    "contentHash": "d1f780e60db16fa714dd2f372befa0f79597aeb8ff7baf52196eaa4eb6370a40"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

@@ -1,0 +1,89 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "figure",
+    "text": "The figure shows triangle ABC with the measure of each interior angle as labeled.",
+    "tableJson": null,
+    "diagram": {
+      "archetypeId": "sat-math:triangle-labeled",
+      "parameters": {
+        "vertices": {
+          "A": {
+            "x": 1,
+            "y": 1
+          },
+          "B": {
+            "x": 9,
+            "y": 1
+          },
+          "C": {
+            "x": 8.5,
+            "y": 6.5
+          }
+        },
+        "sideLabels": [],
+        "angleLabels": [
+          {
+            "vertex": "A",
+            "text": "x°"
+          },
+          {
+            "vertex": "B",
+            "text": "(2x + 15)°"
+          },
+          {
+            "vertex": "C",
+            "text": "60°"
+          }
+        ],
+        "rightAngleAt": null,
+        "showVertexNames": true
+      }
+    }
+  },
+  "stem": "What is the measure, in degrees, of angle B?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "25",
+      "misconceptionId": "SAT_MATH:lines-angles-triangles-complementary-supplementary-swap"
+    },
+    {
+      "id": "B",
+      "text": "60",
+      "misconceptionId": "SAT_MATH:lines-angles-triangles-assuming-equal-angles-without-parallel"
+    },
+    {
+      "id": "C",
+      "text": "85",
+      "misconceptionId": null
+    },
+    {
+      "id": "D",
+      "text": "205",
+      "misconceptionId": "SAT_MATH:lines-angles-triangles-triangle-sum-360-error"
+    }
+  ],
+  "correctAnswer": "C",
+  "rationale": "The interior angles of a triangle sum to \\(180^\\circ\\), so \\(x + (2x + 15) + 60 = 180\\). Combining like terms gives \\(3x + 75 = 180\\), so \\(3x = 105\\) and \\(x = 35\\). The question asks for angle B, not \\(x\\): substituting, \\(2(35) + 15 = 85\\). Choice A results from swapping in the wrong total — subtracting from \\(90^\\circ\\) as if the angles were complementary: \\(3x + 75 = 90\\) gives \\(x = 5\\) and angle B \\(= 25\\). Choice B copies the given \\(60^\\circ\\) angle, assuming angle B equals angle C without any stated justification, instead of solving. Choice D applies the quadrilateral sum of \\(360^\\circ\\) to a triangle: \\(3x + 75 = 360\\) gives \\(x = 95\\) and angle B \\(= 205\\), which is impossible for a triangle's interior angle.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-math-lines-angles-triangles-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:lines-angles-triangles",
+  "provenance": {
+    "archetypeSlug": "lines-angles-triangles",
+    "promptVersion": "1.1.1",
+    "model": "k3",
+    "generatedAt": "2026-08-31T21:54:28.374Z",
+    "contentHash": "2f3f0b5732ed20dde6fffa6595f01a82960d7fdae0b2ebac9d2028a4668e89a6"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

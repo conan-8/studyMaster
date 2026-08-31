@@ -18,10 +18,11 @@ import {
   CANVAS,
   GRAPH_MARGINS,
   Plane,
+  axisObstacles,
   clipSegment,
-  clampCentered,
   coordinatePlane,
   markPoint,
+  placePointLabel,
   plotArea,
 } from './lib/plot.js';
 import { SvgBuilder } from './lib/svg.js';
@@ -116,29 +117,18 @@ export const renderer: Renderer = {
         );
       }
     }
-    const cellW = area.width / (maxX - minX);
-    const lineDx = cellW;
-    const lineDy = m * cellW;
-    const len = Math.hypot(lineDx, lineDy);
-    let nx = -lineDy / len;
-    let ny = lineDx / len;
-    if (ny > 0) {
-      nx = -nx;
-      ny = -ny;
-    } // normal pointing "up" on screen
+    const obstacles = [
+      { x1: xScale(minX), y1: yScale(m * minX + b), x2: xScale(maxX), y2: yScale(m * maxX + b) },
+      ...axisObstacles(plane, area, [minX, maxX], [-yMax, yMax]),
+    ];
     for (let i = 0; i < p.markedPoints.length; i++) {
       const mp = p.markedPoints[i]!;
       const px = xScale(mp.x);
       const py = yScale(mp.y);
       markPoint(bld, px, py, { r: 3 });
-      // Alternate sides so neighboring labels never overlap each other; flip
-      // back inside if the offset would leave the plot area.
-      let side = i % 2 === 0 ? 1 : -1;
-      if (py + side * ny * 16 < area.top + 10) side = -side;
-      const lx = px + side * nx * 16;
-      const ly = py + side * ny * 16 + 4;
       const w = approxTextWidth(mp.label, FONT.sizeSmall);
-      bld.text(clampCentered(lx, area.left, area.right, w), ly, mp.label, {
+      const pos = placePointLabel({ px, py, width: w, area, obstacles });
+      bld.text(pos.x, pos.y, mp.label, {
         anchor: 'middle',
         size: FONT.sizeSmall,
       });

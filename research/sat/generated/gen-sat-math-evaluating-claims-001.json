@@ -1,0 +1,54 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "passage",
+    "text": "Researchers studying sleep habits randomly selected 300 adults from the list of registered residents of Millbrook, a mid-sized city. Each participant completed a survey about daily coffee consumption and sleep quality. The researchers found that participants who drank more than two cups of coffee per day reported significantly poorer sleep quality than participants who drank less coffee. The groups were formed solely by the participants' own reported habits; the researchers did not assign anyone to drink or avoid coffee. A local news article summarized the study with the headline \"Coffee Ruins Sleep for Adults Everywhere.\"",
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "Which of the following conclusions is best supported by the results of the study?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "Among adults in Millbrook, drinking more than two cups of coffee per day caused poorer reported sleep quality.",
+      "misconceptionId": "SAT_MATH:evaluating-claims-causal-claim-from-observational-study"
+    },
+    {
+      "id": "B",
+      "text": "Among adults in Millbrook, drinking more than two cups of coffee per day is associated with poorer reported sleep quality.",
+      "misconceptionId": null
+    },
+    {
+      "id": "C",
+      "text": "Among adults nationwide, drinking more than two cups of coffee per day is associated with poorer reported sleep quality.",
+      "misconceptionId": "SAT_MATH:evaluating-claims-generalizing-beyond-sampled-population"
+    },
+    {
+      "id": "D",
+      "text": "Because the participants were randomly selected, drinking more than two cups of coffee per day caused poorer reported sleep quality among adults in Millbrook.",
+      "misconceptionId": "SAT_MATH:evaluating-claims-random-sampling-vs-random-assignment-swap"
+    }
+  ],
+  "correctAnswer": "B",
+  "rationale": "Apply the two-question licensing check. (1) Were participants randomly assigned to coffee-drinking conditions? No — groups formed by self-reported habits, so only association language is licensed, not causal language. (2) Who was randomly sampled? Adults from Millbrook's registered residents, so conclusions extend to Millbrook adults, not beyond. Choice B matches both dimensions: associational strength, Millbrook scope. Choice A commits the observational-to-causal error: without random assignment, an unmeasured confound (stress, work schedules) could explain both coffee intake and poor sleep, so 'caused' is not licensed. Choice C keeps the correct strength but widens the population one level beyond the sampling frame — random selection from Millbrook licenses conclusions about Millbrook adults only, not adults nationwide. Choice D swaps what randomization buys: random selection of participants supports generalization to the sampled population, but it does nothing to license a causal claim, which requires random assignment to treatment.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-math-evaluating-claims-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:evaluating-claims",
+  "provenance": {
+    "archetypeSlug": "evaluating-claims",
+    "promptVersion": "1.1.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T20:31:04.852Z",
+    "contentHash": "6993238fc1d65b3506f621110fc839e6b4418abe389d6f2fc8e620639811e80e"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

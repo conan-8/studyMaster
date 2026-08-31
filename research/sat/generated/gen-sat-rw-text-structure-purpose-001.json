@@ -1,0 +1,54 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "passage",
+    "text": "For decades, urban planners assumed that widening congested roads would ease traffic. <u>Yet when several cities expanded major highways in the 1990s, researchers found that congestion on those roads typically returned to its earlier levels within a few years.</u> The pattern suggests that new capacity can attract additional drivers, gradually offsetting any initial gains.",
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "Which choice best describes the function of the underlined sentence in the text as a whole?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "It presents research findings that call into question the long-standing assumption described in the first sentence.",
+      "misconceptionId": null
+    },
+    {
+      "id": "B",
+      "text": "It recounts the history of highway expansion projects that cities undertook in the 1990s.",
+      "misconceptionId": "SAT_RW:text-structure-purpose-content-not-role"
+    },
+    {
+      "id": "C",
+      "text": "It states the central claim of the text, which the final sentence then explains.",
+      "misconceptionId": "SAT_RW:text-structure-purpose-role-reversal"
+    },
+    {
+      "id": "D",
+      "text": "It proposes a mechanism explaining why additional road capacity might attract more drivers.",
+      "misconceptionId": "SAT_RW:text-structure-purpose-wrong-object"
+    }
+  ],
+  "correctAnswer": "A",
+  "rationale": "The passage has a view-plus-qualification architecture: sentence 1 introduces a long-standing assumption (widening roads eases traffic), the underlined sentence pivots with \"Yet\" to present findings that undercut that assumption, and sentence 3 interprets those findings. The underlined sentence's role is therefore to introduce evidence challenging the opening assumption, which is what choice A says. Choice B accurately reflects the sentence's content (1990s highway expansions) but mislabels its role: the sentence is not supplying historical background, it is functioning as counterevidence — the what-it-says-mistaken-for-what-it-does error. Choice C commits role reversal: it casts the evidence as the text's central claim and demotes the actual interpretive work of the final sentence to mere explanation, when in fact the claim being advanced emerges only in the last sentence and the underlined sentence supports it. Choice D describes the function of the final sentence — proposing the mechanism (induced demand) that explains the pattern — not the underlined one, a wrong-object error.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-rw-text-structure-purpose-001",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:text-structure-purpose",
+  "provenance": {
+    "archetypeSlug": "text-structure-purpose",
+    "promptVersion": "1.1.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T20:25:39.155Z",
+    "contentHash": "9bfc37efc6e5eca73af5509c53053ce877ba4bec3d3405a11ae6a069ebe0cc77"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

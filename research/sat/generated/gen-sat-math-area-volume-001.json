@@ -1,0 +1,33 @@
+{
+  "questionType": "grid_in",
+  "stimulus": {
+    "type": "passage",
+    "text": "A wooden ramp has a triangular side panel. The panel's horizontal base is 8 feet long, its slanted top edge is 10 feet long, and its vertical back edge meets the base at a right angle. A painter wants to paint the triangular side panel and needs to know its area.",
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "What is the area, in square feet, of the triangular side panel?",
+  "choices": [],
+  "correctAnswer": "24",
+  "rationale": "The vertical back edge is the triangle's perpendicular height, but it is not given directly — it must be found first. Since the vertical edge, the 8-foot base, and the 10-foot slanted edge form a right triangle, the Pythagorean theorem gives the height: \\(h = \\sqrt{10^2 - 8^2} = \\sqrt{100 - 64} = \\sqrt{36} = 6\\) feet. Then the triangle's area is \\(\\frac{1}{2}bh = \\frac{1}{2}(8)(6) = 24\\) square feet. Two traps live here: a student who uses the 10-foot slanted edge as the height commits the slant-height error and gets \\(\\frac{1}{2}(8)(10) = 40\\); a student who finds the correct height but omits the \\(\\frac{1}{2}\\) computes \\(8 \\times 6 = 48\\), the rectangle area rather than the triangle area. Only 24 uses the perpendicular height and the triangle formula.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-math-area-volume-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:area-volume",
+  "provenance": {
+    "archetypeSlug": "area-volume",
+    "promptVersion": "1.1.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T20:27:34.887Z",
+    "contentHash": "93193e2f1b5a2b016fa92268c75236633b44a093aebdf69c2be14538c818dce0"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

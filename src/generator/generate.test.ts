@@ -115,7 +115,7 @@ const VALID_MATH_DIAGRAM_DRAFT = {
       },
     },
   },
-  stem: 'The graph shows the lines l and m in the xy-plane. The two lines intersect at point P. What is the y-coordinate of P?',
+  stem: 'The graph shows the lines \\(l\\) and \\(m\\) in the \\(xy\\)-plane. The two lines intersect at point \\(P\\). What is the \\(y\\)-coordinate of \\(P\\)?',
   choices: [
     { id: 'A', text: '1', misconceptionId: 'SAT_MATH:systems-linear-equations-elimination-scales-one-side-only' },
     { id: 'B', text: '3', misconceptionId: null },
@@ -124,7 +124,7 @@ const VALID_MATH_DIAGRAM_DRAFT = {
   ],
   correctAnswer: 'B',
   rationale:
-    'Line l has equation y = 2x − 5 and line m has equation y = −0.5x + 5. Setting them equal gives 2.5x = 10, so x = 4 and y = 3 — the marked intersection P = (4, 3), and substitution into either equation confirms it. Choice C reports the x-coordinate: the correct solution with the wrong component, the classic re-read-the-ask trap. Choice A comes from scaling only the variable terms when aligning coefficients (2x + 4y = 10), which yields y = 1. Choice D comes from subtracting the left sides while adding the right sides (5y = 25), which yields y = 5.',
+    'Line \\(l\\) has equation \\(y = 2x - 5\\) and line \\(m\\) has equation \\(y = -0.5x + 5\\). Setting them equal gives \\(2.5x = 10\\), so \\(x = 4\\) and \\(y = 3\\) — the marked intersection \\(P = (4, 3)\\), and substitution into either equation confirms it. Choice C reports the x-coordinate: the correct solution with the wrong component, the classic re-read-the-ask trap. Choice A comes from scaling only the variable terms when aligning coefficients (\\(2x + 4y = 10\\)), which yields \\(y = 1\\). Choice D comes from subtracting the left sides while adding the right sides (\\(5y = 25\\)), which yields \\(y = 5\\).',
   difficultyTarget: 3,
 };
 
@@ -200,12 +200,12 @@ test('assembleInputs rejects withDiagram for a skill without diagramSpec, naming
 // --- nextId -----------------------------------------------------------------------
 
 test('nextId continues from existing fixtures in both namespaces', () => {
-  assert.equal(nextId('SAT_RW', 'transitions'), 'gen-sat-rw-transitions-002');
+  assert.equal(nextId('SAT_RW', 'transitions'), 'gen-sat-rw-transitions-003');
   // the math fixture uses the short slug 'systems', which is a DIFFERENT
   // namespace from the full skill slug — the anchored regex must not match it
-  assert.equal(nextId('SAT_MATH', 'systems-linear-equations'), 'gen-sat-math-systems-linear-equations-001');
+  assert.equal(nextId('SAT_MATH', 'systems-linear-equations'), 'gen-sat-math-systems-linear-equations-002');
   assert.equal(nextId('SAT_MATH', 'systems'), 'gen-sat-math-systems-002');
-  assert.equal(nextId('SAT_MATH', 'circles'), 'gen-sat-math-circles-001'); // no fixture yet
+  assert.equal(nextId('SAT_MATH', 'area-volume'), 'gen-sat-math-area-volume-002'); // sweep draft exists
 });
 
 // --- (a) valid first try ------------------------------------------------------------
@@ -222,8 +222,12 @@ test('(a) valid first attempt: accepted, schema-valid, hash recomputes', async (
   });
 
   assert.equal(result.attempts.length, 1);
-  assert.deepEqual(result.attempts[0], { attempt: 1, outcome: 'accepted' });
-  assert.equal(result.promptVersion, '1.0.0');
+  assert.deepEqual(result.attempts[0], {
+    attempt: 1,
+    outcome: 'accepted',
+    usage: { promptTokens: 0, completionTokens: 0 },
+  });
+  assert.equal(result.promptVersion, '1.1.1');
   assert.equal(result.model, 'mock-model-xyz');
 
   const question = result.question as Record<string, unknown>;
@@ -249,7 +253,7 @@ test('(a) valid first attempt: accepted, schema-valid, hash recomputes', async (
   // provenance + documented contentHash convention
   const provenance = question.provenance as Record<string, string>;
   assert.equal(provenance.archetypeSlug, 'transitions');
-  assert.equal(provenance.promptVersion, '1.0.0');
+  assert.equal(provenance.promptVersion, '1.1.1');
   assert.equal(provenance.model, 'mock-model-xyz');
   assert.equal(provenance.generatedAt, '2026-08-24T09:00:00.000Z');
   assert.equal(recomputeContentHash(question), provenance.contentHash);

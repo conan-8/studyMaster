@@ -1,0 +1,54 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "none",
+    "text": null,
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "Which equation is an equation of the line that passes through \\((-2, 3)\\) and is perpendicular to the line with equation \\(2x + 4y = 8\\)?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "\\(y = \\frac{1}{2}x + 4\\)",
+      "misconceptionId": "SAT_MATH:linear-equations-two-vars-perpendicular-slope-not-reciprocated"
+    },
+    {
+      "id": "B",
+      "text": "\\(y = -2x - 1\\)",
+      "misconceptionId": "SAT_MATH:linear-equations-two-vars-standard-form-slope-sign-error"
+    },
+    {
+      "id": "C",
+      "text": "\\(y = 2x + 7\\)",
+      "misconceptionId": null
+    },
+    {
+      "id": "D",
+      "text": "\\(y = 2x - 1\\)",
+      "misconceptionId": "SAT_MATH:linear-equations-two-vars-point-slope-sign-error"
+    }
+  ],
+  "correctAnswer": "C",
+  "rationale": "First find the slope of the given line by solving for \\(y\\): \\(4y = -2x + 8\\), so \\(y = -\\frac{1}{2}x + 2\\) and the slope is \\(-\\frac{1}{2}\\). A perpendicular line has the negative reciprocal slope, \\(2\\). Using point-slope form through \\((-2, 3)\\): \\(y - 3 = 2(x - (-2))\\), so \\(y - 3 = 2(x + 2)\\), which expands to \\(y = 2x + 7\\). Check: substituting \\((-2, 3)\\) gives \\(3 = 2(-2) + 7 = 3\\). Choice A keeps the correct y-intercept logic but uses slope \\(\\frac{1}{2}\\) — the student negated \\(-\\frac{1}{2}\\) but never took the reciprocal. Choice B reads the given line's slope as \\(\\frac{A}{B} = \\frac{2}{4} = \\frac{1}{2}\\) instead of \\(-\\frac{A}{B}\\), then takes the negative reciprocal of that wrong slope to get \\(-2\\). Choice D uses the right slope \\(2\\) but writes \\(y - 3 = 2(x - 2)\\), dropping the double negative on the \\(x\\)-coordinate \\(-2\\), which shifts the line down by \\(8\\) to \\(y = 2x - 1\\).",
+  "difficultyTarget": 3,
+  "id": "gen-sat-math-linear-equations-two-vars-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:linear-equations-two-vars",
+  "provenance": {
+    "archetypeSlug": "linear-equations-two-vars",
+    "promptVersion": "1.1.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T20:33:17.610Z",
+    "contentHash": "c9ede27eeb6210b468c0a3e26462c055cac67e8667d1257a3575c060f134760d"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

@@ -1,0 +1,84 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "figure",
+    "text": "The graph shown gives the volume of water, in liters, remaining in a tank \\(t\\) minutes after a drain valve is opened, where \\(V\\) is the volume in liters.",
+    "tableJson": null,
+    "diagram": {
+      "archetypeId": "sat-math:graph-line",
+      "parameters": {
+        "slope": -3,
+        "yIntercept": 9,
+        "xRange": {
+          "min": -1,
+          "max": 4
+        },
+        "markedPoints": [
+          {
+            "x": 0,
+            "y": 9,
+            "label": "(0, 9)"
+          },
+          {
+            "x": 1,
+            "y": 6,
+            "label": "(1, 6)"
+          },
+          {
+            "x": 2,
+            "y": 3,
+            "label": "(2, 3)"
+          }
+        ],
+        "xAxisLabel": "t",
+        "yAxisLabel": "V",
+        "showIntercepts": false
+      }
+    }
+  },
+  "stem": "Which function models the volume of water remaining in the tank as a function of \\(t\\), the number of minutes after the valve is opened?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "\\(f(t) = 9t - 3\\)",
+      "misconceptionId": "SAT_MATH:linear-functions-slope-intercept-swap"
+    },
+    {
+      "id": "B",
+      "text": "\\(f(t) = -3t + 9\\)",
+      "misconceptionId": null
+    },
+    {
+      "id": "C",
+      "text": "\\(f(t) = 3t + 9\\)",
+      "misconceptionId": "SAT_MATH:linear-functions-slope-sign-from-inconsistent-point-order"
+    },
+    {
+      "id": "D",
+      "text": "\\(f(t) = -\\frac{1}{3}t + 9\\)",
+      "misconceptionId": "SAT_MATH:linear-functions-slope-rise-run-inversion"
+    }
+  ],
+  "correctAnswer": "B",
+  "rationale": "Read two marked points from the graph, say \\((1, 6)\\) and \\((2, 3)\\), and compute the slope with a consistent point order: \\(\\frac{3 - 6}{2 - 1} = \\frac{-3}{1} = -3\\), so the tank loses 3 liters per minute. The line crosses the \\(V\\)-axis at \\((0, 9)\\), so the starting volume is 9 liters and the model is \\(f(t) = -3t + 9\\). Check: \\(f(1) = -3(1) + 9 = 6\\) and \\(f(2) = -3(2) + 9 = 3\\), matching both marked points. Choice A results from swapping the roles of the two context numbers — treating the starting volume 9 as the rate and the rate \\(-3\\) as the intercept. Choice C comes from computing the slope as \\(\\frac{3 - 6}{1 - 2} = 3\\), subtracting the coordinates in opposite orders and flipping the sign. Choice D comes from inverting the slope ratio, computing run over rise as \\(\\frac{2 - 1}{3 - 6} = -\\frac{1}{3}\\) instead of rise over run.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-math-linear-functions-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:linear-functions",
+  "provenance": {
+    "archetypeSlug": "linear-functions",
+    "promptVersion": "1.1.1",
+    "model": "k3",
+    "generatedAt": "2026-08-31T21:53:12.644Z",
+    "contentHash": "9a8a25ebda66c9070f5f5df9b920a6ce9a6605612365e892f0935c157ef35be8"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

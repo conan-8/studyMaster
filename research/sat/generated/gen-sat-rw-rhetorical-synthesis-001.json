@@ -1,0 +1,54 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "notes",
+    "text": "While researching a topic, a student has taken the following notes:\n\n• Lichen species Arborus flavens and Arborus cinereus both grow on granite outcrops in the Wrenvale region.\n• In a 12-week drought simulation, Arborus flavens retained 84% of its photosynthetic activity.\n• Under identical conditions, Arborus cinereus retained only 19% of its photosynthetic activity.\n• Researcher Elena Voss published the study in 2019 with funding from a regional conservation trust.\n• Arborus flavens is used locally as a natural dye source.",
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "The student wants to emphasize the difference in drought resilience between the two lichen species. Which choice most effectively uses the relevant information from the notes to accomplish this goal?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "In a 12-week drought simulation, Arborus flavens retained 84% of its photosynthetic activity, and Arborus cinereus retained 19% of its photosynthetic activity.",
+      "misconceptionId": "SAT_RW:rhetorical-synthesis-structure-mismatch"
+    },
+    {
+      "id": "B",
+      "text": "Although both lichens grow on the same granite outcrops in the Wrenvale region, they responded very differently to drought: Arborus flavens retained 84% of its photosynthetic activity, whereas Arborus cinereus retained only 19%.",
+      "misconceptionId": null
+    },
+    {
+      "id": "C",
+      "text": "Elena Voss published her study of Wrenvale lichens in 2019 with funding from a regional conservation trust; one of the species she examined, Arborus flavens, is used locally as a natural dye source.",
+      "misconceptionId": "SAT_RW:rhetorical-synthesis-relevance-failure"
+    },
+    {
+      "id": "D",
+      "text": "The drought simulation revealed a stark contrast between the two lichens: Arborus flavens retained 84% of its photosynthetic activity, while Arborus cinereus retained only 29%.",
+      "misconceptionId": "SAT_RW:rhetorical-synthesis-fact-distortion"
+    }
+  ],
+  "correctAnswer": "B",
+  "rationale": "The goal is to emphasize a difference, so the sentence must do more than mention the two species — it must perform a contrast using the two decisive figures (84% versus 19% retained photosynthetic activity). Choice B does exactly this: it selects only the goal-relevant notes, states both figures verbatim, and frames them with an explicit contrast ('Although ... whereas ... only 19%'). Choice A uses the right facts but merely lists them side by side with the neutral connector 'and'; the reader must infer the difference, so the rhetorical move the goal requires is never made — a structure mismatch. Choice C is entirely accurate but draws on the publication-funding and dye-source notes, which say nothing about drought resilience — the right facts for the wrong job. Choice D performs the correct contrastive move but corrupts the decisive note, inflating Arborus cinereus's figure from 19% to 29% — a subtle fact distortion that makes the sentence inaccurate even though its rhetoric looks right.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-rw-rhetorical-synthesis-001",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:rhetorical-synthesis",
+  "provenance": {
+    "archetypeSlug": "rhetorical-synthesis",
+    "promptVersion": "1.1.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T20:24:49.617Z",
+    "contentHash": "b6e8e1c5f5c8999a5a52cbdfe5dc97bd7eb9d425ac0f782f84aef0025c91acdb"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

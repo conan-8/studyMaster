@@ -1,0 +1,82 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "figure",
+    "text": "The graph of the function \\(f\\), defined by \\(f(x) = -(x - 2)^2 + 9\\), is shown in the \\(xy\\)-plane, where the parabola passes through the points \\((0, 5)\\) and \\((5, 0)\\).",
+    "tableJson": null,
+    "diagram": {
+      "archetypeId": "sat-math:graph-function",
+      "parameters": {
+        "functionType": "quadratic",
+        "quadratic": {
+          "a": -1,
+          "b": 4,
+          "c": 5
+        },
+        "xRange": {
+          "min": -2,
+          "max": 6
+        },
+        "markedPoints": [
+          {
+            "x": 2,
+            "y": 9
+          },
+          {
+            "x": 0,
+            "y": 5
+          },
+          {
+            "x": 5,
+            "y": 0
+          }
+        ]
+      }
+    }
+  },
+  "stem": "What is the maximum value of the function f?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "2",
+      "misconceptionId": "SAT_MATH:nonlinear-functions-max-min-direction-swap"
+    },
+    {
+      "id": "B",
+      "text": "9",
+      "misconceptionId": null
+    },
+    {
+      "id": "C",
+      "text": "-9",
+      "misconceptionId": "SAT_MATH:nonlinear-functions-vertex-form-sign-error"
+    },
+    {
+      "id": "D",
+      "text": "5",
+      "misconceptionId": "SAT_MATH:nonlinear-functions-root-vs-y-intercept-confusion"
+    }
+  ],
+  "correctAnswer": "B",
+  "rationale": "The function is given in vertex form, \\(f(x) = a(x - h)^2 + k\\) with \\(a = -1\\), \\(h = 2\\), and \\(k = 9\\), so the vertex is \\((2, 9)\\); substituting back confirms \\(f(2) = -(2 - 2)^2 + 9 = 9\\). Because \\(a \\lt 0\\), the parabola opens downward, so the vertex is a maximum, and the maximum VALUE is the vertex's \\(y\\)-coordinate: 9. Choice A, 2, is the \\(x\\)-coordinate of the vertex — the position where the maximum occurs, not the maximum value; this is the value-versus-position swap. Choice C, \\(-9\\), comes from negating the constant \\(k\\) in the vertex form, a sign error; the value of the function at its vertex is 9, not \\(-9\\). Choice D, 5, is a feature read off the wrong part of the graph — it is the \\(y\\)-intercept \\(f(0) = -(0-2)^2 + 9 = 5\\) (and also the location of an \\(x\\)-intercept) — not the extreme value at the vertex.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-math-nonlinear-functions-001",
+  "subjectCode": "SAT_MATH",
+  "taxonomyCode": "SAT_MATH:nonlinear-functions",
+  "provenance": {
+    "archetypeSlug": "nonlinear-functions",
+    "promptVersion": "1.1.1",
+    "model": "k3",
+    "generatedAt": "2026-08-31T21:55:57.531Z",
+    "contentHash": "226b8802bb8801d0011798a2b54b66de013405c76096cdf626c487e3b9aca660"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

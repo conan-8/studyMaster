@@ -23,6 +23,7 @@ node_modules/
 
 # derived artifacts (regenerate with npm run gallery)
 rendered-gallery/
+review-gallery/
 
 # eval run artifacts (regenerate with npm run eval:generator)
 src/generator/eval/report-last-run.json

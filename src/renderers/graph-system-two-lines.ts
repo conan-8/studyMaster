@@ -21,9 +21,11 @@ import { assertValidParams } from './lib/diagram.js';
 import {
   CANVAS,
   GRAPH_MARGINS,
+  axisObstacles,
   clipSegment,
   coordinatePlane,
   markPoint,
+  placePointLabel,
   plotArea,
 } from './lib/plot.js';
 import { SvgBuilder, fmt } from './lib/svg.js';
@@ -129,7 +131,8 @@ export const renderer: Renderer = {
     const seg2 = drawLine(line2.slope, line2.yIntercept);
 
     // Intersection: filled dot when markIntersection; coordinate label when
-    // intersectionIsInteger (schema: false leaves it unlabeled).
+    // intersectionIsInteger (schema: false leaves it unlabeled). The label is
+    // placed in empty space — never over the two lines or the axes.
     if (p.markIntersection && !parallel) {
       const px = xScale(ix);
       const py = yScale(iy);
@@ -137,9 +140,20 @@ export const renderer: Renderer = {
       if (p.intersectionIsInteger) {
         const text = `(${fmt(Math.round(ix))}, ${fmt(Math.round(iy))})`;
         const w = approxTextWidth(text, FONT.sizeSmall);
-        const lx = Math.min(px + 8, area.right - w - 2);
-        bld.text(lx, Math.max(py - 8, area.top + 12), text, {
-          anchor: 'start',
+        const lineSeg = (m: number, b: number): { x1: number; y1: number; x2: number; y2: number } => ({
+          x1: xScale(minX),
+          y1: yScale(m * minX + b),
+          x2: xScale(maxX),
+          y2: yScale(m * maxX + b),
+        });
+        const obstacles = [
+          lineSeg(line1.slope, line1.yIntercept),
+          lineSeg(line2.slope, line2.yIntercept),
+          ...axisObstacles(plane, area, [minX, maxX], [-yMax, yMax]),
+        ];
+        const pos = placePointLabel({ px, py, width: w, area, obstacles });
+        bld.text(pos.x, pos.y, text, {
+          anchor: 'middle',
           size: FONT.sizeSmall,
         });
       }

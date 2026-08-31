@@ -198,7 +198,27 @@ export const renderer: Renderer = {
     }
     const cLabel = p.centerLabel ?? null;
     if (cLabel !== null && cLabel !== '') {
-      const pos = clampLabel({ x: c.x, y: c.y - (p.showCenterDot ? 10 : 0) }, cLabel);
+      // Place the center label in the largest angular gap between feature
+      // anchors so it never sits on a radius/diameter line.
+      const anchors = [...new Set(p.features.flatMap(anchorsOf))]
+        .map((a) => ((a % 360) + 360) % 360)
+        .sort((u, v) => u - v);
+      let gapMid = 180;
+      let gapSize = anchors.length === 0 ? 360 : 0;
+      if (anchors.length > 0) {
+        for (let i = 0; i < anchors.length; i++) {
+          const next = anchors[(i + 1) % anchors.length]! + (i === anchors.length - 1 ? 360 : 0);
+          if (next - anchors[i]! > gapSize) {
+            gapSize = next - anchors[i]!;
+            gapMid = anchors[i]! + (next - anchors[i]!) / 2;
+          }
+        }
+      }
+      const u = radialDir(gapMid);
+      const pos = clampLabel(
+        { x: c.x + u.x * (p.showCenterDot ? 13 : 4), y: c.y + u.y * (p.showCenterDot ? 13 : 4) },
+        cLabel,
+      );
       bld.text(pos.x, pos.y + 4, cLabel, serifItalic);
     }
 
@@ -296,11 +316,20 @@ export const renderer: Renderer = {
             `M ${fmt(qA.x)} ${fmt(qA.y)} A ${fmt(arcR)} ${fmt(arcR)} 0 ${largeArc} 0 ${fmt(qB.x)} ${fmt(qB.y)}`,
             { fill: 'none', stroke: COLORS.ink, 'stroke-width': STROKE.axis },
           );
-          // Degree label on the bisector, just outside the arc.
+          // Degree label on the bisector: inside the sector (between center
+          // and arc) when it fits, otherwise clear outside the rim — never
+          // ON the arc or the rim.
           const bisAngle = a + sweep / 2;
           const u = radialDir(bisAngle);
+          const halfW = approxTextWidth(f.label, FONT.size) / 2;
+          const wedgeClear = (rr: number): number => rr * Math.sin((sweep * Math.PI) / 360);
+          const rIn = arcR - CENTRAL_LABEL_GAP - 2;
+          const labelR =
+            rIn >= 14 && wedgeClear(rIn) >= halfW + 5
+              ? rIn
+              : rPx + 12;
           const pos = clampLabel(
-            { x: c.x + u.x * (arcR + CENTRAL_LABEL_GAP), y: c.y + u.y * (arcR + CENTRAL_LABEL_GAP) },
+            { x: c.x + u.x * labelR, y: c.y + u.y * labelR },
             f.label,
           );
           bld.text(pos.x, pos.y + 4, f.label, serifItalic);

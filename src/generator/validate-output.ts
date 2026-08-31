@@ -179,10 +179,79 @@ function withPlaceholderPipelineFields(
   };
 }
 
+// --- unwrapped-math detection (LaTeX compliance, prompt >= 1.1.0) -----------------
+
+/**
+ * Text fields render through KaTeX: every equation/expression must sit inside
+ * \( ... \). This check removes the \( ... \) spans and flags leftover math
+ * patterns in what remains. Plain prose, plain numbers, and percent values are
+ * fine; the patterns below are the shapes the model actually emits unwrapped.
+ */
+const UNWRAPPED_MATH_PATTERNS: Array<{ re: RegExp; message: string }> = [
+  {
+    re: /\d*\s?[a-z]\s*[+\-−]\s*\d*\s?[a-z]\s*=/i,
+    message: "linear-equation shape (e.g. '2x - y = 5') must be wrapped as inline LaTeX \\( ... \\)",
+  },
+  {
+    re: /\b[fgxy]\s*(?:\([a-z0-9]+\))?\s*=\s*[-\d(a-z]/i,
+    message: "equation/function notation (e.g. 'y = 2x + 1') must be wrapped as inline LaTeX \\( ... \\)",
+  },
+  { re: /[a-z0-9)]\s*\^\s*[a-z0-9(]/, message: "ASCII caret exponent must be LaTeX (e.g. \\(x^2\\))" },
+  { re: /\bpi\b/, message: "the word 'pi' must be LaTeX \\(\\pi\\)" },
+  { re: /\bsqrt\b|\bsquare root of\s+[a-z0-9]/i, message: "'sqrt'/'square root of' must be LaTeX (e.g. \\(\\sqrt{7}\\))" },
+  {
+    re: /\d+(\.\d+)?\s+degrees\b(?!\s+(Fahrenheit|Celsius))/,
+    message: "'N degrees' angle measures must be LaTeX (e.g. \\(120^\\circ\\))",
+  },
+  {
+    re: /\([-\d.]+\s*,\s*[-\d.]+\)/,
+    message: "coordinate pairs (e.g. '(4, -1)') must be wrapped as inline LaTeX \\( ... \\)",
+  },
+];
+
+/** Returns one error message per unwrapped-math pattern found in the field. */
+export function unwrappedMathErrors(text: string, jsonPath: string): string[] {
+  const outsideMath = text.replace(/\\\([\s\S]*?\\\)/g, '');
+  const errors: string[] = [];
+  for (const { re, message } of UNWRAPPED_MATH_PATTERNS) {
+    const match = outsideMath.match(re);
+    if (match !== null) {
+      errors.push(`${jsonPath}: unwrapped math ${JSON.stringify(match[0])} — ${message}`);
+    }
+  }
+  return errors;
+}
+
 // --- cross-checks -----------------------------------------------------------------
 
 function crossCheck(draft: Record<string, unknown>, inputs: GenerationInputs): string[] {
   const errors: string[] = [];
+
+  // LaTeX compliance: every text field must wrap its math in \( ... \).
+  const stimulus = draft.stimulus;
+  const stimulusText =
+    stimulus !== null && typeof stimulus === 'object' && !Array.isArray(stimulus)
+      ? (stimulus as Record<string, unknown>).text
+      : undefined;
+  if (typeof stimulusText === 'string') {
+    errors.push(...unwrappedMathErrors(stimulusText, '/stimulus/text'));
+  }
+  if (typeof draft.stem === 'string') {
+    errors.push(...unwrappedMathErrors(draft.stem, '/stem'));
+  }
+  if (Array.isArray(draft.choices)) {
+    draft.choices.forEach((choice, i) => {
+      if (choice !== null && typeof choice === 'object' && !Array.isArray(choice)) {
+        const text = (choice as Record<string, unknown>).text;
+        if (typeof text === 'string') {
+          errors.push(...unwrappedMathErrors(text, `/choices/${i}/text`));
+        }
+      }
+    });
+  }
+  if (typeof draft.rationale === 'string') {
+    errors.push(...unwrappedMathErrors(draft.rationale, '/rationale'));
+  }
 
   // difficulty echo: the model must return the requested target verbatim
   if (draft.difficultyTarget !== inputs.difficulty) {
@@ -193,7 +262,6 @@ function crossCheck(draft: Record<string, unknown>, inputs: GenerationInputs): s
   }
 
   // diagram presence gating
-  const stimulus = draft.stimulus;
   const diagram =
     stimulus !== null && typeof stimulus === 'object' && !Array.isArray(stimulus)
       ? (stimulus as Record<string, unknown>).diagram

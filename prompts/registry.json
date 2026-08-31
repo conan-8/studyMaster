@@ -7,6 +7,22 @@
       "agent": "G1",
       "description": "Generates one original SAT question from an archetype spec + misconception library slice",
       "changelog": "initial version"
+    },
+    {
+      "id": "question-generator",
+      "version": "1.1.0",
+      "file": "question-generator/v1.1.0.md",
+      "agent": "G1",
+      "description": "Generates one original SAT question from an archetype spec + misconception library slice",
+      "changelog": "all math notation emitted as inline LaTeX (KaTeX-renderable); grid_in answers, table cells, and diagram parameters stay plain"
+    },
+    {
+      "id": "question-generator",
+      "version": "1.1.1",
+      "file": "question-generator/v1.1.1.md",
+      "agent": "G1",
+      "description": "Generates one original SAT question from an archetype spec + misconception library slice",
+      "changelog": "strengthens LaTeX wrapping for equations embedded in prose (with examples); codifies <u>...</u> markup for underlined R&W passage portions"
     }
   ]
 }

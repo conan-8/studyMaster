@@ -1,0 +1,54 @@
+{
+  "questionType": "mcq",
+  "stimulus": {
+    "type": "passage",
+    "text": "Urban ecologist Dr. Lena Ortiz studied community gardens in one city to explain why some native-plant projects failed to sustain pollinators. She compared gardens with small, isolated native beds to gardens in which those beds were linked by narrow flowering strips. Ortiz claimed that connecting native beds increases wild bee species richness more than adding the same area of isolated beds does, but only during midsummer, when spring blooms have faded and few garden plants flower.",
+    "tableJson": null,
+    "diagram": null
+  },
+  "stem": "Which finding, if true, would most directly support Dr. Ortiz's claim?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "Community gardens that replaced turf with native plants, whether connected or isolated, had higher wild bee species richness than gardens that kept turf.",
+      "misconceptionId": "SAT_RW:command-evidence-textual-nearby-claim"
+    },
+    {
+      "id": "B",
+      "text": "Across gardens with native beds, wild bee species richness tended to rise during warm midsummer weeks regardless of whether the beds were connected.",
+      "misconceptionId": "SAT_RW:command-evidence-textual-non-discriminating"
+    },
+    {
+      "id": "C",
+      "text": "In matched city community gardens, connected beds supported more wild bee species than equal-area isolated beds in July and August, but showed no such advantage in May.",
+      "misconceptionId": null
+    },
+    {
+      "id": "D",
+      "text": "On rural farms, spring hedgerows connecting field margins increased butterfly abundance compared with unconnected margins.",
+      "misconceptionId": "SAT_RW:command-evidence-textual-scope-mismatch"
+    }
+  ],
+  "correctAnswer": "C",
+  "rationale": "The claim is comparative and conditional: connectivity must beat equal added area in isolation, for wild bee species richness, in city community gardens, specifically during the midsummer floral gap. Choice C tests exactly that shape by holding garden type, setting, and bed area constant, comparing connected with isolated beds, and finding the predicted advantage only in July and August. A supports the nearby claim that native plants outperform turf, not Ortiz's connected-versus-isolated comparison. B is consistent with a midsummer benefit but blames warmth and cannot distinguish connectivity from a seasonal effect. D shifts to rural farms, butterflies, and spring, missing the population, variable, and condition named in the claim.",
+  "difficultyTarget": 3,
+  "id": "gen-sat-rw-command-evidence-textual-001",
+  "subjectCode": "SAT_RW",
+  "taxonomyCode": "SAT_RW:command-evidence-textual",
+  "provenance": {
+    "archetypeSlug": "command-evidence-textual",
+    "promptVersion": "1.1.0",
+    "model": "k3",
+    "generatedAt": "2026-08-31T20:22:44.601Z",
+    "contentHash": "2003fdc11e39d33bfe51249fcc39c54272a91330968e961051803212006bcdc4"
+  },
+  "review": {
+    "status": "pending",
+    "reviewer": null,
+    "notes": null
+  },
+  "allowedUses": [
+    "display"
+  ],
+  "variantOf": null
+}

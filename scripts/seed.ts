@@ -8,7 +8,13 @@
  * (research/sat/test-fixtures/generated-*.json and committed drafts in
  * research/sat/generated/*.json — shared discovery in lib/catalog.ts).
  * Only review.status === 'approved' is seeded; pending/rejected drafts are
- * reported as skipped counts.
+ * reported as skipped counts. Generated/original questions are flagged
+ * source='generated' in questions/question_versions.
+ *
+ * Harvested Bluebook/SSQB content (research/sat/question-bank/*.json,
+ * gitignored) seeds into the SEPARATE bluebook_questions table with
+ * allowed_uses {internal_eval}; that table is RLS default-deny so harvested
+ * content can never reach the public roles.
  *
  * Reads DATABASE_URL (a Supabase-compatible Postgres URI; see .env.example).
  * Unreachable DB -> PENDING-DEPLOY message with exact commands, exit 0.
@@ -16,7 +22,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { connectOrPending } from './lib/db.js';
-import { loadJson, walkJson } from './lib/validate.js';
+import { loadJson, walkJson, REPO_ROOT } from './lib/validate.js';
 import { listSubjects, subjectDir, archetypeFiles, generatedQuestionFiles, DIAGRAMS_DIR } from './lib/catalog.js';
 
 interface ExamFormat {
@@ -167,8 +173,8 @@ async function main(): Promise<void> {
         continue;
       }
       await client.query(
-        `INSERT INTO questions (id, subject_code, current_version)
-         VALUES ($1, $2, 1)
+        `INSERT INTO questions (id, subject_code, current_version, source)
+         VALUES ($1, $2, 1, 'generated')
          ON CONFLICT (id) DO UPDATE SET subject_code = EXCLUDED.subject_code`,
         [q.id, q.subjectCode],
       );
@@ -202,6 +208,44 @@ async function main(): Promise<void> {
         `seed: upserted ${questionsSeeded} approved generated question(s) ` +
           `(${generatedFiles.length} file(s) scanned${skippedNote ? `, skipped ${skippedNote}` : ''})`,
       );
+    }
+
+    // --- harvested Bluebook/SSQB bank (separate table, internal_eval only) ---
+    const bluebookDir = path.join(REPO_ROOT, 'research', 'sat', 'question-bank');
+    const bluebookFiles = fs.existsSync(bluebookDir)
+      ? fs.readdirSync(bluebookDir).filter((n) => n.endsWith('.json'))
+      : [];
+    if (bluebookFiles.length === 0) {
+      console.log('seed: no harvested Bluebook questions under research/sat/question-bank/ — bluebook seeding skipped');
+    }
+    for (const name of bluebookFiles) {
+      const q = loadJson(path.join(bluebookDir, name)) as Record<string, unknown>;
+      await client.query(
+        `INSERT INTO bluebook_questions
+           (source_id, section, domain, skill, difficulty_official, difficulty_internal,
+            question_type, payload, allowed_uses, source_url, harvested_at)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, '{internal_eval}', $9, $10)
+         ON CONFLICT (source_id) DO UPDATE SET
+           section = EXCLUDED.section, domain = EXCLUDED.domain, skill = EXCLUDED.skill,
+           difficulty_official = EXCLUDED.difficulty_official, difficulty_internal = EXCLUDED.difficulty_internal,
+           question_type = EXCLUDED.question_type, payload = EXCLUDED.payload,
+           source_url = EXCLUDED.source_url, harvested_at = EXCLUDED.harvested_at`,
+        [
+          q.sourceId,
+          q.section,
+          q.domain,
+          q.skill,
+          q.difficultyOfficial,
+          q.difficultyInternal,
+          q.questionType,
+          JSON.stringify(q),
+          q.sourceUrl,
+          q.harvestedAt,
+        ],
+      );
+    }
+    if (bluebookFiles.length > 0) {
+      console.log(`seed: upserted ${bluebookFiles.length} Bluebook question(s) into bluebook_questions`);
     }
     console.log('seed: done');
   } finally {

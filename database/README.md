@@ -59,12 +59,28 @@ Dashboard → Project → Connect (Session pooler or Direct connection, port
 3. **Migrate** (`npm run db:migrate`) applies `migrations/*.sql`
    (tables: subjects, taxonomy_nodes, misconceptions, diagram_archetypes,
    archetypes, questions, question_versions, student_events, mastery,
-   misconception_stats).
+   misconception_stats, bluebook_questions).
 4. **Seed** (`npm run seed`) upserts all of it — subjects from
    `exam_format.json`, taxonomy nodes, misconceptions, diagram archetypes,
    archetypes (whole file as spec JSONB), and approved generated questions
    from `research/sat/test-fixtures/generated-*.json`. Seeding is idempotent
    (`ON CONFLICT DO UPDATE`).
+
+## Question stores: generated vs Bluebook
+
+The question bank is deliberately partitioned:
+
+- **Generated/original questions** (ours, license-safe, `allowedUses:
+  ["display"]`) live in `questions` + `question_versions` with
+  `source = 'generated'` — seeded from approved drafts under
+  `research/sat/generated/` and `research/sat/test-fixtures/generated-*.json`.
+- **Harvested Bluebook/SSQB questions** (College Board content,
+  `allowedUses: ["internal_eval"]` only — never shown to students) live in
+  the separate `bluebook_questions` table, seeded from
+  `research/sat/question-bank/*.json` (gitignored; the harvester is planned
+  but not built — see `research/sat/README.md`). The table has RLS enabled
+  with no policies, so anon/authenticated roles cannot read it; only
+  server-side service-role jobs can.
 5. If the database is unreachable (`DATABASE_URL` unset or the Supabase
    project not responding), `db:migrate` and `seed` print a PENDING-DEPLOY
    message with the exact commands and exit 0 — the pipeline never hard-fails

@@ -43,9 +43,9 @@
     "contentHash": "5e24998e780e3148932110e78435d3c25dbf6d8ef1ee2728100d9c4d543acd85"
   },
   "review": {
-    "status": "pending",
-    "reviewer": null,
-    "notes": null
+    "status": "approved",
+    "reviewer": "conan-8",
+    "notes": "Bulk-approved by owner 2026-08-31"
   },
   "allowedUses": [
     "display"

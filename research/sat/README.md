@@ -114,3 +114,9 @@ Harvested College Board question content is **internal_eval only**. It must
 never be committed to git and must never be shown to students. Only
 original, derived archetypes (`archetypes/`) and our own test fixtures
 (`test-fixtures/`) may be committed and used in the product.
+
+When a harvester eventually runs, its output seeds into the **separate
+`bluebook_questions` table** (migrations/002) — never into the generated
+question store (`questions`/`question_versions`, `source='generated'`).
+`bluebook_questions` has RLS enabled with no policies, so the public roles
+cannot read it; only server-side service-role jobs may touch it.

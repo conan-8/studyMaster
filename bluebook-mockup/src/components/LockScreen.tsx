@@ -3,27 +3,32 @@ import './lock-screen.css'
 
 /**
  * Exam-lock overlay — just the lock sequence from the hand-built animation
- * (exam-lock/, commit 51ff2f0): the lock grows and snaps shut with a light
- * wash over a blurred view of the app, then "Device locked · Exam mode"
- * with the Start Exam button. Plays automatically on mount.
+ * (exam-lock/, commit 51ff2f0). Plays automatically on mount, then hands
+ * straight into the exam (no extra click — the timer starts as the exam
+ * screen appears).
  */
 
-type Phase = 'locking' | 'locked'
-
 export default function LockScreen({ onDone }: { onDone: () => void }) {
-  const [phase, setPhase] = useState<Phase>('locking')
-  const timer = useRef<number | null>(null)
+  const [locked, setLocked] = useState(false)
+  const timers = useRef<number[]>([])
 
   useEffect(() => {
-    timer.current = window.setTimeout(() => setPhase('locked'), 1250)
-    return () => {
-      if (timer.current) window.clearTimeout(timer.current)
-    }
-  }, [])
+    timers.current = [
+      // lock + shackle + flash run 1.35s; then a brief "locked" beat...
+      window.setTimeout(() => setLocked(true), 1250),
+      // ...and straight into the exam.
+      window.setTimeout(onDone, 1950),
+    ]
+    return () => timers.current.forEach((t) => window.clearTimeout(t))
+  }, [onDone])
 
   const replay = () => {
-    setPhase('locking')
-    timer.current = window.setTimeout(() => setPhase('locked'), 1250)
+    timers.current.forEach((t) => window.clearTimeout(t))
+    setLocked(false)
+    timers.current = [
+      window.setTimeout(() => setLocked(true), 1250),
+      window.setTimeout(onDone, 1950),
+    ]
   }
 
   return (
@@ -41,7 +46,7 @@ export default function LockScreen({ onDone }: { onDone: () => void }) {
         </svg>
       </div>
 
-      <div className={`examlock-lockedui${phase === 'locked' ? ' show' : ''}`}>
+      <div className={`examlock-lockedui${locked ? ' show' : ''}`}>
         <div className="lockIcon">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#eaf7ff" strokeWidth="2">
             <rect x="4" y="10" width="16" height="11" rx="2.5" />
@@ -49,12 +54,9 @@ export default function LockScreen({ onDone }: { onDone: () => void }) {
           </svg>
         </div>
         <div className="title">Device locked · Exam mode</div>
-        <button className="examlock-exambtn" onClick={onDone}>
-          Start Exam
-        </button>
       </div>
 
-      <button className={`examlock-replay${phase === 'locked' ? ' show' : ''}`} onClick={replay}>
+      <button className={`examlock-replay${locked ? ' show' : ''}`} onClick={replay}>
         ↺ Replay
       </button>
     </div>

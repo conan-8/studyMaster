@@ -91,30 +91,6 @@
   opacity: 0;
 }
 .examlock-lockedui.show .title { transform: translateY(0); opacity: 0.9; }
-.examlock-exambtn {
-  margin-top: 6px;
-  border: none;
-  cursor: pointer;
-  padding: 15px 52px;
-  border-radius: 36px;
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: #fff;
-  background: linear-gradient(180deg, #34a3ff, #1473e6);
-  box-shadow: 0 12px 32px rgba(20, 115, 230, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  transform: scale(0.5);
-  opacity: 0;
-  transition: transform 0.55s cubic-bezier(0.2, 1.5, 0.35, 1) 0.18s, opacity 0.4s ease 0.18s;
-}
-.examlock-lockedui.show .examlock-exambtn { transform: scale(1); opacity: 1; }
-.examlock-exambtn:hover { filter: brightness(1.08); }
-.examlock-exambtn:active { transform: scale(0.96); }
-@keyframes examlockPulse {
-  0%, 100% { box-shadow: 0 12px 32px rgba(20, 115, 230, 0.5), 0 0 0 0 rgba(52, 163, 255, 0.5); }
-  50% { box-shadow: 0 12px 32px rgba(20, 115, 230, 0.5), 0 0 0 12px rgba(52, 163, 255, 0); }
-}
-.examlock-lockedui.show .examlock-exambtn { animation: examlockPulse 2.2s ease-in-out 0.9s infinite; }
 
 .examlock-replay {
   position: absolute;

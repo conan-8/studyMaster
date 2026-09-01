@@ -47,7 +47,16 @@ export function needsSsl(url: string): boolean {
 }
 
 export function makeClientConfig(url: string): pg.ClientConfig {
-  return { connectionString: url, ssl: needsSsl(url) };
+  // Newer pg treats `ssl: true` (and an sslmode= require/true in the URL) as
+  // verify-full; Supabase's pooler chain is self-signed. Strip sslmode from
+  // the URL so our explicit ssl object wins: encrypt without verifying.
+  if (needsSsl(url)) {
+    const cleaned = url
+      .replace(/[?&]sslmode=[^&]*/, (m) => (m.startsWith('?') ? '?' : ''))
+      .replace(/\?$/, '');
+    return { connectionString: cleaned, ssl: { rejectUnauthorized: false } };
+  }
+  return { connectionString: url };
 }
 
 /** Guidance shared by connectOrPending (exit 0) and db-check (exit 1). */

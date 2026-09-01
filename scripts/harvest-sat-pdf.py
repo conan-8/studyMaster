@@ -82,6 +82,13 @@ SKILL_SLUGS = {
 
 DICT = {w.strip().lower() for w in open('/usr/share/dict/words', encoding='utf-8', errors='ignore') if w.strip()}
 
+CTRL_JUNK = re.compile(r'[\x00-\x08\x0b-\x1f]')
+
+def clean_str(s: str | None) -> str | None:
+    """Strip control chars (incl. NUL bytes the Type3 table cells emit) —
+    PostgreSQL jsonb cannot store U+0000."""
+    return s if s is None else CTRL_JUNK.sub('', s)
+
 def repair_line(line: str) -> str:
     def fix(m):
         left, right = m.group(1), m.group(2)
@@ -222,6 +229,7 @@ def split_stem(qtext: str):
 def parse_question(doc, pages):
     text = '\n'.join(doc[p].get_text() for p in pages)
     text = '\n'.join(repair_line(ln) for ln in text.split('\n'))
+    text = CTRL_JUNK.sub('', text)
     m = re.search(r'\nQuestion\n', text)
     if not m:
         return None

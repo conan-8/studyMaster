@@ -19,9 +19,9 @@
     "gallery": "tsx scripts/render-gallery.ts",
     "gallery:questions": "tsx scripts/question-gallery.ts",
     "build:sim": "esbuild simulator/browser-entry.ts --bundle --format=iife --global-name=StudyMasteRenderers --outfile=simulator/renderers.js --alias:node:fs=./simulator/shims/fs.ts --alias:node:path=./simulator/shims/path.ts --alias:node:url=./simulator/shims/url.ts",
-    "db:check": "tsx scripts/db-check.ts",
-    "db:migrate": "tsx scripts/migrate.ts",
-    "seed": "tsx scripts/seed.ts"
+    "db:check": "tsx --env-file-if-exists=.env scripts/db-check.ts",
+    "db:migrate": "tsx --env-file-if-exists=.env scripts/migrate.ts",
+    "seed": "tsx --env-file-if-exists=.env scripts/seed.ts"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

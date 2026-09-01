@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Maximize2, RotateCcw, X, ZoomIn, ZoomOut } from 'lucide-react'
 import type { DiagramSpec } from '../types/exam'
 
-function Glyph({ kind, scale = 1 }: { kind: DiagramSpec['kind']; scale?: number }) {
+function Glyph({ kind, scale = 1 }: { kind: NonNullable<DiagramSpec['kind']>; scale?: number }) {
   const stroke = '#4a4f59'
   if (kind === 'triangle') {
     return (
@@ -42,12 +42,41 @@ function Glyph({ kind, scale = 1 }: { kind: DiagramSpec['kind']; scale?: number 
   )
 }
 
+/** Real parameterized figure from the studyMaste renderer bundle. */
+function LiveSvg({ diagram, scale }: { diagram: NonNullable<DiagramSpec['live']>; scale: number }) {
+  const svg = useMemo(() => {
+    const R = (window as unknown as { StudyMasteRenderers?: { render: (id: string, p: Record<string, unknown>) => string } })
+      .StudyMasteRenderers
+    if (!R) return null
+    try {
+      return R.render(diagram.archetypeId, structuredClone(diagram.parameters)).replace(/^<\?xml[^?]*\?>\s*/, '')
+    } catch {
+      return null
+    }
+  }, [diagram])
+  if (svg === null) return <Glyph kind="triangle" scale={scale} />
+  return (
+    <div style={{ width: `${scale * 100}%`, transformOrigin: 'top center' }} dangerouslySetInnerHTML={{ __html: svg }} />
+  )
+}
+
 const ZOOM_STEPS = [50, 75, 100, 125, 150, 200]
 
 export default function DiagramPlaceholder({ diagram }: { diagram: DiagramSpec }) {
   const [zoomIdx, setZoomIdx] = useState(2)
   const [fullscreen, setFullscreen] = useState(false)
   const zoom = ZOOM_STEPS[zoomIdx]
+  const scale = zoom / 100
+
+  const body = (
+    <div className="flex w-full justify-center">
+      {diagram.live ? (
+        <LiveSvg diagram={diagram.live} scale={scale} />
+      ) : (
+        <Glyph kind={diagram.kind ?? 'triangle'} scale={scale} />
+      )}
+    </div>
+  )
 
   return (
     <>
@@ -81,10 +110,10 @@ export default function DiagramPlaceholder({ diagram }: { diagram: DiagramSpec }
           </button>
         </div>
 
-        <div className="flex justify-center overflow-auto px-6 py-6">
-          <Glyph kind={diagram.kind} scale={zoom / 100} />
-        </div>
-        <figcaption className="pb-4 text-center font-exam-serif text-sm text-[#3c4048]">{diagram.caption}</figcaption>
+        <div className="flex justify-center overflow-auto px-6 py-6">{body}</div>
+        {diagram.caption && (
+          <figcaption className="pb-4 text-center font-exam-serif text-sm text-[#3c4048]">{diagram.caption}</figcaption>
+        )}
       </figure>
 
       {fullscreen && (
@@ -106,9 +135,11 @@ export default function DiagramPlaceholder({ diagram }: { diagram: DiagramSpec }
               <X size={18} />
             </button>
             <div className="flex justify-center">
-              <Glyph kind={diagram.kind} scale={2} />
+              {diagram.live ? <LiveSvg diagram={diagram.live} scale={2} /> : <Glyph kind={diagram.kind ?? 'triangle'} scale={2} />}
             </div>
-            <p className="mt-4 text-center font-exam-serif text-sm text-[#3c4048]">{diagram.caption}</p>
+            {diagram.caption && (
+              <p className="mt-4 text-center font-exam-serif text-sm text-[#3c4048]">{diagram.caption}</p>
+            )}
           </div>
         </div>
       )}

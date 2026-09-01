@@ -1,9 +1,42 @@
 import { useRef, useState } from 'react'
 import { Bookmark, ChevronsLeftRight } from 'lucide-react'
-import type { ExamModule, Question } from '../types/exam'
+import type { ExamModule, Question, TableSpec } from '../types/exam'
 import AnswerOptions from './AnswerOptions'
 import DiagramPlaceholder from './DiagramPlaceholder'
 import RichText from './RichText'
+
+/** Table stimulus (two-way frequency tables, data tables). */
+function TableFigure({ table }: { table: TableSpec }) {
+  return (
+    <figure className="mx-auto my-6 w-full max-w-[520px] overflow-hidden rounded-lg border border-[#b9bec9] bg-white px-5 py-4">
+      {table.caption && (
+        <figcaption className="mb-2 text-center font-exam-serif text-sm text-[#3c4048]">{table.caption}</figcaption>
+      )}
+      <table className="w-full border-collapse font-exam-serif text-[15px] text-[#1c1c1e]">
+        <thead>
+          <tr>
+            {table.columns.map((c, i) => (
+              <th key={i} className="border border-[#b9bec9] bg-[#f1f2f6] px-3 py-1.5 text-center font-semibold">
+                <RichText text={String(c)} />
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {table.rows.map((row, r) => (
+            <tr key={r}>
+              {row.map((cell, c) => (
+                <td key={c} className="border border-[#d6d9de] px-3 py-1.5 text-center">
+                  <RichText text={String(cell)} />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </figure>
+  )
+}
 
 /** Small ⇕ handle rendered on the divider between split panes. */
 function DividerHandle({ onPointerDown }: { onPointerDown: (e: React.PointerEvent) => void }) {
@@ -260,6 +293,7 @@ export default function QuestionView({
               className="mb-3 block font-exam-serif text-[17px] leading-[1.7] text-[#1c1c1e]"
             />
           )}
+          {question.table && <TableFigure table={question.table} />}
           {question.passage && (
             <RichText
               text={question.passage}
@@ -270,6 +304,7 @@ export default function QuestionView({
         <DividerHandle onPointerDown={startDrag} />
         <div className="flex-1 px-8 py-8 md:overflow-y-auto">
           {header}
+          {question.table && <TableFigure table={question.table} />}
           {promptBlock}
           {answerBlock}
         </div>
@@ -287,6 +322,7 @@ export default function QuestionView({
         <DividerHandle onPointerDown={startDrag} />
         <div className="flex-1 px-8 py-8 md:overflow-y-auto">
           {header}
+          {question.table && <TableFigure table={question.table} />}
           {promptBlock}
           {answerBlock}
         </div>
@@ -300,6 +336,7 @@ export default function QuestionView({
       <div className="mx-auto max-w-[780px] px-6 py-8">
         {header}
         {question.diagram && <DiagramPlaceholder diagram={question.diagram} />}
+        {question.table && <TableFigure table={question.table} />}
         {promptBlock}
         {answerBlock}
       </div>

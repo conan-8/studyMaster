@@ -1,6 +1,19 @@
 export interface DiagramSpec {
-  kind: 'triangle' | 'parabola' | 'barchart'
-  caption: string
+  kind?: 'triangle' | 'parabola' | 'barchart'
+  caption?: string
+  /** Real parameterized figure: rendered by the studyMaste SVG renderer
+   *  bundle (public/renderers.js, window.StudyMasteRenderers). When present
+   *  it replaces the placeholder glyph. */
+  live?: {
+    archetypeId: string
+    parameters: Record<string, unknown>
+  }
+}
+
+export interface TableSpec {
+  caption?: string
+  columns: string[]
+  rows: Array<Array<string | number>>
 }
 
 export interface Question {
@@ -10,6 +23,8 @@ export interface Question {
   passageHeading?: string
   /** Stimulus text. Wrap a sentence in [[double brackets]] to render it underlined. */
   passage?: string
+  /** Table stimulus (rendered above the prompt). */
+  table?: TableSpec
   /** Multiple-choice options. Omit for student-produced (grid-in) responses. */
   options?: string[]
   /** Correct option letter ('A'-'D') or numeric string for grid-in. */

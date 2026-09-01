@@ -24,7 +24,7 @@ const MATH_SKILLS = [
   'Geometry and Trigonometry',
 ]
 
-const PLACEHOLDER_DIAGRAMS: NonNullable<Question['diagram'>][] = [
+const PLACEHOLDER_DIAGRAMS: Array<NonNullable<Question['diagram']>> = [
   { kind: 'triangle', caption: 'Triangle placeholder (not drawn to scale)' },
   { kind: 'parabola', caption: 'Coordinate plane placeholder' },
   { kind: 'barchart', caption: 'Bar graph placeholder' },

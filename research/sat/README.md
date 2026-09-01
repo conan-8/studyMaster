@@ -19,28 +19,25 @@ research/sat/
 `question-bank/`, `assets/`, `index.jsonl`, and `.harvest-progress.json` are
 gitignored — see the licensing rule below.
 
-## Harvest workflow (PLANNED — harvester not yet built)
+## Harvest workflow
 
-The harvester script `scripts/harvest-sat-bank.mjs` is **planned but has not
-been built yet — it was deliberately deferred**. The workflow below is the
-intended design and is recorded here as the design record; the commands it
-refers to do not currently exist and must not be run. The `SATQB_COOKIE`
-mechanism and output layout below are spec, not current behavior.
+Content enters via **two PDF exports** dropped into `research/sat/harvest-source/`
+(gitignored — College Board content never touches git):
 
-1. Export your SSQB session cookie:
-   ```bash
-   export SATQB_COOKIE="..."
-   ```
-   (The future harvester is intended to refuse to run without `SATQB_COOKIE`.)
-2. Run the harvester:
-   ```bash
-   node scripts/harvest-sat-bank.mjs
-   ```
-   It is designed to write normalized JSON files into `question-bank/` (one
-   file per question), figure assets into `assets/`, and a line-per-question
-   index to `index.jsonl`. Progress is designed to be checkpointed in
-   `.harvest-progress.json` so a future run can resume.
-3. Validate the result (see below).
+1. **PDF A — all questions** (the full filtered export, answer explanations
+   included).
+2. **PDF B — Bluebook excluded** (same filters, with the Bluebook/practice
+   items filtered out).
+
+The organizer parses both, keys every question by its printed ID, and diffs
+the sets: IDs in both PDFs → `origin: "question_bank"`; IDs in A only →
+`origin: "bluebook"`; anything in B but missing from A is an export error and
+gets flagged, not silently classified. Output is normalized records in
+`question-bank/` + figures in `assets/` + `index.jsonl`, validated by
+`npm run validate:sat-bank` and seeded into `harvested_questions`.
+
+The `SATQB_COOKIE` API route remains a higher-fidelity alternative (exact
+LaTeX instead of PDF-typeset math) if ever needed later.
 
 ## Validating the bank
 

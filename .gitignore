@@ -15,6 +15,7 @@
 # harvested College Board SAT content — internal use only, never commit
 research/sat/question-bank/
 research/sat/assets/
+research/sat/harvest-source/
 research/sat/index.jsonl
 research/sat/.harvest-progress.json
 # infra

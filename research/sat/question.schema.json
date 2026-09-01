@@ -118,8 +118,8 @@
         },
         "figureAsset": {
           "type": ["string", "null"],
-          "pattern": "^assets\\/.+\\.svg$",
-          "description": "assets/<sourceId>.svg, or null"
+          "pattern": "^assets\\/.+\\.(svg|png)$",
+          "description": "assets/<sourceId>.svg|.png, or null"
         }
       }
     },

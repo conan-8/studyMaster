@@ -62,7 +62,13 @@ function LiveSvg({ diagram, scale }: { diagram: NonNullable<DiagramSpec['live']>
 
 const ZOOM_STEPS = [50, 75, 100, 125, 150, 200]
 
-export default function DiagramPlaceholder({ diagram }: { diagram: DiagramSpec }) {
+export default function DiagramPlaceholder({
+  diagram,
+  image,
+}: {
+  diagram?: DiagramSpec
+  image?: string
+}) {
   const [zoomIdx, setZoomIdx] = useState(2)
   const [fullscreen, setFullscreen] = useState(false)
   const zoom = ZOOM_STEPS[zoomIdx]
@@ -70,13 +76,21 @@ export default function DiagramPlaceholder({ diagram }: { diagram: DiagramSpec }
 
   const body = (
     <div className="flex w-full justify-center">
-      {diagram.live ? (
+      {image ? (
+        <img
+          src={image}
+          alt="Question figure"
+          style={{ width: `${Math.min(scale * 100, 100)}%`, maxWidth: '100%' }}
+          className="object-contain"
+        />
+      ) : diagram?.live ? (
         <LiveSvg diagram={diagram.live} scale={scale} />
       ) : (
-        <Glyph kind={diagram.kind ?? 'triangle'} scale={scale} />
+        <Glyph kind={diagram?.kind ?? 'triangle'} scale={scale} />
       )}
     </div>
   )
+  const caption = diagram?.caption
 
   return (
     <>
@@ -111,8 +125,8 @@ export default function DiagramPlaceholder({ diagram }: { diagram: DiagramSpec }
         </div>
 
         <div className="flex justify-center overflow-auto px-6 py-6">{body}</div>
-        {diagram.caption && (
-          <figcaption className="pb-4 text-center font-exam-serif text-sm text-[#3c4048]">{diagram.caption}</figcaption>
+        {caption && (
+          <figcaption className="pb-4 text-center font-exam-serif text-sm text-[#3c4048]">{caption}</figcaption>
         )}
       </figure>
 
@@ -135,10 +149,16 @@ export default function DiagramPlaceholder({ diagram }: { diagram: DiagramSpec }
               <X size={18} />
             </button>
             <div className="flex justify-center">
-              {diagram.live ? <LiveSvg diagram={diagram.live} scale={2} /> : <Glyph kind={diagram.kind ?? 'triangle'} scale={2} />}
+              {image ? (
+                <img src={image} alt="Question figure" className="max-h-[70vh] max-w-full object-contain" />
+              ) : diagram?.live ? (
+                <LiveSvg diagram={diagram.live} scale={2} />
+              ) : (
+                <Glyph kind={diagram?.kind ?? 'triangle'} scale={2} />
+              )}
             </div>
-            {diagram.caption && (
-              <p className="mt-4 text-center font-exam-serif text-sm text-[#3c4048]">{diagram.caption}</p>
+            {caption && (
+              <p className="mt-4 text-center font-exam-serif text-sm text-[#3c4048]">{caption}</p>
             )}
           </div>
         </div>

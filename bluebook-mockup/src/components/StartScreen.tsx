@@ -1,10 +1,15 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { BarChart3, Clock3, Database, LockOpen, PersonStanding } from 'lucide-react'
-import type { SourceKind } from '../data/live'
+import { archetypeCounts, type SourceKind } from '../data/live'
+
+interface BankData {
+  generated: Array<{ kind: string }>
+  harvested: Array<{ kind: string }>
+}
 
 interface StartScreenProps {
   onStart: (source: SourceKind, excludeBluebook: boolean) => void
-  counts: { generated: number; bank: number; bluebook: number } | null
+  bank: BankData | null
   loading: boolean
   error: string | null
 }
@@ -38,11 +43,24 @@ const SOURCES: Array<{ kind: SourceKind; label: string; blurb: string }> = [
   { kind: 'bluebook', label: 'Bluebook', blurb: 'Bank items that appear in Bluebook practice exams' },
 ]
 
-export default function StartScreen({ onStart, counts, loading, error }: StartScreenProps) {
+export default function StartScreen({ onStart, bank, loading, error }: StartScreenProps) {
   const [source, setSource] = useState<SourceKind>('generated')
   const [excludeBluebook, setExcludeBluebook] = useState(false)
-  const count = counts ? counts[source] : null
-  const empty = counts !== null && count === 0
+
+  const counts = useMemo(() => {
+    if (!bank) return null
+    return {
+      generated: bank.generated.length,
+      bank: bank.harvested.filter((q) => q.kind === 'bank').length,
+      bluebook: bank.harvested.filter((q) => q.kind === 'bluebook').length,
+    }
+  }, [bank])
+
+  const archetypes = useMemo(
+    () => (bank ? archetypeCounts(bank as never, source, excludeBluebook) : []),
+    [bank, source, excludeBluebook],
+  )
+  const empty = counts !== null && counts[source] === 0
 
   return (
     <div className="flex min-h-screen flex-col bg-[#f4f5f7] text-[#1c1c1e]">
@@ -87,14 +105,31 @@ export default function StartScreen({ onStart, counts, loading, error }: StartSc
               />
               Exclude Bluebook questions from any mixed view
             </label>
+
+            {archetypes.length > 0 && (
+              <details className="mt-4 rounded-xl border border-[#e2e4ea] px-4 py-3">
+                <summary className="cursor-pointer text-[13px] font-semibold text-[#3c4048]">
+                  By archetype — {archetypes.length} categories
+                </summary>
+                <div className="mt-3 grid grid-cols-2 gap-x-6 gap-y-1.5 sm:grid-cols-3">
+                  {archetypes.map((a) => (
+                    <div key={a.archetype} className="flex items-baseline justify-between gap-2 text-[12px]">
+                      <span className="truncate text-[#3c4048]" title={a.archetype}>
+                        {a.archetype}
+                      </span>
+                      <span className="shrink-0 font-semibold tabular-nums text-[#5b616e]">{a.count}</span>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            )}
+
             {empty && (
               <p className="mt-4 rounded-lg bg-[#fdf3f2] px-4 py-2.5 text-sm text-[#a13a32]">
                 No {SOURCES.find((s) => s.kind === source)?.label} questions in the bank yet — pick another source.
               </p>
             )}
-            {error && (
-              <p className="mt-4 rounded-lg bg-[#fdf3f2] px-4 py-2.5 text-sm text-[#a13a32]">{error}</p>
-            )}
+            {error && <p className="mt-4 rounded-lg bg-[#fdf3f2] px-4 py-2.5 text-sm text-[#a13a32]">{error}</p>}
           </div>
 
           <div className="mt-5 rounded-2xl border border-[#d6d9de] bg-white px-8 py-4 shadow-sm">

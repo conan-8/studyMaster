@@ -30,6 +30,11 @@ export interface Question {
   /** Correct option letter ('A'-'D') or numeric string for grid-in. */
   correct: string
   diagram?: DiagramSpec
+  /** Rendered question image (harvested math items carry the whole question
+   *  as a picture — College Board draws equations as vector art). */
+  imageAsset?: string
+  /** Archetype (canonical skill slug) this question belongs to. */
+  archetype?: string
 }
 
 export interface ExamModule {

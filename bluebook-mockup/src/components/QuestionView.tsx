@@ -83,7 +83,7 @@ interface HeaderProps {
   onToggleStrikes: () => void
 }
 
-function QuestionHeader({ number, flagged, hasOptions, strikesVisible, onToggleFlag, onToggleStrikes }: HeaderProps) {
+function QuestionHeader({ number, flagged, hasOptions, strikesVisible, onToggleFlag, onToggleStrikes, archetype }: HeaderProps & { archetype?: string }) {
   return (
     <div className="flex items-center justify-between border-b-2 border-dashed border-[#c6c9d2] pb-2.5">
       <div className="flex items-center gap-4">
@@ -101,7 +101,12 @@ function QuestionHeader({ number, flagged, hasOptions, strikesVisible, onToggleF
           Mark for Review
         </button>
       </div>
-      {hasOptions && <StrikeBadge active={strikesVisible} onToggle={onToggleStrikes} />}
+      <div className="flex items-center gap-3">
+        {archetype && (
+          <span className="text-[10px] font-semibold uppercase tracking-[1.2px] text-[#8a8f99]">{archetype}</span>
+        )}
+        {hasOptions && <StrikeBadge active={strikesVisible} onToggle={onToggleStrikes} />}
+      </div>
     </div>
   )
 }
@@ -242,6 +247,7 @@ export default function QuestionView({
       strikesVisible={strikesVisible}
       onToggleFlag={() => onToggleFlag(question.id)}
       onToggleStrikes={() => setStrikesVisible((v) => !v)}
+      archetype={question.archetype}
     />
   )
 
@@ -293,6 +299,7 @@ export default function QuestionView({
               className="mb-3 block font-exam-serif text-[17px] leading-[1.7] text-[#1c1c1e]"
             />
           )}
+          {question.imageAsset && <DiagramPlaceholder image={question.imageAsset} />}
           {question.table && <TableFigure table={question.table} />}
           {question.passage && (
             <RichText
@@ -322,6 +329,7 @@ export default function QuestionView({
         <DividerHandle onPointerDown={startDrag} />
         <div className="flex-1 px-8 py-8 md:overflow-y-auto">
           {header}
+          {question.imageAsset && <DiagramPlaceholder image={question.imageAsset} />}
           {question.table && <TableFigure table={question.table} />}
           {promptBlock}
           {answerBlock}
@@ -335,6 +343,7 @@ export default function QuestionView({
     <div className="h-full overflow-y-auto">
       <div className="mx-auto max-w-[780px] px-6 py-8">
         {header}
+        {question.imageAsset && <DiagramPlaceholder image={question.imageAsset} />}
         {question.diagram && <DiagramPlaceholder diagram={question.diagram} />}
         {question.table && <TableFigure table={question.table} />}
         {promptBlock}

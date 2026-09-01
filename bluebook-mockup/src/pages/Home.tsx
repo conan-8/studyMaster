@@ -6,7 +6,7 @@ import TransitionScreen from '../components/TransitionScreen'
 import BreakScreen from '../components/BreakScreen'
 import ResultsScreen from '../components/ResultsScreen'
 import LockScreen from '../components/LockScreen'
-import { assembleTest, fetchBank, selectQuestions, type BankQuestion, type SourceKind } from '../data/live'
+import { assembleTest, fetchBank, selectQuestions, type SourceKind } from '../data/live'
 import type { ExamModule } from '../types/exam'
 
 type Screen = 'start' | 'intro' | 'exam' | 'review' | 'transition' | 'break' | 'results'
@@ -17,7 +17,7 @@ const BREAK_BEFORE_MODULE = 2
 export default function Home() {
   const [screen, setScreen] = useState<Screen>('start')
   const [test, setTest] = useState<ExamModule[]>([])
-  const [counts, setCounts] = useState<{ generated: number; bank: number; bluebook: number } | null>(null)
+  const [bank, setBank] = useState<Awaited<ReturnType<typeof fetchBank>> | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [pendingStart, setPendingStart] = useState<{ source: SourceKind; excludeBluebook: boolean } | null>(null)
@@ -32,14 +32,9 @@ export default function Home() {
   useEffect(() => {
     let cancelled = false
     fetchBank()
-      .then((bank) => {
+      .then((b) => {
         if (cancelled) return
-        const harvested = bank.harvested
-        setCounts({
-          generated: bank.generated.length,
-          bank: harvested.filter((q: BankQuestion) => q.kind === 'bank').length,
-          bluebook: harvested.filter((q: BankQuestion) => q.kind === 'bluebook').length,
-        })
+        setBank(b)
         setError(null)
       })
       .catch((err) => !cancelled && setError(`Could not reach the question bank: ${String(err)}`))
@@ -74,9 +69,10 @@ export default function Home() {
 
   const startTest = (source: SourceKind, excludeBluebook: boolean) => {
     setPendingStart({ source, excludeBluebook })
-    fetchBank()
-      .then((bank) => {
-        const assembled = assembleTest(selectQuestions(bank, source, excludeBluebook))
+    Promise.resolve(bank ?? fetchBank())
+      .then((b) => {
+        setBank(b)
+        const assembled = assembleTest(selectQuestions(b, source, excludeBluebook))
         if (assembled.length === 0) {
           setError('No questions available for that source.')
           return
@@ -130,7 +126,7 @@ export default function Home() {
     return (
       <StartScreen
         onStart={startTest}
-        counts={counts}
+        bank={bank}
         loading={loading || pendingStart !== null}
         error={error}
       />

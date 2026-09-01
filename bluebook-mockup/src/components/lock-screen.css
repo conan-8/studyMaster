@@ -1,186 +1,18 @@
-/* Exam-lock intro animation — a faithful port of exam-lock/index.html
-   (commit 51ff2f0). Home screen -> Start -> lock grows + shackle snaps +
-   flash -> "Device locked · Exam mode" -> Start Exam. */
+/* Exam-lock overlay — just the lock sequence from exam-lock/index.html
+   (commit 51ff2f0), played over a blurred view of the app beneath. */
 
-.examlock-stage {
+.examlock-overlay {
   position: fixed;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #0b0e14;
-  font-family: -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   z-index: 70;
-}
-
-.examlock-homescreen {
-  position: relative;
-  width: min(100vw, calc(100vh * 0.916));
-  height: min(100vh, calc(100vw * 1.092));
-  overflow: hidden;
-  border-radius: 18px;
-  background: #10141f;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
-}
-
-.examlock-home-content {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(120% 90% at 20% 10%, #3d4a63 0%, transparent 55%),
-    radial-gradient(100% 80% at 85% 90%, #2a3550 0%, transparent 55%),
-    radial-gradient(80% 60% at 60% 40%, #4a5670 0%, transparent 60%),
-    linear-gradient(160deg, #232c40 0%, #171d2b 55%, #10141f 100%);
-  transition: filter 0.45s ease;
-}
-.examlock-home-content::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    conic-gradient(from 200deg at 30% 70%, transparent 0 40%, rgba(255, 255, 255, 0.06) 45%, transparent 52%),
-    conic-gradient(from 20deg at 75% 25%, transparent 0 42%, rgba(255, 255, 255, 0.05) 48%, transparent 55%);
-  filter: blur(2px);
-}
-.examlock-home-content.blurred { filter: blur(16px) brightness(1.25) saturate(1.1); }
-.examlock-home-content.locked { filter: blur(9px) brightness(0.72) saturate(0.9); }
-
-.examlock-statusbar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 14px;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  opacity: 0.95;
-  z-index: 2;
-}
-.examlock-statusbar .right { display: flex; gap: 6px; align-items: center; font-size: 11px; }
-
-.examlock-clock { position: absolute; top: 46px; left: 26px; color: #fff; z-index: 2; }
-.examlock-clock .t { font-size: 64px; font-weight: 200; letter-spacing: 1px; line-height: 1; opacity: 0.92; }
-.examlock-clock .d { margin-top: 6px; font-size: 13px; opacity: 0.85; display: flex; gap: 10px; align-items: center; }
-
-.examlock-widget {
-  position: absolute;
-  top: 46px;
-  right: 26px;
-  width: 200px;
-  height: 118px;
-  border-radius: 20px;
-  background: linear-gradient(180deg, rgba(41, 132, 235, 0.95), rgba(24, 94, 190, 0.95));
-  color: #fff;
-  padding: 14px 16px;
-  z-index: 2;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-}
-.examlock-widget .big { font-size: 38px; font-weight: 300; line-height: 1; }
-.examlock-widget .sub { font-size: 12px; opacity: 0.9; margin-top: 2px; }
-.examlock-widget .ev {
-  margin-top: 12px;
-  font-size: 11px;
-  background: rgba(255, 255, 255, 0.16);
-  border-radius: 10px;
-  padding: 6px 9px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.examlock-grid {
-  position: absolute;
-  top: 196px;
-  left: 0;
-  right: 0;
-  padding: 0 26px;
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 18px 14px;
-  z-index: 2;
-}
-.examlock-app {
-  aspect-ratio: 1;
-  border-radius: 24%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(14px, 2.6vmin, 26px);
-  color: #fff;
-  position: relative;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-}
-.examlock-app span { filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25)); }
-.examlock-badge {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  background: #ff3b30;
-  color: #fff;
-  font-size: 9px;
-  font-weight: 700;
-  border-radius: 9px;
-  padding: 1px 5px;
+  background: linear-gradient(160deg, rgba(35, 44, 64, 0.92), rgba(16, 20, 31, 0.96));
+  backdrop-filter: blur(10px);
+  font-family: -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
-.examlock-dock {
-  position: absolute;
-  bottom: 14px;
-  left: 16px;
-  right: 16px;
-  height: 64px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(8px);
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
-  padding: 8px 14px;
-  z-index: 2;
-}
-.examlock-dock .examlock-app {
-  font-size: clamp(13px, 2.4vmin, 24px);
-  height: 100%;
-  width: auto;
-  aspect-ratio: 1;
-  justify-self: center;
-}
-
-.examlock-start {
-  position: absolute;
-  z-index: 10;
-  left: 50%;
-  top: 58%;
-  transform: translate(-50%, -50%);
-  border: none;
-  cursor: pointer;
-  padding: 16px 46px;
-  border-radius: 40px;
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: 0.4px;
-  color: #0a2a4a;
-  background: linear-gradient(180deg, #ffffff, #dbeafe);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 0 6px rgba(255, 255, 255, 0.12);
-  transition: transform 0.15s ease, opacity 0.3s ease;
-}
-.examlock-start:hover { transform: translate(-50%, -50%) scale(1.04); }
-.examlock-start:active { transform: translate(-50%, -50%) scale(0.97); }
-.examlock-start.hide { opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(0.85); }
-
-.examlock-lockwrap {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 20;
-  pointer-events: none;
-}
 .examlock-lock {
   width: 34vmin;
   opacity: 0;
@@ -212,7 +44,6 @@
   inset: 0;
   background: radial-gradient(circle at 50% 50%, rgba(240, 250, 255, 0.5), rgba(190, 225, 255, 0.28) 60%, rgba(160, 210, 255, 0.12));
   opacity: 0;
-  z-index: 19;
   pointer-events: none;
 }
 @keyframes examlockFlashFx {

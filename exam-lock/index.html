@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Lock</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { height:100%; overflow:hidden; background:#0b0e14;
+    font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; }
+
+  /* ---------- home screen backdrop ---------- */
+  #stage { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; }
+  #homescreen {
+    position:relative; width:min(100vw, calc(100vh * 0.916)); height:min(100vh, calc(100vw * 1.092));
+    overflow:hidden; border-radius:18px; background:#10141f;
+    box-shadow:0 30px 80px rgba(0,0,0,.6);
+  }
+  /* everything that belongs to the "wallpaper" layer — this is what blurs */
+  #homeContent{ position:absolute; inset:0;
+    background:
+      radial-gradient(120% 90% at 20% 10%, #3d4a63 0%, transparent 55%),
+      radial-gradient(100% 80% at 85% 90%, #2a3550 0%, transparent 55%),
+      radial-gradient(80% 60% at 60% 40%, #4a5670 0%, transparent 60%),
+      linear-gradient(160deg,#232c40 0%, #171d2b 55%, #10141f 100%);
+    transition: filter .45s ease;
+  }
+  /* soft feather strokes */
+  #homeContent::before{ content:""; position:absolute; inset:0;
+    background:
+      conic-gradient(from 200deg at 30% 70%, transparent 0 40%, rgba(255,255,255,.06) 45%, transparent 52%),
+      conic-gradient(from 20deg at 75% 25%, transparent 0 42%, rgba(255,255,255,.05) 48%, transparent 55%);
+    filter:blur(2px); }
+
+  #homeContent.blurred { filter: blur(16px) brightness(1.25) saturate(1.1); }
+  #homeContent.locked  { filter: blur(9px) brightness(.72) saturate(.9); }
+
+  /* status bar */
+  .statusbar{ position:absolute; top:0; left:0; right:0; height:30px; display:flex;
+    align-items:center; justify-content:space-between; padding:0 14px;
+    color:#fff; font-size:12px; font-weight:600; opacity:.95; z-index:2; }
+  .statusbar .right{ display:flex; gap:6px; align-items:center; font-size:11px; }
+
+  /* clock + widget */
+  .clock{ position:absolute; top:46px; left:26px; color:#fff; z-index:2; }
+  .clock .t{ font-size:64px; font-weight:200; letter-spacing:1px; line-height:1; opacity:.92; }
+  .clock .d{ margin-top:6px; font-size:13px; opacity:.85; display:flex; gap:10px; align-items:center; }
+  .widget{ position:absolute; top:46px; right:26px; width:200px; height:118px; border-radius:20px;
+    background:linear-gradient(180deg, rgba(41,132,235,.95), rgba(24,94,190,.95));
+    color:#fff; padding:14px 16px; z-index:2; box-shadow:0 8px 24px rgba(0,0,0,.25); }
+  .widget .big{ font-size:38px; font-weight:300; line-height:1; }
+  .widget .sub{ font-size:12px; opacity:.9; margin-top:2px; }
+  .widget .ev{ margin-top:12px; font-size:11px; background:rgba(255,255,255,.16);
+    border-radius:10px; padding:6px 9px; display:flex; justify-content:space-between; }
+
+  /* icon grid */
+  .grid{ position:absolute; top:196px; left:0; right:0; padding:0 26px;
+    display:grid; grid-template-columns:repeat(8,1fr); gap:18px 14px; z-index:2; }
+  .app{ aspect-ratio:1; border-radius:24%; display:flex; align-items:center; justify-content:center;
+    font-size:clamp(14px,2.6vmin,26px); color:#fff; position:relative;
+    box-shadow:0 4px 10px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.35); }
+  .app span{ filter:drop-shadow(0 1px 1px rgba(0,0,0,.25)); }
+  .badge{ position:absolute; top:-4px; right:-4px; background:#ff3b30; color:#fff;
+    font-size:9px; font-weight:700; border-radius:9px; padding:1px 5px; }
+
+  /* dock */
+  .dock{ position:absolute; bottom:14px; left:16px; right:16px; height:64px; border-radius:22px;
+    background:rgba(255,255,255,.14); backdrop-filter:blur(8px);
+    display:grid; grid-template-columns:repeat(7,1fr); gap:10px; padding:8px 14px; z-index:2; }
+  .dock .app{ font-size:clamp(13px,2.4vmin,24px); height:100%; width:auto; aspect-ratio:1; justify-self:center; }
+
+  /* ---------- start button ---------- */
+  #startBtn{ position:absolute; z-index:10; left:50%; top:58%; transform:translate(-50%,-50%);
+    border:none; cursor:pointer; padding:16px 46px; border-radius:40px;
+    font-size:17px; font-weight:600; letter-spacing:.4px; color:#0a2a4a;
+    background:linear-gradient(180deg,#ffffff,#dbeafe);
+    box-shadow:0 10px 30px rgba(0,0,0,.45), 0 0 0 6px rgba(255,255,255,.12);
+    transition:transform .15s ease, opacity .3s ease; }
+  #startBtn:hover{ transform:translate(-50%,-50%) scale(1.04); }
+  #startBtn:active{ transform:translate(-50%,-50%) scale(.97); }
+  #startBtn.hide{ opacity:0; pointer-events:none; transform:translate(-50%,-50%) scale(.85); }
+
+  /* ---------- lock icon ---------- */
+  #lockWrap{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    z-index:20; pointer-events:none; }
+  #lock{ width:34vmin; opacity:0; transform:scale(.12);
+    filter:drop-shadow(0 0 18px rgba(160,220,255,.9)) drop-shadow(0 0 60px rgba(120,200,255,.6)); }
+  /* overflow:visible — the raised shackle pokes past the viewBox top
+     and would otherwise be clipped by a hard horizontal edge */
+  #lock svg{ width:100%; height:auto; display:block; overflow:visible; }
+  #lock .shackle{ transform:translateY(-22px); }
+
+  @keyframes lockIn{
+    0%  { opacity:0; transform:scale(.12); }
+    18% { opacity:1; }
+    62% { opacity:1; transform:scale(1.06); }
+    78% { opacity:1; transform:scale(1.14); }
+    100%{ opacity:0; transform:scale(5.5); }
+  }
+  #lock.play{ animation:lockIn 1.35s cubic-bezier(.55,.06,.35,1) forwards; }
+
+  /* shackle snaps shut while the lock grows — lands flush on the body's
+     top edge, solid like the body, never crossing into the fill */
+  @keyframes shackleShut{
+    0%,40%  { transform:translateY(-22px); }
+    50%     { transform:translateY(-9px); }
+    57%     { transform:translateY(-14px); }
+    63%,100%{ transform:translateY(-12px); }
+  }
+  #lock.play .shackle{ animation:shackleShut 1.35s cubic-bezier(.45,0,.3,1) forwards; }
+
+  /* soft light wash as the lock passes the camera */
+  #flash{ position:absolute; inset:0; background:radial-gradient(circle at 50% 50%,
+    rgba(240,250,255,.5), rgba(190,225,255,.28) 60%, rgba(160,210,255,.12));
+    opacity:0; z-index:19; pointer-events:none; }
+  @keyframes flashFx{ 0%,58%{opacity:0} 78%{opacity:.3} 100%{opacity:0} }
+  #flash.play{ animation:flashFx 1.35s ease forwards; }
+
+  /* ---------- locked overlay / start exam ---------- */
+  #lockedUI{ position:absolute; inset:0; z-index:30; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:18px; opacity:0; pointer-events:none;
+    transition:opacity .5s ease .05s; }
+  #lockedUI.show{ opacity:1; pointer-events:auto; }
+  #lockedUI .lockIcon{ width:64px; height:64px; border-radius:50%;
+    background:rgba(255,255,255,.14); border:1.5px solid rgba(255,255,255,.35);
+    display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px);
+    transform:scale(.4); transition:transform .5s cubic-bezier(.2,1.4,.4,1) .05s; }
+  #lockedUI.show .lockIcon{ transform:scale(1); }
+  #lockedUI .title{ color:#fff; font-size:15px; font-weight:500; letter-spacing:.6px; opacity:.9;
+    transform:translateY(8px); transition:transform .5s ease .12s, opacity .4s ease .12s; opacity:0; }
+  #lockedUI.show .title{ transform:translateY(0); opacity:.9; }
+  #examBtn{ margin-top:6px; border:none; cursor:pointer; padding:15px 52px; border-radius:36px;
+    font-size:17px; font-weight:700; letter-spacing:.5px; color:#fff;
+    background:linear-gradient(180deg,#34a3ff,#1473e6);
+    box-shadow:0 12px 32px rgba(20,115,230,.5), inset 0 1px 0 rgba(255,255,255,.4);
+    transform:scale(.5); opacity:0;
+    transition:transform .55s cubic-bezier(.2,1.5,.35,1) .18s, opacity .4s ease .18s; }
+  #lockedUI.show #examBtn{ transform:scale(1); opacity:1; }
+  #examBtn:hover{ filter:brightness(1.08); }
+  #examBtn:active{ transform:scale(.96); }
+  @keyframes pulse{ 0%,100%{ box-shadow:0 12px 32px rgba(20,115,230,.5),0 0 0 0 rgba(52,163,255,.5);}
+    50%{ box-shadow:0 12px 32px rgba(20,115,230,.5),0 0 0 12px rgba(52,163,255,0);} }
+  #lockedUI.show #examBtn{ animation:pulse 2.2s ease-in-out .9s infinite; }
+
+  /* toast */
+  #toast{ position:absolute; left:50%; bottom:9%; transform:translateX(-50%) translateY(20px);
+    z-index:40; background:rgba(20,26,38,.92); color:#dff1ff; padding:12px 24px; border-radius:14px;
+    font-size:14px; letter-spacing:.3px; opacity:0; transition:all .35s ease; pointer-events:none;
+    border:1px solid rgba(120,200,255,.25); }
+  #toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  /* replay */
+  #replay{ position:absolute; right:14px; bottom:12px; z-index:40; border:none; cursor:pointer;
+    background:rgba(255,255,255,.1); color:rgba(255,255,255,.75); font-size:12px;
+    padding:7px 14px; border-radius:20px; opacity:0; pointer-events:none; transition:opacity .4s ease .4s; }
+  #replay.show{ opacity:1; pointer-events:auto; }
+  #replay:hover{ background:rgba(255,255,255,.2); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="homescreen">
+   <div id="homeContent">
+    <div class="statusbar">
+      <span>06:29</span>
+      <span class="right">&#128247;&#65038; &nbsp; &#128246; &#128225; &nbsp; 44%</span>
+    </div>
+    <div class="clock">
+      <div class="t">06:29</div>
+      <div class="d"><span>Mon, Aug 31</span><span>&#9925; 20&deg;</span></div>
+    </div>
+    <div class="widget">
+      <div class="big">31</div>
+      <div class="sub">Monday &middot; 1 event today</div>
+      <div class="ev"><span>8:00 PM Practice</span><span>10:00 PM</span></div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="dock" id="dock"></div>
+   </div><!-- /homeContent -->
+
+    <button id="startBtn">Start</button>
+
+    <div id="flash"></div>
+    <div id="lockWrap">
+      <div id="lock">
+        <svg viewBox="0 0 120 140" fill="none">
+          <g class="shackle">
+            <path d="M38 68 V46 a22 22 0 0 1 44 0 V68"
+                  stroke="#eaf7ff" stroke-width="11" stroke-linecap="round"/>
+          </g>
+          <rect x="20" y="62" width="80" height="62" rx="16"
+                stroke="#eaf7ff" stroke-width="11" fill="rgba(190,225,255,.10)"/>
+          <circle cx="60" cy="88" r="7" fill="#eaf7ff"/>
+          <rect x="56.5" y="90" width="7" height="16" rx="3.5" fill="#eaf7ff"/>
+        </svg>
+      </div>
+    </div>
+
+    <div id="lockedUI">
+      <div class="lockIcon">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#eaf7ff" stroke-width="2">
+          <rect x="4" y="10" width="16" height="11" rx="2.5"/>
+          <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+        </svg>
+      </div>
+      <div class="title">Device locked &middot; Exam mode</div>
+      <button id="examBtn">Start Exam</button>
+    </div>
+
+    <div id="toast">Exam started &mdash; good luck!</div>
+    <button id="replay">&#8634; Replay</button>
+  </div>
+</div>
+
+<script>
+  // build app icons
+  const icons = [
+    ['&#128300;','#5b8def'],['&#128736;','#3b6fd4'],['&#9881;','#8a94a6'],['&#128171;','#4aa3ff'],
+    ['&#128193;','#f7b731'],['&#128722;','#e8a33d'],['&#128248;','#a55eea'],['&#127925;','#fc5c65'],
+    ['&#9007;','#f5f6fa'],['&#128197;','#ffffff'],['&#128179;','#eb3b5a'],['&#128215;','#e84118'],
+    ['G','#ffffff'],['&#128102;','#778ca3'],['&#128506;','#45aaf2'],['&#127909;','#8854d0'],
+    ['&#128221;','#f7b731'],['&#128269;','#20bf6b'],['&#9200;','#f5f6fa'],['&#127912;','#fa8231'],
+    ['&#10024;','#3867d6'],['&#127828;','#2bcbba'],['&#10039;','#fd9644'],['&#9654;','#ff3838'],
+    ['&#128240;','#4b6584'],['&#128188;','#26de81'],['B','#6c5ce7'],['&#128172;','#2bcbba'],
+    ['&#9993;','#4a69bd'],['U','#2d3436'],['&#9854;','#00cec9'],['T','#e17055'],
+  ];
+  const grid = document.getElementById('grid');
+  icons.forEach(([g,c],i)=>{
+    const d=document.createElement('div'); d.className='app';
+    const dark = (c==='#ffffff'||c==='#f5f6fa');
+    d.style.background=`linear-gradient(160deg, ${c}, ${c}cc)`;
+    d.innerHTML=`<span style="color:${dark?'#555':'#fff'}">${g}</span>`;
+    if(i===6) d.innerHTML+=`<div class="badge">1</div>`;
+    if(i===27) d.innerHTML+=`<div class="badge">99+</div>`;
+    grid.appendChild(d);
+  });
+  const dockIcons=[['&#9993;','#ffffff'],['&#128222;','#2bcbba'],['&#128247;','#8a94a6'],
+    ['&#127912;','#fa8231'],['&#127761;','#a55eea'],['&#128172;','#2bcbba'],['&#127925;','#fc5c65']];
+  const dock=document.getElementById('dock');
+  dockIcons.forEach(([g,c])=>{
+    const d=document.createElement('div'); d.className='app';
+    const dark=(c==='#ffffff');
+    d.style.background=`linear-gradient(160deg, ${c}, ${c}cc)`;
+    d.innerHTML=`<span style="color:${dark?'#c0392b':'#fff'}">${g}</span>`;
+    dock.appendChild(d);
+  });
+
+  const home=document.getElementById('homeContent'),
+        startBtn=document.getElementById('startBtn'),
+        lock=document.getElementById('lock'),
+        flash=document.getElementById('flash'),
+        lockedUI=document.getElementById('lockedUI'),
+        replay=document.getElementById('replay'),
+        toast=document.getElementById('toast');
+
+  startBtn.addEventListener('click', ()=>{
+    startBtn.classList.add('hide');
+    replay.classList.remove('show');
+    // lock grows + background blurs with it, shackle snaps shut
+    home.classList.add('blurred');
+    lock.classList.add('play');
+    flash.classList.add('play');
+    // lock passed the camera -> settle into locked blur, reveal exam UI
+    setTimeout(()=>{
+      home.classList.remove('blurred');
+      home.classList.add('locked');
+      lockedUI.classList.add('show');
+      replay.classList.add('show');
+    }, 1250);
+  });
+
+  document.getElementById('examBtn').addEventListener('click', ()=>{
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'), 2200);
+  });
+
+  replay.addEventListener('click', ()=>{
+    lockedUI.classList.remove('show');
+    home.classList.remove('locked');
+    lock.classList.remove('play');
+    flash.classList.remove('play');
+    replay.classList.remove('show');
+    setTimeout(()=>startBtn.classList.remove('hide'), 300);
+  });
+</script>
+</body>
+</html>

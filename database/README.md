@@ -66,21 +66,74 @@ Dashboard → Project → Connect (Session pooler or Direct connection, port
    from `research/sat/test-fixtures/generated-*.json`. Seeding is idempotent
    (`ON CONFLICT DO UPDATE`).
 
-## Question stores: generated vs Bluebook
+## Question stores: three kinds
 
-The question bank is deliberately partitioned:
+The question bank is deliberately partitioned into three kinds:
 
-- **Generated/original questions** (ours, license-safe, `allowedUses:
+- **Generated questions** (ours, license-safe, `allowedUses:
   ["display"]`) live in `questions` + `question_versions` with
   `source = 'generated'` — seeded from approved drafts under
   `research/sat/generated/` and `research/sat/test-fixtures/generated-*.json`.
-- **Harvested Bluebook/SSQB questions** (College Board content,
-  `allowedUses: ["internal_eval"]` only — never shown to students) live in
-  the separate `bluebook_questions` table, seeded from
-  `research/sat/question-bank/*.json` (gitignored; the harvester is planned
-  but not built — see `research/sat/README.md`). The table has RLS enabled
-  with no policies, so anon/authenticated roles cannot read it; only
-  server-side service-role jobs can.
+- **General bank questions** (online SSQB items, `origin =
+  'question_bank'`) and **Bluebook questions** (SSQB items that appear in
+  Bluebook practice exams, `origin = 'bluebook'`) live together in the
+  separate `harvested_questions` table, split by the `origin` column.
+  Both are College Board content: `allowedUses: ["internal_eval"]` only —
+  never shown to students. Seeded from `research/sat/question-bank/*.json`
+  (gitignored; the harvester is planned but not built — see
+  `research/sat/README.md`); the five `ssqb-fixture-*` records under
+  `research/sat/test-fixtures/` were seeded as the initial content (all
+  `question_bank`). The table has RLS enabled; migrations/004 carries a
+  **dev-only anon read policy** so the local simulator can show them —
+  PRE-LAUNCH TODO: drop that policy.
+
+## Simulator / web-client access (PostgREST)
+
+The simulator HTML reads **live from Supabase** with the publishable anon key
+(migrations/003 sets the policies):
+
+```js
+const SUPABASE_URL = 'https://asnrquijopjjqfjvwalc.supabase.co';
+const ANON_KEY = '<publishable key>'; // Project → Settings → API
+const H = { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` };
+
+// Generated bank (new questions) — display only, approved versions:
+const generated = await fetch(
+  `${SUPABASE_URL}/rest/v1/question_versions?select=question_id,payload,difficulty,taxonomy_code&review_status=eq.approved`,
+  { headers: H }).then(r => r.json());
+
+// Harvested bank (SSQB-sourced, internal_eval) — split by origin:
+const harvested = await fetch(
+  `${SUPABASE_URL}/rest/v1/harvested_questions?select=source_id,origin,payload,skill,difficulty_internal`,
+  { headers: H }).then(r => r.json());
+//   origin = 'bluebook'      → appears in a Bluebook practice exam
+//   origin = 'question_bank' → general online question-bank item
+```
+
+Toggle semantics the simulator should implement:
+
+- **Generated** — items from `question_versions` only.
+- **Bank** — `harvested_questions` where `origin=eq.question_bank`.
+- **Bluebook** — `harvested_questions` where `origin=eq.bluebook`.
+- **Exclude Bluebook** switch — in any mixed view, drop items with
+  `payload.allowedUses` including `internal_eval` AND `origin='bluebook'`
+  (or, stricter, any internal_eval item — decide per view).
+
+Rendering inside the simulator:
+
+- Math text (stem/choices/rationale/stimulus) is inline LaTeX — load KaTeX
+  from CDN and auto-render `\( ... \)` spans.
+- Figures: `payload.stimulus.diagram` holds `{archetypeId, parameters}`.
+  Render with the prebuilt bundle: `npm run build:sim` produces
+  `simulator/renderers.js` (gitignored; IIFE global `StudyMasteRenderers`):
+  ```js
+  const d = payload.stimulus.diagram;
+  container.innerHTML = StudyMasteRenderers.render(d.archetypeId, d.parameters);
+  ```
+- Bluebook items reference figure files (`stimulus.figureAsset`) instead of
+  parameterized diagrams — those assets live under `research/sat/assets/`
+  (gitignored, harvested-only); show a placeholder when a figureAsset is
+  missing.
 5. If the database is unreachable (`DATABASE_URL` unset or the Supabase
    project not responding), `db:migrate` and `seed` print a PENDING-DEPLOY
    message with the exact commands and exit 0 — the pipeline never hard-fails

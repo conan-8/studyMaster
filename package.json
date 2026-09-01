@@ -18,6 +18,7 @@
     "generate": "tsx --env-file-if-exists=.env scripts/generate-question.ts",
     "gallery": "tsx scripts/render-gallery.ts",
     "gallery:questions": "tsx scripts/question-gallery.ts",
+    "build:sim": "esbuild simulator/browser-entry.ts --bundle --format=iife --global-name=StudyMasteRenderers --outfile=simulator/renderers.js --alias:node:fs=./simulator/shims/fs.ts --alias:node:path=./simulator/shims/path.ts --alias:node:url=./simulator/shims/url.ts",
     "db:check": "tsx scripts/db-check.ts",
     "db:migrate": "tsx scripts/migrate.ts",
     "seed": "tsx scripts/seed.ts"
@@ -27,6 +28,7 @@
     "@types/pg": "^8.11.10",
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
+    "esbuild": "^0.28.2",
     "pg": "^8.13.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"

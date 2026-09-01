@@ -14,14 +14,29 @@
   },
   "stem": "As used in the text, what does the word \"waned\" most nearly mean?",
   "choices": [
-    { "id": "A", "text": "Diminished" },
-    { "id": "B", "text": "Returned" },
-    { "id": "C", "text": "Strengthened" },
-    { "id": "D", "text": "Shifted" }
+    {
+      "id": "A",
+      "text": "Diminished"
+    },
+    {
+      "id": "B",
+      "text": "Returned"
+    },
+    {
+      "id": "C",
+      "text": "Strengthened"
+    },
+    {
+      "id": "D",
+      "text": "Shifted"
+    }
   ],
   "correctAnswer": "A",
   "rationale": "The passage contrasts initial excitement with later quiet reading rooms, so \"waned\" most nearly means diminished.",
   "sourceUrl": "https://satsuitequestionbank.collegeboard.org/",
   "harvestedAt": "2026-08-22T00:00:00Z",
-  "allowedUses": ["internal_eval"]
+  "allowedUses": [
+    "internal_eval"
+  ],
+  "origin": "question_bank"
 }

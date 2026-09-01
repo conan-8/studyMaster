@@ -7,6 +7,7 @@
   "additionalProperties": false,
   "required": [
     "sourceId",
+    "origin",
     "section",
     "domain",
     "skill",
@@ -27,6 +28,11 @@
       "type": "string",
       "pattern": "^ssqb-.+",
       "description": "ssqb-<original College Board id>"
+    },
+    "origin": {
+      "type": "string",
+      "enum": ["bluebook", "question_bank"],
+      "description": "bluebook = the question appears in a Bluebook practice exam; question_bank = general online question-bank item"
     },
     "section": {
       "type": "string",

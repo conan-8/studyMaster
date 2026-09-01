@@ -68,6 +68,17 @@ export function loadDiagramArchetype(archetypeId: string): DiagramArchetype {
   return archetype;
 }
 
+/**
+ * Pre-populate the archetype cache without touching the filesystem — used by
+ * the browser bundle (simulator/browser-entry.ts), where fs does not exist.
+ * Registered ids are served from the cache, so loadDiagramArchetype never
+ * falls through to a file read for them.
+ */
+export function registerDiagramArchetypes(archetypes: DiagramArchetype[]): void {
+  for (const a of archetypes) archetypeCache.set(a.archetypeId, a);
+  knownIds = [...archetypeCache.keys()].sort();
+}
+
 // House-style ajv (see scripts/lib/validate.ts): allErrors, non-strict,
 // ajv-formats plugin (CJS module — the plugin is the module itself).
 function createAjv(): Ajv {

@@ -11,10 +11,12 @@
  * reported as skipped counts. Generated/original questions are flagged
  * source='generated' in questions/question_versions.
  *
- * Harvested Bluebook/SSQB content (research/sat/question-bank/*.json,
- * gitignored) seeds into the SEPARATE bluebook_questions table with
- * allowed_uses {internal_eval}; that table is RLS default-deny so harvested
- * content can never reach the public roles.
+ * Harvested SAT content (research/sat/question-bank/*.json,
+ * gitignored) seeds into the SEPARATE harvested_questions table with
+ * allowed_uses {internal_eval} and an origin split: 'bluebook' (appears in a
+ * Bluebook practice exam) vs 'question_bank' (general online SSQB item).
+ * That table is RLS default-deny + a dev-only anon read policy so harvested
+ * content never reaches the public roles outside local dev.
  *
  * Reads DATABASE_URL (a Supabase-compatible Postgres URI; see .env.example).
  * Unreachable DB -> PENDING-DEPLOY message with exact commands, exit 0.
@@ -210,28 +212,32 @@ async function main(): Promise<void> {
       );
     }
 
-    // --- harvested Bluebook/SSQB bank (separate table, internal_eval only) ---
+    // --- harvested SAT bank (separate table, internal_eval only) ---
+    // Three question kinds overall: generated (ours), question_bank (online
+    // SSQB items), and bluebook (SSQB items that appear in Bluebook practice
+    // exams) — the last two live in harvested_questions, split by origin.
     const bluebookDir = path.join(REPO_ROOT, 'research', 'sat', 'question-bank');
     const bluebookFiles = fs.existsSync(bluebookDir)
       ? fs.readdirSync(bluebookDir).filter((n) => n.endsWith('.json'))
       : [];
     if (bluebookFiles.length === 0) {
-      console.log('seed: no harvested Bluebook questions under research/sat/question-bank/ — bluebook seeding skipped');
+      console.log('seed: no harvested SAT questions under research/sat/question-bank/ — harvested seeding skipped');
     }
     for (const name of bluebookFiles) {
       const q = loadJson(path.join(bluebookDir, name)) as Record<string, unknown>;
       await client.query(
-        `INSERT INTO bluebook_questions
-           (source_id, section, domain, skill, difficulty_official, difficulty_internal,
+        `INSERT INTO harvested_questions
+           (source_id, origin, section, domain, skill, difficulty_official, difficulty_internal,
             question_type, payload, allowed_uses, source_url, harvested_at)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, '{internal_eval}', $9, $10)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, '{internal_eval}', $10, $11)
          ON CONFLICT (source_id) DO UPDATE SET
-           section = EXCLUDED.section, domain = EXCLUDED.domain, skill = EXCLUDED.skill,
+           origin = EXCLUDED.origin, section = EXCLUDED.section, domain = EXCLUDED.domain, skill = EXCLUDED.skill,
            difficulty_official = EXCLUDED.difficulty_official, difficulty_internal = EXCLUDED.difficulty_internal,
            question_type = EXCLUDED.question_type, payload = EXCLUDED.payload,
            source_url = EXCLUDED.source_url, harvested_at = EXCLUDED.harvested_at`,
         [
           q.sourceId,
+          q.origin ?? 'question_bank',
           q.section,
           q.domain,
           q.skill,
@@ -245,7 +251,7 @@ async function main(): Promise<void> {
       );
     }
     if (bluebookFiles.length > 0) {
-      console.log(`seed: upserted ${bluebookFiles.length} Bluebook question(s) into bluebook_questions`);
+      console.log(`seed: upserted ${bluebookFiles.length} harvested question(s) into harvested_questions`);
     }
     console.log('seed: done');
   } finally {

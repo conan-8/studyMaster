@@ -65,6 +65,9 @@ See `question.schema.json` for the authoritative JSON Schema. Each question
 record contains:
 
 - `sourceId` — `ssqb-<original College Board id>`
+- `origin` — `bluebook` (appears in a Bluebook practice exam) or
+  `question_bank` (general online question-bank item); the simulator's
+  Bank/Bluebook toggle keys off this
 - `section` — `reading-writing` or `math`
 - `domain` — exact domain display name (e.g. `Craft and Structure`)
 - `skill` — exact skill slug (e.g. `words-in-context`)
@@ -116,7 +119,9 @@ original, derived archetypes (`archetypes/`) and our own test fixtures
 (`test-fixtures/`) may be committed and used in the product.
 
 When a harvester eventually runs, its output seeds into the **separate
-`bluebook_questions` table** (migrations/002) — never into the generated
+`harvested_questions` table** (migrations/004) — never into the generated
 question store (`questions`/`question_versions`, `source='generated'`).
-`bluebook_questions` has RLS enabled with no policies, so the public roles
-cannot read it; only server-side service-role jobs may touch it.
+`harvested_questions` splits content by `origin` (`bluebook` vs
+`question_bank`), is RLS-locked, and carries only a dev-only anon read
+policy for the local simulator; only server-side service-role jobs may
+write it.

@@ -25,5 +25,8 @@ node_modules/
 rendered-gallery/
 review-gallery/
 
+# browser bundle (regenerate with npm run build:sim)
+simulator/renderers.js
+
 # eval run artifacts (regenerate with npm run eval:generator)
 src/generator/eval/report-last-run.json

@@ -89,21 +89,44 @@ def clean_str(s: str | None) -> str | None:
     PostgreSQL jsonb cannot store U+0000."""
     return s if s is None else CTRL_JUNK.sub('', s)
 
+# Common English words ending in 'r' (blocked from aggressive r+t joins so
+# "after treatment" / "their types" never merge).
+R_END_WORDS = set('''for or after before over under other another mother father brother
+either neither whether together matter water later letter better power lower upper order corner
+center enter number member remember character answer wonder hunter partner painter master monster
+register minister poster quarter counter chapter thunder winter summer copper proper super paper
+higher slower faster longer stronger bigger smaller larger greater closer easier harder earlier
+nearer fewer river never ever cover driver player teacher leader reader writer worker speaker
+maker owner dinner winner runner manner inner outer mirror error terror horror favor flavor humor
+color doctor actor factor sector editor mentor tutor author offer suffer differ prefer refer star
+far car bar war jar her per fur sir your our their year dear hear clear near bear fear tear wear
+rear appear disappear career peer beer deer cheer sheer steer poor door floor honor senior junior
+major minor mayor sailor tailor scholar dollar collar pillar similar particular regular popular
+solar polar however whatever whenever wherever whoever moreover further farther rather gather
+weather feather leather sooner former latter computer'''.split())
+
+# Common standalone 't' words (right side) that must not be merged.
+STOP_T = set('''the this that these those they their them then than thus there therefore to too
+two toward towards through throughout though thought thoughts time times today together total
+table tables term terms test tests text texts type types top topic topics town towns team teams
+true truth turn turns take takes taken taking tell tells told try tries tried trying tree trees
+travel trip trips trust tube tune tunes task tasks target targets'''.split())
+
 def repair_line(line: str) -> str:
     def fix(m):
         left, right = m.group(1), m.group(2)
         joined = (left + right).lower()
-        if joined not in DICT:
-            return m.group(0)
-        if left.lower() not in DICT:
+        if joined in DICT and left.lower() not in DICT:
             return left + right
-        if left.endswith('r') and right.startswith('t') and len(right) <= 5:
+        # aggressive r+t kerning split: 'repor ted', 'Par thenogenesis', 'nor th'
+        if (left.endswith('r') and right.startswith('t') and len(right) <= 12
+                and left.lower() not in R_END_WORDS and right not in STOP_T):
             return left + right
         return m.group(0)
     prev = None
     while prev != line:
         prev = line
-        line = re.sub(r"\b([A-Za-z]{2,}) ([a-z]{1,6})\b", fix, line)
+        line = re.sub(r"\b([A-Za-z]{2,}) ([a-z]{1,14})\b", fix, line)
     return line
 
 def slug_skill(name: str) -> str:
@@ -155,15 +178,16 @@ def split_meta(head: str):
     return dict(section=section, domain=domain, skill=skill, difficulty=diff)
 
 def extract_figure(doc, pages):
-    """RW: bounding box of non-metadata vector drawings, if figure-sized."""
+    """RW: figure clusters (non-metadata vector drawings + their nearby text)
+    on EVERY page of the question — graphs often span a page break. Returns a
+    list of (page, rect) tuples."""
+    out = []
     for p in pages:
         page = doc[p]
         cands = []
         for d in page.get_drawings():
             r = d['rect']
             if r.y1 < 125:
-                continue
-            if r.height < 8 and r.width > 120:
                 continue
             if r.width < 8 and r.height < 8:
                 continue
@@ -172,9 +196,44 @@ def extract_figure(doc, pages):
             continue
         x0 = min(r.x0 for r in cands); x1 = max(r.x1 for r in cands)
         y0 = min(r.y0 for r in cands); y1 = max(r.y1 for r in cands)
-        if (x1 - x0) > 90 and (y1 - y0) > 50:
-            return p, (x0 - 6, y0 - 6, x1 + 6, y1 + 6)
-    return None
+        if not (((x1 - x0) > 90 and (y1 - y0) > 50) or ((x1 - x0) > 250 and (y1 - y0) > 20)):
+            # full figure, or the wide top/bottom slice of a page-split figure
+            continue
+        # pull in text words near the drawing cluster (labels are text, not drawings).
+        # Above the plot only short title-like lines count (long lines are passage).
+        zone_sides = pymupdf.Rect(x0 - 70, y0 - 25, x1 + 70, y1 + 12)
+        zone_title = pymupdf.Rect(x0 - 10, y0 - 75, x1 + 10, y0 - 25)
+        words = page.get_text('words')
+        line_words = {}
+        for w in words:
+            line_words.setdefault((w[5], w[6]), []).append(w)
+        for w in words:
+            cx, cy = (w[0] + w[2]) / 2, (w[1] + w[3]) / 2
+            if cy < 120 or w[4] in ('Question', 'Answer'):  # metadata + section markers
+                continue
+            inside = zone_sides.contains(pymupdf.Point(cx, cy))
+            if not inside and zone_title.contains(pymupdf.Point(cx, cy)):
+                inside = len(line_words[(w[5], w[6])]) <= 8
+            if inside:
+                x0 = min(x0, w[0]); x1 = max(x1, w[2])
+                y0 = min(y0, w[1]); y1 = max(y1, w[3])
+        out.append((p, (x0 - 2, y0 - 2, x1 + 2, y1 + 2)))
+    return out
+
+def vstack(imgs):
+    if not imgs:
+        return None
+    if len(imgs) == 1:
+        return imgs[0]
+    width = max(i.width for i in imgs)
+    height = sum(i.height for i in imgs)
+    out = Image.new('RGB', (width, height), 'white')
+    y = 0
+    for i in imgs:
+        out.paste(i, (0, y))
+        y += i.height
+    return out
+
 
 def render_question_image(doc, pages):
     """Math: render the whole question block (below the metadata table) across
@@ -197,23 +256,46 @@ def render_question_image(doc, pages):
         pix = page.get_pixmap(dpi=150, clip=pymupdf.Rect(14, top, page.rect.width - 14, bottom))
         img = Image.frombytes('RGB', (pix.width, pix.height), pix.samples)
         imgs.append(img)
-    if not imgs:
-        return None
-    if len(imgs) == 1:
-        return imgs[0]
-    width = max(i.width for i in imgs)
-    height = sum(i.height for i in imgs)
-    out = Image.new('RGB', (width, height), 'white')
-    y = 0
-    for i in imgs:
-        out.paste(i, (0, y))
-        y += i.height
-    return out
+    return vstack(imgs)
 
 STEM_STARTERS = [
     'Which choice', 'Based on the text', 'As used in the text', 'Which of the following',
     'What is', 'What are', 'What value', 'How many', 'Who is', 'Where is', 'When is',
 ]
+
+def last_stem_cut(text: str):
+    """Position of the last stem-starter at a sentence start, or None."""
+    cuts = []
+    for s in STEM_STARTERS:
+        for m in re.finditer(re.escape(s), text):
+            before = ' '.join(text[: m.start()].split()).rstrip('”"“ ')
+            if m.start() == 0 or before.endswith(('.', '?', '!')):
+                cuts.append(m.start())
+    return max(cuts) if cuts else None
+
+
+def bulletize_notes(passage: str) -> str:
+    """Notes exports carry no bullet glyphs: rebuild '• item' lines from the
+    segment between 'following notes:' and 'The student wants'."""
+    m = re.search(r'(following notes:)\n([\s\S]*?)(?=\nThe student wants)', passage)
+    if not m:
+        return passage
+    items, current = [], ''
+    for ln in m.group(2).split('\n'):
+        ln = ln.strip()
+        if not ln:
+            continue
+        new_item = current == '' or (current.rstrip().endswith(('.', '?', '!')) and ln[:1].isupper())
+        if new_item and current:
+            items.append(current)
+            current = ln
+        else:
+            current = f'{current} {ln}'.strip()
+    if current:
+        items.append(current)
+    bullets = '\n'.join(f'• {i}' for i in items)
+    return passage[: m.start(2)] + bullets + passage[m.end(2):]
+
 
 def split_stem(qtext: str):
     notes = qtext.count('•') >= 2 or 'has taken the following notes' in qtext
@@ -223,14 +305,8 @@ def split_stem(qtext: str):
         # everything after the blank is NOT all stem: a trailing context
         # sentence (if any) belongs to the passage; only the actual question
         # ("Which choice ...?") is the stem.
-        cuts = []
-        for s in STEM_STARTERS:
-            for m in re.finditer(re.escape(s), rest):
-                before = rest[: m.start()].rstrip()
-                if m.start() == 0 or before.endswith(('.', '?', '!”', '.”')):
-                    cuts.append(m.start())
-        if cuts:
-            k = max(cuts)
+        k = last_stem_cut(rest)
+        if k is not None:
             context = rest[:k].strip()
             if context:
                 passage = (passage + ' ' + context).strip()
@@ -238,17 +314,24 @@ def split_stem(qtext: str):
         else:
             stem = ' '.join(rest.split())
     else:
-        paras = [p for p in re.split(r'\n\s*\n', qtext) if p.strip()]
-        if len(paras) >= 2 and paras[-1].strip().endswith('?'):
-            passage, stem = paras[0].strip(), ' '.join(paras[-1].split())
+        k = last_stem_cut(qtext)
+        if k is not None:
+            passage = qtext[:k].strip() or None
+            stem = ' '.join(qtext[k:].split())
         else:
-            lines = qtext.strip().split('\n')
-            li = max((i for i, ln in enumerate(lines) if ln.strip().endswith('?')), default=-1)
-            passage, stem = (' '.join(lines[:li]).strip(), ' '.join(lines[li:]).strip()) if li > 0 else (None, ' '.join(lines).strip())
+            paras = [p for p in re.split(r'\n\s*\n', qtext) if p.strip()]
+            if len(paras) >= 2 and paras[-1].strip().endswith('?'):
+                passage, stem = paras[0].strip(), ' '.join(paras[-1].split())
+            else:
+                lines = qtext.strip().split('\n')
+                li = max((i for i, ln in enumerate(lines) if ln.strip().endswith('?')), default=-1)
+                passage, stem = (' '.join(lines[:li]).strip(), ' '.join(lines[li:]).strip()) if li > 0 else (None, ' '.join(lines).strip())
     stype = 'notes' if notes else ('passage' if passage else 'none')
+    if stype == 'notes' and passage and '•' not in passage:
+        passage = bulletize_notes(passage)
     return stem, passage, stype
 
-def page_text_minus_rect(page, rect, pad=12):
+def page_text_minus_rect(page, rect, pad=3):
     """Page text with words inside the figure bbox dropped — a vector table's
     cell text (numbers, axis labels, caption) must not leak into the passage."""
     if rect is None:
@@ -272,11 +355,10 @@ def page_text_minus_rect(page, rect, pad=12):
 
 def parse_question(doc, pages):
     # RW: find the figure first so its text can be filtered out of the passage
-    fig = extract_figure(doc, pages)
-    fig_rect = fig[1] if fig else None
-    fig_page = fig[0] if fig else None
+    figs = extract_figure(doc, pages)
+    fig_by_page = {pno: rect for pno, rect in figs}
     text = '\n'.join(
-        page_text_minus_rect(doc[p], fig_rect if p == fig_page else None) for p in pages
+        page_text_minus_rect(doc[p], fig_by_page.get(p)) for p in pages
     )
     text = '\n'.join(repair_line(ln) for ln in text.split('\n'))
     text = CTRL_JUNK.sub('', text)
@@ -350,7 +432,7 @@ def parse_question(doc, pages):
             break
         rationale = stripped
     return dict(meta=meta, stem=stem, passage=passage, stype=stype, qtype=qtype,
-                choices=choices, correct=correct, rationale=rationale, figure_pages=fig)
+                choices=choices, correct=correct, rationale=rationale, figure_pages=figs)
 
 # --- main ---------------------------------------------------------------------
 
@@ -420,11 +502,15 @@ def main():
                     stats['with-image'] += 1
             else:
                 if parsed['figure_pages']:
-                    pno, rect = parsed['figure_pages']
-                    pix = doc[pno].get_pixmap(dpi=150, clip=pymupdf.Rect(*rect))
-                    fig_asset = f'assets/ssqb-{qid}.png'
-                    pix.save(ASSETS / f'ssqb-{qid}.png')
-                    stats['with-figure'] += 1
+                    imgs = []
+                    for pno, rect in parsed['figure_pages']:
+                        pix = doc[pno].get_pixmap(dpi=150, clip=pymupdf.Rect(*rect))
+                        imgs.append(Image.frombytes('RGB', (pix.width, pix.height), pix.samples))
+                    img = vstack(imgs)
+                    if img is not None:
+                        fig_asset = f'assets/ssqb-{qid}.png'
+                        img.save(ASSETS / f'ssqb-{qid}.png')
+                        stats['with-figure'] += 1
 
             diff_official, diff_internal = DIFF_MAP[meta['difficulty']]
             skill_name = meta['skill']

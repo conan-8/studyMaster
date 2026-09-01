@@ -1,0 +1,133 @@
+import { useEffect, useState } from 'react'
+import { TEST } from '../data/exam'
+import StartScreen from '../components/StartScreen'
+import ExamScreen from '../components/ExamScreen'
+import ReviewScreen from '../components/ReviewScreen'
+import TransitionScreen from '../components/TransitionScreen'
+import BreakScreen from '../components/BreakScreen'
+import ResultsScreen from '../components/ResultsScreen'
+
+type Screen = 'start' | 'exam' | 'review' | 'transition' | 'break' | 'results'
+
+// The 10-minute break sits between Section 1 (Reading and Writing) and Section 2 (Math).
+const BREAK_BEFORE_MODULE = 2
+
+export default function Home() {
+  const [screen, setScreen] = useState<Screen>('start')
+  const [moduleIdx, setModuleIdx] = useState(0)
+  const [answers, setAnswers] = useState<Record<string, string>>({})
+  const [flags, setFlags] = useState<Record<string, boolean>>({})
+  const [crossed, setCrossed] = useState<Record<string, string[]>>({})
+  const [index, setIndex] = useState(0)
+  const [secondsLeft, setSecondsLeft] = useState(0)
+
+  const module = TEST[moduleIdx]
+  const isLastModule = moduleIdx === TEST.length - 1
+  const running = (screen === 'exam' || screen === 'review') && module !== undefined
+
+  useEffect(() => {
+    if (!running) return
+    const t = window.setInterval(() => setSecondsLeft((s) => Math.max(0, s - 1)), 1000)
+    return () => window.clearInterval(t)
+  }, [running])
+
+  // Time expired: auto-advance to the transition screen (or submit on the last module).
+  useEffect(() => {
+    if (!running || secondsLeft !== 0) return
+    setScreen(isLastModule ? 'results' : 'transition')
+  }, [running, secondsLeft, isLastModule])
+
+  const beginModule = (i: number) => {
+    setModuleIdx(i)
+    setIndex(0)
+    setSecondsLeft(TEST[i].minutes * 60)
+    setScreen('exam')
+  }
+
+  const startTest = () => {
+    setAnswers({})
+    setFlags({})
+    setCrossed({})
+    beginModule(0)
+  }
+
+  const submitModule = () => {
+    setScreen(isLastModule ? 'results' : 'transition')
+  }
+
+  // After the "This Module Is Over" screen: break before Math, otherwise straight to the next module.
+  const advanceAfterTransition = () => {
+    const next = moduleIdx + 1
+    if (next === BREAK_BEFORE_MODULE) setScreen('break')
+    else beginModule(next)
+  }
+
+  const handleAnswer = (questionId: string, value: string) =>
+    setAnswers((prev) => ({ ...prev, [questionId]: value }))
+
+  const handleToggleFlag = (questionId: string) =>
+    setFlags((prev) => ({ ...prev, [questionId]: !prev[questionId] }))
+
+  const handleToggleCross = (questionId: string, letter: string) =>
+    setCrossed((prev) => {
+      const list = prev[questionId] ?? []
+      return {
+        ...prev,
+        [questionId]: list.includes(letter) ? list.filter((l) => l !== letter) : [...list, letter],
+      }
+    })
+
+  const jumpTo = (i: number) => {
+    setIndex(i)
+    setScreen('exam')
+  }
+
+  const exitToStart = () => setScreen('start')
+
+  if (screen === 'start') {
+    return <StartScreen onStart={startTest} />
+  }
+
+  if (screen === 'exam') {
+    return (
+      <ExamScreen
+        module={module}
+        index={index}
+        answers={answers}
+        flags={flags}
+        crossed={crossed}
+        secondsLeft={secondsLeft}
+        onAnswer={handleAnswer}
+        onToggleFlag={handleToggleFlag}
+        onToggleCross={handleToggleCross}
+        onNavigate={setIndex}
+        onReview={() => setScreen('review')}
+        onExit={exitToStart}
+      />
+    )
+  }
+
+  if (screen === 'review') {
+    return (
+      <ReviewScreen
+        module={module}
+        answers={answers}
+        flags={flags}
+        secondsLeft={secondsLeft}
+        onJump={jumpTo}
+        onBackToTest={() => setScreen('exam')}
+        onSubmit={submitModule}
+      />
+    )
+  }
+
+  if (screen === 'transition') {
+    return <TransitionScreen onContinue={advanceAfterTransition} />
+  }
+
+  if (screen === 'break') {
+    return <BreakScreen onResume={() => beginModule(BREAK_BEFORE_MODULE)} />
+  }
+
+  return <ResultsScreen onExit={exitToStart} />
+}

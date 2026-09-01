@@ -158,15 +158,6 @@
   #replay.show{ opacity:1; pointer-events:auto; }
   #replay:hover{ background:rgba(255,255,255,.2); }
 
-  /* ---------- intro video overlay (exam start) ---------- */
-  #introOverlay{ position:fixed; inset:0; z-index:80; background:#000; display:none; }
-  #introOverlay.show{ display:block; }
-  #introVideo{ width:100%; height:100%; object-fit:cover; }
-  #introSkip{ position:absolute; right:20px; bottom:20px; z-index:81; border:1px solid rgba(255,255,255,.4);
-    background:rgba(0,0,0,.4); color:#fff; font-size:13px; padding:8px 18px; border-radius:20px;
-    cursor:pointer; letter-spacing:.4px; }
-  #introSkip:hover{ background:rgba(255,255,255,.15); }
-
   /* ---------- exam screen (Examination direction: Swiss grid, red) ---------- */
   #examScreen{ position:fixed; inset:0; z-index:60; background:#fafaf7; color:#1a1a1a;
     display:none; flex-direction:column; font-family:'Archivo',-apple-system,sans-serif; }
@@ -281,11 +272,6 @@
     <div id="toast">Exam started &mdash; good luck!</div>
     <button id="replay">&#8634; Replay</button>
 
-    <div id="introOverlay">
-      <video id="introVideo" src="exam-intro.mp4" playsinline preload="auto"></video>
-      <button id="introSkip">Skip &rarr;</button>
-    </div>
-
     <div id="examScreen">
       <div id="examTop">
         <span class="brand">EXAM<em>/</em>SIM</span>
@@ -369,10 +355,7 @@
 
   document.getElementById('examBtn').addEventListener('click', ()=>{
     lockedUI.classList.remove('show');
-    introOverlay.classList.add('show');
-    const v = document.getElementById('introVideo');
-    v.currentTime = 0;
-    v.play().catch(()=>enterExam()); // autoplay blocked -> go straight in
+    enterExam();
   });
 </script>
 
@@ -382,7 +365,6 @@ const SUPABASE_URL = 'https://asnrquijopjjqfjvwalc.supabase.co';
 const ANON_KEY = 'sb_publishable_qg5QMNLb-D-BelY5G27kYA_UnZU0Hxh';
 const H = { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` };
 
-const introOverlay = document.getElementById('introOverlay');
 const examScreen  = document.getElementById('examScreen');
 const examInner   = document.getElementById('examInner');
 const qCounter    = document.getElementById('qCounter');
@@ -390,8 +372,6 @@ const verdict     = document.getElementById('verdict');
 const prevBtn     = document.getElementById('prevBtn');
 const nextBtn     = document.getElementById('nextBtn');
 const keyBtn      = document.getElementById('keyBtn');
-const introVideo  = document.getElementById('introVideo');
-const introSkip   = document.getElementById('introSkip');
 
 let generated = [];   // question_versions payloads
 let harvested = [];   // harvested_questions payloads (origin: bluebook | question_bank)
@@ -554,14 +534,10 @@ function numEq(a, b){
 }
 
 function enterExam(){
-  introOverlay.classList.remove('show');
-  introVideo.pause();
   examScreen.classList.add('show');
   if (!generated.length && !harvested.length) loadQuestions();
   else renderList();
 }
-introVideo.addEventListener('ended', enterExam);
-introSkip.addEventListener('click', enterExam);
 
 document.querySelectorAll('#srcSeg button').forEach(b => b.addEventListener('click', () => {
   document.querySelectorAll('#srcSeg button').forEach(x => x.classList.remove('on'));

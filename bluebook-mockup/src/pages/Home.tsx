@@ -5,7 +5,7 @@ import ReviewScreen from '../components/ReviewScreen'
 import TransitionScreen from '../components/TransitionScreen'
 import BreakScreen from '../components/BreakScreen'
 import ResultsScreen from '../components/ResultsScreen'
-import IntroScreen from '../components/IntroScreen'
+import LockScreen from '../components/LockScreen'
 import { assembleTest, fetchBank, selectQuestions, type BankQuestion, type SourceKind } from '../data/live'
 import type { ExamModule } from '../types/exam'
 
@@ -138,7 +138,7 @@ export default function Home() {
   }
 
   if (screen === 'intro') {
-    return <IntroScreen onDone={() => beginModule(0)} />
+    return <LockScreen onDone={() => beginModule(0)} />
   }
 
   if (screen === 'exam') {

@@ -65,7 +65,7 @@ export default function AnswerOptions({
               </span>
               <RichText
                 text={text}
-                className={`font-exam-serif text-[20px] font-medium leading-relaxed ${
+                className={`font-exam-serif text-[17px] font-medium leading-relaxed ${
                   isCrossed ? 'text-[#a3a8b3]' : 'text-[#1c1c1e]'
                 }`}
               />

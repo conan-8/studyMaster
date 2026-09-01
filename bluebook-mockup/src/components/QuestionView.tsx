@@ -215,7 +215,7 @@ export default function QuestionView({
   const promptBlock = (
     <RichText
       text={question.prompt}
-      className="mt-5 block whitespace-pre-line font-exam-serif text-[19px] font-medium leading-[1.7] text-[#1c1c1e]"
+      className="mt-5 block whitespace-pre-line font-exam-serif text-[17px] font-medium leading-[1.7] text-[#1c1c1e]"
     />
   )
 

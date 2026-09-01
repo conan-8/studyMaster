@@ -210,11 +210,33 @@ def render_question_image(doc, pages):
         y += i.height
     return out
 
+STEM_STARTERS = [
+    'Which choice', 'Based on the text', 'As used in the text', 'Which of the following',
+    'What is', 'What are', 'What value', 'How many', 'Who is', 'Where is', 'When is',
+]
+
 def split_stem(qtext: str):
     notes = qtext.count('•') >= 2 or 'has taken the following notes' in qtext
     if '______' in qtext:
         i = qtext.rfind('______')
-        passage, stem = qtext[: i + 6].strip(), ' '.join(qtext[i + 6:].split())
+        passage, rest = qtext[: i + 6].strip(), qtext[i + 6:].strip()
+        # everything after the blank is NOT all stem: a trailing context
+        # sentence (if any) belongs to the passage; only the actual question
+        # ("Which choice ...?") is the stem.
+        cuts = []
+        for s in STEM_STARTERS:
+            for m in re.finditer(re.escape(s), rest):
+                before = rest[: m.start()].rstrip()
+                if m.start() == 0 or before.endswith(('.', '?', '!”', '.”')):
+                    cuts.append(m.start())
+        if cuts:
+            k = max(cuts)
+            context = rest[:k].strip()
+            if context:
+                passage = (passage + ' ' + context).strip()
+            stem = ' '.join(rest[k:].split())
+        else:
+            stem = ' '.join(rest.split())
     else:
         paras = [p for p in re.split(r'\n\s*\n', qtext) if p.strip()]
         if len(paras) >= 2 and paras[-1].strip().endswith('?'):
@@ -226,8 +248,36 @@ def split_stem(qtext: str):
     stype = 'notes' if notes else ('passage' if passage else 'none')
     return stem, passage, stype
 
+def page_text_minus_rect(page, rect, pad=12):
+    """Page text with words inside the figure bbox dropped — a vector table's
+    cell text (numbers, axis labels, caption) must not leak into the passage."""
+    if rect is None:
+        return page.get_text()
+    zone = pymupdf.Rect(rect[0] - pad, rect[1] - pad, rect[2] + pad, rect[3] + pad)
+    words = page.get_text('words')  # x0,y0,x1,y1, word, block, line, word_no
+    kept = []
+    for w in words:
+        cx = (w[0] + w[2]) / 2
+        cy = (w[1] + w[3]) / 2
+        if not zone.contains(pymupdf.Point(cx, cy)):
+            kept.append(w)
+    lines = {}
+    for w in kept:
+        lines.setdefault((w[5], w[6]), []).append((w[7], w[4]))
+    out = []
+    for key in sorted(lines):
+        out.append(' '.join(word for _, word in sorted(lines[key])))
+    return '\n'.join(out)
+
+
 def parse_question(doc, pages):
-    text = '\n'.join(doc[p].get_text() for p in pages)
+    # RW: find the figure first so its text can be filtered out of the passage
+    fig = extract_figure(doc, pages)
+    fig_rect = fig[1] if fig else None
+    fig_page = fig[0] if fig else None
+    text = '\n'.join(
+        page_text_minus_rect(doc[p], fig_rect if p == fig_page else None) for p in pages
+    )
     text = '\n'.join(repair_line(ln) for ln in text.split('\n'))
     text = CTRL_JUNK.sub('', text)
     m = re.search(r'\nQuestion\n', text)
@@ -300,7 +350,7 @@ def parse_question(doc, pages):
             break
         rationale = stripped
     return dict(meta=meta, stem=stem, passage=passage, stype=stype, qtype=qtype,
-                choices=choices, correct=correct, rationale=rationale)
+                choices=choices, correct=correct, rationale=rationale, figure_pages=fig)
 
 # --- main ---------------------------------------------------------------------
 
@@ -369,9 +419,8 @@ def main():
                     img.save(ASSETS / f'ssqb-{qid}.png')
                     stats['with-image'] += 1
             else:
-                fig = extract_figure(doc, pages)
-                if fig:
-                    pno, rect = fig
+                if parsed['figure_pages']:
+                    pno, rect = parsed['figure_pages']
                     pix = doc[pno].get_pixmap(dpi=150, clip=pymupdf.Rect(*rect))
                     fig_asset = f'assets/ssqb-{qid}.png'
                     pix.save(ASSETS / f'ssqb-{qid}.png')

@@ -76,6 +76,78 @@ function underlines(text: string): string {
   return text.replace(/<u>(.+?)<\/u>/g, '[[$1]]')
 }
 
+const SPEAKER_RX = /^[A-Z][A-Z' .]{1,24}:/
+const VERSE_RX = /\b(poem|poetry|sonnet|verse|play|drama)\b/i
+
+/** Notes passages (rhetorical synthesis): guarantee one bulleted line per
+ *  note. Wrapped continuation fragments (start with punctuation/lowercase)
+ *  are folded back into the previous note. */
+function bulletNotes(text: string): string {
+  const out: string[] = []
+  for (const raw of text.split('\n')) {
+    const l = raw.trim()
+    if (!l) {
+      out.push('')
+      continue
+    }
+    if (l.startsWith('•') || l.startsWith('-') || l.startsWith('–')) {
+      out.push(l)
+      continue
+    }
+    if (/^(While researching|A student|The student)/.test(l)) {
+      out.push(l)
+      continue
+    }
+    if ((/^[.,"'”’)]/.test(l) || /^[a-z]/.test(l)) && out.length) {
+      out[out.length - 1] += ` ${l}`
+      continue
+    }
+    out.push(`• ${l}`)
+  }
+  return out.join('\n')
+}
+
+/** Hard-wrapped PDF prose: join lines so the text reflows to the pane width
+ *  when the divider is dragged. Verse and plays keep their line breaks;
+ *  Text headings and speaker labels always start a new paragraph. */
+function reflow(text: string): string {
+  const lines = text
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l)
+  if (lines.length <= 1) return text.trim()
+  if (VERSE_RX.test(text.slice(0, 250))) return lines.join('\n')
+  const blocks: string[] = []
+  let cur = ''
+  const flush = () => {
+    if (cur) {
+      blocks.push(cur)
+      cur = ''
+    }
+  }
+  for (const l of lines) {
+    if (l.startsWith('**Text') || SPEAKER_RX.test(l)) {
+      flush()
+      cur = l
+      continue
+    }
+    if (cur && cur.length >= 40 && !cur.startsWith('**')) cur = `${cur} ${l}`
+    else {
+      flush()
+      cur = l
+    }
+  }
+  flush()
+  return blocks.join('\n\n')
+}
+
+/** Passage cleanup: bold Text 1/Text 2 headings, bullet the notes passages,
+ *  and unwrap hard-broken prose so lines always fit the pane. */
+function formatPassage(text: string, archetype: string): string {
+  const t = underlines(text).replace(/^(Text\s+\w+)\s*$/gm, '**$1**')
+  return archetype === 'rhetorical-synthesis' ? bulletNotes(t) : reflow(t)
+}
+
 function prettyTaxonomy(code: string): string {
   const slug = code.includes(':') ? code.split(':')[1]! : code
   return slug
@@ -115,7 +187,7 @@ function toQuestion(
     archetype,
     domain,
     prompt: payload.stem,
-    passage: stim?.text ? underlines(stim.text) : undefined,
+    passage: stim?.text ? formatPassage(stim.text, archetype) : undefined,
     table,
     options: payload.choices?.map((c) => c.text),
     correct: payload.correctAnswer,

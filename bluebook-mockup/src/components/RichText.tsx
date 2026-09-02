@@ -6,6 +6,7 @@ import type { ReactNode } from 'react'
  * Renders exam content text with light markup:
  *   \(...\)  → inline LaTeX (KaTeX) — generated bank questions carry real math
  *   [[...]]  → underlined span (used for "underlined portion" questions)
+ *   **...**  → bold (Text 1/Text 2 headings in paired-passage questions)
  *   *...*    → italic (used for math variables, book titles, etc.)
  */
 
@@ -32,7 +33,7 @@ function safeKatex(tex: string): string {
 function renderMarkup(text: string, keyPrefix: string): ReactNode[] {
   const underlineParts = text.split(/\[\[(.+?)\]\]/g)
   return underlineParts.map((part, i) => {
-    const inner = renderItalics(part, `${keyPrefix}-u${i}`)
+    const inner = renderBold(part, `${keyPrefix}-u${i}`)
     return i % 2 === 1 ? (
       <span key={`${keyPrefix}-u${i}`} className="underline underline-offset-2">
         {inner}
@@ -41,6 +42,17 @@ function renderMarkup(text: string, keyPrefix: string): ReactNode[] {
       <span key={`${keyPrefix}-u${i}`}>{inner}</span>
     )
   })
+}
+
+function renderBold(text: string, keyPrefix: string): ReactNode[] {
+  const parts = text.split(/\*\*(.+?)\*\*/g)
+  return parts.map((part, i) =>
+    i % 2 === 1 ? (
+      <strong key={`${keyPrefix}-b${i}`}>{renderItalics(part, `${keyPrefix}-b${i}`)}</strong>
+    ) : (
+      <span key={`${keyPrefix}-b${i}`}>{renderItalics(part, `${keyPrefix}-b${i}`)}</span>
+    ),
+  )
 }
 
 function renderItalics(text: string, keyPrefix: string): ReactNode[] {

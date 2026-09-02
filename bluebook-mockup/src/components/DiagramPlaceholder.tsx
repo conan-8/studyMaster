@@ -60,7 +60,7 @@ function LiveSvg({ diagram, scale }: { diagram: NonNullable<DiagramSpec['live']>
   )
 }
 
-const ZOOM_STEPS = [50, 75, 100, 125, 150, 200]
+const ZOOM_STEPS = [50, 75, 100, 125, 150, 200, 250, 300, 400]
 
 export default function DiagramPlaceholder({
   diagram,
@@ -80,7 +80,7 @@ export default function DiagramPlaceholder({
         <img
           src={image}
           alt="Question figure"
-          style={{ width: `${Math.min(scale * 100, 100)}%`, maxWidth: '100%' }}
+          style={{ width: `${Math.min(scale * 100, 400)}%` }}
           className="object-contain"
         />
       ) : diagram?.live ? (
@@ -132,13 +132,13 @@ export default function DiagramPlaceholder({
 
       {fullscreen && (
         <div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 p-8"
+          className="fixed inset-0 z-[60] flex h-screen w-screen items-center justify-center overflow-auto bg-black p-4"
           role="dialog"
           aria-modal="true"
           onClick={() => setFullscreen(false)}
         >
           <div
-            className="relative max-h-full max-w-3xl overflow-auto rounded-lg bg-white p-10"
+            className="relative m-auto max-w-[95vw] rounded-lg bg-white p-10"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -150,7 +150,7 @@ export default function DiagramPlaceholder({
             </button>
             <div className="flex justify-center">
               {image ? (
-                <img src={image} alt="Question figure" className="max-h-[70vh] max-w-full object-contain" />
+                <img src={image} alt="Question figure" className="max-h-[92vh] max-w-full object-contain" />
               ) : diagram?.live ? (
                 <LiveSvg diagram={diagram.live} scale={2} />
               ) : (

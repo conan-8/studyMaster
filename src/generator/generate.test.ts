@@ -313,9 +313,10 @@ test('(b) invalid-then-valid: two attempts, repair message carries error strings
   assert.equal(retryMessages[1]!.role, 'user');
   assert.equal(retryMessages[2]!.role, 'assistant');
   assert.equal(retryMessages[2]!.content, JSON.stringify(invalid), 'assistant echo is previous raw output');
-  const repair = retryMessages[3]!;
-  assert.equal(repair.role, 'user');
-  assert.ok(repair.content.startsWith('Your output failed validation. Fix ALL of these'));
+   const repair = retryMessages[3]!;
+   assert.equal(repair.role, 'user');
+   assert.ok(typeof repair.content === 'string', 'repair message is a text message');
+   assert.ok(repair.content.startsWith('Your output failed validation. Fix ALL of these'));
   assert.ok(repair.content.includes('- /difficultyTarget must equal the requested difficulty 3'));
   assert.ok(repair.content.includes('SAT_RW:transitions-not-in-library'));
 
@@ -835,13 +836,16 @@ test('(j) verify: verifier disagreement → rejected with reasoning, repaired on
   assert.equal(provider.calls.length, 4, 'generation + verification calls interleaved per attempt');
   const verifierCall = provider.calls[1]!;
   assert.equal(verifierCall.messages.length, 2);
-  assert.match(verifierCall.messages[0]!.content, /independent expert SAT solver/);
+   const verifierContent = verifierCall.messages[0]!.content;
+   assert.ok(typeof verifierContent === 'string', 'verifier prompt is a text message');
+   assert.match(verifierContent, /independent expert SAT solver/);
   assert.equal(verifierCall.jsonMode, true);
 
   // the attempt-2 repair message carries the verifier reasoning
-  const repair = provider.calls[2]!.messages[3]!;
-  assert.equal(repair.role, 'user');
-  assert.ok(repair.content.includes(reasoning));
+   const repair = provider.calls[2]!.messages[3]!;
+   assert.equal(repair.role, 'user');
+   assert.ok(typeof repair.content === 'string', 'repair message is a text message');
+   assert.ok(repair.content.includes(reasoning));
 });
 
 test('(j) verify: unparseable verifier output → accepted as unverified (fail-open)', async () => {

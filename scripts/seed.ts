@@ -218,7 +218,7 @@ async function main(): Promise<void> {
     // exams) — the last two live in harvested_questions, split by origin.
     const bluebookDir = path.join(REPO_ROOT, 'research', 'sat', 'question-bank');
     const bluebookFiles = fs.existsSync(bluebookDir)
-      ? fs.readdirSync(bluebookDir).filter((n) => n.endsWith('.json'))
+      ? fs.readdirSync(bluebookDir).filter((n) => n.startsWith('ssqb-') && n.endsWith('.json'))
       : [];
     if (bluebookFiles.length === 0) {
       console.log('seed: no harvested SAT questions under research/sat/question-bank/ — harvested seeding skipped');

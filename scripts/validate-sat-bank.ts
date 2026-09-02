@@ -88,7 +88,7 @@ runSuite('sat-bank', (reporter) => {
   let checked = 0;
 
   // Question bank (recursive).
-  const bankFiles = walkJson(BANK_DIR);
+  const bankFiles = walkJson(BANK_DIR).filter((f) => path.basename(f).startsWith('ssqb-'));
   if (bankFiles.length === 0) {
     reporter.note('research/sat/question-bank/ has no .json files — bank validation skipped');
   } else {

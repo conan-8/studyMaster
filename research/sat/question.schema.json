@@ -123,9 +123,32 @@
         }
       }
     },
+    "needsTranscription": {
+      "type": "boolean",
+      "description": "true when the hollow math text layer left stem/choices unrecoverable at harvest time; a vision pass must fill them"
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "at"],
+      "properties": {
+        "source": {
+          "type": "string",
+          "pattern": "^(pdf-text|ssqb-api|vision(:.+)?)$",
+          "description": "where the current content came from; vision entries carry the model as vision:<model>"
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "verified": {
+          "type": "boolean",
+          "description": "an independent-solver pass confirmed the transcription"
+        }
+      }
+    },
     "stem": {
-      "type": "string",
-      "minLength": 1
+      "type": "string"
     },
     "choices": {
       "type": "array",
@@ -188,8 +211,15 @@
     },
     {
       "if": {
-        "properties": { "questionType": { "const": "mcq" } },
-        "required": ["questionType"]
+        "allOf": [
+          { "properties": { "questionType": { "const": "mcq" } }, "required": ["questionType"] },
+          {
+            "not": {
+              "properties": { "needsTranscription": { "const": true } },
+              "required": ["needsTranscription"]
+            }
+          }
+        ]
       },
       "then": {
         "properties": {
@@ -203,6 +233,17 @@
             "enum": ["A", "B", "C", "D"]
           }
         }
+      }
+    },
+    {
+      "if": {
+        "not": {
+          "properties": { "needsTranscription": { "const": true } },
+          "required": ["needsTranscription"]
+        }
+      },
+      "then": {
+        "properties": { "stem": { "minLength": 1 } }
       }
     },
     {

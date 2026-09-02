@@ -3,6 +3,7 @@
  */
 
 export type {
+  ChatContentPart,
   ChatMessage,
   LLMRequest,
   LLMUsage,
@@ -25,6 +26,7 @@ export type { OpenRouterOptions } from './openrouter.js';
 export {
   KimiProvider,
   KIMI_URL,
+  KIMI_VISION_DEFAULT_MODEL,
   DEFAULT_MODEL as KIMI_DEFAULT_MODEL,
   DEFAULT_TIMEOUT_MS as KIMI_DEFAULT_TIMEOUT_MS,
 } from './kimi.js';

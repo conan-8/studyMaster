@@ -6,7 +6,8 @@ Input:  research/sat/harvest-source/  — two PDF pairs, one per section:
           Reading & Writing: EVERYTHING.pdf + 'EXCLUDING bluebook ones.pdf'
           Math:              'EVERYTHING math.pdf' + 'EXCLUDING bluebook math.pdf'
 Output: research/sat/question-bank/ssqb-<id>.json  +  research/sat/index.jsonl
-        (merge mode: existing records are kept, new ones appended)
+        (merge mode: existing records are kept, new ones appended;
+        --force-math re-harvests math records even if already harvested)
 
 Origin rule: ID in both PDFs -> question_bank; ID in the everything PDF only
 -> bluebook; ID in the excluding PDF only -> hard error (not a subset).
@@ -67,8 +68,8 @@ SKILL_SLUGS = {
     'nonlinear functions': 'nonlinear-functions',
     'ratios rates proportional relationships and units': 'ratios-rates-proportions',
     'percentages': 'percentages',
-    'one-variable data distributions and measures of center and spread': 'one-variable-data',
-    'two-variable data models and scatterplots': 'two-variable-data',
+    'one variable data distributions and measures of center and spread': 'one-variable-data',
+    'two variable data models and scatterplots': 'two-variable-data',
     'probability and conditional probability': 'probability-conditional',
     'inference from sample statistics and margin of error': 'sample-statistics-margin-error',
     'evaluating statistical claims observational studies and experiments': 'evaluating-claims',
@@ -354,20 +355,33 @@ def page_text_minus_rect(page, rect, pad=3):
 
 
 def parse_question(doc, pages):
-    # RW: find the figure first so its text can be filtered out of the passage
-    figs = extract_figure(doc, pages)
-    fig_by_page = {pno: rect for pno, rect in figs}
-    text = '\n'.join(
-        page_text_minus_rect(doc[p], fig_by_page.get(p)) for p in pages
-    )
-    text = '\n'.join(repair_line(ln) for ln in text.split('\n'))
-    text = CTRL_JUNK.sub('', text)
-    m = re.search(r'\nQuestion\n', text)
-    if not m:
-        return None
-    meta = split_meta(text[:m.start()])
-    if meta is None:
-        return None
+    # Math pages are vector-only: the RW figure filter below would treat the
+    # whole question as one big drawing and swallow the metadata table, the
+    # answer key, and even the Question marker. Peek at the raw text first —
+    # if this is a math question, keep the raw text (the question body is
+    # rendered to PNG wholesale instead of being figure-filtered).
+    raw = '\n'.join(doc[p].get_text() for p in pages)
+    raw = '\n'.join(repair_line(ln) for ln in raw.split('\n'))
+    raw = CTRL_JUNK.sub('', raw)
+    m_raw = re.search(r'\nQuestion\n', raw)
+    meta_raw = split_meta(raw[: m_raw.start()]) if m_raw else None
+    if meta_raw is not None and meta_raw['section'] == 'math':
+        figs, text, m, meta = [], raw, m_raw, meta_raw
+    else:
+        # RW: find the figure first so its text can be filtered out of the passage
+        figs = extract_figure(doc, pages)
+        fig_by_page = {pno: rect for pno, rect in figs}
+        text = '\n'.join(
+            page_text_minus_rect(doc[p], fig_by_page.get(p)) for p in pages
+        )
+        text = '\n'.join(repair_line(ln) for ln in text.split('\n'))
+        text = CTRL_JUNK.sub('', text)
+        m = re.search(r'\nQuestion\n', text)
+        if not m:
+            return None
+        meta = split_meta(text[: m.start()])
+        if meta is None:
+            return None
     is_math = meta['section'] == 'math'
     body = text[m.end():]
 
@@ -394,7 +408,7 @@ def parse_question(doc, pages):
             for k, cm in enumerate(run):
                 seg = after[cm.end(): run[k + 1].start() if k + 1 < 4 else run[3].end() + d_end]
                 seg = ' '.join(seg.split())
-                choices.append({'id': cm.group(1), 'text': seg if seg else ('[image]' if is_math else seg)})
+                choices.append({'id': cm.group(1), 'text': seg})
             rationale = ' '.join(tail[d_end:].split()).strip()
         else:
             # math export sometimes drops the Answer marker -> treat as grid-in
@@ -402,9 +416,35 @@ def parse_question(doc, pages):
     else:
         qtext, choices, rationale = body, [], ''
 
-    qtype = 'grid_in' if not choices else 'mcq'
+    if is_math:
+        # Math text layer is hollow: the answer key + rationale regularly land
+        # in qtext (grid-in exports drop the Answer marker entirely). They
+        # belong to correctAnswer/rationale extraction (which reads `body`),
+        # never to the stem — cut qtext at the first marker before splitting.
+        m_key = re.search(r'Correct Answer:?|\bRationale\b', qtext)
+        if m_key:
+            qtext = qtext[: m_key.start()]
+    if choices:
+        qtype = 'mcq'
+    elif re.search(r'Correct Answer:?\s*-?\.?[0-9]', body):
+        qtype = 'grid_in'
+    else:
+        # no choices and no numeric answer key: keep mcq with empty choices —
+        # the vision pass must transcribe the whole question.
+        qtype = 'mcq'
+    needs_transcription = False
     # stem/passage
     stem, passage, stype = split_stem(qtext)
+    if is_math:
+        # stem quality gate: never emit a polluted or fragment stem — an
+        # unusable stem becomes '' and flags the record for transcription.
+        if not stem or stem == '?' or len(stem) < 15 or '?' not in stem:
+            stem = ''
+            needs_transcription = True
+        if qtype == 'mcq' and not choices:
+            needs_transcription = True
+        if any(not c['text'] for c in choices):
+            needs_transcription = True
     # correct answer
     correct = None
     if m := re.search(r'Correct Answer:?\s*([A-D])(?![0-9a-z./])', body):
@@ -420,7 +460,7 @@ def parse_question(doc, pages):
             rem = {'A', 'B', 'C', 'D'} - bad
             correct = rem.pop() if len(rem) == 1 else None
     else:
-        if m := re.search(r'Correct Answer:?\s*(\.?[0-9][0-9,./ ]*)', body):
+        if m := re.search(r'Correct Answer:?\s*(-?\.?[0-9][0-9,./ ]*)', body):
             tokens = [t.strip(' .') for t in m.group(1).split(',')]
             tokens = [t for t in tokens if t]
             frac = next((t for t in tokens if '/' in t), None)
@@ -432,7 +472,8 @@ def parse_question(doc, pages):
             break
         rationale = stripped
     return dict(meta=meta, stem=stem, passage=passage, stype=stype, qtype=qtype,
-                choices=choices, correct=correct, rationale=rationale, figure_pages=figs)
+                choices=choices, correct=correct, rationale=rationale, figure_pages=figs,
+                needsTranscription=needs_transcription)
 
 # --- main ---------------------------------------------------------------------
 
@@ -445,6 +486,7 @@ def load_pdf_pair(all_path: Path, excl_path: Path):
     return doc, ids_b
 
 def main():
+    force_math = '--force-math' in sys.argv  # re-harvest math records even if present
     pairs = [
         (SRC / 'EVERYTHING.pdf', SRC / 'EXCLUDING bluebook ones.pdf'),
         (SRC / 'EVERYTHING math.pdf', SRC / 'EXCLUDING bluebook math.pdf'),
@@ -479,13 +521,14 @@ def main():
             print(f'FATAL {all_path.name}: {len(only_b)} IDs in the excluding PDF but not in the all PDF — refusing')
             sys.exit(1)
         print(f'{all_path.name}: {len(chunks)} questions; excluding-set {len(ids_b)}')
+        is_math_pair = 'math' in all_path.name.lower()
 
         for qid, pages in chunks:
-            if f'ssqb-{qid}' in existing:
+            if f'ssqb-{qid}' in existing and not (force_math and is_math_pair):
                 stats['already-harvested'] += 1
                 continue
             parsed = parse_question(doc, pages)
-            if parsed is None or parsed['correct'] is None or not parsed['stem']:
+            if parsed is None or parsed['correct'] is None or (not parsed['stem'] and not parsed['needsTranscription']):
                 stats['parse-failed'] += 1
                 problems.append(qid)
                 continue
@@ -536,6 +579,11 @@ def main():
                 'harvestedAt': now,
                 'allowedUses': ['internal_eval'],
             }
+            if meta['section'] == 'math':
+                # math-only field: RW records stay byte-identical to before
+                rec['needsTranscription'] = parsed['needsTranscription']
+                if parsed['needsTranscription']:
+                    stats['needs-transcription'] += 1
             name = f'ssqb-{qid}.json'
             (BANK / name).write_text(json.dumps(rec, indent=2) + '\n')
             existing.add(f'ssqb-{qid}')

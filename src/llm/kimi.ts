@@ -9,6 +9,13 @@
  * Note: Kimi coding models are reasoning models — they spend max_tokens on
  * reasoning_content before emitting content, so the token budget is higher
  * than for chat models and truncation with empty content gets its own error.
+ *
+ * Vision: the coding endpoint accepts multimodal messages (ChatMessage.content
+ * as an array of {type:'text'} / {type:'image_url'} parts, data: URLs fine).
+ * KIMI_VISION_DEFAULT_MODEL is the default for vision workloads such as
+ * scripts/transcribe-math.ts; 'k3' was verified against the live endpoint
+ * (2026-09) to accept image parts and transcribe rendered SAT question PNGs
+ * faithfully. Override with the TRANSCRIBE_MODEL env var there.
  */
 
 import { LLMError } from './types.js';
@@ -16,6 +23,8 @@ import type { LLMProvider, LLMRequest, LLMResponse, LLMUsage } from './types.js'
 
 export const KIMI_URL = 'https://api.kimi.com/coding/v1/chat/completions';
 export const DEFAULT_MODEL = 'k3';
+/** Vision-capable default for transcription workloads (see header comment). */
+export const KIMI_VISION_DEFAULT_MODEL = 'k3';
 export const DEFAULT_TIMEOUT_MS = 180_000;
 const DEFAULT_TEMPERATURE = 1; // k3 (and other coding models) only accept 1
 const DEFAULT_MAX_TOKENS = 16384;

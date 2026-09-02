@@ -7,9 +7,25 @@
  * are interchangeable and chosen via resolveProvider() in factory.ts.
  */
 
+/**
+ * One part of a multimodal chat message (OpenAI chat-completions shape).
+ * 'text' carries plain text; 'image_url' carries an image by URL — a
+ * data: URL (e.g. data:image/png;base64,...) is accepted by the Kimi
+ * provider, which is how local question renders are sent for transcription.
+ */
+export type ChatContentPart =
+  | { type: 'text'; text: string }
+  | { type: 'image_url'; image_url: { url: string } };
+
 export interface ChatMessage {
   role: 'system' | 'user' | 'assistant';
-  content: string;
+  /**
+   * Plain string for text-only messages (the common case; every pre-vision
+   * caller keeps working unchanged), or an array of parts for multimodal
+   * (vision) requests. Providers pass parts through to the wire unchanged;
+   * only construct part arrays for providers/models that accept images.
+   */
+  content: string | ChatContentPart[];
 }
 
 export interface LLMRequest {

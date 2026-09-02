@@ -3,8 +3,8 @@
  * bundles these JSON imports inline) so the renderers never touch the
  * filesystem, then re-exports the public renderer API.
  *
- * Build: npm run build:sim  ->  simulator/renderers.js (IIFE, global
- * StudyMasteRenderers). Usage in the simulator HTML:
+ * Build: npm run build:sim  ->  bluebook-mockup/public/renderers.js (IIFE,
+ * global StudyMasteRenderers). Usage in the simulator HTML:
  *   const svg = StudyMasteRenderers.render('sat-math:graph-line', params);
  */
 

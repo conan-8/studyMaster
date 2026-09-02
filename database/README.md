@@ -125,7 +125,8 @@ Rendering inside the simulator:
   from CDN and auto-render `\( ... \)` spans.
 - Figures: `payload.stimulus.diagram` holds `{archetypeId, parameters}`.
   Render with the prebuilt bundle: `npm run build:sim` produces
-  `simulator/renderers.js` (gitignored; IIFE global `StudyMasteRenderers`):
+  `bluebook-mockup/public/renderers.js` (gitignored; IIFE global
+  `StudyMasteRenderers`; `npm run build:app` copies it into the served app):
   ```js
   const d = payload.stimulus.diagram;
   container.innerHTML = StudyMasteRenderers.render(d.archetypeId, d.parameters);

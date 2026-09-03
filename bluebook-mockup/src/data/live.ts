@@ -55,6 +55,7 @@ interface CuratedBlock {
   correctAnswer: string
   rationale: string | null
   diagram: string | null
+  review?: { status: 'approved' | 'returned'; reasons?: string[]; note?: string | null; at: string }
 }
 
 interface RawHarvested {
@@ -97,6 +98,9 @@ export interface BankQuestion extends Question {
   domain: string
   /** Vision-transcribed bank items carry provenance { verified: true }. */
   verified?: boolean
+  /** Curated records only: true once approved in the /review tool. Curated
+   *  questions enter the simulator pools only when approved. */
+  approved?: boolean
 }
 
 /** <u>x</u> → [[x]] so the mockup's RichText underlines it. */
@@ -240,6 +244,7 @@ function toCuratedQuestion(r: RawHarvested, c: CuratedBlock): BankQuestion {
     archetype: c.skill,
     domain: c.domain,
     verified: true,
+    approved: c.review?.status === 'approved',
     prompt: c.prompt,
     passage: c.info ?? undefined,
     options: c.options.length > 0 ? c.options.map((o) => o.text) : undefined,
@@ -314,7 +319,9 @@ export function selectQuestions(
   const onlyVerified = (qs: BankQuestion[]): BankQuestion[] =>
     verifiedOnly ? qs.filter((q) => q.verified === true) : qs
   if (source === 'generated') return onlyVerified(bank.generated)
-  let items = bank.harvested
+  // curated records (approved !== undefined) require approval; non-curated
+  // records (math, fixtures) keep the current behavior until curated.
+  let items = bank.harvested.filter((q) => q.approved === undefined || q.approved === true)
   if (excludeBluebook) items = items.filter((q) => q.kind !== 'bluebook')
   return onlyVerified(items.filter((q) => q.kind === source))
 }

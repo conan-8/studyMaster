@@ -8,6 +8,14 @@
  * at / (index.html), built Bluebook simulator at /bluebook-practice-test.html.
  * '/' resolves to index.html, directory paths get their index.html, path
  * traversal is refused, anything else missing is a plain 404. Exit 0.
+ *
+ * Review API (same-origin, used by the /review route of the built simulator):
+ *   GET  /api/curated-status  -> { "<sourceId>": <review block> } for every
+ *                                curated record carrying one
+ *   POST /api/review          -> { sourceId, status: approved|returned,
+ *                                reasons?, note? }; read-modify-writes the
+ *                                review block into research/sat/curated/
+ *                                ssqb-<id>.json (source of truth).
  */
 import fs from 'node:fs';
 import http from 'node:http';
@@ -39,19 +47,122 @@ function send(res: http.ServerResponse, status: number, body: string): void {
   res.end(body);
 }
 
+function sendJson(res: http.ServerResponse, status: number, body: unknown): void {
+  const json = JSON.stringify(body);
+  res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': Buffer.byteLength(json) });
+  res.end(json);
+}
+
+// --- review API ----------------------------------------------------------------
+
+const CURATED_DIR = path.join(REPO_ROOT, 'research', 'sat', 'curated');
+const SOURCE_ID_RE = /^ssqb-[0-9a-f]+$/;
+const REVIEW_STATUSES = ['approved', 'returned'];
+const REVIEW_REASONS = ['info-prompt-split', 'options', 'figure', 'other'];
+
+interface ReviewBlock {
+  status: string;
+  reasons?: string[];
+  note?: string | null;
+  at: string;
+}
+
+let statusCache: Record<string, ReviewBlock> | null = null;
+
+function loadStatuses(): Record<string, ReviewBlock> {
+  if (statusCache) return statusCache;
+  const out: Record<string, ReviewBlock> = {};
+  if (fs.existsSync(CURATED_DIR)) {
+    for (const name of fs.readdirSync(CURATED_DIR).filter((n) => n.startsWith('ssqb-') && n.endsWith('.json'))) {
+      try {
+        const rec = JSON.parse(fs.readFileSync(path.join(CURATED_DIR, name), 'utf8')) as {
+          sourceId?: string;
+          review?: ReviewBlock;
+        };
+        if (rec.sourceId && rec.review) out[rec.sourceId] = rec.review;
+      } catch {
+        // malformed record: skip
+      }
+    }
+  }
+  statusCache = out;
+  return out;
+}
+
+/** POST /api/review — validate, stamp, and write the review block. */
+function handleReview(req: http.IncomingMessage, res: http.ServerResponse): void {
+  let body = '';
+  req.on('data', (chunk) => {
+    body += chunk;
+    if (body.length > 64 * 1024) req.destroy();
+  });
+  req.on('end', () => {
+    let payload: unknown;
+    try {
+      payload = JSON.parse(body);
+    } catch {
+      sendJson(res, 400, { error: 'invalid JSON body' });
+      return;
+    }
+    const p = (payload ?? {}) as Record<string, unknown>;
+    const sourceId = typeof p.sourceId === 'string' ? p.sourceId : '';
+    const status = typeof p.status === 'string' ? p.status : '';
+    if (!SOURCE_ID_RE.test(sourceId)) {
+      sendJson(res, 400, { error: 'sourceId must match ^ssqb-[0-9a-f]+$' });
+      return;
+    }
+    if (!REVIEW_STATUSES.includes(status)) {
+      sendJson(res, 400, { error: 'status must be approved|returned' });
+      return;
+    }
+    let reasons: string[] | undefined;
+    if (p.reasons !== undefined) {
+      if (!Array.isArray(p.reasons) || p.reasons.some((r) => typeof r !== 'string' || !REVIEW_REASONS.includes(r))) {
+        sendJson(res, 400, { error: `reasons must be a subset of ${REVIEW_REASONS.join(', ')}` });
+        return;
+      }
+      reasons = p.reasons as string[];
+    }
+    const note = p.note === undefined || p.note === null ? null : typeof p.note === 'string' ? p.note : null;
+
+    const file = path.join(CURATED_DIR, `${sourceId}.json`);
+    if (!fs.existsSync(file)) {
+      sendJson(res, 404, { error: 'no curated record with that sourceId' });
+      return;
+    }
+    const rec = JSON.parse(fs.readFileSync(file, 'utf8')) as Record<string, unknown>;
+    const review: ReviewBlock = { status, at: new Date().toISOString() };
+    if (reasons && reasons.length > 0) review.reasons = reasons;
+    review.note = note;
+    rec.review = review;
+    fs.writeFileSync(file, JSON.stringify(rec, null, 2) + '\n');
+    statusCache = null;
+    sendJson(res, 200, { sourceId, review });
+  });
+}
+
 const server = http.createServer((req, res) => {
   const method = req.method ?? 'GET';
   const requestUri = req.url ?? '/';
-  if (method !== 'GET' && method !== 'HEAD') {
-    send(res, 405, 'method not allowed\n');
-    return;
-  }
 
   let pathname: string;
   try {
     pathname = decodeURIComponent(new URL(requestUri, `http://${HOST}:${PORT}`).pathname);
   } catch {
     send(res, 400, 'bad request\n');
+    return;
+  }
+
+  if (method === 'GET' && pathname === '/api/curated-status') {
+    sendJson(res, 200, loadStatuses());
+    return;
+  }
+  if (method === 'POST' && pathname === '/api/review') {
+    handleReview(req, res);
+    return;
+  }
+  if (method !== 'GET' && method !== 'HEAD') {
+    send(res, 405, 'method not allowed\n');
     return;
   }
 

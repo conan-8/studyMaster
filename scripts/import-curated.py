@@ -102,6 +102,7 @@ def main() -> int:
     seen: set[str] = set()
     figures_copied = 0
     figures_missing: list[str] = []
+    reviews_kept = 0
 
     for row_no, r in enumerate(rows[1:], start=2):
         if r is None or all(v is None for v in r):
@@ -201,7 +202,16 @@ def main() -> int:
             'curatedAt': now,
             'allowedUses': ['internal_eval'],
         }
+        # preserve any manual review decision across re-imports
         out = CURATED / f'ssqb-{qid}.json'
+        if out.exists():
+            try:
+                old_review = json.loads(out.read_text()).get('review')
+                if old_review:
+                    rec['review'] = old_review
+                    reviews_kept += 1
+            except json.JSONDecodeError:
+                pass
         out.write_text(json.dumps(rec, indent=2) + '\n')
         written.append({
             'sourceId': rec['sourceId'], 'section': rec['section'], 'domain': rec['domain'],
@@ -221,6 +231,7 @@ def main() -> int:
         f'records written:  {len(written)}',
         f'figures copied:   {figures_copied}',
         f'figures missing:  {len(figures_missing)} {figures_missing}',
+        f'review blocks kept: {reviews_kept}',
         f'skipped rows:     {len(skipped)}',
         f'cross-check flags: {len(flags)}',
         '',

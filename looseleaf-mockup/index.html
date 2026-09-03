@@ -625,8 +625,6 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
           <h1>The <em>simulator</em></h1>
           <span class="sub">FULL-LENGTH &middot; TIMED &middot; BLUEBOOK-STYLE</span>
         </div>
-        <div class="seg"><button class="on" data-sim="sat">SAT</button><button data-sim="ap">AP</button></div>
-
         <div id="sim-sat">
           <div class="simcards">
             <div class="simcard" data-report="score-report"><span class="st">PRACTICE TEST #1 &middot; COMPLETED</span><h3>Digital SAT &mdash; Full Length</h3><div class="sm">2H 14M &middot; 98 QUESTIONS &middot; SCORED SEP 1</div>
@@ -669,42 +667,6 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
           </div>
         </div>
 
-        <div id="sim-ap" style="display:none">
-          <div class="simcards">
-            <div class="simcard" data-report="ap-report"><span class="st">AP BIOLOGY &middot; PRACTICE EXAM #1 &middot; SCORED</span><h3>AP Biology &mdash; Full Exam</h3><div class="sm">3H &middot; 60 MCQ + 6 FRQ &middot; AUG 28</div>
-              <div class="mods"><i class="done">MCQ 1&ndash;30</i><i class="done">MCQ 31&ndash;60</i><i class="done">FRQ 1&ndash;3</i><i>FRQ 4&ndash;6</i></div>
-              <div class="simlaunch">VIEW SCORE REPORT &darr;</div></div>
-            <div class="simcard"><span class="st">AP CALC AB &middot; COMING SOON</span><h3>AP Calculus AB &mdash; Full Exam</h3><div class="sm">3H 15M &middot; MCQ + FRQ &middot; FORMAT MOCKED</div>
-              <div class="mods"><i>MCQ A</i><i>MCQ B</i><i>FRQ A</i><i>FRQ B</i></div>
-              <div class="simlaunch">NOTIFY ME &rarr;</div></div>
-          </div>
-          <div class="panel" id="ap-report">
-            <div class="ph"><span class="t">SCORE REPORT <b>&middot; AP BIOLOGY #1</b></span><span class="t">AUG 28 &middot; SCORED</span></div>
-            <div class="pb">
-              <div class="scorewrap">
-                <div class="bignum">4<small> /5</small></div>
-                <div style="flex:1;min-width:270px">
-                  <div class="secrow"><span class="sl">MULTIPLE CHOICE</span><div class="secbar"><i style="width:74%"></i></div><span class="sv">74%</span></div>
-                  <div class="secrow"><span class="sl">FREE RESPONSE</span><div class="secbar"><i style="width:58%"></i></div><span class="sv">58%</span></div>
-                  <p class="mnote" style="margin-top:10px">one point from a 5 &mdash; FRQ practice is the lever</p>
-                </div>
-              </div>
-              <div class="mono" style="font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:28px 0 12px">Unit breakdown</div>
-              <div class="domgrid">
-                <div class="dom"><div class="dn">Cell Structure</div><div class="dv">82%</div><div class="db"><i style="width:82%;background:var(--right)"></i></div><div class="dd">STRONG</div></div>
-                <div class="dom"><div class="dn">Energetics</div><div class="dv">66%</div><div class="db"><i style="width:66%;background:var(--accent)"></i></div><div class="dd">BUILDING</div></div>
-                <div class="dom"><div class="dn">Heredity</div><div class="dv">71%</div><div class="db"><i style="width:71%;background:var(--accent)"></i></div><div class="dd">BUILDING</div></div>
-                <div class="dom"><div class="dn">Gene Expression</div><div class="dv">58%</div><div class="db"><i style="width:58%;background:var(--wrong)"></i></div><div class="dd down">PRIORITY</div></div>
-                <div class="dom"><div class="dn">Natural Selection</div><div class="dv">74%</div><div class="db"><i style="width:74%;background:var(--right)"></i></div><div class="dd">STRONG</div></div>
-                <div class="dom"><div class="dn">Ecology</div><div class="dv">88%</div><div class="db"><i style="width:88%;background:var(--right)"></i></div><div class="dd">STRONG</div></div>
-              </div>
-              <div style="display:flex;gap:14px;margin-top:28px;flex-wrap:wrap">
-                <a class="btn pri" href="#" data-goto="mistakes">Review 9 mistakes &rarr;</a>
-                <a class="btn sec" href="#" data-goto="zen">Drill weak units in Zen &rarr;</a>
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
 
       <!-- ========= MISTAKES ========= -->
@@ -775,15 +737,10 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
     <h2 style="font-family:'Fraunces',serif;font-weight:900;font-size:30px;letter-spacing:-.02em;margin:10px 0 6px">What are you <em style="font-weight:400">studying for?</em></h2>
     <p class="mono" style="font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:12px">Pick exams &mdash; countdowns + prep bars land on your desk</p>
     <div>
-      <div class="xrow sel"><span class="cb"></span><span class="xt">SAT</span><span class="xd">AUG 23, 2026</span></div>
-      <div class="xrow sel"><span class="cb"></span><span class="xt">AP Biology</span><span class="xd">MAY 5, 2027</span></div>
-      <div class="xrow"><span class="cb"></span><span class="xt">AP Calculus AB</span><span class="xd">MAY 12, 2027</span></div>
-      <div class="xrow"><span class="cb"></span><span class="xt">AP U.S. History</span><span class="xd">MAY 8, 2027</span></div>
-      <div class="xrow sel"><span class="cb"></span><span class="xt">School &middot; Biology quiz</span><span class="xd">SEP 4</span></div>
-      <div class="xrow sel"><span class="cb"></span><span class="xt">School &middot; History midterm</span><span class="xd">SEP 12</span></div>
+      <div class="xrow sel"><span class="cb"></span><span class="xt">SAT</span><span class="xd">SEPT 12, 2026</span></div>
     </div>
     <div style="display:flex;gap:10px;margin:18px 0 20px;flex-wrap:wrap">
-      <button class="zp on">SAT TARGET &middot; 1600</button><button class="zp">AP TARGET &middot; 5</button>
+      <button class="zp on">SAT TARGET &middot; 1600</button>
     </div>
     <a class="btn pri" id="save-onb" style="display:block;text-align:center">Pin to my desk &rarr;</a>
   </div>
@@ -856,12 +813,7 @@ function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t
 
 /* zen mode now lives in the simulator (bluebook-practice-test.html#/zen) */
 
-/* simulator seg + cards */
-document.querySelectorAll('[data-sim]').forEach(b=>b.onclick=()=>{
-  document.querySelectorAll('[data-sim]').forEach(x=>x.classList.toggle('on',x===b));
-  document.getElementById('sim-sat').style.display=b.dataset.sim==='sat'?'block':'none';
-  document.getElementById('sim-ap').style.display=b.dataset.sim==='ap'?'block':'none';
-});
+/* simulator cards */
 document.querySelectorAll('.simcard').forEach(c=>c.onclick=()=>{
   if(c.dataset.launch){window.open(c.dataset.launch,'_blank');return;}
   if(c.dataset.report){const r=document.getElementById(c.dataset.report);if(r){r.scrollIntoView({behavior:'smooth',block:'start'});}}

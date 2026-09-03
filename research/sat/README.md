@@ -78,6 +78,22 @@ The import report (`curated-import-report.txt`) lists skipped rows and
 cross-check flags (curated `correctAnswer`/`bluebook`/`diagram` columns are
 authoritative; disagreements with the harvest are logged, never fatal).
 
+### Manual review / approval
+
+Built on the simulator itself: `npm run build:app && npm run serve`, then open
+`http://127.0.0.1:4173/#/review`. One curated question at a time in the real
+two-pane layout; **Approve** (`A`), **Send back** (`R`, reason chips + optional
+note), `←`/`→` navigate, status filter + skill dropdown, pending-first queue,
+progress counts. Decisions POST to the local server
+(`POST /api/review`, `GET /api/curated-status` — both in `scripts/serve.ts`)
+and are written into the curated record as a `review` block
+(`{ status: approved|returned, reasons?, note?, at }`; absent = pending).
+`npm run seed` propagates the block to `payload.curated.review`, and the
+simulator's Bank/Bluebook pools show curated questions **only once approved**
+(non-curated records, e.g. math, are unaffected until curated). Re-imports
+preserve existing review blocks, so the fix loop is: send back → fix the xlsx →
+`npm run import:curated` → re-approve.
+
 ## Validating the bank
 
 The validator has two modes (a custom-directory mode is not supported):

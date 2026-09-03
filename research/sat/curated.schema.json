@@ -122,6 +122,32 @@
       "format": "date-time",
       "description": "When this record was imported from the curation workbook."
     },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "at"],
+      "description": "Manual approval state from the /review tool. Absent = pending.",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["approved", "returned"]
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["info-prompt-split", "options", "figure", "other"]
+          }
+        },
+        "note": {
+          "type": ["string", "null"]
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
     "allowedUses": {
       "type": "array",
       "minItems": 1,

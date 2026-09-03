@@ -106,6 +106,7 @@ body[data-mode="blueprint"]::after{content:"";position:fixed;inset:0;pointer-eve
 /* ============ GENERIC PIECES ============ */
 .panel{position:relative;border:1.5px solid var(--ink);border-radius:3px;background:var(--sheet);box-shadow:5px 5px 0 var(--shadow);transition:background .5s}
 .panel::before{content:"";position:absolute;top:-9px;left:30px;width:66px;height:19px;background:var(--tape);transform:rotate(-2.5deg);box-shadow:0 1px 3px rgba(0,0,0,.15);clip-path:polygon(0 18%,5% 0,95% 0,100% 18%,100% 82%,95% 100%,5% 100%,0 82%);z-index:3}
+#v-today .panel::before{display:none}
 .panel .ph{padding:14px 20px;border-bottom:1.5px dashed var(--line);display:flex;justify-content:space-between;align-items:baseline}
 .panel .ph .t{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
 .panel .ph .t b{color:var(--accent)}
@@ -152,12 +153,8 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
 .stat .v+em{font-style:normal;font-family:'Sora',sans-serif;font-weight:600;font-size:19px;color:var(--muted)}
 .flame{position:absolute;top:10px;right:12px;font-size:24px;line-height:1;transform-origin:50% 100%;animation:flick 1.2s ease-in-out infinite}
 @keyframes flick{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.14);opacity:.82}}
-.best-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:999;background:rgba(24,14,4,.55);backdrop-filter:blur(2px);font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(42px,8vw,96px);letter-spacing:-.02em;color:#ffb35c;text-shadow:0 0 22px rgba(255,150,60,.9),0 0 90px rgba(255,150,60,.55)}
-.best-overlay.show{display:flex;animation:bestpulse 1.2s ease-in-out infinite}
-@keyframes bestpulse{50%{transform:scale(1.06);text-shadow:0 0 34px rgba(255,170,80,1),0 0 130px rgba(255,150,60,.8)}}
-
 .todo{list-style:none}
-.todo li{display:flex;align-items:center;gap:14px;height:56px;padding:0 4px;border-bottom:1.5px dashed var(--line)}
+.todo li{display:flex;align-items:center;gap:14px;height:56px;padding:0 4px 8px;border-bottom:1.5px dashed var(--line)}
 .todo li:last-child{border-bottom:none}
 .todo .cb{width:17px;height:17px;border:2px solid var(--ink);border-radius:2px;flex:none;position:relative;transition:background .2s,border-color .2s}
 .todo li.done .cb{background:var(--right);border-color:var(--right)}
@@ -787,7 +784,6 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
   </div>
 </div>
 <div class="toast" id="toast">PLAN UPDATED</div>
-<div id="best-overlay" class="best-overlay">🔥 NEW BEST 🔥</div>
 
 <script>
 /* modes */
@@ -1073,12 +1069,6 @@ async function loadToday(){
     }
     $('st-streak-n').textContent=cur;
     $('st-streak-d').textContent=daySet.size?'best: '+best:'no sessions yet';
-    if(cur>0&&cur>=best){ // new best — celebrate
-      const ov=$('best-overlay');
-      ov.classList.add('show');
-      clearTimeout(ov._t);
-      ov._t=setTimeout(()=>ov.classList.remove('show'),2500);
-    }
   }catch(e){$('st-streak-n').textContent='\u2014';$('st-streak-d').textContent='best: \u2014';}
   /* most improved + weakest skill (reuse the question→skill mapping) */
   try{

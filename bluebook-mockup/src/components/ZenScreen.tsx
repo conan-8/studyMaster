@@ -150,8 +150,18 @@ function ZenSetup({ config, onConfig, onStart, onExit, counts }: SetupProps) {
 }
 
 export default function ZenScreen() {
+  const [searchParams] = useSearchParams()
   const [phase, setPhase] = useState<'setup' | 'run' | 'report'>('setup')
-  const [config, setConfig] = useState<ZenConfig>({ subject: 'all', difficulty: 'standard', timer: 0 })
+  const [config, setConfig] = useState<ZenConfig>(() => {
+    const s = searchParams.get('subject')
+    const d = searchParams.get('difficulty')
+    const t = Number(searchParams.get('timer'))
+    return {
+      subject: s === 'math' || s === 'rw' ? s : 'all',
+      difficulty: d === 'chill' || d === 'brutal' ? d : 'standard',
+      timer: t === 60 || t === 90 || t === 120 ? (t as TimerOpt) : 0,
+    }
+  })
   const [bank, setBank] = useState<Awaited<ReturnType<typeof fetchBank>> | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -173,7 +183,6 @@ export default function ZenScreen() {
   const [secondsLeft, setSecondsLeft] = useState(0)
   const lastIdRef = useRef<string | null>(null)
   const shownAtRef = useRef<number>(0)
-  const [searchParams] = useSearchParams()
   const retryId = searchParams.get('retry')
   const skillsList = useMemo(() => {
     const raw = searchParams.get('skills')

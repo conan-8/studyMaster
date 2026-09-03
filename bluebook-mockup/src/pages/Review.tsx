@@ -21,6 +21,23 @@ const REASONS: Array<{ id: string; label: string }> = [
 
 const STATUS_ORDER: Record<Status, number> = { pending: 0, returned: 1, approved: 2 }
 
+/** The review API lives on the serve.ts server. Same-origin first; when the
+ *  app is served by a plain static server on another port (e.g. the python
+ *  one on 4173), fall back cross-origin to the default serve.ts port. */
+const API_FALLBACKS = ['http://127.0.0.1:4173', 'http://127.0.0.1:4174']
+
+async function probeApi(): Promise<string | null> {
+  for (const base of ['', ...API_FALLBACKS]) {
+    try {
+      const r = await fetch(`${base}/api/curated-status`, { signal: AbortSignal.timeout(2000) })
+      if (r.ok) return base
+    } catch {
+      // try the next base
+    }
+  }
+  return null
+}
+
 const noop = () => {}
 
 export default function Review() {
@@ -33,24 +50,26 @@ export default function Review() {
   const [reasons, setReasons] = useState<string[]>([])
   const [note, setNote] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [apiBase, setApiBase] = useState<string | null>(null)
   const [apiDown, setApiDown] = useState(false)
   const [busy, setBusy] = useState(false)
 
   useEffect(() => {
     let cancelled = false
-    Promise.all([
-      fetchBank(),
-      fetch('/api/curated-status')
-        .then((r) => (r.ok ? (r.json() as Promise<Record<string, ReviewState>>) : Promise.reject(new Error('status endpoint unreachable'))))
-        .catch(() => {
-          if (!cancelled) setApiDown(true)
-          return {} as Record<string, ReviewState>
-        }),
-    ])
-      .then(([bank, st]) => {
+    Promise.all([fetchBank(), probeApi()])
+      .then(async ([bank, base]) => {
         if (cancelled) return
         setQuestions(bank.harvested.filter((q) => q.verified === true))
-        setStatuses(st)
+        if (base === null) {
+          setApiDown(true)
+          return
+        }
+        setApiBase(base)
+        const st = (await fetch(`${base}/api/curated-status`).then((r) => (r.ok ? r.json() : {}))) as Record<
+          string,
+          ReviewState
+        >
+        if (!cancelled) setStatuses(st)
       })
       .catch((e) => setError(String(e)))
     return () => {
@@ -86,11 +105,11 @@ export default function Review() {
 
   async function decide(status: 'approved' | 'returned', sendReasons?: string[], sendNote?: string | null) {
     const q = queue[idx]
-    if (!q || busy) return
+    if (!q || busy || apiBase === null) return
     setBusy(true)
     setError(null)
     try {
-      const res = await fetch('/api/review', {
+      const res = await fetch(`${apiBase}/api/review`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sourceId: q.id, status, reasons: sendReasons, note: sendNote }),
@@ -202,8 +221,8 @@ export default function Review() {
 
       {apiDown && (
         <div className="bg-[#fff3cd] px-5 py-1.5 text-[13px] font-semibold text-[#7a5c00]">
-          Review API unreachable — decisions will not persist. Run the built app via <code>npm run serve</code> and open
-          http://127.0.0.1:4173/ (route /review).
+          Review API unreachable — decisions will not persist. Start the review server with{' '}
+          <code>PORT=4174 npm run serve</code> (or free port 4173 for <code>npm run serve</code>), then reload.
         </div>
       )}
       {error && <div className="bg-[#f8d7da] px-5 py-1.5 text-[13px] font-semibold text-[#8b1f2b]">{error}</div>}

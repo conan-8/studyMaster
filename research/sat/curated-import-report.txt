@@ -1,11 +1,12 @@
 curated import report
 workbook: research/sat/curate/sat_questions.xlsx
-run at:   2026-09-02T05:37:48.706522Z
+run at:   2026-09-03T18:37:46.620092Z
 
 rows read:        1845
 records written:  1844
 figures copied:   132
 figures missing:  1 ['43f4013a']
+review blocks kept: 1
 skipped rows:     1
 cross-check flags: 11
 

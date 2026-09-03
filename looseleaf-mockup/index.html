@@ -299,6 +299,15 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
 
 /* ============ ZEN ============ */
 .zen-ctl{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;align-items:center}
+.zc-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.zc-label b{color:var(--accent)}
+.zc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:22px}
+.zc-opt{display:flex;flex-direction:column;align-items:flex-start;gap:4px;border:1.5px solid var(--ink);border-radius:3px;background:var(--sheet);padding:13px 15px;cursor:pointer;transition:transform .12s,box-shadow .12s;text-align:left;font-family:inherit;color:inherit}
+.zc-opt:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink)}
+.zc-opt.on{background:var(--ink);color:var(--sheet);box-shadow:3px 3px 0 var(--accent)}
+.zc-opt .n{font-family:'Sora',sans-serif;font-weight:700;font-size:14px}
+.zc-opt .d{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.zc-opt.on .d{color:color-mix(in srgb,var(--sheet) 65%,transparent)}
 .ans{display:flex;align-items:center;gap:12px;border:1.5px solid var(--ink);border-radius:3px;background:var(--sheet);padding:13px 16px;margin-bottom:10px;cursor:pointer;transition:transform .12s,box-shadow .12s,background .12s;font-size:14.5px;font-weight:600}
 .ans .k{font-family:'Space Mono',monospace;font-size:10px;border:1.5px solid currentColor;border-radius:2px;padding:2px 7px;flex:none}
 .ans:hover{transform:translateX(6px);box-shadow:-4px 4px 0 var(--accent)}
@@ -414,6 +423,37 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
 .dl-mini li,.exam{transition:background .15s,padding .15s}
 .dl-mini li:hover,.exam:hover{background:color-mix(in srgb,var(--accent) 4%,transparent);padding-left:10px}
 
+/* ============ CHAT ============ */
+.chat-log{display:flex;flex-direction:column;gap:14px;padding:4px 2px 18px;max-height:56vh;min-height:220px;overflow-y:auto}
+.msg{max-width:80%;padding:12px 15px;border-radius:3px;font-size:14.5px;line-height:1.65;font-family:'Sora',sans-serif;animation:msgin .28s cubic-bezier(.16,1,.3,1)}
+@keyframes msgin{from{opacity:0;transform:translateY(8px)}}
+.msg .who{display:block;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;opacity:.55;margin-bottom:6px}
+.msg.coach{align-self:flex-start;background:color-mix(in srgb,var(--accent) 5%,var(--sheet));border:1.5px solid var(--line);border-left:4px solid var(--accent)}
+.msg.user{align-self:flex-end;background:var(--ink);color:var(--sheet)}
+.msg.coach p{margin:0 0 8px}
+.msg.coach p:last-child{margin-bottom:0}
+.msg.coach ul,.msg.coach ol{margin:4px 0 8px 18px;padding:0}
+.msg.coach li{margin:2px 0}
+.msg.coach code{font-family:'Space Mono',monospace;font-size:.85em;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:1px 5px;border-radius:2px}
+.msg.coach .ch-h{font-weight:700}
+.msg.err{border-left-color:var(--wrong)}
+.msg.err .mbody{color:var(--wrong)}
+.chat-status{display:flex;align-items:center;gap:10px;padding:2px 2px 12px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.chat-status .chat-st-t{transition:opacity .18s}
+.chat-dots{display:inline-flex;gap:4px}
+.chat-dots i{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:dotb 1.1s ease-in-out infinite}
+.chat-dots i:nth-child(2){animation-delay:.15s}
+.chat-dots i:nth-child(3){animation-delay:.3s}
+@keyframes dotb{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+.chat-in{display:flex;gap:12px;margin-top:6px}
+.chat-field{flex:1;min-width:0;font-family:'Sora',sans-serif;font-size:14.5px;padding:12px 14px;border:1.5px solid var(--ink);border-radius:3px;background:var(--sheet);color:var(--ink);outline:none;transition:box-shadow .15s}
+.chat-field:focus{box-shadow:3px 3px 0 var(--accent)}
+.chat-in .btn{white-space:nowrap}
+.chat-in .btn:disabled{opacity:.45;pointer-events:none}
+.chat-sugg{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chat-sugg button{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:7px 12px;border:1.5px dashed var(--line);border-radius:999px;background:transparent;color:var(--muted);cursor:pointer;transition:all .12s}
+.chat-sugg button:hover{border-color:var(--ink);color:var(--ink);border-style:solid}
+
 </style>
 </head>
 <body data-mode="light">
@@ -427,6 +467,7 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
         <div class="nb-t">Overview</div>
         <button class="on" data-view="today">Today <span class="bdg">23</span></button>
         <button data-view="stats">Stats</button>
+        <button data-view="chat">Chat <span class="bdg">AI</span></button>
       </div>
       <div class="navbox">
         <div class="nb-t">Practice</div>
@@ -472,7 +513,6 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
       <section class="view on" id="v-today">
         <div class="vh">
           <h1><b id="greet">Good evening</b>, <em>Conan.</em></h1>
-          <span class="sub">23 cards due — 2 deadlines this week</span>
         </div>
         <div class="stats4">
           <div class="stat" id="st-exam"><div class="l">Days till next exam</div><span class="v" id="st-exam-n">–</span><div class="d" id="st-exam-name">SAT</div></div>
@@ -506,13 +546,37 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
         </div>
       </section>
 
+      <!-- ========= CHAT ========= -->
+      <section class="view" id="v-chat">
+        <div class="vh">
+          <h1>Ask <em>the coach</em></h1>
+        </div>
+        <div class="panel">
+          <div class="ph"><span class="t">Coach <b>&middot; deepseek v4 flash</b></span></div>
+          <div class="pb">
+            <div class="chat-log" id="chat-log"></div>
+            <div class="chat-status" id="chat-status" style="display:none"><span class="chat-dots"><i></i><i></i><i></i></span><span class="chat-st-t" id="chat-status-t"></span></div>
+            <form class="chat-in" id="chat-form">
+              <input class="chat-field" id="chat-input" placeholder="ask about your weaknesses, your plan, anything&hellip;" autocomplete="off" maxlength="2000" />
+              <button class="btn pri" type="submit" id="chat-send">Send &rarr;</button>
+            </form>
+            <div class="chat-sugg" id="chat-sugg">
+              <button type="button">what's my weakest skill?</button>
+              <button type="button">plan my week</button>
+              <button type="button">why do i keep missing those?</button>
+              <button type="button">pep talk, please</button>
+            </div>
+          </div>
+        </div>
+        <p class="mnote" style="margin-top:20px;max-width:460px">the coach reads your live record &mdash; streak, weakest skills, open mistakes &mdash; and never shows its scratch work</p>
+      </section>
+
       <!-- ========= PRACTICE ========= -->
 
       <!-- ========= GROUPS ========= -->
       <section class="view" id="v-groups">
         <div class="vh">
           <h1>Groups <em>&amp; social</em></h1>
-          <span class="sub">STUDY TOGETHER &middot; SHARE MISTAKES &middot; KEEP EACH OTHER HONEST</span>
         </div>
         <div class="panel">
           <div class="ph"><span class="t">Your groups <b>&middot; coming soon</b></span><span class="t">WAITLIST</span></div>
@@ -530,7 +594,6 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
       <section class="view" id="v-stats">
         <div class="vh">
           <h1>The <em>record</em> so far</h1>
-          <span class="sub">TRACKING SINCE JUNE 14 · 80 DAYS</span>
         </div>
         <div class="stats4">
           <div class="stat gd"><div class="l">Retention</div><div class="v">87<em>%</em></div><div class="d">last 30 days</div></div>
@@ -568,7 +631,6 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
       <section class="view" id="v-exams">
         <div class="vh">
           <h1>Deadlines &amp; <em>exams</em></h1>
-          <span class="sub">4 TRACKED · 1 OVERDUE</span>
         </div>
         <div class="panel">
           <div class="ph"><span class="t">Timeline <b>· fall term</b></span><span class="t">sorted by date</span></div>
@@ -600,16 +662,38 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
       <section class="view" id="v-zen">
         <div class="vh">
           <h1>Zen <em>mode</em></h1>
-          <span class="sub">ENDLESS STREAM &middot; NO DUE DATES &middot; NO STREAK AT RISK</span>
         </div>
         <div class="panel">
           <div class="ph"><span class="t">Zen mode <b>&middot; lives in the simulator</b></span><span class="t">NO LOCK &middot; CHECK AS YOU GO</span></div>
           <div class="pb">
-            <p style="font-family:'Sora',sans-serif;font-size:15px;font-weight:400;line-height:1.7;max-width:600px;color:var(--ink)">An endless stream of real questions in the Bluebook-style simulator. Pick a subject, difficulty and per-question timer, then check answers and read the rationale as you go.</p>
-            <div style="margin-top:22px;display:flex;gap:14px;flex-wrap:wrap">
-              <a class="btn pri" href="bluebook-practice-test.html#/zen" target="_blank" rel="noopener">Launch zen mode &rarr;</a>
+            <p style="font-family:'Sora',sans-serif;font-size:15px;font-weight:400;line-height:1.6;max-width:620px;color:var(--ink)">An endless stream of questions &mdash; no lock screen, no exam timer. Check as you go and read the rationale.</p>
+
+            <div class="zc-label" style="margin-top:26px">Subject</div>
+            <div class="zen-ctl">
+              <button class="zp on" data-zc="subject" data-v="all">All subjects</button>
+              <button class="zp" data-zc="subject" data-v="math">Math</button>
+              <button class="zp" data-zc="subject" data-v="rw">Reading &amp; Writing</button>
             </div>
-            <p class="mnote" style="margin-top:16px;max-width:420px">no timers that lock you out &mdash; the stream just keeps flowing</p>
+
+            <div class="zc-label">Difficulty</div>
+            <div class="zc-grid">
+              <button class="zc-opt" data-zc="difficulty" data-v="chill"><span class="n">Chill</span><span class="d">Easy items only</span></button>
+              <button class="zc-opt on" data-zc="difficulty" data-v="standard"><span class="n">Standard</span><span class="d">The full mix</span></button>
+              <button class="zc-opt" data-zc="difficulty" data-v="brutal"><span class="n">Brutal</span><span class="d">Hard items only</span></button>
+            </div>
+
+            <div class="zc-label">Per-question timer</div>
+            <div class="zen-ctl">
+              <button class="zp on" data-zc="timer" data-v="0">Off</button>
+              <button class="zp" data-zc="timer" data-v="60">1:00</button>
+              <button class="zp" data-zc="timer" data-v="90">1:30</button>
+              <button class="zp" data-zc="timer" data-v="120">2:00</button>
+            </div>
+            <p class="mnote" style="max-width:440px">the timer only shows your pace &mdash; it never locks you out or advances for you</p>
+
+            <div style="margin-top:22px;display:flex;gap:14px;flex-wrap:wrap">
+              <button class="btn pri" id="zen-start">Start session &rarr;</button>
+            </div>
           </div>
         </div>
       </section>
@@ -618,7 +702,6 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
       <section class="view" id="v-sim">
         <div class="vh">
           <h1>The <em>simulator</em></h1>
-          <span class="sub">FULL-LENGTH &middot; TIMED &middot; BLUEBOOK-STYLE</span>
         </div>
         <div id="sim-sat">
           <div class="simcards">
@@ -717,8 +800,8 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
       </section>
 
       <footer class="foot">
-        <span class="mono">Looseleaf app mockup · one language, three modes</span>
-        <span style="display:flex;gap:22px"><span class="mono">serif titles · sans body · mono labels · real paper</span><a href="landing.html">Landing &#8599;</a></span>
+        <span></span>
+        <a href="landing.html">Landing &#8599;</a>
       </footer>
     </div>
   </div>
@@ -762,6 +845,7 @@ function goView(name){
   if(name==='mistakes')loadMistakes();
   if(name==='skills')loadSkills();
   if(name==='today')loadToday();
+  if(name==='chat')chatBoot();
 }
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>goView(b.dataset.view)));
 document.querySelectorAll('[data-goto]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();goView(a.dataset.goto)}));
@@ -804,7 +888,16 @@ pattern.forEach(l=>{const i=document.createElement('i');if(l)i.className='l'+l;h
 /* toast */
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2600);}
 
-/* zen mode now lives in the simulator (bluebook-practice-test.html#/zen) */
+/* zen mode now lives in the simulator (bluebook-practice-test.html#/zen) —
+   the zen tab carries the config and hands it over via query params */
+const ZC={subject:'all',difficulty:'standard',timer:'0'};
+document.querySelectorAll('[data-zc]').forEach(b=>b.addEventListener('click',()=>{
+  ZC[b.dataset.zc]=b.dataset.v;
+  document.querySelectorAll('[data-zc="'+b.dataset.zc+'"]').forEach(o=>o.classList.toggle('on',o===b));
+}));
+document.getElementById('zen-start').addEventListener('click',()=>{
+  window.open('bluebook-practice-test.html#/zen?subject='+encodeURIComponent(ZC.subject)+'&difficulty='+encodeURIComponent(ZC.difficulty)+'&timer='+encodeURIComponent(ZC.timer),'_blank');
+});
 
 /* simulator cards */
 document.querySelectorAll('.simcard').forEach(c=>c.onclick=()=>{
@@ -1082,6 +1175,108 @@ async function loadToday(){
   if(rm&&/\u00b7/.test(rm.textContent))rm.textContent=rm.textContent.replace(/\u00b7/g,'\u2014');
 }
 loadToday();
+
+/* chat — the coach: text in, text out */
+const chatLog=document.getElementById('chat-log');
+const chatHist=[];
+const CHAT_STATUSES=['rummaging through your mistakes','identifying weaknesses','searching the record','connecting the dots','flipping through the heatmap','re-reading your misses','weighing the evidence','sharpening the pencil'];
+let chatBusy=false,chatBooted=false,chatStatusTimer=null;
+
+function mdInline(s){
+  return esc(s)
+    .replace(/`([^`]+)`/g,'<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
+    .replace(/(^|[^*])\*([^*\n]+)\*/g,'$1<em>$2</em>');
+}
+function mdLite(src){
+  const lines=String(src??'').replace(/\r/g,'').split('\n');
+  let html='',list=null;
+  const flush=()=>{if(list){html+='</'+list+'>';list=null;}};
+  for(const raw of lines){
+    const t=raw.trim();
+    if(!t){flush();continue;}
+    if(/^[-*\u2022] /.test(t)){if(list!=='ul'){flush();html+='<ul>';list='ul';}html+='<li>'+mdInline(t.slice(2))+'</li>';continue;}
+    if(/^\d+[.)] /.test(t)){if(list!=='ol'){flush();html+='<ol>';list='ol';}html+='<li>'+mdInline(t.replace(/^\d+[.)] /,''))+'</li>';continue;}
+    flush();
+    if(/^#{1,6} /.test(t)){html+='<p class="ch-h">'+mdInline(t.replace(/^#{1,6} /,''))+'</p>';continue;}
+    html+='<p>'+mdInline(t)+'</p>';
+  }
+  flush();
+  return html;
+}
+function addMsg(kind,text,opts={}){
+  const d=document.createElement('div');
+  d.className='msg '+kind+(opts.err?' err':'');
+  const body=kind==='user'?esc(text).replace(/\n/g,'<br>'):mdLite(text);
+  d.innerHTML='<span class="who">'+(kind==='user'?'YOU':'COACH')+'</span><div class="mbody">'+body+'</div>';
+  chatLog.appendChild(d);
+  chatLog.scrollTop=chatLog.scrollHeight;
+  return d;
+}
+function chatContext(){
+  const g=id=>{const e=document.getElementById(id);return e?e.textContent.trim():'';};
+  const parts=[];
+  const weak=g('st-weakest-d');
+  if(weak&&weak!=='skill'&&weak!=='no data yet')parts.push('weakest skill: '+weak+' at '+g('st-weakest-n')+' correct');
+  const imp=g('st-improved-d');
+  if(imp&&imp!=='skill'&&imp!=='no data yet')parts.push('most improved: '+imp+' ('+g('st-improved-n')+')');
+  const streak=g('st-streak-n');
+  if(streak&&streak!=='\u2014')parts.push('streak: '+streak+' days ('+g('st-streak-d')+')');
+  const exam=g('st-exam-n');
+  if(exam&&exam!=='\u2014')parts.push('days until '+g('st-exam-name')+': '+exam);
+  const mc=g('mcount');
+  if(mc&&mc!=='0')parts.push('open mistakes: '+mc);
+  return parts.join('\n');
+}
+function chatStatusStart(){
+  const box=document.getElementById('chat-status'),t=document.getElementById('chat-status-t');
+  box.style.display='flex';
+  let i=Math.floor(Math.random()*CHAT_STATUSES.length);
+  const tick=()=>{t.style.opacity=0;setTimeout(()=>{t.textContent=CHAT_STATUSES[i%CHAT_STATUSES.length]+'\u2026';t.style.opacity=1;i++;},180);};
+  tick();
+  chatStatusTimer=setInterval(tick,1900);
+}
+function chatStatusStop(){
+  clearInterval(chatStatusTimer);chatStatusTimer=null;
+  document.getElementById('chat-status').style.display='none';
+}
+function chatBoot(){
+  if(chatBooted)return;
+  chatBooted=true;
+  addMsg('coach','Hey Conan \u2014 I keep an eye on your record: streaks, misses, weak skills. Ask me anything about them \u2014 what\u2019s shaky, what to drill next, or how to plan the week. I read your live stats before I answer.');
+  document.getElementById('chat-input').focus();
+}
+document.getElementById('chat-form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(chatBusy)return;
+  const inp=document.getElementById('chat-input'),send=document.getElementById('chat-send');
+  const text=inp.value.trim();
+  if(!text)return;
+  inp.value='';
+  addMsg('user',text);
+  chatHist.push({role:'user',content:text});
+  chatBusy=true;send.disabled=true;chatStatusStart();
+  try{
+    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:chatHist.slice(-24),context:chatContext()})});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||typeof j.content!=='string')throw new Error(j.error||('HTTP '+r.status));
+    chatHist.push({role:'assistant',content:j.content});
+    addMsg('coach',j.content);
+  }catch(err){
+    addMsg('coach','The coach can\u2019t be reached right now \u2014 '+(err&&err.message?err.message:'network error')+'. Give it another try.',{err:true});
+  }finally{
+    chatBusy=false;send.disabled=false;chatStatusStop();
+    chatLog.scrollTop=chatLog.scrollHeight;
+    inp.focus();
+  }
+});
+document.getElementById('chat-sugg').addEventListener('click',e=>{
+  const b=e.target.closest('button');
+  if(!b||chatBusy)return;
+  const inp=document.getElementById('chat-input');
+  inp.value=b.textContent;
+  document.getElementById('chat-form').requestSubmit();
+});
 
 /* initial hash route, deferred so data loaders see initialized consts */
 const h0=location.hash.slice(1);

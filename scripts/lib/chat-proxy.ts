@@ -5,20 +5,17 @@
  *   - Vercel serverless function (api/chat.ts)
  *   - local dev server (scripts/serve.ts)
  *
- * Calls Alibaba Cloud Model Studio (OpenAI-compatible endpoint) with
- * deepseek-v4-flash-0731 at the lowest reasoning effort. Only the final
- * answer is returned to the client — reasoning_content is never forwarded.
+ * Calls OpenRouter (deepseek/deepseek-v4-flash-0731, medium reasoning effort).
+ * Only the final answer is returned to the client — reasoning content is
+ * never forwarded.
  *
  * Env:
- *   ALIBABA_API_KEY    required
- *   ALIBABA_BASE_URL   optional; defaults to the intl Model Studio endpoint
- *                      (for workspace-scoped keys use
- *                      https://<WorkspaceId>.<region>.maas.aliyuncs.com/compatible-mode/v1)
- *   ALIBABA_MODEL      optional; defaults to deepseek-v4-flash-0731
+ *   OPENROUTER_API_KEY   required (same key as the question generator)
+ *   CHAT_MODEL           optional; defaults to deepseek/deepseek-v4-flash-0731
  */
 
-const DEFAULT_BASE_URL = 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1';
-const DEFAULT_MODEL = 'deepseek-v4-flash-0731';
+const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
+const DEFAULT_MODEL = 'deepseek/deepseek-v4-flash-0731';
 const MAX_MESSAGES = 24;
 const MAX_CONTENT = 8000;
 const MAX_CONTEXT = 2000;
@@ -56,8 +53,8 @@ function sanitizeMessages(raw: unknown): ChatMessage[] {
     .slice(-MAX_MESSAGES);
 }
 
-async function callModel(baseUrl: string, apiKey: string, model: string, messages: ChatMessage[], extra: Record<string, unknown>): Promise<Response> {
-  return fetch(`${baseUrl}/chat/completions`, {
+async function callModel(apiKey: string, model: string, messages: ChatMessage[], extra: Record<string, unknown>): Promise<Response> {
+  return fetch(OPENROUTER_URL, {
     method: 'POST',
     headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({ model, messages, ...extra }),
@@ -69,10 +66,9 @@ async function callModel(baseUrl: string, apiKey: string, model: string, message
  * Returns { status, body } for the caller to send as JSON.
  */
 export async function handleChat(payload: unknown): Promise<ChatResult> {
-  const apiKey = process.env.ALIBABA_API_KEY;
-  if (!apiKey) return { status: 500, body: { error: 'ALIBABA_API_KEY is not set on the server' } };
-  const baseUrl = (process.env.ALIBABA_BASE_URL || DEFAULT_BASE_URL).replace(/\/+$/, '');
-  const model = process.env.ALIBABA_MODEL || DEFAULT_MODEL;
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  if (!apiKey) return { status: 500, body: { error: 'OPENROUTER_API_KEY is not set on the server' } };
+  const model = process.env.CHAT_MODEL || DEFAULT_MODEL;
 
   const p = (payload ?? {}) as Record<string, unknown>;
   const messages = sanitizeMessages(p.messages);
@@ -89,9 +85,9 @@ export async function handleChat(payload: unknown): Promise<ChatResult> {
 
   let res: Response;
   try {
-    res = await callModel(baseUrl, apiKey, model, full, { reasoning_effort: 'low' });
+    res = await callModel(apiKey, model, full, { reasoning: { effort: 'medium' } });
     if (res.status === 400) {
-      res = await callModel(baseUrl, apiKey, model, full, {});
+      res = await callModel(apiKey, model, full, {});
     }
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);

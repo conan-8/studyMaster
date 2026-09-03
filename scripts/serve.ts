@@ -48,9 +48,21 @@ function send(res: http.ServerResponse, status: number, body: string): void {
   res.end(body);
 }
 
+/** Review API is also called cross-origin (e.g. the app served by a plain
+ *  static server on another port), so API responses carry permissive CORS. */
+const CORS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
 function sendJson(res: http.ServerResponse, status: number, body: unknown): void {
   const json = JSON.stringify(body);
-  res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': Buffer.byteLength(json) });
+  res.writeHead(status, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Content-Length': Buffer.byteLength(json),
+    ...CORS,
+  });
   res.end(json);
 }
 
@@ -179,6 +191,11 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  if ((pathname === '/api/review' || pathname === '/api/curated-status') && method === 'OPTIONS') {
+    res.writeHead(204, CORS);
+    res.end();
+    return;
+  }
   if (method === 'GET' && pathname === '/api/curated-status') {
     sendJson(res, 200, loadStatuses());
     return;

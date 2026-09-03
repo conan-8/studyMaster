@@ -164,6 +164,11 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
 .todo .tm{margin-left:auto;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;white-space:nowrap}
 .todo li .tm b{color:var(--accent)}
 .tmbox{margin-left:auto;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border:1.5px solid var(--ink);border-radius:4px;padding:6px 10px;background:var(--sheet);white-space:nowrap}
+.tmbox b{color:var(--accent)}
+.todo li .tt{flex:1}
+.todo li .go{opacity:0;pointer-events:none;transition:opacity .15s;background:var(--accent);color:#fff;border:none;border-radius:4px;padding:7px 13px;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;white-space:nowrap}
+.todo li:hover .go{opacity:1;pointer-events:auto}
+.vh h1 b{font-weight:700}
 
 .dl-mini{list-style:none}
 .dl-mini li{display:flex;align-items:center;gap:14px;min-height:56px;padding:12px 4px;border-bottom:1.5px dashed var(--line)}
@@ -178,7 +183,8 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
 .cd.late{border-color:var(--wrong);color:var(--wrong)}
 .cd.calm{border-color:var(--muted);color:var(--muted)}
 .cd.big{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:74px;padding:8px 10px;border:2px solid currentColor;border-radius:6px;font-family:'Sora',sans-serif}
-.cd.big b{font-size:26px;font-weight:800;line-height:1}
+.cd.big b{font-size:26px;font-weight:800;line-height:1;color:var(--accent)}
+.cd.big.late b{color:var(--wrong)}
 .cd.big span{font-size:9px;letter-spacing:.14em;text-transform:uppercase;margin-top:2px}
 
 .wk{display:flex;align-items:flex-end;gap:8px;height:110px;padding-top:6px}
@@ -440,8 +446,8 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
         <div class="l">Current streak · best 34</div>
       </div>
       <div class="acct" id="acct">
-        <span class="avatar">J</span>
-        <span class="acct-t">June &middot; Settings</span>
+        <span class="avatar">C</span>
+        <span class="acct-t">Conan &middot; Settings</span>
         <div class="acct-drop">
           <div class="switch-row">
             <span>Dark mode</span>
@@ -457,7 +463,7 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
   <div class="main">
     <div class="mast">
       <span class="date" id="mast-date"></span>
-      <input class="search" placeholder="search cards, decks, notes_" />
+      <input class="search" placeholder="search" />
       <div class="tabs">
         <button class="tab on" data-go="light"><span class="dot"></span>Off-white</button>
         <button class="tab" data-go="dark"><span class="dot"></span>Warm black</button>
@@ -470,7 +476,7 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
       <!-- ========= TODAY ========= -->
       <section class="view on" id="v-today">
         <div class="vh">
-          <h1>Good evening, <em>June.</em></h1>
+          <h1><b id="greet">Good evening</b>, <em>Conan.</em></h1>
           <span class="sub">23 cards due — 2 deadlines this week</span>
         </div>
         <div class="stats4">
@@ -482,13 +488,12 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
         <a class="resume" data-goto="sim"><span class="pl">&#9654;</span><span class="rt">Back to it &mdash; SAT Practice Test #1</span><span class="rm" id="resume-meta">MATH MODULE 2 — 18:24 LEFT</span></a>
         <div class="grid2">
           <div class="panel">
-            <div class="ph"><span class="t">Today's plan <b>· 4 items</b></span><span class="t">est. 50 min</span></div>
+            <div class="ph"><span class="t">Today's plan <b>· 3 items</b></span><span class="t">one module a day</span></div>
             <div class="pb">
               <ul class="todo">
-                <li><span class="tt">SAT: Algebra drill — 10 questions</span><span class="tmbox">SAT MATH — 15 MIN</span></li>
-                <li><span class="tt">SAT: Reading &amp; Writing — craft &amp; structure</span><span class="tmbox">SAT R&amp;W — 20 MIN</span></li>
-                <li><span class="tt">Review yesterday's missed questions</span><span class="tmbox">REVIEW — 10 MIN</span></li>
-                <li><span class="tt">Zen cooldown — 5 min</span><span class="tmbox">ZEN — 5 MIN</span></li>
+                <li><span class="tt">SAT Math — Module 1</span><button class="go">let's go &rarr;</button><span class="tmbox">MATH — <b>35</b> MIN</span></li>
+                <li><span class="tt">SAT Reading &amp; Writing — Module 1</span><button class="go">let's go &rarr;</button><span class="tmbox">R&amp;W — <b>32</b> MIN</span></li>
+                <li><span class="tt">Review missed questions</span><button class="go">let's go &rarr;</button><span class="tmbox">REVIEW — <b>10</b> MIN</span></li>
               </ul>
               <div style="margin-top:20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
                 <a class="btn pri" href="#" id="start-session">Start today's session →</a>
@@ -811,6 +816,22 @@ function goView(name){
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>goView(b.dataset.view)));
 document.querySelectorAll('[data-goto]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();goView(a.dataset.goto)}));
 document.getElementById('start-session').addEventListener('click',e=>{e.preventDefault();goView('zen')});
+document.addEventListener('click',e=>{
+  const go=e.target.closest('.todo .go');
+  if(go){window.open('bluebook-practice-test.html#/zen','_blank');}
+});
+
+/* greeting — time-of-day bucket, random variant each refresh */
+(function(){
+  const h=new Date().getHours();
+  const bucket=h>=5&&h<12?['Good morning','Rise and grind','Fresh page','Morning, legend']
+    :h>=12&&h<17?['Good afternoon','Midday push','Afternoon, sharp','Keep it rolling']
+    :h>=17&&h<22?['Good evening','Night shift','Winding up','Prime time']
+    :['Burning the midnight oil','Late night','One more run','After hours'];
+  const g=bucket[Math.floor(Math.random()*bucket.length)];
+  const el=document.getElementById('greet');
+  if(el)el.textContent=g;
+})();
 
 /* stats chart (14 days) */
 const days=['19','20','21','22','23','24','25','26','27','28','29','30','31','1'];
@@ -1036,8 +1057,6 @@ async function loadToday(){
   /* deadlines with big countdowns */
   const DLS=[
     {name:'SAT',date:'2026-09-12',meta:'DIGITAL SAT \u00b7 FULL LENGTH'},
-    {name:'AP Biology',date:'2027-05-05',meta:'AP BIO \u00b7 FULL EXAM'},
-    {name:'AP Calculus AB',date:'2027-05-12',meta:'AP CALC AB'},
   ];
   $('dl-list').innerHTML=DLS.sort((a,b)=>new Date(a.date)-new Date(b.date)).map(d=>{
     const dt=new Date(d.date+'T00:00:00');

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import StartScreen from '../components/StartScreen'
 import ExamScreen from '../components/ExamScreen'
 import ReviewScreen from '../components/ReviewScreen'
@@ -6,7 +6,7 @@ import TransitionScreen from '../components/TransitionScreen'
 import BreakScreen from '../components/BreakScreen'
 import ResultsScreen from '../components/ResultsScreen'
 import LockScreen from '../components/LockScreen'
-import { assembleTest, fetchBank, selectQuestions, type SourceKind } from '../data/live'
+import { assembleTest, fetchBank, isCorrect, postEvents, selectQuestions, type SourceKind } from '../data/live'
 import type { ExamModule } from '../types/exam'
 
 type Screen = 'start' | 'intro' | 'exam' | 'review' | 'transition' | 'break' | 'results'
@@ -20,7 +20,11 @@ export default function Home() {
   const [bank, setBank] = useState<Awaited<ReturnType<typeof fetchBank>> | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [pendingStart, setPendingStart] = useState<{ source: SourceKind; excludeBluebook: boolean } | null>(null)
+  const [pendingStart, setPendingStart] = useState<{
+    source: SourceKind
+    excludeBluebook: boolean
+    verifiedOnly: boolean
+  } | null>(null)
   const [moduleIdx, setModuleIdx] = useState(0)
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [flags, setFlags] = useState<Record<string, boolean>>({})
@@ -48,6 +52,45 @@ export default function Home() {
   const isLastModule = moduleIdx === test.length - 1
   const running = (screen === 'exam' || screen === 'review') && module !== undefined
 
+  // Per-question dwell tracking + event recording on module submit.
+  const dwellRef = useRef<Record<string, number>>({})
+  const lastQRef = useRef<string | null>(null)
+  const switchRef = useRef<number>(0)
+  const postedRef = useRef<Set<string>>(new Set())
+  const currentQId = running ? (module.questions[index]?.id ?? null) : null
+
+  useEffect(() => {
+    const now = Date.now()
+    if (lastQRef.current && lastQRef.current !== currentQId) {
+      dwellRef.current[lastQRef.current] =
+        (dwellRef.current[lastQRef.current] ?? 0) + (now - switchRef.current)
+    }
+    lastQRef.current = currentQId
+    switchRef.current = now
+  }, [currentQId])
+
+  const recordModule = (m: ExamModule, ans: Record<string, string>) => {
+    if (postedRef.current.has(m.id)) return
+    postedRef.current.add(m.id)
+    const now = Date.now()
+    if (lastQRef.current) {
+      dwellRef.current[lastQRef.current] =
+        (dwellRef.current[lastQRef.current] ?? 0) + (now - switchRef.current)
+      switchRef.current = now
+    }
+    const events = m.questions
+      .filter((q) => ans[q.id] !== undefined)
+      .map((q) => ({
+        question_id: q.id.slice(m.id.length + 1),
+        correct: isCorrect(q, ans[q.id]!),
+        mode: 'exam' as const,
+        time_ms: dwellRef.current[q.id] ?? 0,
+        choice_id: q.options ? ans[q.id] : undefined,
+        grid_in_answer: q.options ? undefined : ans[q.id],
+      }))
+    postEvents(events).catch(() => {})
+  }
+
   useEffect(() => {
     if (!running) return
     const t = window.setInterval(() => setSecondsLeft((s) => Math.max(0, s - 1)), 1000)
@@ -57,7 +100,11 @@ export default function Home() {
   // Time expired: auto-advance to the transition screen (or submit on the last module).
   useEffect(() => {
     if (!running || secondsLeft !== 0) return
+    if (module) recordModule(module, answers)
+    // Intentional: auto-advance the screen when the module clock hits zero.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setScreen(isLastModule ? 'results' : 'transition')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [running, secondsLeft, isLastModule])
 
   const beginModule = (i: number) => {
@@ -67,12 +114,12 @@ export default function Home() {
     setScreen('exam')
   }
 
-  const startTest = (source: SourceKind, excludeBluebook: boolean) => {
-    setPendingStart({ source, excludeBluebook })
+  const startTest = (source: SourceKind, excludeBluebook: boolean, verifiedOnly: boolean) => {
+    setPendingStart({ source, excludeBluebook, verifiedOnly })
     Promise.resolve(bank ?? fetchBank())
       .then((b) => {
         setBank(b)
-        const assembled = assembleTest(selectQuestions(b, source, excludeBluebook))
+        const assembled = assembleTest(selectQuestions(b, source, excludeBluebook, verifiedOnly))
         if (assembled.length === 0) {
           setError('No questions available for that source.')
           return
@@ -89,6 +136,7 @@ export default function Home() {
   }
 
   const submitModule = () => {
+    if (module) recordModule(module, answers)
     setScreen(isLastModule ? 'results' : 'transition')
   }
 

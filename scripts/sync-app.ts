@@ -107,14 +107,24 @@ function main(): void {
     console.log('copied 0, skipped 0');
     return;
   }
-  const ssqbNames = fs
-    .readdirSync(SSQB_SRC_DIR)
-    .filter((n) => n.startsWith('ssqb-') && n.endsWith('.png'))
-    .sort();
+  // top-level ssqb-*.png plus the curated figures subdir
+  const ssqbNames: string[] = [
+    ...fs
+      .readdirSync(SSQB_SRC_DIR)
+      .filter((n) => n.startsWith('ssqb-') && n.endsWith('.png')),
+    ...(fs.existsSync(path.join(SSQB_SRC_DIR, 'figures'))
+      ? fs
+          .readdirSync(path.join(SSQB_SRC_DIR, 'figures'))
+          .filter((n) => n.startsWith('ssqb-') && n.endsWith('.png'))
+          .map((n) => path.join('figures', n))
+      : []),
+  ].sort();
   let ssqbCopied = 0;
   let ssqbSkipped = 0;
   for (const name of ssqbNames) {
-    if (copyIfChanged(path.join(SSQB_SRC_DIR, name), path.join(DEST_ASSETS_DIR, name))) ssqbCopied++;
+    const dest = path.join(DEST_ASSETS_DIR, name);
+    if (name.startsWith('figures')) fs.mkdirSync(path.dirname(dest), { recursive: true });
+    if (copyIfChanged(path.join(SSQB_SRC_DIR, name), dest)) ssqbCopied++;
     else ssqbSkipped++;
   }
   console.log(`sync-app: ${ssqbSrcRel}/ ssqb-*.png -> looseleaf-mockup/assets/ (${ssqbNames.length} source PNG(s) scanned, copied ${ssqbCopied}, skipped ${ssqbSkipped})`);

@@ -29,6 +29,8 @@ export interface Question {
   options?: string[]
   /** Correct option letter ('A'-'D') or numeric string for grid-in. */
   correct: string
+  /** Explanation shown after checking an answer (zen mode). */
+  rationale?: string
   diagram?: DiagramSpec
   /** Rendered question image (harvested math items carry the whole question
    *  as a picture — College Board draws equations as vector art). */

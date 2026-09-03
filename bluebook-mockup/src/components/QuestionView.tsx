@@ -79,27 +79,30 @@ interface HeaderProps {
   flagged: boolean
   hasOptions: boolean
   strikesVisible: boolean
+  hideFlag?: boolean
   onToggleFlag: () => void
   onToggleStrikes: () => void
 }
 
-function QuestionHeader({ number, flagged, hasOptions, strikesVisible, onToggleFlag, onToggleStrikes, archetype }: HeaderProps & { archetype?: string }) {
+function QuestionHeader({ number, flagged, hasOptions, strikesVisible, hideFlag, onToggleFlag, onToggleStrikes, archetype }: HeaderProps & { archetype?: string }) {
   return (
     <div className="flex items-center justify-between border-b-2 border-dashed border-[#c6c9d2] pb-2.5">
       <div className="flex items-center gap-4">
         <span className="flex h-9 w-9 items-center justify-center rounded-[4px] bg-[#1c1c1e] text-[16px] font-bold text-white">
           {number}
         </span>
-        <button
-          onClick={onToggleFlag}
-          aria-pressed={flagged}
-          className={`flex items-center gap-1.5 text-[15px] font-semibold ${
-            flagged ? 'text-[#c62828] underline underline-offset-4' : 'text-[#3c4048] hover:text-[#1c1c1e]'
-          }`}
-        >
-          <Bookmark size={19} className={flagged ? 'fill-[#c62828] text-[#c62828]' : ''} />
-          Mark for Review
-        </button>
+        {!hideFlag && (
+          <button
+            onClick={onToggleFlag}
+            aria-pressed={flagged}
+            className={`flex items-center gap-1.5 text-[15px] font-semibold ${
+              flagged ? 'text-[#c62828] underline underline-offset-4' : 'text-[#3c4048] hover:text-[#1c1c1e]'
+            }`}
+          >
+            <Bookmark size={19} className={flagged ? 'fill-[#c62828] text-[#c62828]' : ''} />
+            Mark for Review
+          </button>
+        )}
       </div>
       <div className="flex items-center gap-3">
         {archetype && (
@@ -207,6 +210,10 @@ interface QuestionViewProps {
   onAnswer: (questionId: string, value: string) => void
   onToggleFlag: (questionId: string) => void
   onToggleCross: (questionId: string, letter: string) => void
+  /** Zen: lock options + color correct/wrong after checking. */
+  reveal?: boolean
+  /** Zen: hide the Mark for Review control. */
+  hideFlag?: boolean
 }
 
 export default function QuestionView({
@@ -219,6 +226,8 @@ export default function QuestionView({
   onAnswer,
   onToggleFlag,
   onToggleCross,
+  reveal,
+  hideFlag,
 }: QuestionViewProps) {
   const [strikesVisible, setStrikesVisible] = useState(true)
   const [splitPct, setSplitPct] = useState(50)
@@ -245,6 +254,7 @@ export default function QuestionView({
       flagged={flagged}
       hasOptions={!!question.options}
       strikesVisible={strikesVisible}
+      hideFlag={hideFlag}
       onToggleFlag={() => onToggleFlag(question.id)}
       onToggleStrikes={() => setStrikesVisible((v) => !v)}
       archetype={question.archetype}
@@ -267,6 +277,8 @@ export default function QuestionView({
         showStrikeButtons={strikesVisible}
         onSelect={(letter) => onAnswer(question.id, letter)}
         onToggleCross={(letter) => onToggleCross(question.id, letter)}
+        reveal={reveal}
+        correctLetter={question.correct}
       />
     </div>
   ) : (
@@ -277,10 +289,20 @@ export default function QuestionView({
         onChange={(e) => onAnswer(question.id, e.target.value.replace(/[^0-9.\-/]/g, '').slice(0, 6))}
         inputMode="text"
         autoComplete="off"
+        readOnly={reveal}
         aria-label="Enter your answer"
-        className="w-52 rounded-md border border-[#6d7380] bg-white px-4 py-2 text-center font-exam-serif text-2xl tracking-[0.25em] text-[#1c1c1e] outline-none focus:border-[#3b4ed8] focus:ring-2 focus:ring-[#3b4ed8]/20"
+        className={`w-52 rounded-md border px-4 py-2 text-center font-exam-serif text-2xl tracking-[0.25em] outline-none ${
+          reveal
+            ? 'border-[#2e7d32] bg-[#e8f5e9] text-[#1b5e20]'
+            : 'border-[#6d7380] bg-white text-[#1c1c1e] focus:border-[#3b4ed8] focus:ring-2 focus:ring-[#3b4ed8]/20'
+        }`}
       />
       <AnswerPreview value={answer ?? ''} />
+      {reveal && (
+        <p className="mt-3 font-exam-serif text-[16px] font-semibold text-[#1b5e20]">
+          Correct answer: {question.correct}
+        </p>
+      )}
     </div>
   )
 

@@ -13,6 +13,11 @@ import type { ExamModule, Question } from '../types/exam'
  * <u>...</u> underline markup (converted to the mockup's [[...]] markup).
  * Diagrams carry { archetypeId, parameters } and render through the
  * parameterized SVG renderer bundle.
+ *
+ * Curated layer: harvested records may carry payload.curated (imported from
+ * the human curation workbook, research/sat/curate/) — those render VERBATIM
+ * with info/prompt/options/diagram mapped 1:1 to screen regions, bypassing
+ * the reflow/bulleting heuristics below.
  */
 
 const SUPABASE_URL = 'https://asnrquijopjjqfjvwalc.supabase.co'
@@ -30,7 +35,26 @@ interface RawGenerated {
     choices?: Array<{ id: string; text: string }>
     correctAnswer: string
     taxonomyCode: string
+    rationale?: string
   }
+}
+
+/** Human-curated display-ready block (payload.curated) — fields map 1:1 to
+ *  simulator regions and are rendered VERBATIM: no reflow, no bulleting, no
+ *  stem-splitting. Author markup: \( \) LaTeX, [[ ]] underline, **bold**,
+ *  *italic*, blank line = paragraph. */
+interface CuratedBlock {
+  section: 'reading-writing' | 'math'
+  domain: string
+  skill: string
+  difficultyInternal: number
+  info: string | null
+  prompt: string
+  options: Array<{ id: string; text: string }>
+  gridAnswer: string | null
+  correctAnswer: string
+  rationale: string | null
+  diagram: string | null
 }
 
 interface RawHarvested {
@@ -46,6 +70,8 @@ interface RawHarvested {
     stem: string
     choices?: Array<{ id: string; text: string }>
     correctAnswer: string
+    rationale?: string
+    curated?: CuratedBlock
   }
 }
 
@@ -69,6 +95,8 @@ export interface BankQuestion extends Question {
    *  the 30 generator archetypes). */
   archetype: string
   domain: string
+  /** Vision-transcribed bank items carry provenance { verified: true }. */
+  verified?: boolean
 }
 
 /** <u>x</u> → [[x]] so the mockup's RichText underlines it. */
@@ -178,6 +206,7 @@ function toQuestion(
     : undefined
   const rawImage = (stim as RawHarvested['payload']['stimulus'])?.figureAsset
   const imageAsset = rawImage ? `/${rawImage}` : undefined
+  const verified = (payload as { provenance?: { verified?: boolean } }).provenance?.verified === true
   return {
     id,
     kind,
@@ -186,14 +215,54 @@ function toQuestion(
     skill,
     archetype,
     domain,
+    verified,
     prompt: payload.stem,
     passage: stim?.text ? formatPassage(stim.text, archetype) : undefined,
     table,
     options: payload.choices?.map((c) => c.text),
     correct: payload.correctAnswer,
+    rationale: payload.rationale ?? undefined,
     diagram: diagram ? { live: { archetypeId: diagram.archetypeId, parameters: diagram.parameters } } : undefined,
     imageAsset,
   }
+}
+
+/** Curated records render verbatim — the authoring sheet is the source of
+ *  truth for what lands in each pane, so none of the layout heuristics
+ *  (reflow/bulletNotes/underlines) apply. */
+function toCuratedQuestion(r: RawHarvested, c: CuratedBlock): BankQuestion {
+  return {
+    id: r.source_id,
+    kind: r.origin === 'bluebook' ? 'bluebook' : 'bank',
+    section: c.section === 'reading-writing' ? 'rw' : 'math',
+    difficulty: c.difficultyInternal,
+    skill: `${c.domain} — ${prettyTaxonomy(c.skill)}`,
+    archetype: c.skill,
+    domain: c.domain,
+    verified: true,
+    prompt: c.prompt,
+    passage: c.info ?? undefined,
+    options: c.options.length > 0 ? c.options.map((o) => o.text) : undefined,
+    correct: c.correctAnswer,
+    rationale: c.rationale ?? undefined,
+    imageAsset: c.diagram ? `/${c.diagram}` : undefined,
+  }
+}
+
+const PAGE_SIZE = 1000 // PostgREST server-side row cap per request
+
+/** PostgREST silently caps each response at PAGE_SIZE rows — page with
+ *  offset until a short page arrives so the whole bank is fetched. */
+async function fetchAllPages(url: string): Promise<unknown[]> {
+  const out: unknown[] = []
+  for (let offset = 0; ; offset += PAGE_SIZE) {
+    const res = await fetch(`${url}&offset=${offset}&limit=${PAGE_SIZE}`, { headers: H })
+    const page: unknown = await res.json()
+    if (!Array.isArray(page)) return [] // error payload — treat as empty
+    out.push(...page)
+    if (page.length < PAGE_SIZE) break
+  }
+  return out
 }
 
 let cache: { generated: BankQuestion[]; harvested: BankQuestion[] } | null = null
@@ -201,14 +270,10 @@ let cache: { generated: BankQuestion[]; harvested: BankQuestion[] } | null = nul
 export async function fetchBank(): Promise<{ generated: BankQuestion[]; harvested: BankQuestion[] }> {
   if (cache) return cache
   const [g, h] = await Promise.all([
-    fetch(`${SUPABASE_URL}/rest/v1/question_versions?select=question_id,payload&review_status=eq.approved`, {
-      headers: H,
-    }).then((r) => r.json()),
-    fetch(`${SUPABASE_URL}/rest/v1/harvested_questions?select=source_id,origin,payload`, { headers: H }).then((r) =>
-      r.json(),
-    ),
+    fetchAllPages(`${SUPABASE_URL}/rest/v1/question_versions?select=question_id,payload&review_status=eq.approved`),
+    fetchAllPages(`${SUPABASE_URL}/rest/v1/harvested_questions?select=source_id,origin,payload`),
   ])
-  const generated: BankQuestion[] = (Array.isArray(g) ? g : []).map((r: RawGenerated) =>
+  const generated: BankQuestion[] = (g as RawGenerated[]).map((r) =>
     toQuestion(
       r.question_id,
       'generated',
@@ -220,32 +285,118 @@ export async function fetchBank(): Promise<{ generated: BankQuestion[]; harveste
       r.payload,
     ),
   )
-  const harvested: BankQuestion[] = (Array.isArray(h) ? h : []).map((r: RawHarvested) =>
-    toQuestion(
-      r.source_id,
-      r.origin === 'bluebook' ? 'bluebook' : 'bank',
-      r.payload.section === 'reading-writing' ? 'rw' : 'math',
-      `${r.payload.domain} — ${prettyTaxonomy(r.payload.skill)}`,
-      r.payload.skill,
-      r.payload.domain,
-      r.payload.difficultyInternal,
-      r.payload,
-    ),
+  const harvested: BankQuestion[] = (h as RawHarvested[]).map((r) =>
+    r.payload.curated
+      ? toCuratedQuestion(r, r.payload.curated)
+      : toQuestion(
+          r.source_id,
+          r.origin === 'bluebook' ? 'bluebook' : 'bank',
+          r.payload.section === 'reading-writing' ? 'rw' : 'math',
+          `${r.payload.domain} — ${prettyTaxonomy(r.payload.skill)}`,
+          r.payload.skill,
+          r.payload.domain,
+          r.payload.difficultyInternal,
+          r.payload,
+        ),
   )
   cache = { generated, harvested }
   return cache
 }
 
-/** Questions for one source selection (excludeBluebook drops bluebook items). */
+/** Questions for one source selection (excludeBluebook drops bluebook items;
+ *  verifiedOnly keeps only items with a verified vision transcription). */
 export function selectQuestions(
   bank: { generated: BankQuestion[]; harvested: BankQuestion[] },
   source: SourceKind,
   excludeBluebook: boolean,
+  verifiedOnly = false,
 ): BankQuestion[] {
-  if (source === 'generated') return bank.generated
+  const onlyVerified = (qs: BankQuestion[]): BankQuestion[] =>
+    verifiedOnly ? qs.filter((q) => q.verified === true) : qs
+  if (source === 'generated') return onlyVerified(bank.generated)
   let items = bank.harvested
   if (excludeBluebook) items = items.filter((q) => q.kind !== 'bluebook')
-  return items.filter((q) => q.kind === source)
+  return onlyVerified(items.filter((q) => q.kind === source))
+}
+
+/** Correctness check shared by the sim (exam scoring) and zen (check-as-you-go).
+ *  MCQ compares option letters; grid-in compares numeric value with fraction
+ *  and tolerance handling. */
+export function isCorrect(question: { options?: string[]; correct: string }, value: string): boolean {
+  if (question.options) return value === question.correct
+  const norm = (s: string): number => {
+    const t = s.trim()
+    if (!t) return NaN
+    if (t.includes('/')) {
+      const [a, b] = t.split('/')
+      return Number(a) / Number(b)
+    }
+    return Number(t)
+  }
+  const a = norm(value)
+  const b = norm(question.correct)
+  if (Number.isNaN(a) || Number.isNaN(b)) return value.trim() === question.correct.trim()
+  return Math.abs(a - b) < 1e-6
+}
+
+export interface StudentEventInput {
+  question_id: string
+  correct: boolean
+  mode: 'exam' | 'practice' | 'diagnostic'
+  time_ms: number
+  choice_id?: string
+  grid_in_answer?: string
+}
+
+/** Record answered questions to Supabase student_events (dev student). */
+export async function postEvents(events: StudentEventInput[]): Promise<void> {
+  if (events.length === 0) return
+  const now = new Date().toISOString()
+  const body = events.map((e) => ({
+    student_id: 'dev',
+    question_id: e.question_id,
+    question_version: 1,
+    mode: e.mode,
+    idk: false,
+    choice_id: e.choice_id ?? null,
+    grid_in_answer: e.grid_in_answer ?? null,
+    correct: e.correct,
+    time_ms: e.time_ms,
+    occurred_at: now,
+  }))
+  await fetch(`${SUPABASE_URL}/rest/v1/student_events`, {
+    method: 'POST',
+    headers: { ...H, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+    body: JSON.stringify(body),
+  })
+}
+
+export type ZenSubject = 'all' | 'math' | 'rw'
+export type ZenDifficulty = 'chill' | 'standard' | 'brutal'
+
+/** Endless-stream pool for Zen mode: filter by subject + difficulty bucket.
+ *  chill = easy (2), standard = everything, brutal = hard (4). Generated
+ *  questions carry no difficulty (mapped to 3), so they land in standard. */
+export function selectZen(
+  bank: { generated: BankQuestion[]; harvested: BankQuestion[] },
+  subject: ZenSubject,
+  difficulty: ZenDifficulty,
+): BankQuestion[] {
+  let items = [...bank.generated, ...bank.harvested]
+  if (subject !== 'all') items = items.filter((q) => q.section === subject)
+  if (difficulty === 'chill') items = items.filter((q) => q.difficulty === 2)
+  if (difficulty === 'brutal') items = items.filter((q) => q.difficulty === 4)
+  return items
+}
+
+/** Skill-targeted drill pool: only questions whose archetype (skill slug) is
+ *  in `skills`. Powers the looseleaf skill-map "practice" actions. */
+export function selectBySkills(
+  bank: { generated: BankQuestion[]; harvested: BankQuestion[] },
+  skills: string[],
+): BankQuestion[] {
+  const set = new Set(skills)
+  return [...bank.generated, ...bank.harvested].filter((q) => set.has(q.archetype))
 }
 
 /** Digital SAT domain blueprints (percent of each section's questions). */
@@ -318,8 +469,9 @@ export function archetypeCounts(
   bank: { generated: BankQuestion[]; harvested: BankQuestion[] },
   source: SourceKind,
   excludeBluebook: boolean,
+  verifiedOnly = false,
 ): Array<{ archetype: string; count: number }> {
-  const qs = selectQuestions(bank, source, excludeBluebook)
+  const qs = selectQuestions(bank, source, excludeBluebook, verifiedOnly)
   const counts = new Map<string, number>()
   for (const q of qs) counts.set(q.archetype, (counts.get(q.archetype) ?? 0) + 1)
   return [...counts.entries()]

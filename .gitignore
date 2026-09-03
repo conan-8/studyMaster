@@ -19,6 +19,9 @@ research/sat/assets/
 research/sat/harvest-source/
 research/sat/index.jsonl
 research/sat/.harvest-progress.json
+# human-curated layer (source workbook + display-ready records)
+research/sat/curate/
+research/sat/curated/
 # infra
 node_modules/
 *.log

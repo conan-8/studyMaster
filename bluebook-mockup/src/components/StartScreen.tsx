@@ -8,7 +8,7 @@ interface BankData {
 }
 
 interface StartScreenProps {
-  onStart: (source: SourceKind, excludeBluebook: boolean) => void
+  onStart: (source: SourceKind, excludeBluebook: boolean, verifiedOnly: boolean) => void
   bank: BankData | null
   loading: boolean
   error: string | null
@@ -46,6 +46,7 @@ const SOURCES: Array<{ kind: SourceKind; label: string; blurb: string }> = [
 export default function StartScreen({ onStart, bank, loading, error }: StartScreenProps) {
   const [source, setSource] = useState<SourceKind>('generated')
   const [excludeBluebook, setExcludeBluebook] = useState(false)
+  const [verifiedOnly, setVerifiedOnly] = useState(false)
 
   const counts = useMemo(() => {
     if (!bank) return null
@@ -57,8 +58,8 @@ export default function StartScreen({ onStart, bank, loading, error }: StartScre
   }, [bank])
 
   const archetypes = useMemo(
-    () => (bank ? archetypeCounts(bank as never, source, excludeBluebook) : []),
-    [bank, source, excludeBluebook],
+    () => (bank ? archetypeCounts(bank as never, source, excludeBluebook, verifiedOnly) : []),
+    [bank, source, excludeBluebook, verifiedOnly],
   )
   const empty = counts !== null && counts[source] === 0
 
@@ -104,6 +105,15 @@ export default function StartScreen({ onStart, bank, loading, error }: StartScre
                 className="h-4 w-4 accent-[#3b4ed8]"
               />
               Exclude Bluebook questions from any mixed view
+            </label>
+            <label className="mt-2 flex cursor-pointer items-center gap-2.5 text-sm text-[#3c4048]">
+              <input
+                type="checkbox"
+                checked={verifiedOnly}
+                onChange={(e) => setVerifiedOnly(e.target.checked)}
+                className="h-4 w-4 accent-[#3b4ed8]"
+              />
+              Verified transcriptions only
             </label>
 
             {archetypes.length > 0 && (
@@ -158,7 +168,7 @@ export default function StartScreen({ onStart, bank, loading, error }: StartScre
           Back
         </button>
         <button
-          onClick={() => onStart(source, excludeBluebook)}
+          onClick={() => onStart(source, excludeBluebook, verifiedOnly)}
           disabled={loading || empty}
           className="rounded-full bg-[#3b4ed8] px-6 py-2 text-sm font-semibold text-white hover:bg-[#2f3fb8] disabled:opacity-40"
         >

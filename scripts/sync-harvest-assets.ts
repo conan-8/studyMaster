@@ -34,10 +34,18 @@ function main(): void {
     return;
   }
 
-  const names = fs
-    .readdirSync(SRC_DIR)
-    .filter((n) => n.startsWith('ssqb-') && n.endsWith('.png'))
-    .sort();
+  // top-level ssqb-*.png plus the curated figures subdir (assets/figures/)
+  const names: string[] = [
+    ...fs
+      .readdirSync(SRC_DIR)
+      .filter((n) => n.startsWith('ssqb-') && n.endsWith('.png')),
+    ...(fs.existsSync(path.join(SRC_DIR, 'figures'))
+      ? fs
+          .readdirSync(path.join(SRC_DIR, 'figures'))
+          .filter((n) => n.startsWith('ssqb-') && n.endsWith('.png'))
+          .map((n) => path.join('figures', n))
+      : []),
+  ].sort();
 
   let copied = 0;
   let skipped = 0;
@@ -46,6 +54,7 @@ function main(): void {
   for (const name of names) {
     const src = path.join(SRC_DIR, name);
     const dest = path.join(DEST_DIR, name);
+    if (name.startsWith('figures')) fs.mkdirSync(path.dirname(dest), { recursive: true });
     const srcStat = fs.statSync(src);
     if (fs.existsSync(dest)) {
       const destStat = fs.statSync(dest);

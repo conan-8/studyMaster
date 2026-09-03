@@ -253,6 +253,35 @@ async function main(): Promise<void> {
     if (bluebookFiles.length > 0) {
       console.log(`seed: upserted ${bluebookFiles.length} harvested question(s) into harvested_questions`);
     }
+
+    // --- curated display-ready layer (research/sat/curated/*.json) ---
+    // Human-curated text stored verbatim as payload.curated on the harvested
+    // record; the simulator renders it 1:1, bypassing layout heuristics.
+    const curatedDir = path.join(REPO_ROOT, 'research', 'sat', 'curated');
+    const curatedFiles = fs.existsSync(curatedDir)
+      ? fs.readdirSync(curatedDir).filter((n) => n.startsWith('ssqb-') && n.endsWith('.json'))
+      : [];
+    if (curatedFiles.length === 0) {
+      console.log('seed: no curated records under research/sat/curated/ — curated seeding skipped');
+    }
+    let curatedUpserted = 0;
+    for (const name of curatedFiles) {
+      const rec = loadJson(path.join(curatedDir, name)) as Record<string, unknown>;
+      const res = await client.query(
+        `UPDATE harvested_questions
+         SET payload = payload || $1::jsonb
+         WHERE source_id = $2`,
+        [JSON.stringify({ curated: rec }), rec.sourceId],
+      );
+      if (res.rowCount === 0) {
+        console.log(`seed: WARNING curated ${rec.sourceId} has no harvested row — skipped`);
+      } else {
+        curatedUpserted++;
+      }
+    }
+    if (curatedFiles.length > 0) {
+      console.log(`seed: merged ${curatedUpserted} curated record(s) into harvested_questions.payload`);
+    }
     console.log('seed: done');
   } finally {
     await client.end();

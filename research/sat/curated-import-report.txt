@@ -1,0 +1,26 @@
+curated import report
+workbook: research/sat/curate/sat_questions.xlsx
+run at:   2026-09-02T05:37:48.706522Z
+
+rows read:        1845
+records written:  1844
+figures copied:   132
+figures missing:  1 ['43f4013a']
+skipped rows:     1
+cross-check flags: 11
+
+--- SKIPPED (fix and re-run) ---
+e3bbf2bf: ID not in harvested bank (cannot join metadata); partial options (3/4 filled) — must be all four or none
+
+--- CROSS-CHECK FLAGS (user value kept) ---
+ssqb-dd1757fd: diagram=no but harvest extracted a figure — figure dropped per curation
+ssqb-4d38c2ea: diagram=no but harvest extracted a figure — figure dropped per curation
+ssqb-43f4013a: diagram=yes but harvest has no figure asset — crop required
+ssqb-43f4013a: diagram=yes, asset missing — record written WITHOUT diagram, crop it into assets/figures/
+ssqb-dc47c2ac: diagram=no but harvest extracted a figure — figure dropped per curation
+ssqb-eaea6f8f: diagram=no but harvest extracted a figure — figure dropped per curation
+ssqb-37c481f8: diagram=no but harvest extracted a figure — figure dropped per curation
+ssqb-c762ca58: diagram=no but harvest extracted a figure — figure dropped per curation
+ssqb-809addda: diagram=no but harvest extracted a figure — figure dropped per curation
+ssqb-1c6b1fa0: diagram=no but harvest extracted a figure — figure dropped per curation
+ssqb-9b01bcf4: diagram=no but harvest extracted a figure — figure dropped per curation

@@ -20,6 +20,8 @@
     "generate": "tsx --env-file-if-exists=.env scripts/generate-question.ts",
     "gallery": "tsx scripts/render-gallery.ts",
     "gallery:questions": "tsx scripts/question-gallery.ts",
+    "gallery:curated": "tsx scripts/curated-gallery.ts",
+    "import:curated": "python3 scripts/import-curated.py",
     "gallery:harvest": "tsx scripts/harvest-gallery.ts",
     "transcribe:math": "tsx --env-file-if-exists=.env scripts/transcribe-math.ts",
     "build:sim": "esbuild simulator/browser-entry.ts --bundle --format=iife --global-name=StudyMasteRenderers --outfile=bluebook-mockup/public/renderers.js --alias:node:fs=./simulator/shims/fs.ts --alias:node:path=./simulator/shims/path.ts --alias:node:url=./simulator/shims/url.ts",

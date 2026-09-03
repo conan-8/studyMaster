@@ -10,14 +10,18 @@ Question Bank (SSQB).
 research/sat/
 ├── README.md                ← this file
 ├── question.schema.json     ← JSON Schema draft-07 for the normalized contract
+├── curated.schema.json      ← JSON Schema draft-07 for the display-ready curated contract
 ├── question-bank/           ← harvested normalized questions (gitignored)
-├── assets/                  ← harvested figure SVGs, assets/<sourceId>.svg (gitignored)
+├── assets/                  ← harvested figure PNGs (gitignored)
+├── assets/figures/          ← standalone figure PNGs for curated records (gitignored)
+├── curate/                  ← human curation workbook(s), e.g. sat_questions.xlsx (gitignored)
+├── curated/                 ← display-ready curated records + import report (gitignored)
 ├── archetypes/              ← original question archetypes derived from the bank (ours)
 └── test-fixtures/           ← original sample questions for validator tests (ours)
 ```
 
-`question-bank/`, `assets/`, `index.jsonl`, and `.harvest-progress.json` are
-gitignored — see the licensing rule below.
+`question-bank/`, `assets/`, `curate/`, `curated/`, `index.jsonl`, and
+`.harvest-progress.json` are gitignored — see the licensing rule below.
 
 ## Harvest workflow
 
@@ -38,6 +42,41 @@ gets flagged, not silently classified. Output is normalized records in
 
 The `SATQB_COOKIE` API route remains a higher-fidelity alternative (exact
 LaTeX instead of PDF-typeset math) if ever needed later.
+
+## Curated layer (display-ready records)
+
+The harvest pipeline infers layout (passage vs stem vs choices) with
+heuristics; the curated layer replaces that with human-authored text stored
+exactly as the simulator displays it. One record per question in
+`curated/ssqb-<id>.json`, validated against `curated.schema.json`, with fields
+mapping 1:1 to simulator regions:
+
+- `info` — left-pane stimulus text (`null` when the question has none)
+- `prompt` — question text above the answer options
+- `options` / `gridAnswer` — the answer area
+- `diagram` — standalone figure PNG (`assets/figures/ssqb-<id>.png`) or `null`
+- `correctAnswer` / `rationale` — authoritative, from the curation sheet
+
+Metadata (`origin`, `domain`, `skill`, difficulties, `sourceUrl`,
+`harvestedAt`) is joined from the harvested bank by `sourceId` at import time.
+
+Workflow:
+
+```bash
+npm run import:curated     # curate/sat_questions.xlsx -> curated/*.json + report + figure copies
+npm run gallery:curated    # review-gallery/curated.html — verbatim visual QA
+npm run seed               # merges each curated record into harvested_questions.payload.curated
+```
+
+The simulator (`bluebook-mockup/src/data/live.ts`) renders records carrying
+`payload.curated` VERBATIM — no reflow, bulleting, or stem-splitting — while
+non-curated records keep the heuristic path. Author markup in the sheet:
+`\( \)` LaTeX, `[[ ]]` underline, `**bold**`, `*italic*`, blank line =
+paragraph.
+
+The import report (`curated-import-report.txt`) lists skipped rows and
+cross-check flags (curated `correctAnswer`/`bluebook`/`diagram` columns are
+authoritative; disagreements with the harvest are logged, never fatal).
 
 ## Validating the bank
 

@@ -464,11 +464,6 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
     <div class="mast">
       <span class="date" id="mast-date"></span>
       <input class="search" placeholder="search" />
-      <div class="tabs">
-        <button class="tab on" data-go="light"><span class="dot"></span>Off-white</button>
-        <button class="tab" data-go="dark"><span class="dot"></span>Warm black</button>
-        <button class="tab" data-go="blueprint"><span class="dot"></span>Blueprint</button>
-      </div>
     </div>
 
     <div class="content">
@@ -751,11 +746,9 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
 /* modes */
 function setMode(m){
   document.body.dataset.mode=m;
-  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.go===m));
   const sw=document.getElementById('darksw');
   if(sw){sw.classList.toggle('on',m==='dark');sw.setAttribute('aria-checked',String(m==='dark'));}
 }
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>setMode(t.dataset.go)));
 document.getElementById('darksw').addEventListener('click',()=>{
   setMode(document.body.dataset.mode==='dark'?'light':'dark');
 });

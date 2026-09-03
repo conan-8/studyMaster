@@ -26,7 +26,7 @@
     "transcribe:math": "tsx --env-file-if-exists=.env scripts/transcribe-math.ts",
     "build:sim": "esbuild simulator/browser-entry.ts --bundle --format=iife --global-name=StudyMasteRenderers --outfile=bluebook-mockup/public/renderers.js --alias:node:fs=./simulator/shims/fs.ts --alias:node:path=./simulator/shims/path.ts --alias:node:url=./simulator/shims/url.ts",
     "build:app": "npm run build:sim && npm --prefix bluebook-mockup run build && tsx scripts/sync-app.ts",
-    "serve": "tsx scripts/serve.ts",
+    "serve": "tsx --env-file-if-exists=.env scripts/serve.ts",
     "db:check": "tsx --env-file-if-exists=.env scripts/db-check.ts",
     "db:migrate": "tsx --env-file-if-exists=.env scripts/migrate.ts",
     "seed": "tsx --env-file-if-exists=.env scripts/seed.ts"

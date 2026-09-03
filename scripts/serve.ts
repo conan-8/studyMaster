@@ -21,6 +21,7 @@ import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import { REPO_ROOT } from './lib/validate.js';
+import { handleChat } from './lib/chat-proxy.js';
 
 const ROOT = path.join(REPO_ROOT, 'looseleaf-mockup');
 const HOST = '127.0.0.1';
@@ -141,6 +142,31 @@ function handleReview(req: http.IncomingMessage, res: http.ServerResponse): void
   });
 }
 
+/** POST /api/chat — coach chat proxy (Alibaba Cloud Model Studio). */
+function handleChatRoute(req: http.IncomingMessage, res: http.ServerResponse): void {
+  let body = '';
+  req.on('data', (chunk) => {
+    body += chunk;
+    if (body.length > 256 * 1024) req.destroy();
+  });
+  req.on('end', async () => {
+    let payload: unknown;
+    try {
+      payload = JSON.parse(body);
+    } catch {
+      sendJson(res, 400, { error: 'invalid JSON body' });
+      return;
+    }
+    try {
+      const out = await handleChat(payload);
+      sendJson(res, out.status, out.body);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      sendJson(res, 500, { error: `internal error: ${msg}` });
+    }
+  });
+}
+
 const server = http.createServer((req, res) => {
   const method = req.method ?? 'GET';
   const requestUri = req.url ?? '/';
@@ -159,6 +185,10 @@ const server = http.createServer((req, res) => {
   }
   if (method === 'POST' && pathname === '/api/review') {
     handleReview(req, res);
+    return;
+  }
+  if (method === 'POST' && pathname === '/api/chat') {
+    handleChatRoute(req, res);
     return;
   }
   if (method !== 'GET' && method !== 'HEAD') {

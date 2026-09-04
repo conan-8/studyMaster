@@ -22,6 +22,9 @@
     "gallery:questions": "tsx scripts/question-gallery.ts",
     "gallery:curated": "tsx scripts/curated-gallery.ts",
     "import:curated": "python3 scripts/import-curated.py",
+    "import:figures": "python3 scripts/import-figures.py",
+    "harvest:api": "python3 scripts/harvest-ssqb-api.py",
+    "apply:api": "python3 scripts/apply-api-content.py",
     "gallery:harvest": "tsx scripts/harvest-gallery.ts",
     "transcribe:math": "tsx --env-file-if-exists=.env scripts/transcribe-math.ts",
     "build:sim": "esbuild simulator/browser-entry.ts --bundle --format=iife --global-name=StudyMasteRenderers --outfile=bluebook-mockup/public/renderers.js --alias:node:fs=./simulator/shims/fs.ts --alias:node:path=./simulator/shims/path.ts --alias:node:url=./simulator/shims/url.ts",
@@ -32,13 +35,17 @@
     "seed": "tsx --env-file-if-exists=.env scripts/seed.ts"
   },
   "devDependencies": {
-    "@types/node": "^22.10.0",
+    "@types/node": "^22.20.1",
     "@types/pg": "^8.11.10",
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
     "esbuild": "^0.28.2",
     "pg": "^8.13.1",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "ai": "^7.0.92",
+    "dotenv": "^17.4.2"
   }
 }

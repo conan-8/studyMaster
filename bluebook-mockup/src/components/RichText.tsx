@@ -11,8 +11,36 @@ import type { ReactNode } from 'react'
  */
 
 function renderSegments(text: string, keyPrefix: string): ReactNode[] {
-  // Math first so \( x * y \) never gets italic-mangled.
-  const mathParts = text.split(/\\\((.+?)\\\)/g)
+  // Images saved from the API: {{img:path}} inline (math-size) vs
+  // {{imgfull:path}} block-level (graph answer options, stimulus figures).
+  const imgParts = text.split(/\{\{(imgfull?):(.+?)\}\}/g)
+  if (imgParts.length > 1) {
+    const nodes: ReactNode[] = []
+    for (let i = 0; i < imgParts.length; i += 3) {
+      nodes.push(
+        <span key={`${keyPrefix}-is${i}`}>{renderSegments(imgParts[i]!, `${keyPrefix}-is${i}`)}</span>,
+      )
+      if (i + 2 < imgParts.length) {
+        const full = imgParts[i + 1] === 'imgfull'
+        nodes.push(
+          <img
+            key={`${keyPrefix}-img${i}`}
+            src={`/${imgParts[i + 2]}`}
+            alt=""
+            className={
+              full
+                ? 'mx-auto my-3 block h-auto w-auto max-w-full max-h-[360px]'
+                : 'mx-1 inline-block max-h-[2.2em] align-middle'
+            }
+          />,
+        )
+      }
+    }
+    return nodes
+  }
+  // Math first so \( x * y \) never gets italic-mangled; [\s\S] tolerates any
+  // stray newlines inside a LaTeX chunk.
+  const mathParts = text.split(/\\\(([\s\S]+?)\\\)/g)
   return mathParts.map((part, i) =>
     i % 2 === 1 ? (
       <span key={`${keyPrefix}-m${i}`} dangerouslySetInnerHTML={{ __html: safeKatex(part) }} />

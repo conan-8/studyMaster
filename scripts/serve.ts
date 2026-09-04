@@ -34,6 +34,8 @@ const MIME: Record<string, string> = {
   '.mjs': 'text/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
   '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
   '.svg': 'image/svg+xml',
   '.woff': 'font/woff',
   '.woff2': 'font/woff2',
@@ -80,10 +82,9 @@ interface ReviewBlock {
   at: string;
 }
 
-let statusCache: Record<string, ReviewBlock> | null = null;
-
+/** Rescanned on every call: files may also change outside the API (imports,
+ *  manual edits), so caching would serve stale review state. */
 function loadStatuses(): Record<string, ReviewBlock> {
-  if (statusCache) return statusCache;
   const out: Record<string, ReviewBlock> = {};
   if (fs.existsSync(CURATED_DIR)) {
     for (const name of fs.readdirSync(CURATED_DIR).filter((n) => n.startsWith('ssqb-') && n.endsWith('.json'))) {
@@ -98,7 +99,6 @@ function loadStatuses(): Record<string, ReviewBlock> {
       }
     }
   }
-  statusCache = out;
   return out;
 }
 
@@ -149,12 +149,11 @@ function handleReview(req: http.IncomingMessage, res: http.ServerResponse): void
     review.note = note;
     rec.review = review;
     fs.writeFileSync(file, JSON.stringify(rec, null, 2) + '\n');
-    statusCache = null;
     sendJson(res, 200, { sourceId, review });
   });
 }
 
-/** POST /api/chat — coach chat proxy (Alibaba Cloud Model Studio). */
+/** POST /api/chat — coach chat proxy (OpenRouter). */
 function handleChatRoute(req: http.IncomingMessage, res: http.ServerResponse): void {
   let body = '';
   req.on('data', (chunk) => {

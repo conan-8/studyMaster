@@ -45,6 +45,7 @@ export default function Review() {
   const [statuses, setStatuses] = useState<Record<string, ReviewState>>({})
   const [statusFilter, setStatusFilter] = useState<Status | 'all'>('pending')
   const [skillFilter, setSkillFilter] = useState('all')
+  const [diagramsOnly, setDiagramsOnly] = useState(false)
   const [idx, setIdx] = useState(0)
   const [popoverOpen, setPopoverOpen] = useState(false)
   const [reasons, setReasons] = useState<string[]>([])
@@ -59,7 +60,7 @@ export default function Review() {
     Promise.all([fetchBank(), probeApi()])
       .then(async ([bank, base]) => {
         if (cancelled) return
-        setQuestions(bank.harvested.filter((q) => q.verified === true))
+        setQuestions(bank.harvested.filter((q) => q.approved !== undefined))
         if (base === null) {
           setApiDown(true)
           return
@@ -89,11 +90,12 @@ export default function Review() {
   const queue = useMemo(() => {
     if (!questions) return []
     let qs = questions
+    if (diagramsOnly) qs = qs.filter((q) => q.imageAsset || q.table)
     if (statusFilter !== 'all') qs = qs.filter((q) => statusOf(q.id) === statusFilter)
     if (skillFilter !== 'all') qs = qs.filter((q) => q.archetype === skillFilter)
     return [...qs].sort((a, b) => STATUS_ORDER[statusOf(a.id)] - STATUS_ORDER[statusOf(b.id)])
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [questions, statuses, statusFilter, skillFilter])
+  }, [questions, statuses, statusFilter, skillFilter, diagramsOnly])
 
   useEffect(() => {
     setIdx((i) => Math.min(i, Math.max(0, queue.length - 1)))
@@ -165,9 +167,9 @@ export default function Review() {
   const module: ExamModule = {
     id: 'review',
     label: 'Review',
-    title: 'Reading and Writing',
+    title: current.section === 'rw' ? 'Reading and Writing' : 'Math',
     minutes: 0,
-    split: true,
+    split: current.section === 'rw',
     questions: [current],
   }
   const st = statusOf(current.id)
@@ -217,6 +219,17 @@ export default function Review() {
             </option>
           ))}
         </select>
+        <button
+          onClick={() => {
+            setDiagramsOnly((v) => !v)
+            setIdx(0)
+          }}
+          className={`rounded-full border px-3 py-1 text-[13px] font-semibold ${
+            diagramsOnly ? 'border-[#1e2350] bg-[#1e2350] text-white' : 'border-[#9aa1ad] bg-white text-[#3c4048]'
+          }`}
+        >
+          diagrams only
+        </button>
       </header>
 
       {apiDown && (

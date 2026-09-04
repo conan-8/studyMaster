@@ -40,3 +40,4 @@ looseleaf-mockup/bluebook-practice-test.html
 
 # eval run artifacts (regenerate with npm run eval:generator)
 src/generator/eval/report-last-run.json
+.vercel

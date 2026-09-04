@@ -55,6 +55,7 @@ interface CuratedBlock {
   correctAnswer: string
   rationale: string | null
   diagram: string | null
+  tableJson?: TableJson | null
   review?: { status: 'approved' | 'returned'; reasons?: string[]; note?: string | null; at: string }
 }
 
@@ -235,6 +236,13 @@ function toQuestion(
  *  truth for what lands in each pane, so none of the layout heuristics
  *  (reflow/bulletNotes/underlines) apply. */
 function toCuratedQuestion(r: RawHarvested, c: CuratedBlock): BankQuestion {
+  const table = c.tableJson
+    ? {
+        caption: c.tableJson.caption,
+        columns: c.tableJson.columns ?? c.tableJson.headers ?? [],
+        rows: c.tableJson.rows ?? [],
+      }
+    : undefined
   return {
     id: r.source_id,
     kind: r.origin === 'bluebook' ? 'bluebook' : 'bank',
@@ -247,9 +255,9 @@ function toCuratedQuestion(r: RawHarvested, c: CuratedBlock): BankQuestion {
     approved: c.review?.status === 'approved',
     prompt: c.prompt,
     passage: c.info ?? undefined,
+    table,
     options: c.options.length > 0 ? c.options.map((o) => o.text) : undefined,
     correct: c.correctAnswer,
-    rationale: c.rationale ?? undefined,
     imageAsset: c.diagram ? `/${c.diagram}` : undefined,
   }
 }
@@ -449,9 +457,9 @@ function allocate(total: number, weights: number[]): number[] {
 }
 
 /** Sample `pool` down to the section's real-test domain ratio. */
-function sampleByBlueprint(pool: BankQuestion[], section: 'rw' | 'math'): BankQuestion[] {
+function sampleByBlueprint(pool: BankQuestion[], section: 'rw' | 'math', cap = SECTION_LENGTH[section]): BankQuestion[] {
   const spec = BLUEPRINT[section]
-  const total = Math.min(pool.length, SECTION_LENGTH[section])
+  const total = Math.min(pool.length, cap)
   const quotas = allocate(total, spec.map(([, w]) => w))
   const byDomain = new Map<string, BankQuestion[]>()
   for (const q of shuffle(pool)) {
@@ -486,50 +494,46 @@ export function archetypeCounts(
     .sort((a, b) => b.count - a.count || a.archetype.localeCompare(b.archetype))
 }
 
-/** Build a 4-module digital-SAT-shaped test at real domain ratios. */
-export function assembleTest(questions: BankQuestion[]): ExamModule[] {
-  const rw = sampleByBlueprint(questions.filter((q) => q.section === 'rw'), 'rw')
-  const math = sampleByBlueprint(questions.filter((q) => q.section === 'math'), 'math')
+export type TestFocus = 'math' | 'math-section' | 'rw' | 'rw-section'
 
-  const modules: ExamModule[] = []
-  const rwSplit = Math.ceil(rw.length / 2)
-  const mathSplit = Math.ceil(math.length / 2)
+/** Build a 4-module digital-SAT-shaped test at real domain ratios.
+ *  `focus` narrows the run to one module, or one full section. */
+export function assembleTest(questions: BankQuestion[], focus?: TestFocus): ExamModule[] {
   const minutes = (count: number, realCount: number, realMinutes: number): number =>
     Math.max(5, Math.round((count / realCount) * realMinutes))
-  const half = (list: BankQuestion[], module: string, from: number, to: number): BankQuestion[] =>
-    list.slice(from, to).map((q) => ({ ...q, id: `${module}-${q.id}` }))
+  const prefix = (list: BankQuestion[], module: string): BankQuestion[] =>
+    list.map((q) => ({ ...q, id: `${module}-${q.id}` }))
 
-  modules.push({
-    id: 'rw1',
-    label: 'Section 1, Module 1',
-    title: 'Reading and Writing',
-    minutes: minutes(rwSplit || 1, 27, 32),
-    split: true,
-    questions: half(rw, 'rw1', 0, rwSplit),
-  })
-  modules.push({
-    id: 'rw2',
-    label: 'Section 1, Module 2',
-    title: 'Reading and Writing',
-    minutes: minutes(rw.length - rwSplit || 1, 27, 32),
-    split: true,
-    questions: half(rw, 'rw2', rwSplit, rw.length),
-  })
-  modules.push({
-    id: 'math1',
-    label: 'Section 2, Module 1',
-    title: 'Math',
-    minutes: minutes(mathSplit || 1, 22, 35),
-    split: false,
-    questions: half(math, 'math1', 0, mathSplit),
-  })
-  modules.push({
-    id: 'math2',
-    label: 'Section 2, Module 2',
-    title: 'Math',
-    minutes: minutes(math.length - mathSplit || 1, 22, 35),
-    split: false,
-    questions: half(math, 'math2', mathSplit, math.length),
-  })
-  return modules.filter((m) => m.questions.length > 0)
+  const sectionModules = (section: 'rw' | 'math'): ExamModule[] => {
+    const pool = sampleByBlueprint(questions.filter((q) => q.section === section), section)
+    const split = Math.ceil(pool.length / 2)
+    const realCount = section === 'rw' ? 27 : 22
+    const realMinutes = section === 'rw' ? 32 : 35
+    const secNo = section === 'rw' ? 1 : 2
+    const make = (id: string, from: number, to: number): ExamModule => ({
+      id,
+      label: `Section ${secNo}, Module ${id.slice(-1)}`,
+      title: section === 'rw' ? 'Reading and Writing' : 'Math',
+      minutes: minutes(to - from || 1, realCount, realMinutes),
+      split: section === 'rw',
+      questions: prefix(pool.slice(from, to), id),
+    })
+    const mods = [make(`${section}1`, 0, split), make(`${section}2`, split, pool.length)]
+    return mods.filter((m) => m.questions.length > 0)
+  }
+
+  if (focus === 'rw') {
+    const rw = sampleByBlueprint(questions.filter((q) => q.section === 'rw'), 'rw', 27)
+    if (rw.length === 0) return []
+    return [{ id: 'rw1', label: 'Section 1, Module 1', title: 'Reading and Writing', minutes: minutes(rw.length, 27, 32), split: true, questions: prefix(rw, 'rw1') }]
+  }
+  if (focus === 'math') {
+    const math = sampleByBlueprint(questions.filter((q) => q.section === 'math'), 'math', 22)
+    if (math.length === 0) return []
+    return [{ id: 'math1', label: 'Section 2, Module 1', title: 'Math', minutes: minutes(math.length, 22, 35), split: false, questions: prefix(math, 'math1') }]
+  }
+  if (focus === 'rw-section') return sectionModules('rw')
+  if (focus === 'math-section') return sectionModules('math')
+
+  return [...sectionModules('rw'), ...sectionModules('math')]
 }

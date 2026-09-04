@@ -27,17 +27,6 @@ const SUBJECTS: Array<{ id: ZenSubject; label: string }> = [
   { id: 'math', label: 'Math' },
   { id: 'rw', label: 'Reading & Writing' },
 ]
-const DIFFS: Array<{ id: ZenDifficulty; label: string; blurb: string }> = [
-  { id: 'chill', label: 'Chill', blurb: 'Easy items only' },
-  { id: 'standard', label: 'Standard', blurb: 'The full mix' },
-  { id: 'brutal', label: 'Brutal', blurb: 'Hard items only' },
-]
-const TIMERS: Array<{ id: TimerOpt; label: string }> = [
-  { id: 0, label: 'Off' },
-  { id: 60, label: '1:00' },
-  { id: 90, label: '1:30' },
-  { id: 120, label: '2:00' },
-]
 
 function shuffle<T>(list: T[]): T[] {
   const out = [...list]
@@ -48,111 +37,10 @@ function shuffle<T>(list: T[]): T[] {
   return out
 }
 
-interface SetupProps {
-  config: ZenConfig
-  onConfig: (c: ZenConfig) => void
-  onStart: () => void
-  onExit: () => void
-  counts: Record<ZenDifficulty, number> | null
-}
-
-function ZenSetup({ config, onConfig, onStart, onExit, counts }: SetupProps) {
-  return (
-    <div className="flex min-h-screen flex-col bg-[#f4f5f7] text-[#1c1c1e]">
-      <main className="flex flex-1 items-center justify-center px-6 py-12">
-        <div className="w-full max-w-xl">
-          <h1 className="text-center text-[30px] font-bold">Zen mode</h1>
-          <p className="mt-2 text-center text-sm text-[#5b616e]">
-            An endless stream of questions. No lock screen, no exam timer — check as you go and read the rationale.
-          </p>
-
-          <div className="mt-8 rounded-2xl border border-[#d6d9de] bg-white px-8 py-6 shadow-sm">
-            <p className="text-[15px] font-bold">Subject</p>
-            <div className="mt-2.5 flex flex-wrap gap-2">
-              {SUBJECTS.map((s) => (
-                <button
-                  key={s.id}
-                  onClick={() => onConfig({ ...config, subject: s.id })}
-                  className={`rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors ${
-                    config.subject === s.id
-                      ? 'border-[#3b4ed8] bg-[#eef0fd] text-[#3b4ed8]'
-                      : 'border-[#d6d9de] bg-white text-[#3c4048] hover:border-[#9aa1ad]'
-                  }`}
-                >
-                  {s.label}
-                </button>
-              ))}
-            </div>
-
-            <p className="mt-5 text-[15px] font-bold">Difficulty</p>
-            <div className="mt-2.5 grid gap-2.5">
-              {DIFFS.map((d) => (
-                <button
-                  key={d.id}
-                  onClick={() => onConfig({ ...config, difficulty: d.id })}
-                  className={`flex items-center justify-between rounded-xl border px-4 py-2.5 text-left transition-colors ${
-                    config.difficulty === d.id
-                      ? 'border-[#3b4ed8] bg-[#eef0fd]'
-                      : 'border-[#d6d9de] bg-white hover:border-[#9aa1ad]'
-                  }`}
-                >
-                  <span>
-                    <span className="block text-sm font-bold">{d.label}</span>
-                    <span className="mt-0.5 block text-xs text-[#3c4048]">{d.blurb}</span>
-                  </span>
-                  <span className="text-xs font-semibold tabular-nums text-[#5b616e]">
-                    {counts ? `${counts[d.id]} items` : '…'}
-                  </span>
-                </button>
-              ))}
-            </div>
-
-            <p className="mt-5 text-[15px] font-bold">Per-question timer</p>
-            <div className="mt-2.5 flex flex-wrap gap-2">
-              {TIMERS.map((t) => (
-                <button
-                  key={t.id}
-                  onClick={() => onConfig({ ...config, timer: t.id })}
-                  className={`rounded-full border px-4 py-1.5 text-sm font-semibold tabular-nums transition-colors ${
-                    config.timer === t.id
-                      ? 'border-[#3b4ed8] bg-[#eef0fd] text-[#3b4ed8]'
-                      : 'border-[#d6d9de] bg-white text-[#3c4048] hover:border-[#9aa1ad]'
-                  }`}
-                >
-                  {t.label}
-                </button>
-              ))}
-            </div>
-            <p className="mt-2 text-xs text-[#8a8f99]">
-              The timer only shows your pace — it never locks you out or advances for you.
-            </p>
-          </div>
-
-          <div className="mt-6 flex items-center justify-center gap-2.5">
-            <button
-              onClick={onExit}
-              className="rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#3c4048] ring-1 ring-[#d6d9de] hover:bg-[#f4f5f7]"
-            >
-              Back to Looseleaf
-            </button>
-            <button
-              onClick={onStart}
-              disabled={counts !== null && counts[config.difficulty] === 0}
-              className="rounded-full bg-[#3b4ed8] px-7 py-2 text-sm font-semibold text-white hover:bg-[#2f3fb8] disabled:opacity-40"
-            >
-              Start session
-            </button>
-          </div>
-        </div>
-      </main>
-    </div>
-  )
-}
-
 export default function ZenScreen() {
   const [searchParams] = useSearchParams()
-  const [phase, setPhase] = useState<'setup' | 'run' | 'report'>('setup')
-  const [config, setConfig] = useState<ZenConfig>(() => {
+  const [phase, setPhase] = useState<'run' | 'report'>('run')
+  const [config] = useState<ZenConfig>(() => {
     const s = searchParams.get('subject')
     const d = searchParams.get('difficulty')
     const t = Number(searchParams.get('timer'))
@@ -189,58 +77,7 @@ export default function ZenScreen() {
     return raw ? raw.split(',').map((s) => s.trim()).filter(Boolean) : []
   }, [searchParams])
 
-  useEffect(() => {
-    let cancelled = false
-    fetchBank()
-      .then((b) => {
-        if (cancelled) return
-        setBank(b)
-        // Entering via "RETRY" from Mistakes: jump straight into a run with
-        // that question served first.
-        if (retryId) {
-          const target = [...b.generated, ...b.harvested].find((q) => q.id === retryId)
-          if (target) {
-            const rest = shuffle(
-              selectZen(b, 'all', 'standard').filter((q) => q.id !== retryId),
-            )
-            setQueue([target, ...rest])
-            setSecondsLeft(0)
-            shownAtRef.current = Date.now()
-            setPhase('run')
-          }
-          return
-        }
-        // Entering via a skill drill from the looseleaf skill map.
-        if (skillsList.length > 0) {
-          const pool = shuffle(selectBySkills(b, skillsList))
-          if (pool.length > 0) {
-            setQueue(pool)
-            setSecondsLeft(0)
-            shownAtRef.current = Date.now()
-            setPhase('run')
-          }
-        }
-      })
-      .finally(() => !cancelled && setLoading(false))
-    return () => {
-      cancelled = true
-    }
-  }, [retryId, skillsList])
-
-  const counts = useMemo(() => {
-    if (!bank) return null
-    return {
-      chill: selectZen(bank, config.subject, 'chill').length,
-      standard: selectZen(bank, config.subject, 'standard').length,
-      brutal: selectZen(bank, config.subject, 'brutal').length,
-    }
-  }, [bank, config.subject])
-
-  const question = queue[index]
-
-  const start = () => {
-    if (!bank) return
-    const pool = shuffle(selectZen(bank, config.subject, config.difficulty))
+  const startWith = (pool: BankQuestion[], timer: TimerOpt) => {
     setQueue(pool)
     setIndex(0)
     setAnswers({})
@@ -255,9 +92,43 @@ export default function ZenScreen() {
     postedRef.current = new Set()
     lastIdRef.current = null
     shownAtRef.current = Date.now()
-    setSecondsLeft(config.timer)
+    setSecondsLeft(timer)
     setPhase('run')
   }
+
+  useEffect(() => {
+    let cancelled = false
+    fetchBank()
+      .then((b) => {
+        if (cancelled) return
+        setBank(b)
+        // Entering via "RETRY" from Mistakes: that question served first.
+        if (retryId) {
+          const target = [...b.generated, ...b.harvested].find((q) => q.id === retryId)
+          if (target) {
+            const rest = shuffle(selectZen(b, 'all', 'standard').filter((q) => q.id !== retryId))
+            startWith([target, ...rest], 0)
+          }
+          return
+        }
+        // Entering via a skill drill from the looseleaf skill map.
+        if (skillsList.length > 0) {
+          const pool = shuffle(selectBySkills(b, skillsList))
+          if (pool.length > 0) startWith(pool, 0)
+          return
+        }
+        // Straight into the run — config was chosen on the Looseleaf tab.
+        const pool = shuffle(selectZen(b, config.subject, config.difficulty))
+        if (pool.length > 0) startWith(pool, config.timer)
+      })
+      .finally(() => !cancelled && setLoading(false))
+    return () => {
+      cancelled = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [retryId, skillsList])
+
+  const question = queue[index]
 
   // Grade the current question, post its event once, and append it to the
   // session log (used by the exit report). Called on Next and on Finish.
@@ -338,20 +209,6 @@ export default function ZenScreen() {
     })
   }
 
-  if (phase === 'setup') {
-    return (
-      <ZenSetup
-        config={config}
-        onConfig={setConfig}
-        onStart={start}
-        onExit={() => {
-          window.location.href = './index.html#zen'
-        }}
-        counts={loading ? null : counts}
-      />
-    )
-  }
-
   if (phase === 'report') {
     const right = sessionLog.filter((e) => e.correct === true).length
     const wrong = sessionLog.filter((e) => e.correct === false).length
@@ -409,8 +266,8 @@ export default function ZenScreen() {
             </button>
             <button
               onClick={() => {
-                setSessionLog([])
-                setPhase('setup')
+                if (!bank) return
+                startWith(shuffle(selectZen(bank, config.subject, config.difficulty)), config.timer)
               }}
               className="rounded-full bg-[#3b4ed8] px-7 py-2 text-sm font-semibold text-white hover:bg-[#2f3fb8]"
             >

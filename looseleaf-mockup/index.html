@@ -136,7 +136,7 @@ body[data-mode="blueprint"]::after{content:"";position:fixed;inset:0;pointer-eve
 .stat:nth-child(4){transform:rotate(1.2deg);background:var(--note4)}
 .stat::before{content:"";position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-1.5deg);width:72px;height:20px;background:var(--tape);box-shadow:0 1px 3px rgba(0,0,0,.15);clip-path:polygon(0 18%,5% 0,95% 0,100% 18%,100% 82%,95% 100%,5% 100%,0 82%)}
 .stat:hover{transform:rotate(0) scale(1.04);box-shadow:0 3px 4px rgba(0,0,0,.15),0 18px 32px -12px rgba(0,0,0,.42);z-index:2}
-.stat .l{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.stat .l{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
 .stat .v{display:inline-block;font-family:'Sora',sans-serif;font-weight:800;font-size:38px;line-height:1.05;margin-top:8px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .stat .v em{font-style:normal;font-weight:600;font-size:.5em;color:var(--muted);letter-spacing:0}
 .stat .d{font-family:'Caveat',cursive;font-size:17px;color:var(--ink);opacity:.7;margin-top:4px}
@@ -299,7 +299,7 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
 
 /* ============ ZEN ============ */
 .zen-ctl{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;align-items:center}
-.zc-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.zc-label{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);margin:0 0 10px}
 .zc-label b{color:var(--accent)}
 .zc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:22px}
 .zc-opt{display:flex;flex-direction:column;align-items:flex-start;gap:4px;border:1.5px solid var(--ink);border-radius:3px;background:var(--sheet);padding:13px 15px;cursor:pointer;transition:transform .12s,box-shadow .12s;text-align:left;font-family:inherit;color:inherit}
@@ -320,19 +320,22 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
 .seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:3px;overflow:hidden;margin-bottom:24px}
 .seg button{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;padding:10px 20px;border:none;background:var(--sheet);color:var(--muted);cursor:pointer;transition:all .15s}
 .seg button.on{background:var(--ink);color:var(--sheet)}
-.simcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:20px;margin-bottom:26px}
-.simcard{border:1.5px solid var(--ink);border-radius:3px;background:var(--sheet);box-shadow:4px 4px 0 var(--shadow);padding:20px;position:relative;cursor:pointer;transition:transform .18s,box-shadow .18s;overflow:hidden}
-.simcard:nth-child(odd){transform:rotate(-.4deg)}.simcard:nth-child(even){transform:rotate(.5deg)}
-.simcard:hover,.simcard:nth-child(odd):hover,.simcard:nth-child(even):hover{transform:translate(-2px,-3px) rotate(0);box-shadow:7px 8px 0 var(--shadow)}
-.simcard .st{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
-.simcard h3{font-family:'Fraunces',serif;font-weight:900;font-size:22px;margin:7px 0 4px;letter-spacing:-.01em}
-.simcard .sm{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--muted);margin-bottom:14px}
 .mods{display:flex;gap:6px;flex-wrap:wrap}
 .mods i{font-style:normal;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;border:1.5px solid var(--line);border-radius:2px;padding:4px 8px;color:var(--muted);transition:all .15s}
-.simcard:hover .mods i{border-color:var(--ink);color:var(--ink)}
 .mods i.done{background:var(--right);border-color:var(--right);color:#fff}
-.simlaunch{margin:16px -20px -20px;padding:12px;background:var(--accent);color:#fff;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;text-align:center;transform:translateY(102%);transition:transform .25s cubic-bezier(.16,1,.3,1)}
-.simcard:hover .simlaunch{transform:none}
+.simrecs{display:flex;flex-direction:column;gap:16px;margin-bottom:26px}
+.simrec{display:flex;align-items:center;gap:26px;border:1.5px solid var(--ink);border-radius:3px;background:var(--sheet);box-shadow:4px 4px 0 var(--shadow);padding:20px 24px;flex-wrap:wrap;transition:transform .18s,box-shadow .18s}
+.simrec:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--shadow)}
+.simrec .sr-main{flex:1;min-width:250px}
+.simrec .sr-st{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.simrec .sr-st.done{color:var(--right)}
+.simrec h3{font-family:'Fraunces',serif;font-weight:900;font-size:21px;margin:6px 0 4px;letter-spacing:-.01em}
+.simrec .sr-meta{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}
+.simrec:hover .mods i{border-color:var(--ink);color:var(--ink)}
+.simrec:hover .mods i.done{border-color:var(--right);color:#fff}
+.simrec .sr-score{font-family:'Sora',sans-serif;font-weight:800;font-size:34px;letter-spacing:-.02em;color:var(--accent);flex:none}
+.simrec .sr-score small{font-size:13px;color:var(--muted);font-weight:600;letter-spacing:0}
+.simrec .sr-score.none{color:var(--muted)}
 .scorewrap{display:flex;gap:34px;align-items:center;flex-wrap:wrap}
 .bignum{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(64px,7vw,96px);line-height:1;letter-spacing:-.04em;color:var(--accent)}
 .bignum small{font-size:.28em;color:var(--muted);font-weight:600;letter-spacing:0}
@@ -424,7 +427,15 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
 .dl-mini li:hover,.exam:hover{background:color-mix(in srgb,var(--accent) 4%,transparent);padding-left:10px}
 
 /* ============ CHAT ============ */
-.chat-log{display:flex;flex-direction:column;gap:14px;padding:4px 2px 18px;max-height:56vh;min-height:220px;overflow-y:auto}
+/* chat fills the viewport exactly — only the log scrolls, never the page */
+#v-chat.on{display:flex;flex-direction:column;height:calc(100dvh - 260px);min-height:420px}
+#v-chat .vh{margin-bottom:16px;flex:none}
+#v-chat .vh h1{font-size:clamp(30px,3.2vw,44px)}
+#v-chat .panel{flex:1;display:flex;flex-direction:column;min-height:0;height:auto}
+#v-chat>.mnote{display:none}
+#v-chat .panel .pb{flex:1;display:flex;flex-direction:column;min-height:0}
+.chat-log{flex:1;min-height:0;display:flex;flex-direction:column;gap:14px;padding:4px 2px 18px;overflow-y:auto}
+@media(max-width:980px){#v-chat{height:calc(100dvh - 330px);min-height:380px}}
 .msg{max-width:80%;padding:12px 15px;border-radius:3px;font-size:14.5px;line-height:1.65;font-family:'Sora',sans-serif;animation:msgin .28s cubic-bezier(.16,1,.3,1)}
 @keyframes msgin{from{opacity:0;transform:translateY(8px)}}
 .msg .who{display:block;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;opacity:.55;margin-bottom:6px}
@@ -434,6 +445,9 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
 .msg.coach p:last-child{margin-bottom:0}
 .msg.coach ul,.msg.coach ol{margin:4px 0 8px 18px;padding:0}
 .msg.coach li{margin:2px 0}
+.msg.coach li::marker{color:var(--accent);font-weight:700}
+.mbody.typing::after{content:"\258D";color:var(--accent);margin-left:2px;animation:caret .9s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
 .msg.coach code{font-family:'Space Mono',monospace;font-size:.85em;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:1px 5px;border-radius:2px}
 .msg.coach .ch-h{font-weight:700}
 .msg.err{border-left-color:var(--wrong)}
@@ -453,6 +467,10 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
 .chat-sugg{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .chat-sugg button{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:7px 12px;border:1.5px dashed var(--line);border-radius:999px;background:transparent;color:var(--muted);cursor:pointer;transition:all .12s}
 .chat-sugg button:hover{border-color:var(--ink);color:var(--ink);border-style:solid}
+.chat-widget{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:12px;padding:14px 16px;border:1.5px solid var(--ink);border-left:5px solid var(--accent);border-radius:3px;background:var(--sheet);box-shadow:3px 3px 0 var(--shadow);animation:msgin .35s cubic-bezier(.16,1,.3,1)}
+.chat-widget .cw-t{font-family:'Fraunces',serif;font-weight:700;font-size:16px;letter-spacing:-.01em}
+.chat-widget .cw-m{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.chat-widget .cw-go{margin-left:auto;white-space:nowrap}
 
 </style>
 </head>
@@ -704,16 +722,54 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
           <h1>The <em>simulator</em></h1>
         </div>
         <div id="sim-sat">
-          <div class="simcards">
-            <div class="simcard" data-report="score-report"><span class="st">PRACTICE TEST #1 &middot; COMPLETED</span><h3>Digital SAT &mdash; Full Length</h3><div class="sm">2H 14M &middot; 98 QUESTIONS &middot; SCORED SEP 1</div>
-              <div class="mods"><i class="done">R&amp;W M1</i><i class="done">R&amp;W M2</i><i class="done">MATH M1</i><i class="done">MATH M2</i></div>
-              <div class="simlaunch">VIEW SCORE REPORT &darr;</div></div>
-            <div class="simcard" data-launch="bluebook-practice-test.html"><span class="st">PRACTICE TEST #2 &middot; FRESH</span><h3>Digital SAT &mdash; Full Length</h3><div class="sm">2H 14M &middot; 98 QUESTIONS &middot; NOT STARTED</div>
-              <div class="mods"><i>R&amp;W M1</i><i>R&amp;W M2</i><i>MATH M1</i><i>MATH M2</i></div>
-              <div class="simlaunch">LAUNCH THE SIMULATOR &rarr;</div></div>
-            <div class="simcard" data-report="score-report"><span class="st">SECTION SPRINT &middot; TIMED</span><h3>Math only &mdash; module sprint</h3><div class="sm">35 MIN &middot; 22 QUESTIONS &middot; ADAPTIVE</div>
-              <div class="mods"><i>ALGEBRA</i><i>ADV. MATH</i><i>PSDA</i><i>GEO/TRIG</i></div>
-              <div class="simlaunch">START SPRINT &rarr;</div></div>
+          <div class="panel">
+            <div class="ph"><span class="t">Configure a run <b>&middot; pick one</b></span><span class="t">TIMED &middot; BLUEBOOK-STYLE</span></div>
+            <div class="pb">
+              <div class="zc-grid">
+                <button class="zc-opt" data-sc="math"><span class="n">Math module</span><span class="d">1 module &middot; 35 min &middot; 22 questions</span></button>
+                <button class="zc-opt" data-sc="math-section"><span class="n">Math section</span><span class="d">2 modules &middot; 1h 10m &middot; 44 questions</span></button>
+                <button class="zc-opt" data-sc="rw"><span class="n">Reading &amp; Writing module</span><span class="d">1 module &middot; 32 min &middot; 27 questions</span></button>
+                <button class="zc-opt" data-sc="rw-section"><span class="n">Reading &amp; Writing section</span><span class="d">2 modules &middot; 1h 4m &middot; 54 questions</span></button>
+                <button class="zc-opt on" data-sc="full"><span class="n">Full exam</span><span class="d">4 modules &middot; 2h 14m &middot; 98 questions</span></button>
+              </div>
+              <div style="display:flex;gap:14px;flex-wrap:wrap">
+                <button class="btn pri" id="sim-start">Launch the simulator &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="zc-label" style="margin:34px 0 12px">Past sessions</div>
+          <div class="simrecs">
+            <div class="simrec">
+              <div class="sr-main">
+                <span class="sr-st done">PRACTICE TEST #1 &middot; COMPLETED</span>
+                <h3>Digital SAT &mdash; Full Length</h3>
+                <div class="sr-meta">SEP 1 &middot; 2H 14M &middot; 98 QUESTIONS</div>
+                <div class="mods"><i class="done">R&amp;W M1</i><i class="done">R&amp;W M2</i><i class="done">MATH M1</i><i class="done">MATH M2</i></div>
+              </div>
+              <div class="sr-score">1400<small> /1600</small></div>
+              <button class="btn sec sm" data-report="score-report">View report &darr;</button>
+            </div>
+            <div class="simrec">
+              <div class="sr-main">
+                <span class="sr-st">PRACTICE TEST #2 &middot; FRESH</span>
+                <h3>Digital SAT &mdash; Full Length</h3>
+                <div class="sr-meta">NOT STARTED &middot; 2H 14M &middot; 98 QUESTIONS</div>
+                <div class="mods"><i>R&amp;W M1</i><i>R&amp;W M2</i><i>MATH M1</i><i>MATH M2</i></div>
+              </div>
+              <div class="sr-score none">&mdash;</div>
+              <button class="btn sec sm" data-launch="bluebook-practice-test.html">Launch &#8599;</button>
+            </div>
+            <div class="simrec">
+              <div class="sr-main">
+                <span class="sr-st done">SECTION SPRINT &middot; COMPLETED</span>
+                <h3>Math only &mdash; module sprint</h3>
+                <div class="sr-meta">AUG 27 &middot; 35 MIN &middot; 22 QUESTIONS</div>
+                <div class="mods"><i class="done">ALGEBRA</i><i class="done">ADV. MATH</i><i class="done">PSDA</i><i class="done">GEO/TRIG</i></div>
+              </div>
+              <div class="sr-score">640<small> /800</small></div>
+              <button class="btn sec sm" data-report="score-report">View report &darr;</button>
+            </div>
           </div>
           <div class="panel" id="score-report">
             <div class="ph"><span class="t">SCORE REPORT <b>&middot; PRACTICE TEST #1</b></span><span class="t">SEPT 1 &middot; SCORED</span></div>
@@ -899,11 +955,20 @@ document.getElementById('zen-start').addEventListener('click',()=>{
   window.open('bluebook-practice-test.html#/zen?subject='+encodeURIComponent(ZC.subject)+'&difficulty='+encodeURIComponent(ZC.difficulty)+'&timer='+encodeURIComponent(ZC.timer),'_blank');
 });
 
-/* simulator cards */
-document.querySelectorAll('.simcard').forEach(c=>c.onclick=()=>{
-  if(c.dataset.launch){window.open(c.dataset.launch,'_blank');return;}
-  if(c.dataset.report){const r=document.getElementById(c.dataset.report);if(r){r.scrollIntoView({behavior:'smooth',block:'start'});}}
+/* simulator — run config picker + past session records */
+let SC='full';
+document.querySelectorAll('[data-sc]').forEach(b=>b.addEventListener('click',()=>{
+  SC=b.dataset.sc;
+  document.querySelectorAll('[data-sc]').forEach(o=>o.classList.toggle('on',o===b));
+}));
+document.getElementById('sim-start').addEventListener('click',()=>{
+  window.open('bluebook-practice-test.html'+(SC==='full'?'':'?focus='+encodeURIComponent(SC)),'_blank');
 });
+document.querySelectorAll('.simrec [data-launch]').forEach(b=>b.addEventListener('click',()=>window.open(b.dataset.launch,'_blank')));
+document.querySelectorAll('.simrec [data-report]').forEach(b=>b.addEventListener('click',()=>{
+  const r=document.getElementById(b.dataset.report);
+  if(r)r.scrollIntoView({behavior:'smooth',block:'start'});
+}));
 
 /* mistakes — live data layer (Supabase student_events) */
 const SUP='https://asnrquijopjjqfjvwalc.supabase.co';
@@ -1213,6 +1278,61 @@ function addMsg(kind,text,opts={}){
   chatLog.scrollTop=chatLog.scrollHeight;
   return d;
 }
+function typeCoach(text){
+  const d=document.createElement('div');
+  d.className='msg coach';
+  d.innerHTML='<span class="who">COACH</span><div class="mbody typing"></div>';
+  chatLog.appendChild(d);
+  chatLog.scrollTop=chatLog.scrollHeight;
+  const body=d.querySelector('.mbody');
+  const parts=String(text).split(/(\s+)/);
+  let i=0;
+  return new Promise(resolve=>{
+    const step=()=>{
+      i=Math.min(i+2,parts.length);
+      body.innerHTML=mdLite(parts.slice(0,i).join(''));
+      chatLog.scrollTop=chatLog.scrollHeight;
+      if(i<parts.length)setTimeout(step,26);
+      else{body.classList.remove('typing');resolve(d);}
+    };
+    step();
+  });
+}
+/* drill widgets — the coach's pseudo tool-call: [[drill:<slug>|<N>]] */
+let chatSlugs=null; // slug -> pretty name, lazy-loaded from the taxonomy
+async function chatLoadSlugs(){
+  if(chatSlugs)return chatSlugs;
+  try{
+    const nodes=await mfetch(SUP+'/rest/v1/taxonomy_nodes?select=kind,slug&order=code');
+    const map={};
+    for(const n of(nodes||[]))if(n.kind==='skill'&&n.slug)map[n.slug]=skPretty(n.slug);
+    chatSlugs=map;
+  }catch(e){chatSlugs={};}
+  return chatSlugs;
+}
+function parseDrills(text){
+  const drills=[];
+  const clean=String(text).replace(/\[\[drill:([a-z0-9-]+)\|(\d{1,3})\]\]/g,(m,slug,n)=>{
+    if(!chatSlugs||!(slug in chatSlugs))return '';
+    if(drills.length<2)drills.push({slug,count:Math.min(40,Math.max(1,parseInt(n,10)||20))});
+    return '';
+  }).replace(/\n{3,}/g,'\n\n').trim();
+  return {clean,drills};
+}
+function addDrillWidgets(msgEl,drills){
+  for(const d of drills){
+    const w=document.createElement('div');
+    w.className='chat-widget';
+    w.innerHTML='<div><div class="cw-t">'+esc(chatSlugs[d.slug]||d.slug)+'</div><div class="cw-m">DRILL &middot; '+d.count+' QUESTIONS &middot; ZEN MODE</div></div>';
+    const b=document.createElement('button');
+    b.className='btn pri cw-go';
+    b.textContent='Start \u2192';
+    b.onclick=()=>window.open('bluebook-practice-test.html#/zen?skills='+encodeURIComponent(d.slug)+'&count='+d.count,'_blank');
+    w.appendChild(b);
+    msgEl.appendChild(w);
+  }
+  if(drills.length)chatLog.scrollTop=chatLog.scrollHeight;
+}
 function chatContext(){
   const g=id=>{const e=document.getElementById(id);return e?e.textContent.trim():'';};
   const parts=[];
@@ -1226,6 +1346,7 @@ function chatContext(){
   if(exam&&exam!=='\u2014')parts.push('days until '+g('st-exam-name')+': '+exam);
   const mc=g('mcount');
   if(mc&&mc!=='0')parts.push('open mistakes: '+mc);
+  if(chatSlugs&&Object.keys(chatSlugs).length)parts.push('available skill slugs: '+Object.keys(chatSlugs).join(', '));
   return parts.join('\n');
 }
 function chatStatusStart(){
@@ -1243,7 +1364,8 @@ function chatStatusStop(){
 function chatBoot(){
   if(chatBooted)return;
   chatBooted=true;
-  addMsg('coach','Hey Conan \u2014 I keep an eye on your record: streaks, misses, weak skills. Ask me anything about them \u2014 what\u2019s shaky, what to drill next, or how to plan the week. I read your live stats before I answer.');
+  chatLoadSlugs();
+  typeCoach('Hey Conan \u2014 I keep an eye on your record: streaks, misses, weak skills. Ask me anything about them \u2014 what\u2019s shaky, what to drill next, or how to plan the week. I read your live stats before I answer.');
   document.getElementById('chat-input').focus();
 }
 document.getElementById('chat-form').addEventListener('submit',async e=>{
@@ -1257,11 +1379,15 @@ document.getElementById('chat-form').addEventListener('submit',async e=>{
   chatHist.push({role:'user',content:text});
   chatBusy=true;send.disabled=true;chatStatusStart();
   try{
+    await chatLoadSlugs();
     const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:chatHist.slice(-24),context:chatContext()})});
     const j=await r.json().catch(()=>({}));
     if(!r.ok||typeof j.content!=='string')throw new Error(j.error||('HTTP '+r.status));
     chatHist.push({role:'assistant',content:j.content});
-    addMsg('coach',j.content);
+    chatStatusStop();
+    const parsed=parseDrills(j.content);
+    const msgEl=await typeCoach(parsed.clean);
+    addDrillWidgets(msgEl,parsed.drills);
   }catch(err){
     addMsg('coach','The coach can\u2019t be reached right now \u2014 '+(err&&err.message?err.message:'network error')+'. Give it another try.',{err:true});
   }finally{

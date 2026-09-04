@@ -107,23 +107,26 @@ function main(): void {
     console.log('copied 0, skipped 0');
     return;
   }
-  // top-level ssqb-*.png plus the curated figures subdir
+  // top-level ssqb-*.png plus the curated figures subdir (png/jpg/svg)
+  const FIGURE_EXT = /\.(png|jpe?g|svg)$/;
   const ssqbNames: string[] = [
     ...fs
       .readdirSync(SSQB_SRC_DIR)
       .filter((n) => n.startsWith('ssqb-') && n.endsWith('.png')),
-    ...(fs.existsSync(path.join(SSQB_SRC_DIR, 'figures'))
-      ? fs
-          .readdirSync(path.join(SSQB_SRC_DIR, 'figures'))
-          .filter((n) => n.startsWith('ssqb-') && n.endsWith('.png'))
-          .map((n) => path.join('figures', n))
-      : []),
+    ...['figures', 'choiceimg'].flatMap((sub) =>
+      fs.existsSync(path.join(SSQB_SRC_DIR, sub))
+        ? fs
+            .readdirSync(path.join(SSQB_SRC_DIR, sub))
+            .filter((n) => n.startsWith('ssqb-') && FIGURE_EXT.test(n))
+            .map((n) => path.join(sub, n))
+        : [],
+    ),
   ].sort();
   let ssqbCopied = 0;
   let ssqbSkipped = 0;
   for (const name of ssqbNames) {
     const dest = path.join(DEST_ASSETS_DIR, name);
-    if (name.startsWith('figures')) fs.mkdirSync(path.dirname(dest), { recursive: true });
+    if (name.includes(path.sep)) fs.mkdirSync(path.dirname(dest), { recursive: true });
     if (copyIfChanged(path.join(SSQB_SRC_DIR, name), dest)) ssqbCopied++;
     else ssqbSkipped++;
   }

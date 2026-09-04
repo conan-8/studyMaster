@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'react-router'
 import StartScreen from '../components/StartScreen'
 import ExamScreen from '../components/ExamScreen'
 import ReviewScreen from '../components/ReviewScreen'
@@ -6,7 +7,7 @@ import TransitionScreen from '../components/TransitionScreen'
 import BreakScreen from '../components/BreakScreen'
 import ResultsScreen from '../components/ResultsScreen'
 import LockScreen from '../components/LockScreen'
-import { assembleTest, fetchBank, isCorrect, postEvents, selectQuestions, type SourceKind } from '../data/live'
+import { assembleTest, fetchBank, isCorrect, postEvents, selectQuestions, type SourceKind, type TestFocus } from '../data/live'
 import type { ExamModule } from '../types/exam'
 
 type Screen = 'start' | 'intro' | 'exam' | 'review' | 'transition' | 'break' | 'results'
@@ -15,6 +16,14 @@ type Screen = 'start' | 'intro' | 'exam' | 'review' | 'transition' | 'break' | '
 const BREAK_BEFORE_MODULE = 2
 
 export default function Home() {
+  // ?focus narrows the run to one module or one full section
+  // (launched that way from the Looseleaf simulator config).
+  const [searchParams] = useSearchParams()
+  const focusParam = searchParams.get('focus')
+  const focus: TestFocus | null =
+    focusParam === 'math' || focusParam === 'math-section' || focusParam === 'rw' || focusParam === 'rw-section'
+      ? focusParam
+      : null
   const [screen, setScreen] = useState<Screen>('start')
   const [test, setTest] = useState<ExamModule[]>([])
   const [bank, setBank] = useState<Awaited<ReturnType<typeof fetchBank>> | null>(null)
@@ -119,7 +128,10 @@ export default function Home() {
     Promise.resolve(bank ?? fetchBank())
       .then((b) => {
         setBank(b)
-        const assembled = assembleTest(selectQuestions(b, source, excludeBluebook, verifiedOnly))
+        const assembled = assembleTest(
+          selectQuestions(b, source, excludeBluebook, verifiedOnly),
+          focus ?? undefined,
+        )
         if (assembled.length === 0) {
           setError('No questions available for that source.')
           return

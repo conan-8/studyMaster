@@ -259,7 +259,8 @@ function toCuratedQuestion(r: RawHarvested, c: CuratedBlock): BankQuestion {
     table,
     options: c.options.length > 0 ? c.options.map((o) => o.text) : undefined,
     correct: c.correctAnswer,
-    imageAsset: c.diagram ? `/${c.diagram}` : undefined,
+    // ?v= busts browser caches that still hold the pre-fix broken SVGs
+    imageAsset: c.diagram ? `/${c.diagram}?v=2` : undefined,
   }
 }
 

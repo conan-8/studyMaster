@@ -232,6 +232,12 @@ def speech_to_latex(alt: str) -> str:
     s = re.sub(r'(?i)\bdegrees\b', lambda m: '^\\circ', s)
     s = re.sub(r'(?i)\bcomma\b', ',', s)
     s = s.replace(',', ' ')
+    FRACTIONS = {'one half': '\\frac{1}{2}', 'a half': '\\frac{1}{2}', 'one third': '\\frac{1}{3}',
+                 'two thirds': '\\frac{2}{3}', 'one quarter': '\\frac{1}{4}', 'a quarter': '\\frac{1}{4}',
+                 'three quarters': '\\frac{3}{4}', 'three fourths': '\\frac{3}{4}'}
+    for phrase, sym in FRACTIONS.items():
+        s = re.sub(rf'(?i)\b{phrase}\b', lambda m, sym=sym: sym, s)
+    s = re.sub(r'(?i)\band\b', ',', s)
     GREEK = {'pi': '\\pi', 'theta': '\\theta', 'alpha': '\\alpha', 'beta': '\\beta',
              'gamma': '\\gamma', 'delta': '\\delta', 'sigma': '\\sigma', 'phi': '\\phi',
              'omega': '\\omega', 'mu': '\\mu', 'lambda': '\\lambda', 'tau': '\\tau'}
@@ -436,11 +442,29 @@ class TableParser(HTMLParser):
             self._cell += data.replace('\xa0', ' ')
 
 
+MATH_IMG_RX = re.compile(r'<img\b[^>]*>', re.I)
+
+
+def math_imgs_to_latex(html: str) -> str:
+    """Old-format items carry math as base64 <img class="math-img"> with a
+    spoken alt — convert those everywhere (including inside table cells,
+    which the text parser never sees)."""
+
+    def rep(m: re.Match) -> str:
+        tag = m.group(0)
+        if 'math-img' not in tag:
+            return tag
+        am = re.search(r'alt="([^"]*)"', tag)
+        return '\\(' + speech_to_latex(am.group(1)) + '\\)' if am else '[MATH?]'
+
+    return MATH_IMG_RX.sub(rep, html)
+
+
 def convert_html(raw: str, qid: str | None = None) -> dict:
     """Returns {text, table, svg} for one HTML blob. Figures and tables are
     extracted by regex FIRST so they stay byte-faithful (HTMLParser lowercases
     end-tag case and converts entities, which corrupts SVG)."""
-    s = convert_mathml_chunks(raw)
+    s = math_imgs_to_latex(convert_mathml_chunks(raw))
     svgs = re.findall(r'<svg\b.*?</svg>', s, re.S | re.I)
     tables_html = re.findall(r'<table\b.*?</table>', s, re.S | re.I)
     s = re.sub(r'<svg\b.*?</svg>', ' ', s, flags=re.S | re.I)

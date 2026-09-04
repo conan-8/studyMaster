@@ -173,8 +173,8 @@ export default function StartScreen({ onStart, bank, loading, error }: StartScre
 
       <footer className="flex items-center justify-end gap-2.5 border-t border-[#c9cede] bg-[#e8ecf5] px-5 py-2.5">
         <button
-          disabled
-          className="cursor-not-allowed rounded-full bg-[#3b4ed8] px-6 py-2 text-sm font-semibold text-white opacity-40"
+          onClick={() => window.location.assign('./index.html')}
+          className="rounded-full bg-[#3b4ed8] px-6 py-2 text-sm font-semibold text-white hover:bg-[#2f3fb8]"
         >
           Back
         </button>

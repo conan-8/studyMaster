@@ -8,6 +8,7 @@ import BreakScreen from '../components/BreakScreen'
 import ResultsScreen from '../components/ResultsScreen'
 import LockScreen from '../components/LockScreen'
 import { assembleTest, fetchBank, isCorrect, postEvents, selectQuestions, type SourceKind, type TestFocus } from '../data/live'
+import { clearCalcState } from '../lib/desmos'
 import { probeApi, reportQuestionError } from '../lib/reviewApi'
 import type { ExamModule } from '../types/exam'
 
@@ -136,6 +137,8 @@ export default function Home() {
   }
 
   const startTest = (source: SourceKind, excludeBluebook: boolean, verifiedOnly: boolean) => {
+    // Fresh test: the graphing calculator must not carry over any previous work.
+    clearCalcState()
     setPendingStart({ source, excludeBluebook, verifiedOnly })
     Promise.resolve(bank ?? fetchBank())
       .then((b) => {

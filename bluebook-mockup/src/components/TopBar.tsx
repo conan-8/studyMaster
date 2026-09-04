@@ -41,11 +41,13 @@ interface TopBarProps {
   module: ExamModule
   secondsLeft: number
   hidden: boolean
+  calcOpen?: boolean
+  onToggleCalc?: () => void
   onToggleHidden: (hidden: boolean) => void
   onExit: () => void
 }
 
-export default function TopBar({ module, secondsLeft, hidden, onToggleHidden, onExit }: TopBarProps) {
+export default function TopBar({ module, secondsLeft, hidden, calcOpen, onToggleCalc, onToggleHidden, onExit }: TopBarProps) {
   const low = secondsLeft <= 5 * 60
   const isMath = !module.split
   const [directionsOpen, setDirectionsOpen] = useState(false)
@@ -127,8 +129,14 @@ export default function TopBar({ module, secondsLeft, hidden, onToggleHidden, on
           {isMath && (
             <>
               <button
-                onClick={() => setToolNote('The calculator is not included in this mockup')}
-                className="flex flex-col items-center gap-1 text-[#1c1c1e] hover:text-[#3b4ed8]"
+                onClick={() => {
+                  if (onToggleCalc) onToggleCalc()
+                  else setToolNote('The calculator is not included in this mockup')
+                }}
+                aria-pressed={!!calcOpen}
+                className={`flex flex-col items-center gap-1 hover:text-[#3b4ed8] ${
+                  calcOpen ? 'text-[#3b4ed8]' : 'text-[#1c1c1e]'
+                }`}
               >
                 <Calculator size={20} />
                 <span className="text-[13px] font-semibold">Calculator</span>

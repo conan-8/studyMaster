@@ -4,6 +4,7 @@ import TopBar from './TopBar'
 import BottomBar from './BottomBar'
 import QuestionView from './QuestionView'
 import NavigatorSheet from './NavigatorSheet'
+import DesmosCalculatorPanel from './DesmosCalculatorPanel'
 
 interface ExamScreenProps {
   module: ExamModule
@@ -38,11 +39,13 @@ export default function ExamScreen({
 }: ExamScreenProps) {
   const [navOpen, setNavOpen] = useState(false)
   const [timerHidden, setTimerHidden] = useState(false)
+  const [calcOpen, setCalcOpen] = useState(false)
   const [reportOpen, setReportOpen] = useState(false)
   const [reportNote, setReportNote] = useState('')
   const [reportBusy, setReportBusy] = useState(false)
   const [reportMsg, setReportMsg] = useState<string | null>(null)
   const question = module.questions[index]
+  const isMath = !module.split
 
   async function submitReport() {
     if (!onReport || reportBusy || !reportNote.trim()) return
@@ -59,11 +62,13 @@ export default function ExamScreen({
   }
 
   return (
-    <div className="flex h-screen flex-col bg-[#f4f5f7] text-[#1c1c1e]">
+    <div className="relative flex h-screen flex-col bg-[#f4f5f7] text-[#1c1c1e]">
       <TopBar
         module={module}
         secondsLeft={secondsLeft}
         hidden={timerHidden}
+        calcOpen={calcOpen}
+        onToggleCalc={() => setCalcOpen((o) => !o)}
         onToggleHidden={setTimerHidden}
         onExit={onExit}
       />
@@ -73,6 +78,15 @@ export default function ExamScreen({
           THIS IS A PRACTICE TEST
         </div>
       </div>
+
+      {isMath && (
+        <DesmosCalculatorPanel
+          key={module.id}
+          moduleId={module.id}
+          open={calcOpen}
+          onClose={() => setCalcOpen(false)}
+        />
+      )}
 
       <main className="flex-1 overflow-hidden bg-white">
         <QuestionView

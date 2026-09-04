@@ -274,7 +274,28 @@ async function main(): Promise<void> {
         [JSON.stringify({ curated: rec }), rec.sourceId],
       );
       if (res.rowCount === 0) {
-        console.log(`seed: WARNING curated ${rec.sourceId} has no harvested row — skipped`);
+        // educator-bank-only question: create the harvested row so it reaches the simulator
+        await client.query(
+          `INSERT INTO harvested_questions
+             (source_id, origin, section, domain, skill, difficulty_official, difficulty_internal,
+              question_type, payload, allowed_uses, source_url, harvested_at)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, '{internal_eval}', $10, $11)
+           ON CONFLICT (source_id) DO UPDATE SET payload = EXCLUDED.payload`,
+          [
+            rec.sourceId,
+            rec.origin,
+            rec.section,
+            rec.domain,
+            rec.skill,
+            rec.difficultyOfficial,
+            rec.difficultyInternal,
+            rec.questionType,
+            JSON.stringify({ curated: rec }),
+            rec.sourceUrl,
+            rec.harvestedAt,
+          ],
+        );
+        curatedUpserted++;
       } else {
         curatedUpserted++;
       }

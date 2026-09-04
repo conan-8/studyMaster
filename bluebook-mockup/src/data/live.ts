@@ -1,4 +1,5 @@
 import type { ExamModule, Question } from '../types/exam'
+import { supabase } from '../lib/supabase'
 
 /**
  * Live question bank — replaces the static lorem-ipsum data/exam.ts TEST.
@@ -363,12 +364,16 @@ export interface StudentEventInput {
   grid_in_answer?: string
 }
 
-/** Record answered questions to Supabase student_events (dev student). */
+/** Record answered questions to Supabase student_events, owned by the
+ *  signed-in account (student_id = auth.uid(), enforced by RLS). */
 export async function postEvents(events: StudentEventInput[]): Promise<void> {
   if (events.length === 0) return
+  const { data } = await supabase.auth.getSession()
+  const userId = data.session?.user?.id
+  if (!userId) return
   const now = new Date().toISOString()
   const body = events.map((e) => ({
-    student_id: 'dev',
+    student_id: userId,
     question_id: e.question_id,
     question_version: 1,
     mode: e.mode,
@@ -379,11 +384,7 @@ export async function postEvents(events: StudentEventInput[]): Promise<void> {
     time_ms: e.time_ms,
     occurred_at: now,
   }))
-  await fetch(`${SUPABASE_URL}/rest/v1/student_events`, {
-    method: 'POST',
-    headers: { ...H, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
-    body: JSON.stringify(body),
-  })
+  await supabase.from('student_events').insert(body)
 }
 
 export type ZenSubject = 'all' | 'math' | 'rw'

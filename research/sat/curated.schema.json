@@ -105,8 +105,17 @@
     },
     "diagram": {
       "type": ["string", "null"],
-      "pattern": "^assets/figures/.+\\.png$",
-      "description": "Standalone figure PNG, or null."
+      "pattern": "^assets/figures/.+\\.(png|jpe?g|svg)$",
+      "description": "Standalone figure image (user-supplied site export overrides the PDF crop), or null."
+    },
+    "tableJson": {
+      "type": ["object", "null"],
+      "description": "Structured table figure from the API (rendered natively instead of an image).",
+      "properties": {
+        "caption": { "type": ["string", "null"] },
+        "columns": { "type": "array", "items": { "type": "string" } },
+        "rows": { "type": "array", "items": { "type": "array" } }
+      }
     },
     "sourceUrl": {
       "type": "string",

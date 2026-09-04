@@ -18,6 +18,7 @@ interface ExamScreenProps {
   onNavigate: (index: number) => void
   onReview: () => void
   onExit: () => void
+  onReport?: (questionId: string, note: string) => Promise<string | null>
 }
 
 export default function ExamScreen({
@@ -33,10 +34,29 @@ export default function ExamScreen({
   onNavigate,
   onReview,
   onExit,
+  onReport,
 }: ExamScreenProps) {
   const [navOpen, setNavOpen] = useState(false)
   const [timerHidden, setTimerHidden] = useState(false)
+  const [reportOpen, setReportOpen] = useState(false)
+  const [reportNote, setReportNote] = useState('')
+  const [reportBusy, setReportBusy] = useState(false)
+  const [reportMsg, setReportMsg] = useState<string | null>(null)
   const question = module.questions[index]
+
+  async function submitReport() {
+    if (!onReport || reportBusy || !reportNote.trim()) return
+    setReportBusy(true)
+    const err = await onReport(question.id, reportNote.trim())
+    setReportBusy(false)
+    if (err) {
+      setReportMsg(err)
+    } else {
+      setReportMsg(null)
+      setReportNote('')
+      setReportOpen(false)
+    }
+  }
 
   return (
     <div className="flex h-screen flex-col bg-[#f4f5f7] text-[#1c1c1e]">
@@ -78,7 +98,45 @@ export default function ExamScreen({
           if (index === module.questions.length - 1) onReview()
           else onNavigate(index + 1)
         }}
+        onReport={onReport ? () => setReportOpen(true) : undefined}
       />
+
+      {reportOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-6">
+          <div className="w-full max-w-md rounded-lg bg-white p-5 shadow-xl">
+            <p className="text-[16px] font-bold">Report question error</p>
+            <p className="mt-1 text-[13px] text-[#5b616e]">
+              Question {index + 1} ({question.id}). What's wrong with it?
+            </p>
+            <textarea
+              autoFocus
+              value={reportNote}
+              onChange={(e) => setReportNote(e.target.value)}
+              placeholder="Describe the error (wrong text, broken figure, bad math…)"
+              className="mt-3 h-28 w-full rounded-md border border-[#6d7380] p-2 text-[14px]"
+            />
+            {reportMsg && <p className="mt-2 text-[13px] font-semibold text-[#c62828]">{reportMsg}</p>}
+            <div className="mt-3 flex justify-end gap-2">
+              <button
+                onClick={() => {
+                  setReportOpen(false)
+                  setReportMsg(null)
+                }}
+                className="rounded-md border border-[#6d7380] bg-white px-3 py-1.5 text-[13px] font-semibold"
+              >
+                Cancel
+              </button>
+              <button
+                disabled={reportBusy || !reportNote.trim()}
+                onClick={() => void submitReport()}
+                className="rounded-md bg-[#3b4ed8] px-3 py-1.5 text-[13px] font-semibold text-white disabled:opacity-50"
+              >
+                {reportBusy ? 'Sending…' : 'Submit'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <NavigatorSheet
         open={navOpen}

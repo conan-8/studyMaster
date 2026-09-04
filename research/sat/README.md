@@ -46,16 +46,27 @@ LaTeX instead of PDF-typeset math) if ever needed later.
 ## Curated layer (display-ready records)
 
 The harvest pipeline infers layout (passage vs stem vs choices) with
-heuristics; the curated layer replaces that with human-authored text stored
-exactly as the simulator displays it. One record per question in
-`curated/ssqb-<id>.json`, validated against `curated.schema.json`, with fields
-mapping 1:1 to simulator regions:
+heuristics; the curated layer replaces that with display-ready text stored
+exactly as the simulator shows it. **Source of truth is the College Board
+educator question bank API** (public, reverse-engineered — see
+`scripts/harvest-ssqb-api.py`); `scripts/apply-api-content.py` converts the
+cached payloads (HTML → author markup, MathML/spoken-alt → LaTeX, HTML tables →
+tableJson, inline SVG/graphs → figure assets) into one record per question in
+`curated/ssqb-<id>.json`, validated against `curated.schema.json`. (The Excel
+curation workflow is deprecated; `import-curated.py` remains for emergencies.)
+Fields map 1:1 to simulator regions:
 
 - `info` — left-pane stimulus text (`null` when the question has none)
 - `prompt` — question text above the answer options
 - `options` / `gridAnswer` — the answer area
-- `diagram` — standalone figure PNG (`assets/figures/ssqb-<id>.png`) or `null`
+- `diagram` — standalone figure image (`assets/figures/ssqb-<id>.<ext>`) or `null`
 - `correctAnswer` / `rationale` — authoritative, from the curation sheet
+
+Figures: the PDF scrape auto-crops R&W figures; user-supplied exports saved
+straight from the SSQB site override the crops — drop them into
+`curate/figures/<id>.png|jpg|svg` and run `npm run import:figures` (copies to
+`assets/figures/`, repoints the curated record, supersedes stale crops).
+Re-imports (`import:curated`) never clobber a user-supplied figure.
 
 Metadata (`origin`, `domain`, `skill`, difficulties, `sourceUrl`,
 `harvestedAt`) is joined from the harvested bank by `sourceId` at import time.

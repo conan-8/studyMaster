@@ -8,6 +8,7 @@ import BreakScreen from '../components/BreakScreen'
 import ResultsScreen from '../components/ResultsScreen'
 import LockScreen from '../components/LockScreen'
 import { assembleTest, fetchBank, isCorrect, postEvents, selectQuestions, type SourceKind, type TestFocus } from '../data/live'
+import { probeApi, reportQuestionError } from '../lib/reviewApi'
 import type { ExamModule } from '../types/exam'
 
 type Screen = 'start' | 'intro' | 'exam' | 'review' | 'transition' | 'break' | 'results'
@@ -40,6 +41,17 @@ export default function Home() {
   const [crossed, setCrossed] = useState<Record<string, string[]>>({})
   const [index, setIndex] = useState(0)
   const [secondsLeft, setSecondsLeft] = useState(0)
+  const [apiBase, setApiBase] = useState<string | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    probeApi().then((b) => {
+      if (!cancelled) setApiBase(b)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   // Load the live bank once for the start-screen counts.
   useEffect(() => {
@@ -212,6 +224,9 @@ export default function Home() {
         onNavigate={setIndex}
         onReview={() => setScreen('review')}
         onExit={exitToStart}
+        onReport={
+          apiBase !== null ? (questionId, note) => reportQuestionError(apiBase, questionId, note) : undefined
+        }
       />
     )
   }

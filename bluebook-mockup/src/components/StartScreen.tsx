@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { BarChart3, Clock3, Database, LockOpen, PersonStanding } from 'lucide-react'
 import { archetypeCounts, type SourceKind } from '../data/live'
+import { useAuth } from '../lib/auth-context'
 
 interface BankData {
   generated: Array<{ kind: string }>
@@ -44,6 +45,7 @@ const SOURCES: Array<{ kind: SourceKind; label: string; blurb: string }> = [
 ]
 
 export default function StartScreen({ onStart, bank, loading, error }: StartScreenProps) {
+  const { user, signOut } = useAuth()
   const [source, setSource] = useState<SourceKind>('generated')
   const [excludeBluebook, setExcludeBluebook] = useState(false)
   const [verifiedOnly, setVerifiedOnly] = useState(false)
@@ -65,6 +67,15 @@ export default function StartScreen({ onStart, bank, loading, error }: StartScre
 
   return (
     <div className="flex min-h-screen flex-col bg-[#f4f5f7] text-[#1c1c1e]">
+      <header className="flex items-center justify-end gap-3 border-b border-[#e2e4ea] bg-white px-5 py-2.5 text-sm">
+        <span className="truncate text-[#5b616e]">{user?.email}</span>
+        <button
+          onClick={() => void signOut()}
+          className="rounded-lg border border-[#d6d9de] px-3 py-1 text-xs font-semibold text-[#3c4048] hover:border-[#9aa1ad]"
+        >
+          Sign out
+        </button>
+      </header>
       <main className="flex flex-1 items-center justify-center px-6 py-12">
         <div className="w-full max-w-2xl">
           <h1 className="text-center text-[30px] font-bold">Practice Test</h1>

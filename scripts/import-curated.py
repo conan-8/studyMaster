@@ -169,17 +169,26 @@ def main() -> int:
         if diag == 'no' and harvest_fig:
             flags.append(f'ssqb-{qid}: diagram=no but harvest extracted a figure — figure dropped per curation')
 
-        # --- figure: copy the harvested standalone PNG into assets/figures/
+        # --- figure: user-supplied site export (svg/jpg/png in assets/figures/)
+        # wins; else copy the harvested standalone PNG into assets/figures/
         diagram_path = None
         if diag == 'yes':
-            src_png = ASSETS / f'ssqb-{qid}.png'
-            if src_png.exists():
-                shutil.copy(src_png, FIGURES / f'ssqb-{qid}.png')
-                diagram_path = f'assets/figures/ssqb-{qid}.png'
-                figures_copied += 1
+            user_fig = next(
+                (FIGURES / f'ssqb-{qid}{ext}' for ext in ('.svg', '.jpg', '.jpeg', '.png')
+                 if (FIGURES / f'ssqb-{qid}{ext}').exists()),
+                None,
+            )
+            if user_fig is not None:
+                diagram_path = f'assets/figures/{user_fig.name}'
             else:
-                figures_missing.append(qid)
-                flags.append(f'ssqb-{qid}: diagram=yes, asset missing — record written WITHOUT diagram, crop it into assets/figures/')
+                src_png = ASSETS / f'ssqb-{qid}.png'
+                if src_png.exists():
+                    shutil.copy(src_png, FIGURES / f'ssqb-{qid}.png')
+                    diagram_path = f'assets/figures/ssqb-{qid}.png'
+                    figures_copied += 1
+                else:
+                    figures_missing.append(qid)
+                    flags.append(f'ssqb-{qid}: diagram=yes, asset missing — record written WITHOUT diagram, crop it into assets/figures/')
 
         rec = {
             'sourceId': f'ssqb-{qid}',
@@ -202,14 +211,17 @@ def main() -> int:
             'curatedAt': now,
             'allowedUses': ['internal_eval'],
         }
-        # preserve any manual review decision across re-imports
+        # preserve manual review decisions and API-native figures across re-imports
         out = CURATED / f'ssqb-{qid}.json'
         if out.exists():
             try:
-                old_review = json.loads(out.read_text()).get('review')
-                if old_review:
-                    rec['review'] = old_review
+                old = json.loads(out.read_text())
+                if old.get('review'):
+                    rec['review'] = old['review']
                     reviews_kept += 1
+                if old.get('tableJson'):
+                    rec['tableJson'] = old['tableJson']
+                    rec['diagram'] = old.get('diagram')
             except json.JSONDecodeError:
                 pass
         out.write_text(json.dumps(rec, indent=2) + '\n')

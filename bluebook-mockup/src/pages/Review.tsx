@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { fetchBank, type BankQuestion } from '../data/live'
 import QuestionView from '../components/QuestionView'
+import { probeApi } from '../lib/reviewApi'
 import type { ExamModule } from '../types/exam'
 
 type Status = 'pending' | 'approved' | 'returned'
@@ -20,23 +21,6 @@ const REASONS: Array<{ id: string; label: string }> = [
 ]
 
 const STATUS_ORDER: Record<Status, number> = { pending: 0, returned: 1, approved: 2 }
-
-/** The review API lives on the serve.ts server. Same-origin first; when the
- *  app is served by a plain static server on another port (e.g. the python
- *  one on 4173), fall back cross-origin to the default serve.ts port. */
-const API_FALLBACKS = ['http://127.0.0.1:4173', 'http://127.0.0.1:4174']
-
-async function probeApi(): Promise<string | null> {
-  for (const base of ['', ...API_FALLBACKS]) {
-    try {
-      const r = await fetch(`${base}/api/curated-status`, { signal: AbortSignal.timeout(2000) })
-      if (r.ok) return base
-    } catch {
-      // try the next base
-    }
-  }
-  return null
-}
 
 const noop = () => {}
 

@@ -102,6 +102,43 @@ function loadStatuses(): Record<string, ReviewBlock> {
   return out;
 }
 
+const ERROR_REPORTS = path.join(REPO_ROOT, 'research', 'sat', 'curate', 'error-reports.jsonl');
+
+/** POST /api/report-error — append a student/tester error report for a question. */
+function handleReportError(req: http.IncomingMessage, res: http.ServerResponse): void {
+  let body = '';
+  req.on('data', (chunk) => {
+    body += chunk;
+    if (body.length > 16 * 1024) req.destroy();
+  });
+  req.on('end', () => {
+    let payload: unknown;
+    try {
+      payload = JSON.parse(body);
+    } catch {
+      sendJson(res, 400, { error: 'invalid JSON body' });
+      return;
+    }
+    const p = (payload ?? {}) as Record<string, unknown>;
+    const sourceId = typeof p.sourceId === 'string' ? p.sourceId : '';
+    const note = typeof p.note === 'string' ? p.note.trim() : '';
+    if (!SOURCE_ID_RE.test(sourceId)) {
+      sendJson(res, 400, { error: 'sourceId must match ^ssqb-[0-9a-f]+$' });
+      return;
+    }
+    if (!note || note.length > 2000) {
+      sendJson(res, 400, { error: 'note must be 1-2000 characters' });
+      return;
+    }
+    fs.mkdirSync(path.dirname(ERROR_REPORTS), { recursive: true });
+    fs.appendFileSync(
+      ERROR_REPORTS,
+      JSON.stringify({ sourceId, note, at: new Date().toISOString() }) + '\n',
+    );
+    sendJson(res, 200, { ok: true });
+  });
+}
+
 /** POST /api/review — validate, stamp, and write the review block. */
 function handleReview(req: http.IncomingMessage, res: http.ServerResponse): void {
   let body = '';
@@ -190,9 +227,16 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  if ((pathname === '/api/review' || pathname === '/api/curated-status') && method === 'OPTIONS') {
+  if (
+    (pathname === '/api/review' || pathname === '/api/curated-status' || pathname === '/api/report-error') &&
+    method === 'OPTIONS'
+  ) {
     res.writeHead(204, CORS);
     res.end();
+    return;
+  }
+  if (method === 'POST' && pathname === '/api/report-error') {
+    handleReportError(req, res);
     return;
   }
   if (method === 'GET' && pathname === '/api/curated-status') {

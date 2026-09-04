@@ -7,13 +7,22 @@ interface BottomBarProps {
   onToggleNavigator: () => void
   onBack: () => void
   onNext: () => void
+  onReport?: () => void
 }
 
-export default function BottomBar({ index, total, navOpen, onToggleNavigator, onBack, onNext }: BottomBarProps) {
+export default function BottomBar({ index, total, navOpen, onToggleNavigator, onBack, onNext, onReport }: BottomBarProps) {
   return (
     <footer className="flex items-center justify-between gap-4 border-t border-[#c9cede] bg-[#e8ecf5] px-6 py-3">
-      <div className="flex-1">
+      <div className="flex min-w-0 flex-1 items-center gap-3">
         <p className="truncate text-[17px] font-bold text-[#1c1c1e]">Conan Yi</p>
+        {onReport && (
+          <button
+            onClick={onReport}
+            className="shrink-0 rounded-full border border-[#8a8f99] px-3 py-1 text-[12px] font-semibold text-[#5b616e] hover:bg-[#dfe3ee]"
+          >
+            Report question error
+          </button>
+        )}
       </div>
 
       <button

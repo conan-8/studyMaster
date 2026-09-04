@@ -42,6 +42,8 @@ function escapeHtml(s: string): string {
  *  \\( \\) math is left untouched for the KaTeX auto-render pass. */
 function renderMarkup(s: string): string {
   let out = escapeHtml(s);
+  out = out.replace(/\{\{imgfull:(.+?)\}\}/g, '<img class="block-img" src="../research/sat/$1" alt="">');
+  out = out.replace(/\{\{img:(.+?)\}\}/g, '<img class="inline-img" src="../research/sat/$1" alt="">');
   out = out.replace(/\[\[(.+?)\]\]/g, '<u>$1</u>');
   out = out.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   out = out.replace(/\*(.+?)\*/g, '<em>$1</em>');
@@ -128,6 +130,8 @@ function main(): void {
     .pane.info { background: #fafaf7; border-right: 2px dashed #ccc; padding-right: 14px; }
     .passage { font-size: 14px; white-space: pre-wrap; }
     .figure-img { display: block; margin: 0 auto 10px; max-width: 100%; }
+    .inline-img { display: inline-block; max-height: 2.2em; vertical-align: middle; margin: 0 2px; }
+    .block-img { display: block; margin: 10px auto; max-width: 100%; max-height: 360px; }
     .stem { margin: 0 0 10px; font-weight: 600; white-space: pre-wrap; }
     .choices { margin: 0; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
     .choice { display: flex; gap: 8px; align-items: baseline; border: 1px solid #e2e2dd;

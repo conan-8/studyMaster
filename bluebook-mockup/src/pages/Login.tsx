@@ -1,5 +1,4 @@
-import { useState, type FormEvent } from 'react'
-import { Navigate } from 'react-router'
+import { useEffect, useState, type FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../lib/auth-context'
 import './login.css'
@@ -38,6 +37,14 @@ export default function Login() {
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
 
+  // Once signed in, hand off to the dashboard (the looseleaf hub at the
+  // origin root) — it reads the same Supabase session from localStorage.
+  useEffect(() => {
+    if (user) window.location.href = `${window.location.origin}/`
+  }, [user])
+
+  if (user) return null
+
   const submit = async (e: FormEvent) => {
     e.preventDefault()
     setBusy(true)
@@ -67,8 +74,6 @@ export default function Login() {
     })
     if (err) setError(err.message)
   }
-
-  if (user) return <Navigate to="/" replace />
 
   return (
     <div className="cd-login">

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://studymaste.dev/schemas/generated-question.schema.json",
+  "$id": "https://cramduck.dev/schemas/generated-question.schema.json",
   "title": "Generated Question",
   "description": "Contract for ORIGINAL displayable questions produced from archetypes (distinct from the harvested contract in research/sat/question.schema.json, which stays internal_eval). Generated questions always carry a rationale and are display-only.",
   "type": "object",

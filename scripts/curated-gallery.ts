@@ -109,7 +109,7 @@ function main(): void {
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>studyMaste curated question gallery</title>
+  <title>Cramduck curated question gallery</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"

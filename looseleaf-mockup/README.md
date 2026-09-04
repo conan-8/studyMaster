@@ -1,6 +1,6 @@
-# Looseleaf — design-language mockup
+# Cramduck — design-language mockup
 
-Full-product interactive mockup of the Looseleaf app (SAT + AP study system). One papery design language — sticky-note stats, washi-taped ruled panels, red-margin flashcards — applied across the whole target structure. All data is fake; everything is clickable.
+Full-product interactive mockup of the Cramduck app (SAT + AP study system). One papery design language — sticky-note stats, washi-taped ruled panels, red-margin flashcards — applied across the whole target structure. All data is fake; everything is clickable.
 
 ## Files
 

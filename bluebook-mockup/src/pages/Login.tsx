@@ -1,11 +1,14 @@
 import { useState, type FormEvent } from 'react'
+import { Navigate } from 'react-router'
 import { supabase } from '../lib/supabase'
+import { useAuth } from '../lib/auth-context'
+import './login.css'
 
 type Mode = 'signin' | 'signup'
 
 function GoogleIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
+    <svg width="17" height="17" viewBox="0 0 48 48" aria-hidden="true">
       <path
         fill="#EA4335"
         d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
@@ -27,6 +30,7 @@ function GoogleIcon() {
 }
 
 export default function Login() {
+  const { user } = useAuth()
   const [mode, setMode] = useState<Mode>('signin')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -43,15 +47,13 @@ export default function Login() {
       if (mode === 'signup') {
         const { data, error: err } = await supabase.auth.signUp({ email, password })
         if (err) throw err
-        if (data.session === null) {
-          setNotice('Check your inbox to confirm your email, then sign in.')
-        }
+        if (data.session === null) setNotice('check your inbox to confirm, then sign in')
       } else {
         const { error: err } = await supabase.auth.signInWithPassword({ email, password })
         if (err) throw err
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong.')
+      setError(err instanceof Error ? err.message : 'something went wrong')
     } finally {
       setBusy(false)
     }
@@ -66,92 +68,66 @@ export default function Login() {
     if (err) setError(err.message)
   }
 
-  const inputCls =
-    'w-full rounded-xl border border-[#d6d9de] bg-white px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#3b4ed8] focus:ring-2 focus:ring-[#3b4ed8]/20'
+  if (user) return <Navigate to="/" replace />
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#f4f5f7] text-[#1c1c1e]">
-      <main className="flex flex-1 items-center justify-center px-6 py-12">
-        <div className="w-full max-w-sm">
-          <h1 className="text-center text-[26px] font-bold">studyMaste</h1>
-          <p className="mt-1 text-center text-sm text-[#5b616e]">
-            {mode === 'signin' ? 'Sign in to pick up where you left off' : 'Create your account'}
-          </p>
+    <div className="cd-login">
+      <div className="cd-wrap">
+        <div className="cd-brand">
+          Cram<span>duck</span>
+          <small>Study system · SAT + AP</small>
+        </div>
 
-          <div className="mt-6 rounded-2xl border border-[#d6d9de] bg-white px-6 py-6 shadow-sm">
-            <div className="mb-5 grid grid-cols-2 gap-1 rounded-xl bg-[#eef0f3] p-1">
-              {(['signin', 'signup'] as const).map((m) => (
-                <button
-                  key={m}
-                  onClick={() => {
-                    setMode(m)
-                    setError(null)
-                    setNotice(null)
-                  }}
-                  className={`rounded-lg px-3 py-1.5 text-sm font-semibold transition-colors ${
-                    mode === m ? 'bg-white text-[#1c1c1e] shadow-sm' : 'text-[#5b616e]'
-                  }`}
-                >
-                  {m === 'signin' ? 'Sign in' : 'Sign up'}
-                </button>
-              ))}
-            </div>
-
-            <form onSubmit={submit} className="grid gap-3">
-              <label className="grid gap-1.5 text-sm font-semibold">
-                Email
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  className={inputCls}
-                />
-              </label>
-              <label className="grid gap-1.5 text-sm font-semibold">
-                Password
-                <input
-                  type="password"
-                  required
-                  minLength={mode === 'signup' ? 8 : undefined}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder={mode === 'signup' ? 'At least 8 characters' : 'Your password'}
-                  className={inputCls}
-                />
-              </label>
-              {error && <p className="text-sm text-[#d0342c]">{error}</p>}
-              {notice && <p className="text-sm text-[#1e7e34]">{notice}</p>}
-              <button
-                type="submit"
-                disabled={busy}
-                className="mt-1 rounded-xl bg-[#3b4ed8] px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#2f3fb8] disabled:opacity-60"
-              >
-                {busy ? 'One moment…' : mode === 'signin' ? 'Sign in' : 'Create account'}
-              </button>
-            </form>
-
-            <div className="my-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-wide text-[#9aa1ad]">
-              <span className="h-px flex-1 bg-[#e2e4ea]" />
-              or
-              <span className="h-px flex-1 bg-[#e2e4ea]" />
-            </div>
-
-            <button
-              onClick={googleSignIn}
-              className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-[#d6d9de] bg-white px-4 py-2.5 text-sm font-semibold transition-colors hover:border-[#9aa1ad]"
-            >
-              <GoogleIcon />
-              Continue with Google
+        <div className="cd-card">
+          <div className="cd-tabs">
+            <button className={mode === 'signin' ? 'on' : ''} onClick={() => { setMode('signin'); setError(null); setNotice(null) }}>
+              Sign in
+            </button>
+            <button className={mode === 'signup' ? 'on' : ''} onClick={() => { setMode('signup'); setError(null); setNotice(null) }}>
+              Sign up
             </button>
           </div>
 
-          <p className="mt-4 text-center text-xs text-[#5b616e]">
-            Your practice results are saved to your account.
-          </p>
+          <form onSubmit={submit}>
+            <label className="cd-field">
+              <span className="lbl">Email</span>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+              />
+            </label>
+            <label className="cd-field">
+              <span className="lbl">Password</span>
+              <input
+                type="password"
+                required
+                minLength={mode === 'signup' ? 8 : undefined}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder={mode === 'signup' ? 'at least 8 characters' : 'your password'}
+              />
+            </label>
+            <button type="submit" disabled={busy} className="cd-btn pri">
+              {busy ? 'one moment…' : mode === 'signin' ? 'Sign in' : 'Create account'}
+            </button>
+          </form>
+
+          <div className="cd-or">or</div>
+
+          <button onClick={googleSignIn} className="cd-btn sec">
+            <GoogleIcon />
+            Continue with Google
+          </button>
         </div>
-      </main>
+
+        {notice && <div className="cd-note">{notice}</div>}
+        {error && <div className="cd-note err">{error}</div>}
+
+        <p className="cd-foot">your practice results live on your account</p>
+      </div>
     </div>
   )
 }

@@ -4,8 +4,8 @@
  * filesystem, then re-exports the public renderer API.
  *
  * Build: npm run build:sim  ->  bluebook-mockup/public/renderers.js (IIFE,
- * global StudyMasteRenderers). Usage in the simulator HTML:
- *   const svg = StudyMasteRenderers.render('sat-math:graph-line', params);
+ * global CramduckRenderers). Usage in the simulator HTML:
+ *   const svg = CramduckRenderers.render('sat-math:graph-line', params);
  */
 
 import { registerDiagramArchetypes } from '../src/renderers/lib/diagram.js';

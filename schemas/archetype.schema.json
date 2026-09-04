@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://studymaste.dev/schemas/archetype.schema.json",
+  "$id": "https://cramduck.dev/schemas/archetype.schema.json",
   "title": "Question Archetype",
   "description": "Formalizes and extends the de-facto archetype shape in research/sat/archetypes/<section>/<slug>.json (see rw/transitions.json). One archetype describes how to generate original questions for a single taxonomy skill. NOTE: distractorLogic is an array of {misconceptionId, trap} objects — this changes the current rw files, which use plain strings and are being converted separately.",
   "type": "object",

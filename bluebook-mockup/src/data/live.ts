@@ -406,7 +406,7 @@ export function selectZen(
 }
 
 /** Skill-targeted drill pool: only questions whose archetype (skill slug) is
- *  in `skills`. Powers the looseleaf skill-map "practice" actions. */
+ *  in `skills`. Powers the Cramduck skill-map "practice" actions. */
 export function selectBySkills(
   bank: { generated: BankQuestion[]; harvested: BankQuestion[] },
   skills: string[],

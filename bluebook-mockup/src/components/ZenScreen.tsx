@@ -111,13 +111,13 @@ export default function ZenScreen() {
           }
           return
         }
-        // Entering via a skill drill from the looseleaf skill map.
+        // Entering via a skill drill from the Cramduck skill map.
         if (skillsList.length > 0) {
           const pool = shuffle(selectBySkills(b, skillsList))
           if (pool.length > 0) startWith(pool, 0)
           return
         }
-        // Straight into the run — config was chosen on the Looseleaf tab.
+        // Straight into the run — config was chosen on the Cramduck tab.
         const pool = shuffle(selectZen(b, config.subject, config.difficulty))
         if (pool.length > 0) startWith(pool, config.timer)
       })
@@ -262,7 +262,7 @@ export default function ZenScreen() {
               onClick={() => window.location.assign('./index.html#zen')}
               className="rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#3c4048] ring-1 ring-[#d6d9de] hover:bg-[#f4f5f7]"
             >
-              Back to Looseleaf
+              Back to Cramduck
             </button>
             <button
               onClick={() => {

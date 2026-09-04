@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://studymaste.dev/schemas/mastery.schema.json",
+  "$id": "https://cramduck.dev/schemas/mastery.schema.json",
   "title": "Student Mastery",
   "description": "Runtime contract for one student's aggregated mastery state on a single taxonomy node. Stored in the mastery DB table; updated from student events.",
   "type": "object",

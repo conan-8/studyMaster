@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://studymaste.dev/schemas/taxonomy.schema.json",
+  "$id": "https://cramduck.dev/schemas/taxonomy.schema.json",
   "title": "Subject Taxonomy",
   "description": "Validates a subject taxonomy file (database/<SUBJECT>/taxonomy.json): the canonical hierarchy of domains, skills, and (for AP) units, topics, and learning objectives. Node codes are subject-scoped, e.g. 'SAT_RW:boundaries'.",
   "type": "object",

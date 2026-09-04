@@ -18,7 +18,7 @@ const BREAK_BEFORE_MODULE = 2
 
 export default function Home() {
   // ?focus narrows the run to one module or one full section
-  // (launched that way from the Looseleaf simulator config).
+  // (launched that way from the Cramduck simulator config).
   const [searchParams] = useSearchParams()
   const focusParam = searchParams.get('focus')
   const focus: TestFocus | null =

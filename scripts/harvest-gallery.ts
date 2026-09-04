@@ -230,7 +230,7 @@ function main(): void {
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>studyMaste harvested math review gallery</title>
+  <title>Cramduck harvested math review gallery</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>

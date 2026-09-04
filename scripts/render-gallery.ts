@@ -91,7 +91,7 @@ function main(): void {
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>studyMaste diagram renderer gallery</title>
+  <title>Cramduck diagram renderer gallery</title>
   <style>
     body { margin: 0; padding: 24px; background: #f6f6f4; color: #1a1a1a;
            font: 14px/1.4 -apple-system, "Segoe UI", sans-serif; }

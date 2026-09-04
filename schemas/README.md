@@ -1,6 +1,6 @@
 # Schemas
 
-JSON Schema (draft-07) contracts for the studyMaste data layer. These files are
+JSON Schema (draft-07) contracts for the Cramduck data layer. These files are
 the **single source of truth** for validation: ajv validators consume them
 directly, and no validation logic may be duplicated elsewhere (validators,
 generators, and DB writers all reference these schemas).
@@ -19,7 +19,7 @@ generators, and DB writers all reference these schemas).
 ## Conventions
 
 - All schemas are draft-07 with `$id` of the form
-  `https://studymaste.dev/schemas/<filename>`, plus `title` and `description`.
+  `https://cramduck.dev/schemas/<filename>`, plus `title` and `description`.
 - `additionalProperties: false` is used wherever the shape is closed.
 - Subject codes match `^(AP|SAT)_[A-Z0-9_]+$` (e.g. `SAT_RW`, `SAT_MATH`).
 - Subject-scoped node/misconception codes match

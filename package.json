@@ -1,9 +1,9 @@
 {
-  "name": "studymaste",
+  "name": "cramduck",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "studyMaste data layer: contracts validation, Supabase (Postgres) schema, and seed tooling",
+  "description": "Cramduck data layer: contracts validation, Supabase (Postgres) schema, and seed tooling",
   "scripts": {
     "validate:exam-formats": "tsx scripts/validate-exam-formats.ts",
     "validate:taxonomy": "tsx scripts/validate-taxonomy.ts",
@@ -27,7 +27,7 @@
     "apply:api": "python3 scripts/apply-api-content.py",
     "gallery:harvest": "tsx scripts/harvest-gallery.ts",
     "transcribe:math": "tsx --env-file-if-exists=.env scripts/transcribe-math.ts",
-    "build:sim": "esbuild simulator/browser-entry.ts --bundle --format=iife --global-name=StudyMasteRenderers --outfile=bluebook-mockup/public/renderers.js --alias:node:fs=./simulator/shims/fs.ts --alias:node:path=./simulator/shims/path.ts --alias:node:url=./simulator/shims/url.ts",
+    "build:sim": "esbuild simulator/browser-entry.ts --bundle --format=iife --global-name=CramduckRenderers --outfile=bluebook-mockup/public/renderers.js --alias:node:fs=./simulator/shims/fs.ts --alias:node:path=./simulator/shims/path.ts --alias:node:url=./simulator/shims/url.ts",
     "build:app": "npm run build:sim && npm --prefix bluebook-mockup run build && tsx scripts/sync-app.ts",
     "serve": "tsx --env-file-if-exists=.env scripts/serve.ts",
     "db:check": "tsx --env-file-if-exists=.env scripts/db-check.ts",

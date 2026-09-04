@@ -1,6 +1,6 @@
 # Database (data files)
 
-Validated, seed-ready data for the studyMaste content layer. Everything here is
+Validated, seed-ready data for the Cramduck content layer. Everything here is
 plain JSON checked into Git; `schemas/` holds the contracts, `scripts/` holds
 the validators and the seed that loads these files into Postgres.
 
@@ -126,10 +126,10 @@ Rendering inside the simulator:
 - Figures: `payload.stimulus.diagram` holds `{archetypeId, parameters}`.
   Render with the prebuilt bundle: `npm run build:sim` produces
   `bluebook-mockup/public/renderers.js` (gitignored; IIFE global
-  `StudyMasteRenderers`; `npm run build:app` copies it into the served app):
+  `CramduckRenderers`; `npm run build:app` copies it into the served app):
   ```js
   const d = payload.stimulus.diagram;
-  container.innerHTML = StudyMasteRenderers.render(d.archetypeId, d.parameters);
+  container.innerHTML = CramduckRenderers.render(d.archetypeId, d.parameters);
   ```
 - Bluebook items reference figure files (`stimulus.figureAsset`) instead of
   parameterized diagrams — those assets live under `research/sat/assets/`

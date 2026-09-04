@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://studymaste.dev/schemas/diagram-archetype.schema.json",
+  "$id": "https://cramduck.dev/schemas/diagram-archetype.schema.json",
   "title": "Diagram Archetype Registry Entry",
   "description": "Validates one diagram archetype registry entry (database/diagrams/<id>.json): a named, parameterized diagram type with a deterministic SVG renderer. Generated questions reference these by archetypeId and supply typed parameters.",
   "type": "object",

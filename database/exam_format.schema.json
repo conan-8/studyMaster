@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://studymaste.dev/schemas/exam_format.json",
+  "$id": "https://cramduck.dev/schemas/exam_format.json",
   "title": "Exam Format",
   "description": "Structured exam format data for an AP or SAT subject",
   "type": "object",

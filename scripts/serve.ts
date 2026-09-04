@@ -1,5 +1,5 @@
 /**
- * serve: dependency-free static server for the Looseleaf app (node http only).
+ * serve: dependency-free static server for the Cramduck app (node http only).
  *
  *   npm run serve                  -> http://127.0.0.1:4173
  *   PORT=8080 npm run serve        -> http://127.0.0.1:8080

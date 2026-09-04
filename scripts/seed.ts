@@ -1,5 +1,5 @@
 /**
- * seed.ts — idempotent seed of the studyMaste database from the repo's data
+ * seed.ts — idempotent seed of the Cramduck database from the repo's data
  * files. Every write is an upsert (ON CONFLICT DO UPDATE), so re-running is safe.
  *
  * Seeds: subjects (database/<SUBJECT>/exam_format.json), taxonomy_nodes,

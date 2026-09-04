@@ -39,7 +39,7 @@ const INFO_ROWS = [
 ]
 
 const SOURCES: Array<{ kind: SourceKind; label: string; blurb: string }> = [
-  { kind: 'generated', label: 'Generated', blurb: 'Original questions written by the studyMaste generator' },
+  { kind: 'generated', label: 'Generated', blurb: 'Original questions written by the Cramduck generator' },
   { kind: 'bank', label: 'Question Bank', blurb: 'Items from the online College Board question bank' },
   { kind: 'bluebook', label: 'Bluebook', blurb: 'Bank items that appear in Bluebook practice exams' },
 ]

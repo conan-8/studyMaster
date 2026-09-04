@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://studymaste.dev/schemas/student-event.schema.json",
+  "$id": "https://cramduck.dev/schemas/student-event.schema.json",
   "title": "Student Event",
   "description": "Runtime contract for one student interaction with a question (an answered or IDK'd attempt). Stored in the student_events DB table.",
   "type": "object",

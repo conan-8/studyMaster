@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://studymaste.dev/schemas/misconception-stat.schema.json",
+  "$id": "https://cramduck.dev/schemas/misconception-stat.schema.json",
   "title": "Student Misconception Stat",
   "description": "Runtime contract for one student's hit count against a single misconception. Stored in the misconception_stats DB table; incremented when the student picks a distractor wired to that misconception.",
   "type": "object",

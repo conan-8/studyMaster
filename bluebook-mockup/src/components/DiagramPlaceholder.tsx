@@ -42,11 +42,11 @@ function Glyph({ kind, scale = 1 }: { kind: NonNullable<DiagramSpec['kind']>; sc
   )
 }
 
-/** Real parameterized figure from the studyMaste renderer bundle. */
+/** Real parameterized figure from the Cramduck renderer bundle. */
 function LiveSvg({ diagram, scale }: { diagram: NonNullable<DiagramSpec['live']>; scale: number }) {
   const svg = useMemo(() => {
-    const R = (window as unknown as { StudyMasteRenderers?: { render: (id: string, p: Record<string, unknown>) => string } })
-      .StudyMasteRenderers
+    const R = (window as unknown as { CramduckRenderers?: { render: (id: string, p: Record<string, unknown>) => string } })
+      .CramduckRenderers
     if (!R) return null
     try {
       return R.render(diagram.archetypeId, structuredClone(diagram.parameters)).replace(/^<\?xml[^?]*\?>\s*/, '')

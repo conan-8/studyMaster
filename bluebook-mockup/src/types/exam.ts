@@ -1,8 +1,8 @@
 export interface DiagramSpec {
   kind?: 'triangle' | 'parabola' | 'barchart'
   caption?: string
-  /** Real parameterized figure: rendered by the studyMaste SVG renderer
-   *  bundle (public/renderers.js, window.StudyMasteRenderers). When present
+  /** Real parameterized figure: rendered by the Cramduck SVG renderer
+   *  bundle (public/renderers.js, window.CramduckRenderers). When present
    *  it replaces the placeholder glyph. */
   live?: {
     archetypeId: string

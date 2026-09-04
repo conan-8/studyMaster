@@ -2,7 +2,7 @@
  * Vercel serverless function: POST /api/chat — Looseleaf coach chat proxy.
  * Forwards to Alibaba Cloud Model Studio (see scripts/lib/chat-proxy.ts).
  */
-import { handleChat } from '../scripts/lib/chat-proxy';
+import { handleChat } from '../scripts/lib/chat-proxy.js';
 
 interface Req {
   method?: string;

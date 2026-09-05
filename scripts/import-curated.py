@@ -32,6 +32,9 @@ from pathlib import Path
 import openpyxl
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / 'scripts' / 'lib'))
+
+from wordmath import clean_text  # noqa: E402
 SAT = ROOT / 'research' / 'sat'
 BANK = SAT / 'question-bank'
 ASSETS = SAT / 'assets'
@@ -60,7 +63,11 @@ def clean(v) -> str | None:
     if v is None:
         return None
     s = str(v).strip()
-    return s if s else None
+    if not s:
+        return None
+    # College Board alttext verbalizes math ("fourth root x squared root") —
+    # rewrite it to real LaTeX inside \(...\) segments on the way in.
+    return clean_text(s)
 
 
 def norm_id(raw: str) -> str:

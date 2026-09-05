@@ -35,14 +35,13 @@ export default function BottomBar({ index, total, navOpen, onToggleNavigator, on
       </button>
 
       <div className="flex flex-1 items-center justify-end gap-2.5">
-        {index > 0 && (
-          <button
-            onClick={onBack}
-            className="rounded-full bg-[#3b4ed8] px-7 py-2.5 text-[15px] font-semibold text-white hover:bg-[#2f3fb8]"
-          >
-            Back
-          </button>
-        )}
+        <button
+          onClick={onBack}
+          disabled={index === 0}
+          className="rounded-full bg-[#3b4ed8] px-7 py-2.5 text-[15px] font-semibold text-white hover:bg-[#2f3fb8] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#3b4ed8]"
+        >
+          Back
+        </button>
         <button
           onClick={onNext}
           className="rounded-full bg-[#3b4ed8] px-7 py-2.5 text-[15px] font-semibold text-white hover:bg-[#2f3fb8]"

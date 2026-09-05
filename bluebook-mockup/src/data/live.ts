@@ -1,5 +1,6 @@
 import type { ExamModule, Question } from '../types/exam'
 import { supabase } from '../lib/supabase'
+import { assetUrl } from '../lib/assets'
 
 /**
  * Live question bank — replaces the static lorem-ipsum data/exam.ts TEST.
@@ -211,7 +212,7 @@ function toQuestion(
       }
     : undefined
   const rawImage = (stim as RawHarvested['payload']['stimulus'])?.figureAsset
-  const imageAsset = rawImage ? `/${rawImage}` : undefined
+  const imageAsset = rawImage ? assetUrl(rawImage) : undefined
   const verified = (payload as { provenance?: { verified?: boolean } }).provenance?.verified === true
   return {
     id,
@@ -260,7 +261,7 @@ function toCuratedQuestion(r: RawHarvested, c: CuratedBlock): BankQuestion {
     options: c.options.length > 0 ? c.options.map((o) => o.text) : undefined,
     correct: c.correctAnswer,
     // ?v= busts browser caches that still hold the pre-fix broken SVGs
-    imageAsset: c.diagram ? `/${c.diagram}?v=2` : undefined,
+    imageAsset: c.diagram ? `${assetUrl(c.diagram)}?v=2` : undefined,
   }
 }
 

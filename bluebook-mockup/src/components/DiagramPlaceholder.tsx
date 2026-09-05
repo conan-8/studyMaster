@@ -71,15 +71,20 @@ export default function DiagramPlaceholder({
 }) {
   const [zoomIdx, setZoomIdx] = useState(2)
   const [fullscreen, setFullscreen] = useState(false)
+  /** src of the image that failed to load (e.g. figure missing from a stale
+   *  deployment) — fall back to the glyph instead of the broken-image icon. */
+  const [failedSrc, setFailedSrc] = useState<string | null>(null)
   const zoom = ZOOM_STEPS[zoomIdx]
   const scale = zoom / 100
+  const showImage = image && failedSrc !== image
 
   const body = (
     <div className="flex w-full justify-center">
-      {image ? (
+      {showImage ? (
         <img
           src={image}
           alt="Question figure"
+          onError={() => setFailedSrc(image)}
           style={{ width: `${Math.min(scale * 100, 400)}%` }}
           className="object-contain"
         />
@@ -149,8 +154,8 @@ export default function DiagramPlaceholder({
               <X size={18} />
             </button>
             <div className="flex justify-center">
-              {image ? (
-                <img src={image} alt="Question figure" className="max-h-[92vh] max-w-full object-contain" />
+              {showImage ? (
+                <img src={image} alt="Question figure" onError={() => setFailedSrc(image)} className="max-h-[92vh] max-w-full object-contain" />
               ) : diagram?.live ? (
                 <LiveSvg diagram={diagram.live} scale={2} />
               ) : (

@@ -1,6 +1,7 @@
 import katex from 'katex'
 import 'katex/dist/katex.min.css'
 import type { ReactNode } from 'react'
+import { assetUrl } from '../lib/assets'
 
 /**
  * Renders exam content text with light markup:
@@ -25,7 +26,7 @@ function renderSegments(text: string, keyPrefix: string): ReactNode[] {
         nodes.push(
           <img
             key={`${keyPrefix}-img${i}`}
-            src={`/${imgParts[i + 2]}`}
+            src={assetUrl(imgParts[i + 2]!)}
             alt=""
             className={
               full

@@ -59,6 +59,9 @@ export default function ZenScreen() {
   const [crossed, setCrossed] = useState<Record<string, string[]>>({})
   const [revealed, setRevealed] = useState(false)
   const [lastRight, setLastRight] = useState<boolean | null>(null)
+  /** Questions already checked this session — revisiting them re-shows the
+   *  reveal instead of allowing a stat-double-counting second check. */
+  const [checkedIds, setCheckedIds] = useState<Set<string>>(new Set())
 
   const [answered, setAnswered] = useState(0)
   const [correctCount, setCorrectCount] = useState(0)
@@ -84,6 +87,7 @@ export default function ZenScreen() {
     setCrossed({})
     setRevealed(false)
     setLastRight(null)
+    setCheckedIds(new Set())
     setAnswered(0)
     setCorrectCount(0)
     setRun(0)
@@ -168,11 +172,13 @@ export default function ZenScreen() {
   const answer = question ? answers[question.id] : undefined
 
   const canCheck =
-    !!question && !revealed && (question.options ? !!answer : !!answer && answer.trim() !== '')
+    !!question && !revealed && !checkedIds.has(question.id) &&
+    (question.options ? !!answer : !!answer && answer.trim() !== '')
 
   const check = () => {
     if (!question || !canCheck) return
     const right = isCorrect(question, answer ?? '')
+    setCheckedIds((s) => new Set(s).add(question.id))
     setRevealed(true)
     setLastRight(right)
     setAnswered((n) => n + 1)
@@ -193,20 +199,39 @@ export default function ZenScreen() {
     lastIdRef.current = question?.id ?? null
     shownAtRef.current = Date.now()
     setSecondsLeft(config.timer)
-    setRevealed(false)
-    setLastRight(null)
-    setIndex((i) => {
-      const ni = i + 1
-      if (ni >= queue.length) {
-        let reshuffled = shuffle(queue)
-        if (reshuffled.length > 1 && reshuffled[0]!.id === lastIdRef.current) {
-          reshuffled = [...reshuffled.slice(1), reshuffled[0]!]
-        }
-        setQueue(reshuffled)
-        return 0
+    let pool = queue
+    let ni = index + 1
+    if (ni >= queue.length) {
+      let reshuffled = shuffle(queue)
+      if (reshuffled.length > 1 && reshuffled[0]!.id === lastIdRef.current) {
+        reshuffled = [...reshuffled.slice(1), reshuffled[0]!]
       }
-      return ni
+      pool = reshuffled
+      ni = 0
+      setQueue(reshuffled)
+    }
+    const target = pool[ni]
+    const wasChecked = target ? checkedIds.has(target.id) : false
+    setRevealed(wasChecked)
+    setLastRight(wasChecked && target ? isCorrect(target, answers[target.id] ?? '') : null)
+    setIndex(ni)
+  }
+
+  const back = () => {
+    if (index === 0) return
+    const target = queue[index - 1]!
+    // drop the log entry recorded when the target was left, so leaving it
+    // again doesn't duplicate it in the session report
+    setSessionLog((log) => {
+      const last = log[log.length - 1]
+      return last && last.q.id === target.id ? log.slice(0, -1) : log
     })
+    const wasChecked = checkedIds.has(target.id)
+    setRevealed(wasChecked)
+    setLastRight(wasChecked ? isCorrect(target, answers[target.id] ?? '') : null)
+    shownAtRef.current = Date.now()
+    setSecondsLeft(config.timer)
+    setIndex(index - 1)
   }
 
   if (phase === 'report') {
@@ -404,6 +429,13 @@ export default function ZenScreen() {
         </span>
 
         <div className="flex flex-1 items-center justify-end gap-2.5">
+          <button
+            onClick={back}
+            disabled={index === 0}
+            className="rounded-full bg-white px-6 py-2.5 text-[15px] font-semibold text-[#3b4ed8] ring-1 ring-[#3b4ed8] hover:bg-[#eef0fd] disabled:opacity-40 disabled:ring-[#d6d9de] disabled:text-[#9aa1ad]"
+          >
+            ← Back
+          </button>
           <button
             onClick={check}
             disabled={!canCheck}

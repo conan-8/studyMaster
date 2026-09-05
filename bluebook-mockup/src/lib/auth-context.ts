@@ -14,3 +14,12 @@ export const AuthContext = createContext<AuthState>({ user: null, session: null,
 export function useAuth(): AuthState {
   return useContext(AuthContext)
 }
+
+/** Display name for the signed-in user: Google full name, else email local part. */
+export function displayName(user: User | null): string {
+  if (!user) return ''
+  const meta = user.user_metadata as Record<string, unknown> | undefined
+  const full = (meta?.full_name ?? meta?.name) as string | undefined
+  if (full && full.trim()) return full.trim()
+  return user.email?.split('@')[0] || 'Student'
+}

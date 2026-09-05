@@ -36,6 +36,28 @@ function RequireAuth({ children }: { children: ReactNode }) {
   return <>{children}</>
 }
 
+/**
+ * Catch-all — most importantly the Google OAuth callback: Supabase redirects
+ * to bluebook-practice-test.html#access_token=…, which matches no route, so
+ * neither Login nor RequireAuth would ever mount to hand off. Once the client
+ * has parsed the session out of the URL, send the user to the dashboard (the
+ * looseleaf hub at the origin root). Signed-out: show the login card.
+ */
+function OAuthHandoff() {
+  const { user, loading } = useAuth()
+  useEffect(() => {
+    if (!loading && user) window.location.href = `${window.location.origin}/`
+  }, [loading, user])
+  if (loading || user) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#f4f5f7] text-sm text-[#5b616e]">
+        Loading…
+      </div>
+    )
+  }
+  return <Login />
+}
+
 export default function App() {
   return (
     <AuthProvider>
@@ -65,6 +87,7 @@ export default function App() {
             </RequireAuth>
           }
         />
+        <Route path="*" element={<OAuthHandoff />} />
       </Routes>
     </AuthProvider>
   )

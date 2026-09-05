@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { formatTime } from './TopBar'
+import { displayName, useAuth } from '../lib/auth-context'
 
 const BREAK_SECONDS = 10 * 60
 
@@ -17,6 +18,8 @@ interface BreakScreenProps {
 
 export default function BreakScreen({ onResume }: BreakScreenProps) {
   const [secondsLeft, setSecondsLeft] = useState(BREAK_SECONDS)
+  const { user } = useAuth()
+  const name = displayName(user)
 
   useEffect(() => {
     const t = window.setInterval(() => setSecondsLeft((s) => Math.max(0, s - 1)), 1000)
@@ -38,7 +41,7 @@ export default function BreakScreen({ onResume }: BreakScreenProps) {
             Resume Testing
           </button>
         </div>
-        <p className="absolute bottom-6 left-8 text-[15px] font-bold text-white">Conan Yi</p>
+        <p className="absolute bottom-6 left-8 text-[15px] font-bold text-white">{name}</p>
       </div>
     )
   }
@@ -83,7 +86,7 @@ export default function BreakScreen({ onResume }: BreakScreenProps) {
         </div>
       </div>
 
-      <p className="absolute bottom-6 left-8 text-[15px] font-bold text-white md:left-16">Conan Yi</p>
+      <p className="absolute bottom-6 left-8 text-[15px] font-bold text-white md:left-16">{name}</p>
     </div>
   )
 }

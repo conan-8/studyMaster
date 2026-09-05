@@ -1,5 +1,6 @@
 import { Bookmark } from 'lucide-react'
 import type { ExamModule } from '../types/exam'
+import { displayName, useAuth } from '../lib/auth-context'
 
 interface ReviewScreenProps {
   module: ExamModule
@@ -19,6 +20,7 @@ export default function ReviewScreen({
   onBackToTest,
   onSubmit,
 }: ReviewScreenProps) {
+  const { user } = useAuth()
   return (
     <div className="flex h-screen flex-col bg-[#f4f5f7] text-[#1c1c1e]">
       <main className="flex-1 overflow-y-auto">
@@ -84,7 +86,7 @@ export default function ReviewScreen({
 
       <footer className="flex items-center justify-between gap-4 border-t border-[#c9cede] bg-[#e8ecf5] px-6 py-3">
         <div className="flex-1">
-          <p className="truncate text-[17px] font-bold text-[#1c1c1e]">Conan Yi</p>
+          <p className="truncate text-[17px] font-bold text-[#1c1c1e]">{displayName(user)}</p>
         </div>
         <div className="flex items-center gap-2.5">
           <button

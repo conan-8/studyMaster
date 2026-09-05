@@ -1,4 +1,5 @@
 import { ChevronDown, ChevronUp } from 'lucide-react'
+import { displayName, useAuth } from '../lib/auth-context'
 
 interface BottomBarProps {
   index: number
@@ -11,10 +12,11 @@ interface BottomBarProps {
 }
 
 export default function BottomBar({ index, total, navOpen, onToggleNavigator, onBack, onNext, onReport }: BottomBarProps) {
+  const { user } = useAuth()
   return (
     <footer className="flex items-center justify-between gap-4 border-t border-[#c9cede] bg-[#e8ecf5] px-6 py-3">
       <div className="flex min-w-0 flex-1 items-center gap-3">
-        <p className="truncate text-[17px] font-bold text-[#1c1c1e]">Conan Yi</p>
+        <p className="truncate text-[17px] font-bold text-[#1c1c1e]">{displayName(user)}</p>
         {onReport && (
           <button
             onClick={onReport}

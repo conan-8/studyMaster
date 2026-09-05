@@ -536,8 +536,8 @@ body[data-mode="blueprint"] .stat.rd{background:rgba(255,122,122,.18)}
         <div class="l">Current streak · best 34</div>
       </div>
       <div class="acct" id="acct">
-        <span class="avatar" id="acct-avatar">C</span>
-        <span class="acct-t" id="acct-name">Conan &middot; Settings</span>
+        <span class="avatar" id="acct-avatar">&rarr;</span>
+        <span class="acct-t" id="acct-name">Sign in</span>
         <div class="acct-drop">
           <div class="switch-row">
             <span>Dark mode</span>
@@ -1124,28 +1124,32 @@ const mfetch=u=>fetch(u,{headers:MH}).then(r=>r.json());
    simulator (bluebook-practice-test.html#/login) owns sign-in/sign-up; the
    dashboard reuses the session supabase-js persists in localStorage. */
 const SBC=window.supabase.createClient(SUP,ANON);
-let UID=null,USER_EMAIL=null;
+let UID=null,USER_EMAIL=null,USER_NAME=null;
 function renderAcct(){
-  const av=document.getElementById('acct-avatar'),nm=document.getElementById('acct-name'),lk=document.getElementById('acct-link');
-  if(!av||!nm||!lk)return;
+  const av=document.getElementById('acct-avatar'),nm=document.getElementById('acct-name'),lk=document.getElementById('acct-link'),chip=document.getElementById('acct');
+  if(!av||!nm||!lk||!chip)return;
   if(UID){
-    const label=USER_EMAIL||'account';
+    const label=USER_NAME||USER_EMAIL||'account';
     av.textContent=(label[0]||'a').toUpperCase();
-    nm.textContent=label.split('@')[0]+' \u00b7 settings';
-    lk.textContent='Sign out \u2192';
+    nm.textContent=label.split('@')[0]+' · settings';
+    lk.textContent='Sign out →';
     lk.onclick=async e=>{e.preventDefault();await SBC.auth.signOut();location.reload();};
+    chip.onclick=null;
   }else{
-    av.textContent='\u2192';
+    av.textContent='→';
     nm.textContent='Sign in';
-    lk.textContent='Sign in / create account \u2192';
+    lk.textContent='Sign in / create account →';
     lk.onclick=()=>{location.href='bluebook-practice-test.html#/login';};
+    // the chip itself is the sign-in button — no need to aim for the
+    // drop-link inside the hover dropdown (which is also unreachable on touch)
+    chip.onclick=e=>{if(!e.target.closest('.acct-drop'))location.href='bluebook-practice-test.html#/login';};
   }
 }
 const AUTH_READY=(async()=>{
   try{
     const{data}=await SBC.auth.getSession();
     const s=data.session;
-    if(s&&s.user){UID=s.user.id;USER_EMAIL=s.user.email;MH.Authorization='Bearer '+s.access_token;}
+    if(s&&s.user){UID=s.user.id;USER_EMAIL=s.user.email;USER_NAME=(s.user.user_metadata&&(s.user.user_metadata.full_name||s.user.user_metadata.name))||null;MH.Authorization='Bearer '+s.access_token;}
   }catch(e){}
   renderAcct();
   return UID;
